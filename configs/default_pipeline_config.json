@@ -1,0 +1,54 @@
+{
+  "fps": 30.0,
+  "filter": {
+    "savgol_window": 7,
+    "savgol_polyorder": 3
+  },
+  "joints": {
+    "pelvis": 0,
+    "left_hip": 1,
+    "right_hip": 2,
+    "spine1": 3,
+    "left_knee": 4,
+    "right_knee": 5,
+    "spine2": 6,
+    "left_ankle": 7,
+    "right_ankle": 8,
+    "spine3": 9,
+    "left_foot": 10,
+    "right_foot": 11,
+    "neck": 12,
+    "left_collar": 13,
+    "right_collar": 14,
+    "head": 15,
+    "left_shoulder": 16,
+    "right_shoulder": 17,
+    "left_elbow": 18,
+    "right_elbow": 19,
+    "left_wrist": 20,
+    "right_wrist": 21,
+    "lower_joints": [0, 1, 2, 4, 5, 7, 8, 10, 11],
+    "upper_joints": [3, 6, 9, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
+    "end_effectors": [7, 8, 20, 21]
+  },
+  "segmentation": {
+    "min_segment_frames": 3,
+    "lower_body": {
+      "foot_speed_threshold": 0.1,
+      "foot_height_epsilon": 0.05,
+      "min_distance_sec": 0.4,
+      "energy_prominence": 0.01
+    },
+    "upper_body": {
+      "min_distance_sec": 0.2,
+      "jerk_prominence_std_factor": 0.5,
+      "tension_curvature_prominence": 0.05
+    }
+  },
+  "texture": {
+    "radial_dominance_thresh": 0.6,
+    "ulnar_dominance_thresh": 0.6,
+    "apparent_stiffness_scale": 1.0,
+    "apparent_damping_scale": 1.0
+  }
+}

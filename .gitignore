@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Large Datasets & Media
+*.mp4
+*.avi
+*.mov
+*.m4v
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.task
+
+# Output & Downloads
+output/
+downloads/
+models/
+
+# Keep samples
+!samples/
+!samples/*.json
+!samples/*.py
+
+# Virtual Environments
+venv/
+env/
+.venv/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

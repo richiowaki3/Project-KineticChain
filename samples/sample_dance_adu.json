@@ -1,0 +1,4844 @@
+{
+  "video_id": "MRka5p5qTxw_vrm49",
+  "fps": 30.0,
+  "total_frames": 650,
+  "segments": [
+    {
+      "adu_id": 1,
+      "time_range": [
+        0.0,
+        0.2
+      ],
+      "frames": [
+        0,
+        6
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.89,
+        "time_impulsiveness": 0.84,
+        "weight_heaviness": 0.06,
+        "flow_fluidity": 0.06,
+        "radial_dominance": 0.46,
+        "ulnar_dominance": 0.14,
+        "apparent_stiffness": 85.85
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.2203,
+          "spine_tilt_rad": 0.6124,
+          "core_kinetic_energy": 0.3013,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.8884,
+          "reach_velocity": 5.8715,
+          "radial_max_jerk": 1659.7515,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 150.2539,
+          "lateral_balance": -0.7659
+        }
+      }
+    },
+    {
+      "adu_id": 2,
+      "time_range": [
+        0.2,
+        0.37
+      ],
+      "frames": [
+        6,
+        11
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "radial_reach",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.73,
+        "time_impulsiveness": 0.72,
+        "weight_heaviness": 0.0,
+        "flow_fluidity": 0.1,
+        "radial_dominance": 0.73,
+        "ulnar_dominance": 0.06,
+        "apparent_stiffness": 27.19
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.3495,
+          "spine_tilt_rad": 0.5109,
+          "core_kinetic_energy": 0.2905,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.7314,
+          "reach_velocity": 5.4855,
+          "radial_max_jerk": 1959.9939,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.8,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.8019
+        }
+      }
+    },
+    {
+      "adu_id": 3,
+      "time_range": [
+        0.37,
+        0.6
+      ],
+      "frames": [
+        11,
+        18
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.93,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.1,
+        "flow_fluidity": 0.25,
+        "radial_dominance": 0.54,
+        "ulnar_dominance": 0.11,
+        "apparent_stiffness": 52.58
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.3631,
+          "spine_tilt_rad": 0.5002,
+          "core_kinetic_energy": 0.2338,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9272,
+          "reach_velocity": 8.742,
+          "radial_max_jerk": 884.3605,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 12.1705,
+          "lateral_balance": -0.8677
+        }
+      }
+    },
+    {
+      "adu_id": 4,
+      "time_range": [
+        0.6,
+        0.7
+      ],
+      "frames": [
+        18,
+        21
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 1.0,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.0,
+        "flow_fluidity": 0.18,
+        "radial_dominance": 0.4,
+        "ulnar_dominance": 0.33,
+        "apparent_stiffness": 157.92
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.2073,
+          "spine_tilt_rad": 0.6226,
+          "core_kinetic_energy": 0.271,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 1.0,
+          "reach_velocity": 1.2201,
+          "radial_max_jerk": 0.0,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.0
+        }
+      }
+    },
+    {
+      "adu_id": 5,
+      "time_range": [
+        0.7,
+        1.1
+      ],
+      "frames": [
+        21,
+        33
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.09,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.36,
+        "flow_fluidity": 0.13,
+        "radial_dominance": 0.54,
+        "ulnar_dominance": 0.2,
+        "apparent_stiffness": 51.31
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0293,
+          "spine_tilt_rad": 0.7624,
+          "core_kinetic_energy": 0.8055,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.0947,
+          "reach_velocity": 1.1675,
+          "radial_max_jerk": 296.8473,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 23.166,
+          "lateral_balance": -0.9234
+        }
+      }
+    },
+    {
+      "adu_id": 6,
+      "time_range": [
+        1.1,
+        1.37
+      ],
+      "frames": [
+        33,
+        41
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.24,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.02,
+        "flow_fluidity": 0.21,
+        "radial_dominance": 0.54,
+        "ulnar_dominance": 0.17,
+        "apparent_stiffness": 154.87
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.2888,
+          "spine_tilt_rad": 0.5586,
+          "core_kinetic_energy": 0.5632,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.2363,
+          "reach_velocity": 0.6966,
+          "radial_max_jerk": 146.5734,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 210.3719,
+          "lateral_balance": -0.9465
+        }
+      }
+    },
+    {
+      "adu_id": 7,
+      "time_range": [
+        1.37,
+        1.5
+      ],
+      "frames": [
+        41,
+        45
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.83,
+        "time_impulsiveness": 0.62,
+        "weight_heaviness": 0.31,
+        "flow_fluidity": 0.24,
+        "radial_dominance": 0.35,
+        "ulnar_dominance": 0.5,
+        "apparent_stiffness": 90.15
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.1283,
+          "spine_tilt_rad": 0.6847,
+          "core_kinetic_energy": 0.57,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.8283,
+          "reach_velocity": 3.9753,
+          "radial_max_jerk": 705.0588,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.9349
+        }
+      }
+    },
+    {
+      "adu_id": 8,
+      "time_range": [
+        1.5,
+        1.63
+      ],
+      "frames": [
+        45,
+        49
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.97,
+        "time_impulsiveness": 0.74,
+        "weight_heaviness": 0.2,
+        "flow_fluidity": 0.18,
+        "radial_dominance": 0.43,
+        "ulnar_dominance": 0.38,
+        "apparent_stiffness": 103.34
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0772,
+          "spine_tilt_rad": 0.7248,
+          "core_kinetic_energy": 0.4585,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9738,
+          "reach_velocity": 5.5661,
+          "radial_max_jerk": 568.5884,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.5,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 84.4356,
+          "lateral_balance": -0.4418
+        }
+      }
+    },
+    {
+      "adu_id": 9,
+      "time_range": [
+        1.63,
+        1.87
+      ],
+      "frames": [
+        49,
+        56
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.64,
+        "time_impulsiveness": 0.84,
+        "weight_heaviness": 0.13,
+        "flow_fluidity": 0.07,
+        "radial_dominance": 0.6,
+        "ulnar_dominance": 0.24,
+        "apparent_stiffness": 46.45
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.2713,
+          "spine_tilt_rad": 0.5723,
+          "core_kinetic_energy": 0.2672,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.6422,
+          "reach_velocity": 6.2541,
+          "radial_max_jerk": 1126.3704,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.8371
+        }
+      }
+    },
+    {
+      "adu_id": 10,
+      "time_range": [
+        1.87,
+        1.97
+      ],
+      "frames": [
+        56,
+        59
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.98,
+        "time_impulsiveness": 0.63,
+        "weight_heaviness": 0.0,
+        "flow_fluidity": 0.22,
+        "radial_dominance": 0.48,
+        "ulnar_dominance": 0.27,
+        "apparent_stiffness": 104.29
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.3498,
+          "spine_tilt_rad": 0.5107,
+          "core_kinetic_energy": 0.2468,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9792,
+          "reach_velocity": 6.5863,
+          "radial_max_jerk": 0.0,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.6667,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 67.7686,
+          "lateral_balance": -0.5649
+        }
+      }
+    },
+    {
+      "adu_id": 11,
+      "time_range": [
+        1.97,
+        2.13
+      ],
+      "frames": [
+        59,
+        64
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.82,
+        "time_impulsiveness": 0.57,
+        "weight_heaviness": 0.0,
+        "flow_fluidity": 0.22,
+        "radial_dominance": 0.36,
+        "ulnar_dominance": 0.3,
+        "apparent_stiffness": 183.72
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.3013,
+          "spine_tilt_rad": 0.5488,
+          "core_kinetic_energy": 0.47,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.8215,
+          "reach_velocity": 3.2747,
+          "radial_max_jerk": 918.9837,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.8706
+        }
+      }
+    },
+    {
+      "adu_id": 12,
+      "time_range": [
+        2.13,
+        2.47
+      ],
+      "frames": [
+        64,
+        74
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.29,
+        "time_impulsiveness": 0.8,
+        "weight_heaviness": 0.23,
+        "flow_fluidity": 0.14,
+        "radial_dominance": 0.4,
+        "ulnar_dominance": 0.47,
+        "apparent_stiffness": 39.68
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 0.8748,
+          "core_kinetic_energy": 1.2266,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.2867,
+          "reach_velocity": 1.2241,
+          "radial_max_jerk": 171.2371,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 86.9476,
+          "lateral_balance": -0.9274
+        }
+      }
+    },
+    {
+      "adu_id": 13,
+      "time_range": [
+        2.47,
+        2.67
+      ],
+      "frames": [
+        74,
+        80
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "radial_reach",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.71,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.42,
+        "flow_fluidity": 0.07,
+        "radial_dominance": 0.63,
+        "ulnar_dominance": 0.22,
+        "apparent_stiffness": 89.77
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 0.9071,
+          "core_kinetic_energy": 1.8173,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.7091,
+          "reach_velocity": 2.8097,
+          "radial_max_jerk": 907.1208,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 80.6257,
+          "lateral_balance": -0.9051
+        }
+      }
+    },
+    {
+      "adu_id": 14,
+      "time_range": [
+        2.67,
+        2.87
+      ],
+      "frames": [
+        80,
+        86
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.36,
+        "time_impulsiveness": 0.77,
+        "weight_heaviness": 0.0,
+        "flow_fluidity": 0.06,
+        "radial_dominance": 0.57,
+        "ulnar_dominance": 0.17,
+        "apparent_stiffness": 61.8
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.2362,
+          "spine_tilt_rad": 0.5999,
+          "core_kinetic_energy": 1.3661,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.3581,
+          "reach_velocity": 7.9175,
+          "radial_max_jerk": 4671.7934,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.8333,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 173.7975,
+          "lateral_balance": -0.9451
+        }
+      }
+    },
+    {
+      "adu_id": 15,
+      "time_range": [
+        2.93,
+        3.33
+      ],
+      "frames": [
+        88,
+        100
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.71,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.33,
+        "flow_fluidity": 0.2,
+        "radial_dominance": 0.42,
+        "ulnar_dominance": 0.1,
+        "apparent_stiffness": 30.56
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.5184,
+          "spine_tilt_rad": 0.3782,
+          "core_kinetic_energy": 0.3536,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.708,
+          "reach_velocity": 1.7076,
+          "radial_max_jerk": 207.9386,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 15.1434,
+          "lateral_balance": -0.9733
+        }
+      }
+    },
+    {
+      "adu_id": 16,
+      "time_range": [
+        3.33,
+        3.43
+      ],
+      "frames": [
+        100,
+        103
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 1.0,
+        "time_impulsiveness": 0.72,
+        "weight_heaviness": 0.0,
+        "flow_fluidity": 0.52,
+        "radial_dominance": 0.31,
+        "ulnar_dominance": 0.2,
+        "apparent_stiffness": 344.92
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.6413,
+          "spine_tilt_rad": 0.2818,
+          "core_kinetic_energy": 0.0336,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 1.0,
+          "reach_velocity": 0.3558,
+          "radial_max_jerk": 0.0,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": 0.0
+        }
+      }
+    },
+    {
+      "adu_id": 17,
+      "time_range": [
+        3.43,
+        3.63
+      ],
+      "frames": [
+        103,
+        109
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.97,
+        "time_impulsiveness": 0.6,
+        "weight_heaviness": 0.0,
+        "flow_fluidity": 0.22,
+        "radial_dominance": 0.46,
+        "ulnar_dominance": 0.48,
+        "apparent_stiffness": 0.0
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.5212,
+          "spine_tilt_rad": 0.376,
+          "core_kinetic_energy": 1.0932,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9681,
+          "reach_velocity": 3.5816,
+          "radial_max_jerk": 909.894,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.8333,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.8591
+        }
+      }
+    },
+    {
+      "adu_id": 18,
+      "time_range": [
+        3.63,
+        3.93
+      ],
+      "frames": [
+        109,
+        118
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "ulnar_brace",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.84,
+        "time_impulsiveness": 0.72,
+        "weight_heaviness": 0.41,
+        "flow_fluidity": 0.1,
+        "radial_dominance": 0.66,
+        "ulnar_dominance": 0.69,
+        "apparent_stiffness": 39.22
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 0.8454,
+          "core_kinetic_energy": 1.5629,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.8362,
+          "reach_velocity": 2.2578,
+          "radial_max_jerk": 362.4068,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 85.5375,
+          "lateral_balance": -0.9627
+        }
+      }
+    },
+    {
+      "adu_id": 19,
+      "time_range": [
+        3.93,
+        4.13
+      ],
+      "frames": [
+        118,
+        124
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.93,
+        "time_impulsiveness": 0.82,
+        "weight_heaviness": 0.61,
+        "flow_fluidity": 0.12,
+        "radial_dominance": 0.46,
+        "ulnar_dominance": 0.55,
+        "apparent_stiffness": 41.91
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 0.9925,
+          "core_kinetic_energy": 0.8786,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9312,
+          "reach_velocity": 6.4033,
+          "radial_max_jerk": 2147.9025,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.8846
+        }
+      }
+    },
+    {
+      "adu_id": 20,
+      "time_range": [
+        4.13,
+        4.33
+      ],
+      "frames": [
+        124,
+        130
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.68,
+        "time_impulsiveness": 0.83,
+        "weight_heaviness": 0.12,
+        "flow_fluidity": 0.22,
+        "radial_dominance": 0.32,
+        "ulnar_dominance": 0.32,
+        "apparent_stiffness": 34.83
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0819,
+          "spine_tilt_rad": 0.7211,
+          "core_kinetic_energy": 0.6133,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.6813,
+          "reach_velocity": 5.9733,
+          "radial_max_jerk": 2149.4655,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 32.337,
+          "lateral_balance": -0.8581
+        }
+      }
+    },
+    {
+      "adu_id": 21,
+      "time_range": [
+        4.33,
+        4.63
+      ],
+      "frames": [
+        130,
+        139
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.91,
+        "time_impulsiveness": 0.87,
+        "weight_heaviness": 0.17,
+        "flow_fluidity": 0.18,
+        "radial_dominance": 0.41,
+        "ulnar_dominance": 0.32,
+        "apparent_stiffness": 32.22
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.4408,
+          "spine_tilt_rad": 0.4392,
+          "core_kinetic_energy": 0.7568,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9051,
+          "reach_velocity": 5.8887,
+          "radial_max_jerk": 1002.5225,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 65.3167,
+          "lateral_balance": -0.8888
+        }
+      }
+    },
+    {
+      "adu_id": 22,
+      "time_range": [
+        4.63,
+        4.9
+      ],
+      "frames": [
+        139,
+        147
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.82,
+        "time_impulsiveness": 0.71,
+        "weight_heaviness": 0.56,
+        "flow_fluidity": 0.18,
+        "radial_dominance": 0.51,
+        "ulnar_dominance": 0.52,
+        "apparent_stiffness": 44.36
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.4697,
+          "spine_tilt_rad": 0.4165,
+          "core_kinetic_energy": 1.4026,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.8192,
+          "reach_velocity": 3.0285,
+          "radial_max_jerk": 374.8124,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 120.0011,
+          "lateral_balance": -0.9644
+        }
+      }
+    },
+    {
+      "adu_id": 23,
+      "time_range": [
+        4.9,
+        5.0
+      ],
+      "frames": [
+        147,
+        150
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.98,
+        "time_impulsiveness": 0.48,
+        "weight_heaviness": 0.6,
+        "flow_fluidity": 0.21,
+        "radial_dominance": 0.47,
+        "ulnar_dominance": 0.2,
+        "apparent_stiffness": 290.92
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.3803,
+          "spine_tilt_rad": 0.4867,
+          "core_kinetic_energy": 0.3489,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9833,
+          "reach_velocity": 2.8135,
+          "radial_max_jerk": 0.0,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 54.499,
+          "lateral_balance": -0.8787
+        }
+      }
+    },
+    {
+      "adu_id": 24,
+      "time_range": [
+        5.0,
+        5.37
+      ],
+      "frames": [
+        150,
+        161
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.85,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.08,
+        "flow_fluidity": 0.31,
+        "radial_dominance": 0.52,
+        "ulnar_dominance": 0.32,
+        "apparent_stiffness": 23.86
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.8442,
+          "spine_tilt_rad": 0.1223,
+          "core_kinetic_energy": 0.6053,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.8537,
+          "reach_velocity": 2.9882,
+          "radial_max_jerk": 308.1549,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.9665
+        }
+      }
+    },
+    {
+      "adu_id": 25,
+      "time_range": [
+        5.37,
+        5.57
+      ],
+      "frames": [
+        161,
+        167
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.95,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.0,
+        "flow_fluidity": 0.12,
+        "radial_dominance": 0.52,
+        "ulnar_dominance": 0.32,
+        "apparent_stiffness": 166.27
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.9017,
+          "spine_tilt_rad": 0.0772,
+          "core_kinetic_energy": 1.2297,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9477,
+          "reach_velocity": 3.3597,
+          "radial_max_jerk": 771.3228,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 300.4179,
+          "lateral_balance": -0.9942
+        }
+      }
+    },
+    {
+      "adu_id": 26,
+      "time_range": [
+        5.57,
+        5.87
+      ],
+      "frames": [
+        167,
+        176
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.26,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.21,
+        "flow_fluidity": 0.12,
+        "radial_dominance": 0.54,
+        "ulnar_dominance": 0.48,
+        "apparent_stiffness": 65.92
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.4625,
+          "spine_tilt_rad": 0.4221,
+          "core_kinetic_energy": 0.4647,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.2608,
+          "reach_velocity": 4.7507,
+          "radial_max_jerk": 534.2483,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 73.0874,
+          "lateral_balance": -0.9762
+        }
+      }
+    },
+    {
+      "adu_id": 27,
+      "time_range": [
+        5.93,
+        6.1
+      ],
+      "frames": [
+        178,
+        183
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.98,
+        "time_impulsiveness": 0.58,
+        "weight_heaviness": 0.23,
+        "flow_fluidity": 0.13,
+        "radial_dominance": 0.31,
+        "ulnar_dominance": 0.37,
+        "apparent_stiffness": 84.84
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.5596,
+          "spine_tilt_rad": 0.3459,
+          "core_kinetic_energy": 0.2288,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9815,
+          "reach_velocity": 4.9931,
+          "radial_max_jerk": 1663.7521,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.8,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 64.595,
+          "lateral_balance": -0.6325
+        }
+      }
+    },
+    {
+      "adu_id": 28,
+      "time_range": [
+        6.1,
+        6.5
+      ],
+      "frames": [
+        183,
+        195
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.64,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.19,
+        "flow_fluidity": 0.08,
+        "radial_dominance": 0.57,
+        "ulnar_dominance": 0.2,
+        "apparent_stiffness": 30.38
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.6241,
+          "spine_tilt_rad": 0.2953,
+          "core_kinetic_energy": 0.3699,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.6373,
+          "reach_velocity": 5.0242,
+          "radial_max_jerk": 653.6651,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 93.7911,
+          "lateral_balance": -0.9638
+        }
+      }
+    },
+    {
+      "adu_id": 29,
+      "time_range": [
+        6.5,
+        6.7
+      ],
+      "frames": [
+        195,
+        201
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "radial_reach",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.77,
+        "time_impulsiveness": 0.85,
+        "weight_heaviness": 0.33,
+        "flow_fluidity": 0.19,
+        "radial_dominance": 0.67,
+        "ulnar_dominance": 0.15,
+        "apparent_stiffness": 184.45
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.4599,
+          "spine_tilt_rad": 0.4242,
+          "core_kinetic_energy": 0.4265,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.7682,
+          "reach_velocity": 7.6173,
+          "radial_max_jerk": 2854.6441,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.5,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 53.5992,
+          "lateral_balance": -0.8497
+        }
+      }
+    },
+    {
+      "adu_id": 30,
+      "time_range": [
+        6.7,
+        6.9
+      ],
+      "frames": [
+        201,
+        207
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.79,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.16,
+        "flow_fluidity": 0.16,
+        "radial_dominance": 0.46,
+        "ulnar_dominance": 0.25,
+        "apparent_stiffness": 130.84
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.4851,
+          "spine_tilt_rad": 0.4044,
+          "core_kinetic_energy": 0.8757,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.7878,
+          "reach_velocity": 3.0898,
+          "radial_max_jerk": 1287.1391,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.6667,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 421.6059,
+          "lateral_balance": -0.9553
+        }
+      }
+    },
+    {
+      "adu_id": 31,
+      "time_range": [
+        6.9,
+        7.0
+      ],
+      "frames": [
+        207,
+        210
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.99,
+        "time_impulsiveness": 0.81,
+        "weight_heaviness": 0.02,
+        "flow_fluidity": 0.06,
+        "radial_dominance": 0.43,
+        "ulnar_dominance": 0.13,
+        "apparent_stiffness": 19.44
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.3216,
+          "spine_tilt_rad": 0.5328,
+          "core_kinetic_energy": 1.1815,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9917,
+          "reach_velocity": 2.4437,
+          "radial_max_jerk": 0.0,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 42.7313,
+          "lateral_balance": -0.9661
+        }
+      }
+    },
+    {
+      "adu_id": 32,
+      "time_range": [
+        7.0,
+        7.1
+      ],
+      "frames": [
+        210,
+        213
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.93,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.05,
+        "flow_fluidity": 0.1,
+        "radial_dominance": 0.59,
+        "ulnar_dominance": 0.22,
+        "apparent_stiffness": 24.34
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.2521,
+          "spine_tilt_rad": 0.5874,
+          "core_kinetic_energy": 0.31,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9315,
+          "reach_velocity": 1.9341,
+          "radial_max_jerk": 0.0,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 14.6018,
+          "lateral_balance": -0.9809
+        }
+      }
+    },
+    {
+      "adu_id": 33,
+      "time_range": [
+        7.1,
+        7.3
+      ],
+      "frames": [
+        213,
+        219
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.62,
+        "time_impulsiveness": 0.65,
+        "weight_heaviness": 0.67,
+        "flow_fluidity": 0.21,
+        "radial_dominance": 0.36,
+        "ulnar_dominance": 0.24,
+        "apparent_stiffness": 29.75
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.2821,
+          "spine_tilt_rad": 0.5638,
+          "core_kinetic_energy": 2.2906,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.6158,
+          "reach_velocity": 1.1865,
+          "radial_max_jerk": 1287.2472,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.8333,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 99.9689,
+          "lateral_balance": -0.8795
+        }
+      }
+    },
+    {
+      "adu_id": 34,
+      "time_range": [
+        7.3,
+        7.5
+      ],
+      "frames": [
+        219,
+        225
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.52,
+        "time_impulsiveness": 0.56,
+        "weight_heaviness": 0.28,
+        "flow_fluidity": 0.17,
+        "radial_dominance": 0.17,
+        "ulnar_dominance": 0.21,
+        "apparent_stiffness": 88.12
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.5048,
+          "spine_tilt_rad": 0.3889,
+          "core_kinetic_energy": 1.468,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.5236,
+          "reach_velocity": 3.0179,
+          "radial_max_jerk": 2081.5469,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.6667,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 50.3908,
+          "lateral_balance": -0.7935
+        }
+      }
+    },
+    {
+      "adu_id": 35,
+      "time_range": [
+        7.5,
+        7.67
+      ],
+      "frames": [
+        225,
+        230
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.83,
+        "time_impulsiveness": 0.91,
+        "weight_heaviness": 0.21,
+        "flow_fluidity": 0.25,
+        "radial_dominance": 0.34,
+        "ulnar_dominance": 0.2,
+        "apparent_stiffness": 83.55
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.4486,
+          "spine_tilt_rad": 0.4331,
+          "core_kinetic_energy": 3.5532,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.8319,
+          "reach_velocity": 4.6928,
+          "radial_max_jerk": 1743.29,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.4,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.5467
+        }
+      }
+    },
+    {
+      "adu_id": 36,
+      "time_range": [
+        7.73,
+        8.0
+      ],
+      "frames": [
+        232,
+        240
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.65,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.31,
+        "flow_fluidity": 0.09,
+        "radial_dominance": 0.39,
+        "ulnar_dominance": 0.18,
+        "apparent_stiffness": 71.07
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.3079,
+          "spine_tilt_rad": 0.5436,
+          "core_kinetic_energy": 0.4713,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.6543,
+          "reach_velocity": 3.4387,
+          "radial_max_jerk": 866.5276,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.875,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 28.0851,
+          "lateral_balance": -0.9378
+        }
+      }
+    },
+    {
+      "adu_id": 37,
+      "time_range": [
+        8.0,
+        8.1
+      ],
+      "frames": [
+        240,
+        243
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.99,
+        "time_impulsiveness": 0.59,
+        "weight_heaviness": 0.22,
+        "flow_fluidity": 0.26,
+        "radial_dominance": 0.53,
+        "ulnar_dominance": 0.17,
+        "apparent_stiffness": 125.47
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.4422,
+          "spine_tilt_rad": 0.4381,
+          "core_kinetic_energy": 0.6141,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9949,
+          "reach_velocity": 4.5416,
+          "radial_max_jerk": 0.0,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 32.3753,
+          "lateral_balance": -0.7831
+        }
+      }
+    },
+    {
+      "adu_id": 38,
+      "time_range": [
+        8.1,
+        8.2
+      ],
+      "frames": [
+        243,
+        246
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.99,
+        "time_impulsiveness": 0.54,
+        "weight_heaviness": 0.09,
+        "flow_fluidity": 0.18,
+        "radial_dominance": 0.53,
+        "ulnar_dominance": 0.07,
+        "apparent_stiffness": 59.54
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.5938,
+          "spine_tilt_rad": 0.319,
+          "core_kinetic_energy": 0.5404,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9894,
+          "reach_velocity": 6.7132,
+          "radial_max_jerk": 0.0,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.3333,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 20.2892,
+          "lateral_balance": -0.6171
+        }
+      }
+    },
+    {
+      "adu_id": 39,
+      "time_range": [
+        8.2,
+        8.47
+      ],
+      "frames": [
+        246,
+        254
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.73,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.11,
+        "flow_fluidity": 0.29,
+        "radial_dominance": 0.5,
+        "ulnar_dominance": 0.27,
+        "apparent_stiffness": 24.18
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.8418,
+          "spine_tilt_rad": 0.1243,
+          "core_kinetic_energy": 0.514,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.7339,
+          "reach_velocity": 3.9102,
+          "radial_max_jerk": 445.8756,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 60.1952,
+          "lateral_balance": -0.892
+        }
+      }
+    },
+    {
+      "adu_id": 40,
+      "time_range": [
+        8.47,
+        8.57
+      ],
+      "frames": [
+        254,
+        257
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.96,
+        "time_impulsiveness": 0.45,
+        "weight_heaviness": 0.0,
+        "flow_fluidity": 0.61,
+        "radial_dominance": 0.52,
+        "ulnar_dominance": 0.58,
+        "apparent_stiffness": 136.6
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.7263,
+          "spine_tilt_rad": 0.2149,
+          "core_kinetic_energy": 0.1388,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9581,
+          "reach_velocity": 0.417,
+          "radial_max_jerk": 0.0,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 63.3999,
+          "lateral_balance": -0.9216
+        }
+      }
+    },
+    {
+      "adu_id": 41,
+      "time_range": [
+        8.57,
+        8.87
+      ],
+      "frames": [
+        257,
+        266
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.61,
+        "time_impulsiveness": 0.5,
+        "weight_heaviness": 0.19,
+        "flow_fluidity": 0.78,
+        "radial_dominance": 0.47,
+        "ulnar_dominance": 0.56,
+        "apparent_stiffness": 46.94
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.6824,
+          "spine_tilt_rad": 0.2494,
+          "core_kinetic_energy": 0.1142,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.6103,
+          "reach_velocity": 0.8699,
+          "radial_max_jerk": 88.8335,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 13.4559,
+          "lateral_balance": -0.9313
+        }
+      }
+    },
+    {
+      "adu_id": 42,
+      "time_range": [
+        8.87,
+        9.13
+      ],
+      "frames": [
+        266,
+        274
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.81,
+        "time_impulsiveness": 0.51,
+        "weight_heaviness": 0.04,
+        "flow_fluidity": 0.71,
+        "radial_dominance": 0.46,
+        "ulnar_dominance": 0.34,
+        "apparent_stiffness": 26.0
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.7744,
+          "spine_tilt_rad": 0.1772,
+          "core_kinetic_energy": 0.2109,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.8068,
+          "reach_velocity": 1.9567,
+          "radial_max_jerk": 234.8733,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 24.905,
+          "lateral_balance": -0.6669
+        }
+      }
+    },
+    {
+      "adu_id": 43,
+      "time_range": [
+        9.13,
+        9.33
+      ],
+      "frames": [
+        274,
+        280
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "radial_reach",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.79,
+        "time_impulsiveness": 0.69,
+        "weight_heaviness": 0.08,
+        "flow_fluidity": 0.19,
+        "radial_dominance": 0.61,
+        "ulnar_dominance": 0.15,
+        "apparent_stiffness": 60.18
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.7323,
+          "spine_tilt_rad": 0.2102,
+          "core_kinetic_energy": 0.1663,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.7941,
+          "reach_velocity": 6.2186,
+          "radial_max_jerk": 2893.6567,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 165.6024,
+          "lateral_balance": -0.9483
+        }
+      }
+    },
+    {
+      "adu_id": 44,
+      "time_range": [
+        9.33,
+        9.53
+      ],
+      "frames": [
+        280,
+        286
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.92,
+        "time_impulsiveness": 0.78,
+        "weight_heaviness": 0.13,
+        "flow_fluidity": 0.13,
+        "radial_dominance": 0.49,
+        "ulnar_dominance": 0.1,
+        "apparent_stiffness": 104.07
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.6858,
+          "spine_tilt_rad": 0.2468,
+          "core_kinetic_energy": 0.2002,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.921,
+          "reach_velocity": 7.5082,
+          "radial_max_jerk": 1596.0026,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.8333,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 9.2829,
+          "lateral_balance": -0.7922
+        }
+      }
+    },
+    {
+      "adu_id": 45,
+      "time_range": [
+        9.53,
+        9.63
+      ],
+      "frames": [
+        286,
+        289
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.97,
+        "time_impulsiveness": 0.65,
+        "weight_heaviness": 0.17,
+        "flow_fluidity": 0.19,
+        "radial_dominance": 0.48,
+        "ulnar_dominance": 0.11,
+        "apparent_stiffness": 82.19
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.6879,
+          "spine_tilt_rad": 0.2451,
+          "core_kinetic_energy": 0.2822,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9724,
+          "reach_velocity": 2.6817,
+          "radial_max_jerk": 0.0,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.6667,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 178.2389,
+          "lateral_balance": -0.765
+        }
+      }
+    },
+    {
+      "adu_id": 46,
+      "time_range": [
+        9.63,
+        9.87
+      ],
+      "frames": [
+        289,
+        296
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.88,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.18,
+        "flow_fluidity": 0.17,
+        "radial_dominance": 0.47,
+        "ulnar_dominance": 0.12,
+        "apparent_stiffness": 116.79
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.7236,
+          "spine_tilt_rad": 0.2171,
+          "core_kinetic_energy": 0.0991,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.8795,
+          "reach_velocity": 2.9734,
+          "radial_max_jerk": 286.3027,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.8571,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 511.7858,
+          "lateral_balance": -0.9314
+        }
+      }
+    },
+    {
+      "adu_id": 47,
+      "time_range": [
+        9.87,
+        10.1
+      ],
+      "frames": [
+        296,
+        303
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.58,
+        "time_impulsiveness": 0.94,
+        "weight_heaviness": 0.07,
+        "flow_fluidity": 0.08,
+        "radial_dominance": 0.51,
+        "ulnar_dominance": 0.06,
+        "apparent_stiffness": 98.0
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.7529,
+          "spine_tilt_rad": 0.1941,
+          "core_kinetic_energy": 0.1063,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.5826,
+          "reach_velocity": 4.8523,
+          "radial_max_jerk": 973.2527,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 132.7126,
+          "lateral_balance": -0.9217
+        }
+      }
+    },
+    {
+      "adu_id": 48,
+      "time_range": [
+        10.13,
+        10.7
+      ],
+      "frames": [
+        304,
+        321
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.24,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.11,
+        "flow_fluidity": 0.07,
+        "radial_dominance": 0.46,
+        "ulnar_dominance": 0.14,
+        "apparent_stiffness": 45.52
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.8172,
+          "spine_tilt_rad": 0.1436,
+          "core_kinetic_energy": 0.0623,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.2395,
+          "reach_velocity": 11.5469,
+          "radial_max_jerk": 1077.3128,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 32.9768,
+          "lateral_balance": -0.9694
+        }
+      }
+    },
+    {
+      "adu_id": 49,
+      "time_range": [
+        10.7,
+        11.0
+      ],
+      "frames": [
+        321,
+        330
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.84,
+        "time_impulsiveness": 0.91,
+        "weight_heaviness": 0.07,
+        "flow_fluidity": 0.1,
+        "radial_dominance": 0.56,
+        "ulnar_dominance": 0.13,
+        "apparent_stiffness": 73.69
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.678,
+          "spine_tilt_rad": 0.2529,
+          "core_kinetic_energy": 0.4757,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.8358,
+          "reach_velocity": 11.6106,
+          "radial_max_jerk": 728.2128,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 75.961,
+          "lateral_balance": -0.9158
+        }
+      }
+    },
+    {
+      "adu_id": 50,
+      "time_range": [
+        11.0,
+        11.27
+      ],
+      "frames": [
+        330,
+        338
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.69,
+        "time_impulsiveness": 0.65,
+        "weight_heaviness": 0.29,
+        "flow_fluidity": 0.36,
+        "radial_dominance": 0.41,
+        "ulnar_dominance": 0.3,
+        "apparent_stiffness": 5.31
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.3825,
+          "spine_tilt_rad": 0.485,
+          "core_kinetic_energy": 0.2446,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.6851,
+          "reach_velocity": 2.2051,
+          "radial_max_jerk": 322.2186,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 114.4257,
+          "lateral_balance": -0.9558
+        }
+      }
+    },
+    {
+      "adu_id": 51,
+      "time_range": [
+        11.27,
+        11.4
+      ],
+      "frames": [
+        338,
+        342
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.92,
+        "time_impulsiveness": 0.53,
+        "weight_heaviness": 0.22,
+        "flow_fluidity": 0.24,
+        "radial_dominance": 0.41,
+        "ulnar_dominance": 0.4,
+        "apparent_stiffness": 65.08
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.3107,
+          "spine_tilt_rad": 0.5414,
+          "core_kinetic_energy": 1.9668,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9181,
+          "reach_velocity": 3.4876,
+          "radial_max_jerk": 715.7415,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 446.1038,
+          "lateral_balance": -0.9608
+        }
+      }
+    },
+    {
+      "adu_id": 52,
+      "time_range": [
+        11.4,
+        11.53
+      ],
+      "frames": [
+        342,
+        346
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.5,
+        "time_impulsiveness": 0.34,
+        "weight_heaviness": 0.15,
+        "flow_fluidity": 0.45,
+        "radial_dominance": 0.25,
+        "ulnar_dominance": 0.42,
+        "apparent_stiffness": 62.66
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.2201,
+          "spine_tilt_rad": 0.6125,
+          "core_kinetic_energy": 1.908,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.5044,
+          "reach_velocity": 4.8519,
+          "radial_max_jerk": 3144.8486,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.25,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 63.4624,
+          "lateral_balance": -0.6785
+        }
+      }
+    },
+    {
+      "adu_id": 53,
+      "time_range": [
+        11.53,
+        11.73
+      ],
+      "frames": [
+        346,
+        352
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.84,
+        "time_impulsiveness": 0.88,
+        "weight_heaviness": 0.3,
+        "flow_fluidity": 0.43,
+        "radial_dominance": 0.19,
+        "ulnar_dominance": 0.3,
+        "apparent_stiffness": 8.8
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.1706,
+          "spine_tilt_rad": 0.6514,
+          "core_kinetic_energy": 0.8492,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.845,
+          "reach_velocity": 2.7452,
+          "radial_max_jerk": 917.9496,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.8333,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 187.4796,
+          "lateral_balance": -0.8923
+        }
+      }
+    },
+    {
+      "adu_id": 54,
+      "time_range": [
+        11.73,
+        12.03
+      ],
+      "frames": [
+        352,
+        361
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.87,
+        "time_impulsiveness": 0.83,
+        "weight_heaviness": 0.16,
+        "flow_fluidity": 0.63,
+        "radial_dominance": 0.41,
+        "ulnar_dominance": 0.3,
+        "apparent_stiffness": 30.91
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 0.878,
+          "core_kinetic_energy": 0.2647,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.8736,
+          "reach_velocity": 2.0453,
+          "radial_max_jerk": 212.3766,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 1.2519,
+          "lateral_balance": -0.9655
+        }
+      }
+    },
+    {
+      "adu_id": 55,
+      "time_range": [
+        12.03,
+        12.23
+      ],
+      "frames": [
+        361,
+        367
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.63,
+        "time_impulsiveness": 0.61,
+        "weight_heaviness": 0.41,
+        "flow_fluidity": 0.48,
+        "radial_dominance": 0.49,
+        "ulnar_dominance": 0.25,
+        "apparent_stiffness": 128.98
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 0.9527,
+          "core_kinetic_energy": 0.4554,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.633,
+          "reach_velocity": 1.1223,
+          "radial_max_jerk": 586.9596,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.9644
+        }
+      }
+    },
+    {
+      "adu_id": 56,
+      "time_range": [
+        12.23,
+        12.5
+      ],
+      "frames": [
+        367,
+        375
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.49,
+        "time_impulsiveness": 0.85,
+        "weight_heaviness": 0.29,
+        "flow_fluidity": 0.33,
+        "radial_dominance": 0.17,
+        "ulnar_dominance": 0.27,
+        "apparent_stiffness": 16.05
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 1.005,
+          "core_kinetic_energy": 0.8345,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.4881,
+          "reach_velocity": 2.7454,
+          "radial_max_jerk": 494.1671,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 64.9034,
+          "lateral_balance": -0.9579
+        }
+      }
+    },
+    {
+      "adu_id": 57,
+      "time_range": [
+        12.57,
+        12.77
+      ],
+      "frames": [
+        377,
+        383
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.85,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.26,
+        "flow_fluidity": 0.04,
+        "radial_dominance": 0.41,
+        "ulnar_dominance": 0.36,
+        "apparent_stiffness": 52.22
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 1.2593,
+          "core_kinetic_energy": 1.0009,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.851,
+          "reach_velocity": 2.6498,
+          "radial_max_jerk": 1503.6674,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.9575
+        }
+      }
+    },
+    {
+      "adu_id": 58,
+      "time_range": [
+        12.77,
+        12.97
+      ],
+      "frames": [
+        383,
+        389
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.83,
+        "time_impulsiveness": 0.86,
+        "weight_heaviness": 1.0,
+        "flow_fluidity": 0.06,
+        "radial_dominance": 0.43,
+        "ulnar_dominance": 0.51,
+        "apparent_stiffness": 200.81
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 1.2517,
+          "core_kinetic_energy": 1.2596,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.8272,
+          "reach_velocity": 2.179,
+          "radial_max_jerk": 1097.0292,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 205.7844,
+          "lateral_balance": -0.9738
+        }
+      }
+    },
+    {
+      "adu_id": 59,
+      "time_range": [
+        12.97,
+        13.13
+      ],
+      "frames": [
+        389,
+        394
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "radial_reach",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.96,
+        "time_impulsiveness": 0.59,
+        "weight_heaviness": 0.0,
+        "flow_fluidity": 0.07,
+        "radial_dominance": 0.65,
+        "ulnar_dominance": 0.29,
+        "apparent_stiffness": 59.88
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0549,
+          "spine_tilt_rad": 0.7423,
+          "core_kinetic_energy": 1.5717,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9562,
+          "reach_velocity": 8.6304,
+          "radial_max_jerk": 900.4168,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 98.4842,
+          "lateral_balance": -0.9737
+        }
+      }
+    },
+    {
+      "adu_id": 60,
+      "time_range": [
+        13.13,
+        13.47
+      ],
+      "frames": [
+        394,
+        404
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.46,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.3,
+        "flow_fluidity": 0.17,
+        "radial_dominance": 0.53,
+        "ulnar_dominance": 0.29,
+        "apparent_stiffness": 54.77
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.5832,
+          "spine_tilt_rad": 0.3274,
+          "core_kinetic_energy": 1.1363,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.4553,
+          "reach_velocity": 2.9197,
+          "radial_max_jerk": 316.3553,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 88.2474,
+          "lateral_balance": -0.9774
+        }
+      }
+    },
+    {
+      "adu_id": 61,
+      "time_range": [
+        13.47,
+        13.8
+      ],
+      "frames": [
+        404,
+        414
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.66,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.21,
+        "flow_fluidity": 0.13,
+        "radial_dominance": 0.28,
+        "ulnar_dominance": 0.41,
+        "apparent_stiffness": 42.71
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.6132,
+          "spine_tilt_rad": 0.3038,
+          "core_kinetic_energy": 0.6885,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.6577,
+          "reach_velocity": 3.8059,
+          "radial_max_jerk": 728.5721,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 50.865,
+          "lateral_balance": -0.9518
+        }
+      }
+    },
+    {
+      "adu_id": 62,
+      "time_range": [
+        13.8,
+        13.9
+      ],
+      "frames": [
+        414,
+        417
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.97,
+        "time_impulsiveness": 0.63,
+        "weight_heaviness": 0.22,
+        "flow_fluidity": 0.15,
+        "radial_dominance": 0.6,
+        "ulnar_dominance": 0.46,
+        "apparent_stiffness": 72.93
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.3034,
+          "spine_tilt_rad": 0.5471,
+          "core_kinetic_energy": 0.5256,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9742,
+          "reach_velocity": 1.296,
+          "radial_max_jerk": 0.0,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 2.9423,
+          "lateral_balance": -0.8218
+        }
+      }
+    },
+    {
+      "adu_id": 63,
+      "time_range": [
+        13.9,
+        14.3
+      ],
+      "frames": [
+        417,
+        429
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "radial_reach",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.23,
+        "time_impulsiveness": 0.6,
+        "weight_heaviness": 0.91,
+        "flow_fluidity": 0.13,
+        "radial_dominance": 0.69,
+        "ulnar_dominance": 0.37,
+        "apparent_stiffness": 49.8
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0194,
+          "spine_tilt_rad": 0.7702,
+          "core_kinetic_energy": 1.7491,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.2325,
+          "reach_velocity": 2.7967,
+          "radial_max_jerk": 422.4169,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.9167,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 67.0817,
+          "lateral_balance": -0.9376
+        }
+      }
+    },
+    {
+      "adu_id": 64,
+      "time_range": [
+        14.3,
+        14.57
+      ],
+      "frames": [
+        429,
+        437
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.46,
+        "time_impulsiveness": 0.63,
+        "weight_heaviness": 0.0,
+        "flow_fluidity": 0.11,
+        "radial_dominance": 0.49,
+        "ulnar_dominance": 0.16,
+        "apparent_stiffness": 23.23
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.3067,
+          "spine_tilt_rad": 0.5445,
+          "core_kinetic_energy": 1.2649,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.4598,
+          "reach_velocity": 5.6052,
+          "radial_max_jerk": 745.4925,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.875,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.7818
+        }
+      }
+    },
+    {
+      "adu_id": 65,
+      "time_range": [
+        14.57,
+        15.0
+      ],
+      "frames": [
+        437,
+        450
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.17,
+        "time_impulsiveness": 0.92,
+        "weight_heaviness": 0.04,
+        "flow_fluidity": 0.1,
+        "radial_dominance": 0.57,
+        "ulnar_dominance": 0.2,
+        "apparent_stiffness": 23.48
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.5111,
+          "spine_tilt_rad": 0.384,
+          "core_kinetic_energy": 0.1897,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.1658,
+          "reach_velocity": 7.6928,
+          "radial_max_jerk": 966.5014,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 69.1777,
+          "lateral_balance": -0.94
+        }
+      }
+    },
+    {
+      "adu_id": 66,
+      "time_range": [
+        15.0,
+        15.27
+      ],
+      "frames": [
+        450,
+        458
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.62,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.27,
+        "flow_fluidity": 0.11,
+        "radial_dominance": 0.27,
+        "ulnar_dominance": 0.12,
+        "apparent_stiffness": 85.73
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.3346,
+          "spine_tilt_rad": 0.5226,
+          "core_kinetic_energy": 0.9658,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.6215,
+          "reach_velocity": 1.8679,
+          "radial_max_jerk": 301.1555,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 62.6054,
+          "lateral_balance": -0.8859
+        }
+      }
+    },
+    {
+      "adu_id": 67,
+      "time_range": [
+        15.27,
+        15.5
+      ],
+      "frames": [
+        458,
+        465
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.76,
+        "time_impulsiveness": 0.98,
+        "weight_heaviness": 0.45,
+        "flow_fluidity": 0.37,
+        "radial_dominance": 0.49,
+        "ulnar_dominance": 0.19,
+        "apparent_stiffness": 66.18
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.1013,
+          "spine_tilt_rad": 0.7059,
+          "core_kinetic_energy": 0.5958,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.7638,
+          "reach_velocity": 1.6539,
+          "radial_max_jerk": 107.7116,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.8571,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 100.6471,
+          "lateral_balance": -0.791
+        }
+      }
+    },
+    {
+      "adu_id": 68,
+      "time_range": [
+        15.5,
+        15.7
+      ],
+      "frames": [
+        465,
+        471
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.59,
+        "time_impulsiveness": 0.55,
+        "weight_heaviness": 0.0,
+        "flow_fluidity": 0.34,
+        "radial_dominance": 0.48,
+        "ulnar_dominance": 0.27,
+        "apparent_stiffness": 79.21
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.2216,
+          "spine_tilt_rad": 0.6114,
+          "core_kinetic_energy": 2.8889,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.5903,
+          "reach_velocity": 0.7569,
+          "radial_max_jerk": 554.8588,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.8333,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.7972
+        }
+      }
+    },
+    {
+      "adu_id": 69,
+      "time_range": [
+        15.7,
+        16.27
+      ],
+      "frames": [
+        471,
+        488
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "radial_reach",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.6,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.7,
+        "flow_fluidity": 0.46,
+        "radial_dominance": 0.84,
+        "ulnar_dominance": 0.72,
+        "apparent_stiffness": 9.71
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 1.8469,
+          "core_kinetic_energy": 2.6822,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.6008,
+          "reach_velocity": 0.9674,
+          "radial_max_jerk": 206.7173,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 18.9051,
+          "lateral_balance": -0.9575
+        }
+      }
+    },
+    {
+      "adu_id": 70,
+      "time_range": [
+        16.33,
+        16.53
+      ],
+      "frames": [
+        490,
+        496
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "radial_reach",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.72,
+        "time_impulsiveness": 0.56,
+        "weight_heaviness": 0.33,
+        "flow_fluidity": 0.5,
+        "radial_dominance": 0.82,
+        "ulnar_dominance": 0.7,
+        "apparent_stiffness": 120.3
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 2.1408,
+          "core_kinetic_energy": 0.9748,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.72,
+          "reach_velocity": 1.7109,
+          "radial_max_jerk": 721.35,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 124.8799,
+          "lateral_balance": -0.965
+        }
+      }
+    },
+    {
+      "adu_id": 71,
+      "time_range": [
+        16.53,
+        16.73
+      ],
+      "frames": [
+        496,
+        502
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "radial_reach",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.37,
+        "time_impulsiveness": 0.53,
+        "weight_heaviness": 0.42,
+        "flow_fluidity": 0.31,
+        "radial_dominance": 0.65,
+        "ulnar_dominance": 0.64,
+        "apparent_stiffness": 0.0
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 1.7999,
+          "core_kinetic_energy": 1.5582,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.3672,
+          "reach_velocity": 3.3573,
+          "radial_max_jerk": 679.154,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.8896
+        }
+      }
+    },
+    {
+      "adu_id": 72,
+      "time_range": [
+        16.73,
+        16.87
+      ],
+      "frames": [
+        502,
+        506
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "radial_reach",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.92,
+        "time_impulsiveness": 0.73,
+        "weight_heaviness": 0.14,
+        "flow_fluidity": 0.33,
+        "radial_dominance": 0.61,
+        "ulnar_dominance": 0.47,
+        "apparent_stiffness": 54.63
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 1.3954,
+          "core_kinetic_energy": 1.5291,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9173,
+          "reach_velocity": 3.0944,
+          "radial_max_jerk": 393.1862,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 0.0,
+          "lateral_balance": -0.9274
+        }
+      }
+    },
+    {
+      "adu_id": 73,
+      "time_range": [
+        16.87,
+        17.03
+      ],
+      "frames": [
+        506,
+        511
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.68,
+        "time_impulsiveness": 0.4,
+        "weight_heaviness": 0.01,
+        "flow_fluidity": 0.34,
+        "radial_dominance": 0.6,
+        "ulnar_dominance": 0.45,
+        "apparent_stiffness": 44.74
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 1.0719,
+          "core_kinetic_energy": 1.4826,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.682,
+          "reach_velocity": 2.684,
+          "radial_max_jerk": 147.8812,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 346.1,
+          "lateral_balance": -0.9766
+        }
+      }
+    },
+    {
+      "adu_id": 74,
+      "time_range": [
+        17.03,
+        17.27
+      ],
+      "frames": [
+        511,
+        518
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.65,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.05,
+        "flow_fluidity": 0.15,
+        "radial_dominance": 0.28,
+        "ulnar_dominance": 0.32,
+        "apparent_stiffness": 51.16
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.1609,
+          "spine_tilt_rad": 0.659,
+          "core_kinetic_energy": 3.6122,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.6496,
+          "reach_velocity": 3.0443,
+          "radial_max_jerk": 530.4454,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 80.2068,
+          "lateral_balance": -0.9747
+        }
+      }
+    },
+    {
+      "adu_id": 75,
+      "time_range": [
+        17.3,
+        17.73
+      ],
+      "frames": [
+        519,
+        532
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "radial_reach",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.72,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.37,
+        "flow_fluidity": 0.18,
+        "radial_dominance": 0.8,
+        "ulnar_dominance": 0.68,
+        "apparent_stiffness": 13.25
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 1.3012,
+          "core_kinetic_energy": 2.6847,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.7178,
+          "reach_velocity": 1.7958,
+          "radial_max_jerk": 427.616,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 42.4409,
+          "lateral_balance": -0.9733
+        }
+      }
+    },
+    {
+      "adu_id": 76,
+      "time_range": [
+        17.8,
+        17.93
+      ],
+      "frames": [
+        534,
+        538
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "ulnar_brace",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.81,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.23,
+        "flow_fluidity": 0.16,
+        "radial_dominance": 0.85,
+        "ulnar_dominance": 0.89,
+        "apparent_stiffness": 274.7
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 1.7837,
+          "core_kinetic_energy": 1.3764,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.8146,
+          "reach_velocity": 1.4544,
+          "radial_max_jerk": 400.0837,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 428.3538,
+          "lateral_balance": -0.9755
+        }
+      }
+    },
+    {
+      "adu_id": 77,
+      "time_range": [
+        17.93,
+        18.13
+      ],
+      "frames": [
+        538,
+        544
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.67,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.56,
+        "flow_fluidity": 0.05,
+        "radial_dominance": 0.6,
+        "ulnar_dominance": 0.56,
+        "apparent_stiffness": 37.84
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 1.6242,
+          "core_kinetic_energy": 3.489,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.665,
+          "reach_velocity": 4.4325,
+          "radial_max_jerk": 1589.54,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 431.8984,
+          "lateral_balance": -0.9909
+        }
+      }
+    },
+    {
+      "adu_id": 78,
+      "time_range": [
+        18.13,
+        18.33
+      ],
+      "frames": [
+        544,
+        550
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.77,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.24,
+        "flow_fluidity": 0.21,
+        "radial_dominance": 0.34,
+        "ulnar_dominance": 0.46,
+        "apparent_stiffness": 63.21
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 1.1845,
+          "core_kinetic_energy": 4.8835,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.7729,
+          "reach_velocity": 1.5009,
+          "radial_max_jerk": 790.7783,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 275.1838,
+          "lateral_balance": -0.9902
+        }
+      }
+    },
+    {
+      "adu_id": 79,
+      "time_range": [
+        18.33,
+        18.57
+      ],
+      "frames": [
+        550,
+        557
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.51,
+        "time_impulsiveness": 0.66,
+        "weight_heaviness": 0.05,
+        "flow_fluidity": 0.17,
+        "radial_dominance": 0.57,
+        "ulnar_dominance": 0.2,
+        "apparent_stiffness": 24.43
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0727,
+          "spine_tilt_rad": 0.7283,
+          "core_kinetic_energy": 1.8497,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.5135,
+          "reach_velocity": 4.3895,
+          "radial_max_jerk": 651.1354,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 167.239,
+          "lateral_balance": -0.9581
+        }
+      }
+    },
+    {
+      "adu_id": 80,
+      "time_range": [
+        18.57,
+        18.67
+      ],
+      "frames": [
+        557,
+        560
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.99,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.08,
+        "flow_fluidity": 0.26,
+        "radial_dominance": 0.43,
+        "ulnar_dominance": 0.27,
+        "apparent_stiffness": 10.86
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.2754,
+          "spine_tilt_rad": 0.5691,
+          "core_kinetic_energy": 0.2208,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9864,
+          "reach_velocity": 3.0942,
+          "radial_max_jerk": 0.0,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 15.7961,
+          "lateral_balance": -0.785
+        }
+      }
+    },
+    {
+      "adu_id": 81,
+      "time_range": [
+        18.67,
+        19.27
+      ],
+      "frames": [
+        560,
+        578
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.61,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.17,
+        "flow_fluidity": 0.47,
+        "radial_dominance": 0.36,
+        "ulnar_dominance": 0.46,
+        "apparent_stiffness": 12.35
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 0.8073,
+          "core_kinetic_energy": 0.3999,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.6138,
+          "reach_velocity": 2.4656,
+          "radial_max_jerk": 250.9772,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 7.2637,
+          "lateral_balance": -0.8852
+        }
+      }
+    },
+    {
+      "adu_id": 82,
+      "time_range": [
+        19.27,
+        19.6
+      ],
+      "frames": [
+        578,
+        588
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.48,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.27,
+        "flow_fluidity": 0.18,
+        "radial_dominance": 0.51,
+        "ulnar_dominance": 0.33,
+        "apparent_stiffness": 26.02
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 0.9924,
+          "core_kinetic_energy": 0.3229,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.4794,
+          "reach_velocity": 1.9438,
+          "radial_max_jerk": 191.7765,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 50.8083,
+          "lateral_balance": -0.9639
+        }
+      }
+    },
+    {
+      "adu_id": 83,
+      "time_range": [
+        19.6,
+        19.77
+      ],
+      "frames": [
+        588,
+        593
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.93,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.0,
+        "flow_fluidity": 0.08,
+        "radial_dominance": 0.52,
+        "ulnar_dominance": 0.33,
+        "apparent_stiffness": 30.35
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.275,
+          "spine_tilt_rad": 0.5694,
+          "core_kinetic_energy": 1.2793,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9308,
+          "reach_velocity": 2.1883,
+          "radial_max_jerk": 503.5467,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 194.8054,
+          "lateral_balance": -0.8426
+        }
+      }
+    },
+    {
+      "adu_id": 84,
+      "time_range": [
+        19.77,
+        19.97
+      ],
+      "frames": [
+        593,
+        599
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.7,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.09,
+        "flow_fluidity": 0.15,
+        "radial_dominance": 0.29,
+        "ulnar_dominance": 0.17,
+        "apparent_stiffness": 0.0
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.4838,
+          "spine_tilt_rad": 0.4054,
+          "core_kinetic_energy": 0.6981,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.697,
+          "reach_velocity": 1.2128,
+          "radial_max_jerk": 671.1663,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 12.0008,
+          "lateral_balance": -0.9299
+        }
+      }
+    },
+    {
+      "adu_id": 85,
+      "time_range": [
+        19.97,
+        20.23
+      ],
+      "frames": [
+        599,
+        607
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.76,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.22,
+        "flow_fluidity": 0.48,
+        "radial_dominance": 0.3,
+        "ulnar_dominance": 0.21,
+        "apparent_stiffness": 48.66
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.2565,
+          "spine_tilt_rad": 0.584,
+          "core_kinetic_energy": 1.1098,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.7619,
+          "reach_velocity": 1.0593,
+          "radial_max_jerk": 140.3556,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 38.7909,
+          "lateral_balance": -0.8192
+        }
+      }
+    },
+    {
+      "adu_id": 86,
+      "time_range": [
+        20.23,
+        20.57
+      ],
+      "frames": [
+        607,
+        617
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "radial_reach",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.74,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.84,
+        "flow_fluidity": 0.41,
+        "radial_dominance": 0.6,
+        "ulnar_dominance": 0.38,
+        "apparent_stiffness": 69.39
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 0.9196,
+          "core_kinetic_energy": 1.0584,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.7422,
+          "reach_velocity": 1.6267,
+          "radial_max_jerk": 275.1448,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 25.3178,
+          "lateral_balance": -0.9289
+        }
+      }
+    },
+    {
+      "adu_id": 87,
+      "time_range": [
+        20.57,
+        20.83
+      ],
+      "frames": [
+        617,
+        625
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "radial_reach",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.8,
+        "time_impulsiveness": 0.95,
+        "weight_heaviness": 0.95,
+        "flow_fluidity": 0.2,
+        "radial_dominance": 0.69,
+        "ulnar_dominance": 0.33,
+        "apparent_stiffness": 50.11
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 1.0033,
+          "core_kinetic_energy": 0.444,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.7957,
+          "reach_velocity": 2.4065,
+          "radial_max_jerk": 616.6976,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 125.5725,
+          "lateral_balance": -0.9621
+        }
+      }
+    },
+    {
+      "adu_id": 88,
+      "time_range": [
+        20.83,
+        20.97
+      ],
+      "frames": [
+        625,
+        629
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.94,
+        "time_impulsiveness": 0.48,
+        "weight_heaviness": 0.15,
+        "flow_fluidity": 0.21,
+        "radial_dominance": 0.52,
+        "ulnar_dominance": 0.36,
+        "apparent_stiffness": 98.37
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0768,
+          "spine_tilt_rad": 0.725,
+          "core_kinetic_energy": 0.7648,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.9424,
+          "reach_velocity": 2.6515,
+          "radial_max_jerk": 424.0453,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 0.5,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 110.2478,
+          "lateral_balance": -0.5197
+        }
+      }
+    },
+    {
+      "adu_id": 89,
+      "time_range": [
+        21.03,
+        21.23
+      ],
+      "frames": [
+        631,
+        637
+      ],
+      "hierarchy": "micro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "upper_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.46,
+        "time_impulsiveness": 0.73,
+        "weight_heaviness": 0.0,
+        "flow_fluidity": 0.27,
+        "radial_dominance": 0.42,
+        "ulnar_dominance": 0.36,
+        "apparent_stiffness": 126.72
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0359,
+          "spine_tilt_rad": 0.7572,
+          "core_kinetic_energy": 0.942,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.4569,
+          "reach_velocity": 3.8396,
+          "radial_max_jerk": 927.0992,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 249.7537,
+          "lateral_balance": -0.8634
+        }
+      }
+    },
+    {
+      "adu_id": 90,
+      "time_range": [
+        21.23,
+        21.47
+      ],
+      "frames": [
+        637,
+        644
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "radial_reach",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.88,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.41,
+        "flow_fluidity": 0.07,
+        "radial_dominance": 0.69,
+        "ulnar_dominance": 0.54,
+        "apparent_stiffness": 36.75
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 1.2162,
+          "core_kinetic_energy": 0.6901,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.8795,
+          "reach_velocity": 3.0054,
+          "radial_max_jerk": 365.3062,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 63.3695,
+          "lateral_balance": -0.9427
+        }
+      }
+    },
+    {
+      "adu_id": 91,
+      "time_range": [
+        21.47,
+        21.67
+      ],
+      "frames": [
+        644,
+        650
+      ],
+      "hierarchy": "macro",
+      "kinematic_summary": {
+        "focus_chain": "neutral",
+        "primary_driver": "lower_body"
+      },
+      "texture_profile": {
+        "space_directness": 0.74,
+        "time_impulsiveness": 1.0,
+        "weight_heaviness": 0.16,
+        "flow_fluidity": 0.07,
+        "radial_dominance": 0.51,
+        "ulnar_dominance": 0.45,
+        "apparent_stiffness": 100.77
+      },
+      "chain_profiles": {
+        "central_axial": {
+          "axial_stability": 0.0,
+          "spine_tilt_rad": 1.402,
+          "core_kinetic_energy": 0.43,
+          "middle_finger_alignment": 1.0
+        },
+        "radial_arm": {
+          "space_directness": 0.7397,
+          "reach_velocity": 1.0801,
+          "radial_max_jerk": 938.1059,
+          "radial_aperture": 0.0013
+        },
+        "ulnar_grounding": {
+          "ground_support_ratio": 1.0,
+          "ulnar_tension": 0.25,
+          "dynamic_stiffness": 293.5182,
+          "lateral_balance": -0.9653
+        }
+      }
+    }
+  ],
+  "chains_topology": {
+    "central_axial": {
+      "name": "central_axial",
+      "display_name": "中指・全身軸系",
+      "color": "green",
+      "num_nodes": 31,
+      "node_indices": [
+        22,
+        23,
+        24,
+        5,
+        4,
+        3,
+        2,
+        1,
+        0,
+        14,
+        16,
+        18,
+        20,
+        15,
+        17,
+        19,
+        21,
+        6,
+        8,
+        10,
+        12,
+        7,
+        9,
+        11,
+        13,
+        31,
+        32,
+        33,
+        43,
+        44,
+        45
+      ],
+      "node_names": [
+        "left_eye",
+        "right_eye",
+        "jaw",
+        "head",
+        "neck",
+        "upper_chest",
+        "chest",
+        "spine",
+        "hips",
+        "left_upper_leg",
+        "left_lower_leg",
+        "left_foot",
+        "left_toes",
+        "right_upper_leg",
+        "right_lower_leg",
+        "right_foot",
+        "right_toes",
+        "left_shoulder",
+        "left_upper_arm",
+        "left_lower_arm",
+        "left_hand",
+        "right_shoulder",
+        "right_upper_arm",
+        "right_lower_arm",
+        "right_hand",
+        "left_middle_proximal",
+        "left_middle_intermediate",
+        "left_middle_distal",
+        "right_middle_proximal",
+        "right_middle_intermediate",
+        "right_middle_distal"
+      ],
+      "edges": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          8,
+          13
+        ],
+        [
+          13,
+          14
+        ],
+        [
+          14,
+          15
+        ],
+        [
+          15,
+          16
+        ],
+        [
+          5,
+          17
+        ],
+        [
+          17,
+          18
+        ],
+        [
+          18,
+          19
+        ],
+        [
+          19,
+          20
+        ],
+        [
+          20,
+          25
+        ],
+        [
+          25,
+          26
+        ],
+        [
+          26,
+          27
+        ],
+        [
+          5,
+          21
+        ],
+        [
+          21,
+          22
+        ],
+        [
+          22,
+          23
+        ],
+        [
+          23,
+          24
+        ],
+        [
+          24,
+          28
+        ],
+        [
+          28,
+          29
+        ],
+        [
+          29,
+          30
+        ]
+      ],
+      "global_edges": [
+        [
+          5,
+          22
+        ],
+        [
+          5,
+          23
+        ],
+        [
+          5,
+          24
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          14
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          0,
+          15
+        ],
+        [
+          15,
+          17
+        ],
+        [
+          17,
+          19
+        ],
+        [
+          19,
+          21
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          31
+        ],
+        [
+          31,
+          32
+        ],
+        [
+          32,
+          33
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          13,
+          43
+        ],
+        [
+          43,
+          44
+        ],
+        [
+          44,
+          45
+        ]
+      ]
+    },
+    "radial_arm": {
+      "name": "radial_arm",
+      "display_name": "橈側・腕系",
+      "color": "blue",
+      "num_nodes": 20,
+      "node_indices": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42
+      ],
+      "node_names": [
+        "left_shoulder",
+        "right_shoulder",
+        "left_upper_arm",
+        "right_upper_arm",
+        "left_lower_arm",
+        "right_lower_arm",
+        "left_hand",
+        "right_hand",
+        "left_thumb_proximal",
+        "left_thumb_intermediate",
+        "left_thumb_distal",
+        "left_index_proximal",
+        "left_index_intermediate",
+        "left_index_distal",
+        "right_thumb_proximal",
+        "right_thumb_intermediate",
+        "right_thumb_distal",
+        "right_index_proximal",
+        "right_index_intermediate",
+        "right_index_distal"
+      ],
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          6,
+          11
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          12,
+          13
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          7,
+          14
+        ],
+        [
+          14,
+          15
+        ],
+        [
+          15,
+          16
+        ],
+        [
+          7,
+          17
+        ],
+        [
+          17,
+          18
+        ],
+        [
+          18,
+          19
+        ]
+      ],
+      "global_edges": [
+        [
+          6,
+          7
+        ],
+        [
+          6,
+          8
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          12,
+          25
+        ],
+        [
+          25,
+          26
+        ],
+        [
+          26,
+          27
+        ],
+        [
+          12,
+          28
+        ],
+        [
+          28,
+          29
+        ],
+        [
+          29,
+          30
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          9,
+          11
+        ],
+        [
+          11,
+          13
+        ],
+        [
+          13,
+          37
+        ],
+        [
+          37,
+          38
+        ],
+        [
+          38,
+          39
+        ],
+        [
+          13,
+          40
+        ],
+        [
+          40,
+          41
+        ],
+        [
+          41,
+          42
+        ]
+      ]
+    },
+    "ulnar_grounding": {
+      "name": "ulnar_grounding",
+      "display_name": "尺側・接地系",
+      "color": "red",
+      "num_nodes": 22,
+      "node_indices": [
+        6,
+        8,
+        10,
+        12,
+        34,
+        35,
+        36,
+        14,
+        16,
+        18,
+        20,
+        7,
+        9,
+        11,
+        13,
+        46,
+        47,
+        48,
+        15,
+        17,
+        19,
+        21
+      ],
+      "node_names": [
+        "left_shoulder",
+        "left_upper_arm",
+        "left_lower_arm",
+        "left_hand",
+        "left_ulnar_proximal",
+        "left_ulnar_intermediate",
+        "left_ulnar_distal",
+        "left_upper_leg",
+        "left_lower_leg",
+        "left_foot",
+        "left_toes",
+        "right_shoulder",
+        "right_upper_arm",
+        "right_lower_arm",
+        "right_hand",
+        "right_ulnar_proximal",
+        "right_ulnar_intermediate",
+        "right_ulnar_distal",
+        "right_upper_leg",
+        "right_lower_leg",
+        "right_foot",
+        "right_toes"
+      ],
+      "edges": [
+        [
+          6,
+          5
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          4,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          7
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          17,
+          16
+        ],
+        [
+          16,
+          15
+        ],
+        [
+          15,
+          14
+        ],
+        [
+          14,
+          13
+        ],
+        [
+          13,
+          12
+        ],
+        [
+          12,
+          11
+        ],
+        [
+          11,
+          18
+        ],
+        [
+          18,
+          19
+        ],
+        [
+          19,
+          20
+        ],
+        [
+          20,
+          21
+        ]
+      ],
+      "global_edges": [
+        [
+          36,
+          35
+        ],
+        [
+          35,
+          34
+        ],
+        [
+          34,
+          12
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          10,
+          8
+        ],
+        [
+          8,
+          6
+        ],
+        [
+          6,
+          14
+        ],
+        [
+          14,
+          16
+        ],
+        [
+          16,
+          18
+        ],
+        [
+          18,
+          20
+        ],
+        [
+          48,
+          47
+        ],
+        [
+          47,
+          46
+        ],
+        [
+          46,
+          13
+        ],
+        [
+          13,
+          11
+        ],
+        [
+          11,
+          9
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          7,
+          15
+        ],
+        [
+          15,
+          17
+        ],
+        [
+          17,
+          19
+        ],
+        [
+          19,
+          21
+        ]
+      ]
+    }
+  }
+}
