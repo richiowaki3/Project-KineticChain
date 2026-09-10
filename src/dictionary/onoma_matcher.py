@@ -10,26 +10,22 @@ import numpy as np
 
 from ..core.types import AtomicDanceUnit
 from .adu_encoder import ADUVectorEncoder
-
-try:
-    from onomadict import OnomaDictionary, OnomaSearcher, OnomaEntry
-    _ONOMADICT_AVAILABLE = True
-except ImportError:
-    _ONOMADICT_AVAILABLE = False
+from .models import OnomaEntry
+from .dictionary import OnomaDictionary, get_default_data_path
+from .search import OnomaSearcher
 
 
 def find_dictionary_json_path() -> Path:
-    """Finds onomatopoeia_dictionary.json across workspace environments."""
+    """Finds onomatopoeia_dictionary.json within MotionAnalysis project or fallback locations."""
     candidates = [
-        Path("D:/Antigravity_Work/OnomaDict/data/onomatopoeia_dictionary.json"),
-        Path(__file__).resolve().parent.parent.parent / "OnomaDict" / "data" / "onomatopoeia_dictionary.json",
         Path(__file__).resolve().parent.parent.parent / "data" / "onomatopoeia_dictionary.json",
+        Path("D:/Antigravity_Work/MotionAnalysis/data/onomatopoeia_dictionary.json"),
+        Path("D:/Antigravity_Work/OnomaDict/data/onomatopoeia_dictionary.json"),
     ]
     for c in candidates:
         if c.exists():
             return c
-    # Default fallback
-    return Path("D:/Antigravity_Work/OnomaDict/data/onomatopoeia_dictionary.json")
+    return get_default_data_path()
 
 
 class OnomaMatcher:
