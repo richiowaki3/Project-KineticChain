@@ -46,10 +46,13 @@ class DanceKinematicsPipeline:
         self,
         fps: float = 30.0,
         config_path: Optional[Union[str, Path]] = None,
-        config_dict: Optional[Dict] = None
+        config_dict: Optional[Dict] = None,
+        with_onomatopoeia: bool = True,
+        onoma_dict_path: Optional[str] = None
     ):
         self.fps = fps
         self.dt = 1.0 / fps
+        self.with_onomatopoeia = with_onomatopoeia
 
         # Load configurations
         self.cfg = {}
@@ -58,6 +61,16 @@ class DanceKinematicsPipeline:
         elif config_path is not None and Path(config_path).exists():
             with open(config_path, "r", encoding="utf-8") as f:
                 self.cfg = json.load(f)
+
+        # Initialize Onomatopoeia Matcher if requested
+        self.onoma_matcher = None
+        if self.with_onomatopoeia:
+            try:
+                from ..dictionary.onoma_matcher import OnomaMatcher
+                self.onoma_matcher = OnomaMatcher(dict_path=onoma_dict_path)
+            except Exception as e:
+                import warnings
+                warnings.warn(f"OnomaMatcher could not be initialized: {e}")
 
         # Initialize Sub-modules
         filter_cfg = self.cfg.get("filter", {})
@@ -241,6 +254,10 @@ class DanceKinematicsPipeline:
                 chain_profiles=chain_profiles
             )
             adu_list.append(adu)
+
+        # 8. Annotate ADUs with Onomatopoeia Tags
+        if self.with_onomatopoeia and self.onoma_matcher is not None:
+            self.onoma_matcher.tag_segments(adu_list)
 
         result = DanceAnalysisResult(
             video_id=video_id,

@@ -166,4 +166,9 @@ class AduExporter:
                     if chain_name not in cp:
                         raise ValueError(f"Segment #{idx} chain_profiles missing '{chain_name}'")
 
+            # Check onomatopoeia_tags if present
+            if "onomatopoeia_tags" in seg:
+                if not isinstance(seg["onomatopoeia_tags"], list):
+                    raise ValueError(f"Segment #{idx} onomatopoeia_tags must be a list")
+
         return True

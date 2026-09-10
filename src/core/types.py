@@ -81,6 +81,7 @@ class AtomicDanceUnit:
     lower_body_state: str = "stable"  # 'stable', 'stance_transition', 'left_stance', 'right_stance', 'flight'
     upper_body_focus: str = "neutral" # 'radial_reach', 'ulnar_brace', 'neutral'
     chain_profiles: Optional[ChainProfiles] = None
+    onomatopoeia_tags: List[Dict[str, Any]] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     def to_handover_dict(self) -> Dict[str, Any]:
@@ -101,6 +102,8 @@ class AtomicDanceUnit:
                 "apparent_stiffness": round(float(self.texture_profile.apparent_stiffness), 2)
             }
         }
+        if self.onomatopoeia_tags:
+            d["onomatopoeia_tags"] = self.onomatopoeia_tags
         if self.chain_profiles is not None:
             d["chain_profiles"] = self.chain_profiles.to_dict()
         return d
