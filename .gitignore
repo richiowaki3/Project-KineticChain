@@ -20,6 +20,8 @@ __pycache__/
 output/
 downloads/
 models/
+visualizer/data/
+visualizer/standalone_*.html
 
 # Keep samples
 !samples/

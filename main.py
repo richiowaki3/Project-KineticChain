@@ -58,6 +58,11 @@ def main():
         action="store_true",
         help="Also export full numerical matrices to HDF5 format"
     )
+    parser.add_argument(
+        "--visualize",
+        action="store_true",
+        help="Generate interactive 3D Web Visualizer HTML and dataset"
+    )
 
     args = parser.parse_args()
     input_path = Path(args.input)
@@ -129,6 +134,19 @@ def main():
         h5_path = output_dir / f"{video_id}_adu.h5"
         AduExporter.export_hdf5(result, h5_path, joints=joints)
         print(f"[OK] Exported HDF5: {h5_path}")
+
+    if args.visualize:
+        from src.visualization.exporter import VisualizerDataExporter
+        from tools.build_standalone_viewer import build_standalone_viewer
+
+        vis_json = output_dir / f"{video_id}_vis.json"
+        VisualizerDataExporter.export_to_json(result, vis_json, companion_video_path=video_file)
+        print(f"[OK] Exported Visualizer Data: {vis_json}")
+
+        template_path = Path(__file__).resolve().parent / "visualizer" / "index.html"
+        vis_html = output_dir / f"{video_id}_visualizer.html"
+        build_standalone_viewer(vis_json, template_path, vis_html)
+        print(f"[OK] Generated Interactive 3D Visualizer: {vis_html}")
 
     print("\nSummary of first 5 ADUs:")
     for adu in result.segments[:5]:

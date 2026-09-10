@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project-KineticChain: 3D Dance Kinematics & Onomatopoeia Visualizer</title>
+  <style>
+    :root {
+      --bg: #0B0F19;
+      --card-bg: rgba(17, 24, 39, 0.85);
+      --card-border: rgba(55, 65, 81, 0.6);
+      --text: #F3F4F6;
+      --text-muted: #9CA3AF;
+      --accent-green: #10B981;
+      --accent-blue: #3B82F6;
+      --accent-red: #EF4444;
+      --accent-cyan: #06B6D4;
+      --accent-purple: #8B5CF6;
+      --accent-gold: #F59E0B;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", Meiryo, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Navbar */
+    header {
+      height: 52px;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--card-border);
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 20;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .badge-chip {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--accent-green);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .file-btn {
+      font-size: 12px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      background: #1F2937;
+      color: var(--text);
+      border: 1px solid var(--card-border);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .file-btn:hover { background: #374151; }
+
+    /* Main Workspace */
+    main {
+      flex: 1;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Left 3D Viewport */
+    #viewport-container {
+      flex: 1;
+      position: relative;
+      background: radial-gradient(circle at center, #131d31 0%, #080c14 100%);
+      cursor: grab;
+    }
+    #viewport-container:active { cursor: grabbing; }
+    canvas#renderCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* 3D Overlays */
+    .viewport-overlay {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: none;
+    }
+    .overlay-card {
+      pointer-events: auto;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .chain-toggles {
+      display: flex;
+      gap: 6px;
+    }
+    .chain-btn {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+      background: rgba(31, 41, 55, 0.8);
+      color: var(--text-muted);
+    }
+    .chain-btn.active.all { background: #374151; color: #fff; border-color: #6B7280; }
+    .chain-btn.active.green { background: rgba(16, 185, 129, 0.25); color: #34D399; border-color: var(--accent-green); }
+    .chain-btn.active.blue { background: rgba(59, 130, 246, 0.25); color: #60A5FA; border-color: var(--accent-blue); }
+    .chain-btn.active.red { background: rgba(239, 68, 68, 0.25); color: #F87171; border-color: var(--accent-red); }
+
+    .camera-help {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Right HUD Inspector */
+    aside#inspector {
+      width: 380px;
+      background: var(--card-bg);
+      border-left: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      z-index: 10;
+    }
+    .inspector-section {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Current ADU Card */
+    .adu-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .adu-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .adu-hierarchy-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .badge-macro { background: #047857; color: #D1FAE5; }
+    .badge-micro { background: #6D28D9; color: #EDE9FE; }
+
+    /* Spotlight Onomatopoeia Banner */
+    .onomatopoeia-spotlight {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      border-radius: 12px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.1);
+    }
+    .onoma-word-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .onoma-main-word {
+      font-size: 36px;
+      font-weight: 900;
+      color: #FBBF24;
+      letter-spacing: 1px;
+      text-shadow: 0 0 16px rgba(251, 191, 36, 0.3);
+    }
+    .onoma-sim-badge {
+      font-size: 14px;
+      font-weight: 800;
+      color: #34D399;
+      background: rgba(16, 185, 129, 0.2);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .onoma-sub-meta {
+      display: flex;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .onoma-rationale {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #E2E8F0;
+      background: rgba(0,0,0,0.3);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border-left: 3px solid #F59E0B;
+    }
+
+    /* Candidates List */
+    .candidate-list {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .candidate-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: rgba(31, 41, 55, 0.4);
+      border: 1px solid rgba(55, 65, 81, 0.3);
+    }
+
+    /* Gauges */
+    .gauge-item {
+      margin-bottom: 12px;
+    }
+    .gauge-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .gauge-track {
+      height: 7px;
+      background: #1F2937;
+      border-radius: 9999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .gauge-fill {
+      height: 100%;
+      border-radius: 9999px;
+      transition: width 0.08s ease-out;
+    }
+    .fill-direct { background: #38BDF8; }
+    .fill-time   { background: #F87171; }
+    .fill-weight { background: #FB923C; }
+    .fill-flow   { background: #34D399; }
+    .fill-stiff  { background: #C084FC; }
+
+    /* Bottom Control & Timeline Bar */
+    footer {
+      height: 130px;
+      background: rgba(15, 23, 42, 0.98);
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      flex-direction: column;
+      padding: 8px 18px;
+      gap: 8px;
+      z-index: 20;
+    }
+    .control-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .playback-btns {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-icon {
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      background: #1F2937;
+      border: 1px solid var(--card-border);
+      color: #fff;
+      cursor: pointer;
+      font-size: 13px;
+      transition: background 0.15s;
+    }
+    .btn-icon:hover { background: #374151; }
+    .btn-icon.play-active { background: #2563EB; border-color: #3B82F6; }
+
+    .time-display {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: #E2E8F0;
+      min-width: 180px;
+    }
+    .scrubber-slider {
+      flex: 1;
+      height: 6px;
+      border-radius: 3px;
+      background: #374151;
+      outline: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+    .scrubber-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #3B82F6;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
+    }
+
+    .speed-selector {
+      display: flex;
+      gap: 4px;
+    }
+    .speed-btn {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #1F2937;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+    .speed-btn.active { background: #374151; color: #fff; border-color: #6B7280; }
+
+    /* Timeline ADU Ribbon */
+    .ribbon-container {
+      position: relative;
+      height: 42px;
+      background: #111827;
+      border-radius: 6px;
+      border: 1px solid rgba(55, 65, 81, 0.5);
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+    }
+    .ribbon-track {
+      position: relative;
+      height: 100%;
+      width: 100%;
+    }
+    .adu-block {
+      position: absolute;
+      top: 3px;
+      height: 34px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #fff;
+    }
+    .adu-block:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.25);
+      z-index: 5;
+    }
+    .adu-block.macro {
+      background: rgba(16, 185, 129, 0.35);
+      border: 1px solid rgba(16, 185, 129, 0.7);
+    }
+    .adu-block.micro {
+      background: rgba(139, 92, 246, 0.35);
+      border: 1px solid rgba(139, 92, 246, 0.7);
+    }
+    .adu-block.current {
+      border: 2px solid #FBBF24 !important;
+      box-shadow: 0 0 10px rgba(251, 191, 36, 0.6);
+      z-index: 10;
+      filter: brightness(1.3);
+    }
+    .ribbon-playhead {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #EF4444;
+      box-shadow: 0 0 6px #EF4444;
+      pointer-events: none;
+      z-index: 15;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <span>Project-KineticChain</span>
+      <span class="badge-chip">3D VRM 49-Node + OnomaDict</span>
+    </div>
+    <div class="nav-actions">
+      <label class="file-btn">
+        <span>📂 データを読み込む (.json)</span>
+        <input type="file" id="jsonFileInput" accept=".json" style="display:none;">
+      </label>
+      <label class="file-btn">
+        <span>🎬 動画を同期 (.mp4)</span>
+        <input type="file" id="videoFileInput" accept="video/mp4" style="display:none;">
+      </label>
+    </div>
+  </header>
+
+  <!-- Main Viewports -->
+  <main>
+    <!-- Left 3D Viewport -->
+    <div id="viewport-container">
+      <canvas id="renderCanvas"></canvas>
+
+      <!-- Viewport Overlays -->
+      <div class="viewport-overlay">
+        <!-- Chain Filter Toggles -->
+        <div class="overlay-card">
+          <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:6px;">
+            機能連鎖 (KINETIC CHAINS) 表示切替
+          </div>
+          <div class="chain-toggles">
+            <button class="chain-btn active all" data-chain="all">全3連鎖 (ALL)</button>
+            <button class="chain-btn green" data-chain="central_axial">🟢 中指・全身軸系</button>
+            <button class="chain-btn blue" data-chain="radial_arm">🔵 橈側・腕系</button>
+            <button class="chain-btn red" data-chain="ulnar_grounding">🔴 尺側・接地系</button>
+          </div>
+        </div>
+
+        <div class="overlay-card camera-help">
+          🖱️ 左ドラッグ: 360°回転 | 右ドラッグ: 平行移動 | ホイール: ズーム
+        </div>
+      </div>
+    </div>
+
+    <!-- Right HUD Inspector -->
+    <aside id="inspector">
+      <!-- Section: ADU State -->
+      <div class="inspector-section">
+        <div class="section-title">
+          <span>動作単位 (Atomic Dance Unit)</span>
+          <span id="aduTimeBadge" style="font-family:monospace; color:#E2E8F0;">0.00s - 0.20s</span>
+        </div>
+        <div class="adu-meta-row">
+          <div class="adu-title">
+            <span id="aduIdLabel">ADU #1</span>
+            <span id="aduHierarchyBadge" class="adu-hierarchy-badge badge-macro">MACRO</span>
+          </div>
+          <span id="aduFocusBadge" class="badge-chip" style="background:#1E293B; color:#93C5FD; border-color:#3B82F6;">neutral</span>
+        </div>
+        <div style="font-size:11px; color:var(--text-muted);">
+          主導部位: <span id="aduDriverLabel" style="color:#F3F4F6;">lower_body</span> | 
+          フレーム: <span id="aduFramesLabel" style="color:#F3F4F6;">0 - 6</span>
+        </div>
+      </div>
+
+      <!-- Section: Top Onomatopoeia Spotlight -->
+      <div class="inspector-section">
+        <div class="section-title">
+          <span>照合オノマトペ (TOP MATCH)</span>
+          <span style="font-size:10px; color:#F59E0B;">764語辞書照合</span>
+        </div>
+
+        <div class="onomatopoeia-spotlight">
+          <div class="onoma-word-row">
+            <div class="onoma-main-word" id="spotlightWord">『 ちょこっ 』</div>
+            <div class="onoma-sim-badge" id="spotlightSim">68.8%</div>
+          </div>
+          <div class="onoma-sub-meta">
+            <span id="spotlightIpa">IPA: /tɕokoʔ/</span>
+            <span>•</span>
+            <span id="spotlightMorph">形態: Q(促音単発)</span>
+          </div>
+          <div class="onoma-rationale" id="spotlightRationale">
+            最小単位の運動。最大のTime(9)と圧縮遮断(Decay 9)。
+          </div>
+        </div>
+
+        <div style="margin-top:14px;">
+          <div style="font-size:11px; font-weight:700; color:var(--text-muted); margin-bottom:6px;">候補 Top 2 & 3:</div>
+          <div class="candidate-list" id="candidateList">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Laban Effort & Physical Texture -->
+      <div class="inspector-section">
+        <div class="section-title">
+          <span>動作質感・ラバンエフォート (TEXTURE PROFILE)</span>
+        </div>
+
+        <div class="gauge-item">
+          <div class="gauge-header">
+            <span>空間直線度 (Space Directness)</span>
+            <span id="valDirectness">0.89</span>
+          </div>
+          <div class="gauge-track"><div class="gauge-fill fill-direct" id="barDirectness" style="width:89%;"></div></div>
+        </div>
+
+        <div class="gauge-item">
+          <div class="gauge-header">
+            <span>時間突発性 (Time Impulsiveness)</span>
+            <span id="valImpulsive">0.84</span>
+          </div>
+          <div class="gauge-track"><div class="gauge-fill fill-time" id="barImpulsive" style="width:84%;"></div></div>
+        </div>
+
+        <div class="gauge-item">
+          <div class="gauge-header">
+            <span>重量感 (Weight Heaviness)</span>
+            <span id="valHeaviness">0.06</span>
+          </div>
+          <div class="gauge-track"><div class="gauge-fill fill-weight" id="barHeaviness" style="width:6%;"></div></div>
+        </div>
+
+        <div class="gauge-item">
+          <div class="gauge-header">
+            <span>流動性 (Flow Fluidity)</span>
+            <span id="valFluidity">0.06</span>
+          </div>
+          <div class="gauge-track"><div class="gauge-fill fill-flow" id="barFluidity" style="width:6%;"></div></div>
+        </div>
+
+        <div class="gauge-item">
+          <div class="gauge-header">
+            <span>見かけの剛性 (Stiffness K)</span>
+            <span id="valStiffness">85.8 N/m</span>
+          </div>
+          <div class="gauge-track"><div class="gauge-fill fill-stiff" id="barStiffness" style="width:85%;"></div></div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Bottom Timeline & Playback Bar -->
+  <footer>
+    <div class="control-row">
+      <div class="playback-btns">
+        <button class="btn-icon" id="btnPrevADU" title="前のADU (Alt+Left)">⏮</button>
+        <button class="btn-icon" id="btnPrevFrame" title="1コマ戻る (Left)">◀</button>
+        <button class="btn-icon play-active" id="btnPlayPause" title="再生/一時停止 (Space)">⏸</button>
+        <button class="btn-icon" id="btnNextFrame" title="1コマ進む (Right)">▶</button>
+        <button class="btn-icon" id="btnNextADU" title="次のADU (Alt+Right)">⏭</button>
+      </div>
+
+      <div class="time-display" id="timeDisplay">
+        00:00.00 / 00:21.66 [F: 0 / 650]
+      </div>
+
+      <input type="range" class="scrubber-slider" id="scrubber" min="0" max="649" value="0">
+
+      <div class="speed-selector">
+        <button class="speed-btn" data-speed="0.25">0.25x</button>
+        <button class="speed-btn" data-speed="0.5">0.5x</button>
+        <button class="speed-btn active" data-speed="1.0">1.0x</button>
+      </div>
+    </div>
+
+    <!-- ADU Segmentation Ribbon -->
+    <div class="ribbon-container" id="ribbonContainer">
+      <div class="ribbon-track" id="ribbonTrack">
+        <!-- Injected via JS -->
+        <div class="ribbon-playhead" id="ribbonPlayhead"></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Embedded or External Logic -->
+  <script>
+    // --- 3D Canvas Rendering Engine & Interactive Controller ---
+    (function() {
+      let animData = null;
+      let currentFrame = 0;
+      let isPlaying = true;
+      let playbackSpeed = 1.0;
+      let lastTime = 0;
+      let activeChain = 'all';
+
+      // Camera state (orbit around origin)
+      const camera = {
+        yaw: 0.25,        // Radians around Y
+        pitch: 0.15,      // Radians above ground
+        distance: 3.2,    // Distance in meters
+        panX: 0.0,
+        panY: 0.95,       // Centered vertically on hips/chest
+        isDragging: false,
+        dragButton: 0,
+        lastMouseX: 0,
+        lastMouseY: 0
+      };
+
+      const canvas = document.getElementById('renderCanvas');
+      const ctx = canvas.getContext('2d');
+
+      // Resize canvas
+      function resizeCanvas() {
+        canvas.width = canvas.parentElement.clientWidth * window.devicePixelRatio;
+        canvas.height = canvas.parentElement.clientHeight * window.devicePixelRatio;
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      // Mouse Orbit Controls
+      canvas.addEventListener('mousedown', (e) => {
+        camera.isDragging = true;
+        camera.dragButton = e.button;
+        camera.lastMouseX = e.clientX;
+        camera.lastMouseY = e.clientY;
+      });
+      window.addEventListener('mouseup', () => { camera.isDragging = false; });
+      window.addEventListener('mousemove', (e) => {
+        if (!camera.isDragging) return;
+        const dx = e.clientX - camera.lastMouseX;
+        const dy = e.clientY - camera.lastMouseY;
+        camera.lastMouseX = e.clientX;
+        camera.lastMouseY = e.clientY;
+
+        if (camera.dragButton === 0) { // Left-click: Orbit
+          camera.yaw -= dx * 0.008;
+          camera.pitch = Math.max(-1.4, Math.min(1.4, camera.pitch - dy * 0.008));
+        } else if (camera.dragButton === 2) { // Right-click: Pan
+          camera.panX -= dx * 0.003 * camera.distance;
+          camera.panY += dy * 0.003 * camera.distance;
+        }
+      });
+      canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        camera.distance = Math.max(1.0, Math.min(10.0, camera.distance * (1.0 + e.deltaY * 0.001)));
+      }, { passive: false });
+      canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+      // 3D Perspective Projection
+      function project(x, y, z) {
+        // Apply camera pan
+        const px = x - camera.panX;
+        const py = y - camera.panY;
+        const pz = z;
+
+        // Orbit rotation
+        const cosY = Math.cos(camera.yaw), sinY = Math.sin(camera.yaw);
+        const cosP = Math.cos(camera.pitch), sinP = Math.sin(camera.pitch);
+
+        // Yaw around Y
+        const x1 = px * cosY - pz * sinY;
+        const z1 = px * sinY + pz * cosY;
+
+        // Pitch around X
+        const y2 = py * cosP - z1 * sinP;
+        const z2 = py * sinP + z1 * cosP + camera.distance;
+
+        if (z2 <= 0.1) return null; // Behind camera
+
+        const focal = (canvas.height / 2) / Math.tan(30 * Math.PI / 360);
+        const screenX = (x1 / z2) * focal + (canvas.width / 2);
+        const screenY = -(y2 / z2) * focal + (canvas.height / 2);
+
+        return { x: screenX, y: screenY, z: z2 };
+      }
+
+      // Draw Floor Grid
+      function drawFloorGrid() {
+        ctx.strokeStyle = 'rgba(55, 65, 81, 0.35)';
+        ctx.lineWidth = 1 * window.devicePixelRatio;
+
+        const size = 3.0;
+        const step = 0.5;
+        for (let x = -size; x <= size; x += step) {
+          const p1 = project(x, 0, -size);
+          const p2 = project(x, 0, size);
+          if (p1 && p2) {
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        }
+        for (let z = -size; z <= size; z += step) {
+          const p1 = project(-size, 0, z);
+          const p2 = project(size, 0, z);
+          if (p1 && p2) {
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        }
+
+        // Circular center target
+        ctx.strokeStyle = 'rgba(59, 130, 246, 0.3)';
+        ctx.lineWidth = 2 * window.devicePixelRatio;
+        const radius = 1.0;
+        const segments = 32;
+        ctx.beginPath();
+        for (let i = 0; i <= segments; i++) {
+          const theta = (i / segments) * Math.PI * 2;
+          const p = project(Math.cos(theta) * radius, 0, Math.sin(theta) * radius);
+          if (p) {
+            if (i === 0) ctx.moveTo(p.x, p.y);
+            else ctx.lineTo(p.x, p.y);
+          }
+        }
+        ctx.stroke();
+      }
+
+      // Render 3D Skeleton
+      function renderSkeleton(frameIdx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawFloorGrid();
+
+        if (!animData || !animData.joints || animData.joints.length === 0) return;
+
+        const joints = animData.joints[frameIdx];
+        const projNodes = joints.map(j => project(j[0], j[1], j[2]));
+
+        // Gather bones/edges to draw
+        const drawItems = [];
+
+        // Build bone edge lookup for chains
+        const chainGreenEdges = new Set(animData.chains.central_axial.edges.map(e => `${e[0]}_${e[1]}`));
+        const chainBlueEdges  = new Set(animData.chains.radial_arm.edges.map(e => `${e[0]}_${e[1]}`));
+        const chainRedEdges   = new Set(animData.chains.ulnar_grounding.edges.map(e => `${e[0]}_${e[1]}`));
+
+        // 1. Edges
+        animData.edges.forEach(([u, v]) => {
+          const p1 = projNodes[u];
+          const p2 = projNodes[v];
+          if (!p1 || !p2) return;
+
+          const key = `${u}_${v}`;
+          const rkey = `${v}_${u}`;
+
+          let color = '#4B5563'; // Neutral grey
+          let width = 2.0;
+          let alpha = 0.4;
+          let isHighlighted = false;
+
+          const inGreen = chainGreenEdges.has(key) || chainGreenEdges.has(rkey);
+          const inBlue  = chainBlueEdges.has(key)  || chainBlueEdges.has(rkey);
+          const inRed   = chainRedEdges.has(key)   || chainRedEdges.has(rkey);
+
+          if (activeChain === 'all') {
+            if (inGreen) { color = '#10B981'; width = 3.5; alpha = 0.9; }
+            else if (inBlue) { color = '#3B82F6'; width = 3.5; alpha = 0.9; }
+            else if (inRed) { color = '#EF4444'; width = 3.5; alpha = 0.9; }
+          } else if (activeChain === 'central_axial' && inGreen) {
+            color = '#10B981'; width = 4.5; alpha = 1.0; isHighlighted = true;
+          } else if (activeChain === 'radial_arm' && inBlue) {
+            color = '#3B82F6'; width = 4.5; alpha = 1.0; isHighlighted = true;
+          } else if (activeChain === 'ulnar_grounding' && inRed) {
+            color = '#EF4444'; width = 4.5; alpha = 1.0; isHighlighted = true;
+          } else {
+            alpha = 0.15; // Dimmed out
+            width = 1.2;
+          }
+
+          const avgZ = (p1.z + p2.z) / 2;
+          drawItems.push({
+            type: 'bone',
+            z: avgZ,
+            p1, p2, color, width, alpha, isHighlighted
+          });
+        });
+
+        // 2. Joints
+        projNodes.forEach((p, idx) => {
+          if (!p) return;
+          let radius = 3.0;
+          let color = '#9CA3AF';
+          if (idx === 5) { radius = 6.0; color = '#F3F4F6'; } // Head
+          else if (idx === 0) { radius = 5.0; color = '#F59E0B'; } // Hips
+
+          drawItems.push({
+            type: 'joint',
+            z: p.z,
+            p, radius, color
+          });
+        });
+
+        // Sort items back-to-front (Painter's algorithm)
+        drawItems.sort((a, b) => b.z - a.z);
+
+        // Draw items
+        drawItems.forEach(item => {
+          if (item.type === 'bone') {
+            ctx.save();
+            ctx.globalAlpha = item.alpha;
+            ctx.strokeStyle = item.color;
+            ctx.lineWidth = item.width * window.devicePixelRatio;
+            ctx.lineCap = 'round';
+            if (item.isHighlighted) {
+              ctx.shadowColor = item.color;
+              ctx.shadowBlur = 8 * window.devicePixelRatio;
+            }
+            ctx.beginPath();
+            ctx.moveTo(item.p1.x, item.p1.y);
+            ctx.lineTo(item.p2.x, item.p2.y);
+            ctx.stroke();
+            ctx.restore();
+          } else if (item.type === 'joint') {
+            ctx.save();
+            ctx.fillStyle = item.color;
+            ctx.beginPath();
+            ctx.arc(item.p.x, item.p.y, item.radius * window.devicePixelRatio, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
+        });
+      }
+
+      // Update HUD and Inspectors
+      function updateHUD(frameIdx) {
+        if (!animData || !animData.segments) return;
+
+        // Find active ADU
+        const adu = animData.segments.find(s => frameIdx >= s.start_frame && frameIdx <= s.end_frame) 
+                    || animData.segments[animData.segments.length - 1];
+        if (!adu) return;
+
+        // ADU Metadata
+        document.getElementById('aduIdLabel').innerText = `ADU #${adu.adu_id}`;
+        document.getElementById('aduTimeBadge').innerText = `${adu.time_range[0].toFixed(2)}s - ${adu.time_range[1].toFixed(2)}s`;
+        const hierBadge = document.getElementById('aduHierarchyBadge');
+        hierBadge.innerText = adu.hierarchy.toUpperCase();
+        hierBadge.className = `adu-hierarchy-badge ${adu.hierarchy === 'macro' ? 'badge-macro' : 'badge-micro'}`;
+        
+        document.getElementById('aduFocusBadge').innerText = adu.focus_chain;
+        document.getElementById('aduDriverLabel').innerText = adu.primary_driver;
+        document.getElementById('aduFramesLabel').innerText = `${adu.start_frame} - ${adu.end_frame}`;
+
+        // Spotlight Onomatopoeia
+        const topTag = (adu.onomatopoeia_tags && adu.onomatopoeia_tags.length > 0) ? adu.onomatopoeia_tags[0] : null;
+        if (topTag) {
+          document.getElementById('spotlightWord').innerText = `『 ${topTag.word} 』`;
+          document.getElementById('spotlightSim').innerText = `${(topTag.similarity * 100).toFixed(1)}%`;
+          document.getElementById('spotlightIpa').innerText = `IPA: /${topTag.ipa || ''}/`;
+          document.getElementById('spotlightMorph').innerText = `形態: ${topTag.morph_type || ''}`;
+          document.getElementById('spotlightRationale').innerText = topTag.rationale || '解析理由なし';
+        }
+
+        // Candidates Top 2 & 3
+        const candidateContainer = document.getElementById('candidateList');
+        candidateContainer.innerHTML = '';
+        if (adu.onomatopoeia_tags && adu.onomatopoeia_tags.length > 1) {
+          adu.onomatopoeia_tags.slice(1, 3).forEach((tag, idx) => {
+            const row = document.createElement('div');
+            row.className = 'candidate-item';
+            row.innerHTML = `
+              <span>${idx + 2}. <strong>『${tag.word}』</strong> [/${tag.ipa}/]</span>
+              <span style="font-weight:700; color:#34D399;">${(tag.similarity * 100).toFixed(1)}%</span>
+            `;
+            candidateContainer.appendChild(row);
+          });
+        }
+
+        // Physical Textures
+        const tp = adu.texture_profile;
+        document.getElementById('valDirectness').innerText = tp.space_directness.toFixed(2);
+        document.getElementById('barDirectness').style.width = `${tp.space_directness * 100}%`;
+
+        document.getElementById('valImpulsive').innerText = tp.time_impulsiveness.toFixed(2);
+        document.getElementById('barImpulsive').style.width = `${tp.time_impulsiveness * 100}%`;
+
+        document.getElementById('valHeaviness').innerText = tp.weight_heaviness.toFixed(2);
+        document.getElementById('barHeaviness').style.width = `${tp.weight_heaviness * 100}%`;
+
+        document.getElementById('valFluidity').innerText = tp.flow_fluidity.toFixed(2);
+        document.getElementById('barFluidity').style.width = `${tp.flow_fluidity * 100}%`;
+
+        const stiffK = tp.apparent_stiffness || 0;
+        document.getElementById('valStiffness').innerText = `${stiffK.toFixed(1)} N/m`;
+        document.getElementById('barStiffness').style.width = `${Math.min(100, (stiffK / 120) * 100)}%`;
+
+        // Update Active ADU block in ribbon
+        document.querySelectorAll('.adu-block').forEach(b => {
+          if (parseInt(b.dataset.id) === adu.adu_id) {
+            b.classList.add('current');
+            // Auto-scroll ribbon if necessary
+            b.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+          } else {
+            b.classList.remove('current');
+          }
+        });
+
+        // Update playhead position on ribbon
+        const total = animData.total_frames;
+        const pct = (frameIdx / Math.max(1, total - 1)) * 100;
+        document.getElementById('ribbonPlayhead').style.left = `${pct}%`;
+      }
+
+      // Update Scrubber & Time Display
+      function updateTimeDisplay() {
+        if (!animData) return;
+        const total = animData.total_frames;
+        const fps = animData.fps;
+        const curSec = currentFrame / fps;
+        const totSec = total / fps;
+
+        const fmt = (s) => {
+          const m = Math.floor(s / 60);
+          const sec = (s % 60).toFixed(2);
+          return `${String(m).padStart(2, '0')}:${sec.padStart(5, '0')}`;
+        };
+
+        document.getElementById('timeDisplay').innerText = 
+          `${fmt(curSec)} / ${fmt(totSec)} [F: ${currentFrame} / ${total}]`;
+        document.getElementById('scrubber').value = currentFrame;
+      }
+
+      // Render Timeline Ribbon Blocks
+      function buildRibbon() {
+        const track = document.getElementById('ribbonTrack');
+        track.querySelectorAll('.adu-block').forEach(b => b.remove());
+        if (!animData || !animData.segments) return;
+
+        const total = animData.total_frames;
+        animData.segments.forEach(adu => {
+          const leftPct = (adu.start_frame / total) * 100;
+          const widthPct = Math.max(0.8, ((adu.end_frame - adu.start_frame) / total) * 100);
+
+          const block = document.createElement('div');
+          block.className = `adu-block ${adu.hierarchy}`;
+          block.dataset.id = adu.adu_id;
+          block.dataset.start = adu.start_frame;
+          block.style.left = `${leftPct}%`;
+          block.style.width = `${widthPct}%`;
+
+          const topWord = (adu.onomatopoeia_tags && adu.onomatopoeia_tags.length > 0) ? adu.onomatopoeia_tags[0].word : '';
+          block.innerText = `#${adu.adu_id} ${topWord}`;
+          block.title = `ADU #${adu.adu_id} (${adu.hierarchy}): 『${topWord}』 [${adu.time_range[0]}s - ${adu.time_range[1]}s]`;
+
+          block.addEventListener('click', () => {
+            currentFrame = adu.start_frame;
+            updateTimeDisplay();
+            updateHUD(currentFrame);
+            renderSkeleton(currentFrame);
+          });
+
+          track.appendChild(block);
+        });
+      }
+
+      // Animation Loop
+      function animate(timestamp) {
+        if (!lastTime) lastTime = timestamp;
+        const delta = (timestamp - lastTime) / 1000;
+        lastTime = timestamp;
+
+        if (isPlaying && animData && animData.joints.length > 0) {
+          const frameAdvance = delta * animData.fps * playbackSpeed;
+          currentFrame = (currentFrame + frameAdvance);
+          if (currentFrame >= animData.total_frames) {
+            currentFrame = 0; // Loop
+          }
+          const rounded = Math.floor(currentFrame);
+          updateTimeDisplay();
+          updateHUD(rounded);
+          renderSkeleton(rounded);
+        }
+
+        requestAnimationFrame(animate);
+      }
+      requestAnimationFrame(animate);
+
+      // Playback Controls
+      const playPauseBtn = document.getElementById('btnPlayPause');
+      function togglePlay() {
+        isPlaying = !isPlaying;
+        playPauseBtn.innerText = isPlaying ? '⏸' : '▶';
+        playPauseBtn.classList.toggle('play-active', isPlaying);
+      }
+      playPauseBtn.addEventListener('click', togglePlay);
+
+      document.getElementById('scrubber').addEventListener('input', (e) => {
+        currentFrame = parseInt(e.target.value);
+        updateTimeDisplay();
+        updateHUD(currentFrame);
+        renderSkeleton(currentFrame);
+      });
+
+      document.getElementById('btnPrevFrame').addEventListener('click', () => {
+        currentFrame = Math.max(0, Math.floor(currentFrame) - 1);
+        updateTimeDisplay(); updateHUD(currentFrame); renderSkeleton(currentFrame);
+      });
+      document.getElementById('btnNextFrame').addEventListener('click', () => {
+        if (!animData) return;
+        currentFrame = Math.min(animData.total_frames - 1, Math.floor(currentFrame) + 1);
+        updateTimeDisplay(); updateHUD(currentFrame); renderSkeleton(currentFrame);
+      });
+
+      document.getElementById('btnPrevADU').addEventListener('click', () => {
+        if (!animData) return;
+        const curAdu = animData.segments.find(s => currentFrame >= s.start_frame && currentFrame <= s.end_frame);
+        if (curAdu && curAdu.adu_id > 1) {
+          const prev = animData.segments[curAdu.adu_id - 2];
+          currentFrame = prev.start_frame;
+          updateTimeDisplay(); updateHUD(currentFrame); renderSkeleton(currentFrame);
+        }
+      });
+      document.getElementById('btnNextADU').addEventListener('click', () => {
+        if (!animData) return;
+        const curAdu = animData.segments.find(s => currentFrame >= s.start_frame && currentFrame <= s.end_frame);
+        if (curAdu && curAdu.adu_id < animData.segments.length) {
+          const next = animData.segments[curAdu.adu_id];
+          currentFrame = next.start_frame;
+          updateTimeDisplay(); updateHUD(currentFrame); renderSkeleton(currentFrame);
+        }
+      });
+
+      // Speed selection
+      document.querySelectorAll('.speed-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          playbackSpeed = parseFloat(e.target.dataset.speed);
+        });
+      });
+
+      // Chain Filter selection
+      document.querySelectorAll('.chain-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('.chain-btn').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          activeChain = e.target.dataset.chain;
+          renderSkeleton(Math.floor(currentFrame));
+        });
+      });
+
+      // Keyboard Shortcuts
+      window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') {
+          e.preventDefault(); togglePlay();
+        } else if (e.code === 'ArrowLeft') {
+          currentFrame = Math.max(0, Math.floor(currentFrame) - 1);
+          updateTimeDisplay(); updateHUD(currentFrame); renderSkeleton(currentFrame);
+        } else if (e.code === 'ArrowRight') {
+          if (!animData) return;
+          currentFrame = Math.min(animData.total_frames - 1, Math.floor(currentFrame) + 1);
+          updateTimeDisplay(); updateHUD(currentFrame); renderSkeleton(currentFrame);
+        }
+      });
+
+      // Load Data File
+      function loadJsonData(data) {
+        animData = data;
+        currentFrame = 0;
+        document.getElementById('scrubber').max = animData.total_frames - 1;
+        buildRibbon();
+        updateTimeDisplay();
+        updateHUD(0);
+        renderSkeleton(0);
+      }
+
+      // File input handler
+      document.getElementById('jsonFileInput').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          try {
+            const parsed = JSON.parse(evt.target.result);
+            loadJsonData(parsed);
+          } catch (err) {
+            alert('JSONファイルの読み込みに失敗しました: ' + err.message);
+          }
+        };
+        reader.readAsText(file, 'utf-8');
+      });
+
+      // Try auto-loading data/MRka5p5qTxw_vis.json
+      fetch('data/MRka5p5qTxw_vis.json')
+        .then(res => {
+          if (res.ok) return res.json();
+          throw new Error('Local fetch failed');
+        })
+        .then(data => loadJsonData(data))
+        .catch(() => {
+          console.log('Auto-fetch data/MRka5p5qTxw_vis.json not accessible via direct file:// protocol; load via button if needed.');
+        });
+
+      // Expose loader to window for embedded datasets
+      window.loadVisualizerData = loadJsonData;
+    })();
+  </script>
+</body>
+</html>
