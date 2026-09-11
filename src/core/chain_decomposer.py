@@ -10,7 +10,10 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple, Any, Union
 import numpy as np
 
-from .vrm_bones import VRMBone, NUM_VRM_BONES, VRM_BONE_NAMES
+from .vrm_bones import (
+    VRMBone, NUM_VRM_BONES, VRM_BONE_NAMES,
+    ArmatureTail, NUM_ARMATURE_NODES, ARMATURE_NODE_NAMES, ARMATURE_FULL_EDGES
+)
 
 
 @dataclass
@@ -95,16 +98,16 @@ class KineticChainDecomposer:
         """Constructs edge pairs for each chain in both global and local indexing."""
         # 1. Central Axial Edges (Green)
         self.central_global_edges: List[Tuple[int, int]] = [
-            # Face to Head
+            # Axial Spine (Parent -> Child: Hips -> Spine -> Chest -> UpperChest -> Neck -> Head)
+            (VRMBone.HIPS, VRMBone.SPINE),
+            (VRMBone.SPINE, VRMBone.CHEST),
+            (VRMBone.CHEST, VRMBone.UPPER_CHEST),
+            (VRMBone.UPPER_CHEST, VRMBone.NECK),
+            (VRMBone.NECK, VRMBone.HEAD),
+            # Face & Sensory Nodes (Branching forward from cranial base Head)
             (VRMBone.HEAD, VRMBone.LEFT_EYE),
             (VRMBone.HEAD, VRMBone.RIGHT_EYE),
             (VRMBone.HEAD, VRMBone.JAW),
-            # Axial Spine
-            (VRMBone.HEAD, VRMBone.NECK),
-            (VRMBone.NECK, VRMBone.UPPER_CHEST),
-            (VRMBone.UPPER_CHEST, VRMBone.CHEST),
-            (VRMBone.CHEST, VRMBone.SPINE),
-            (VRMBone.SPINE, VRMBone.HIPS),
             # Left Leg
             (VRMBone.HIPS, VRMBone.LEFT_UPPER_LEG),
             (VRMBone.LEFT_UPPER_LEG, VRMBone.LEFT_LOWER_LEG),
@@ -192,16 +195,25 @@ class KineticChainDecomposer:
     def build_vrm_skeleton(
         self,
         smpl_joints: np.ndarray,
-        hand_landmarks: Optional[Dict[int, Any]] = None
+        hand_landmarks: Optional[Dict[int, Any]] = None,
+        include_tails: bool = False
     ) -> np.ndarray:
         """
         Maps raw input joints (OpenPose-25 from 4D-Humans or SMPL-24) and MediaPipe hand landmarks
-        into standard VRM 49-node array (T, 49, 3).
+        into standard VRM 49-node array (T, 49, 3) or full 58-node Armature array (T, 58, 3) if include_tails=True.
         Automatically corrects coordinate orientation (ensuring +Y is up, +Z is forward) and grounds feet at Y=0.
+        
+        Strict VRM / Armature Head vs Tail Standard:
+          - Bone 'head': Head (joint origin / pivot) is at cranial base (C1, ear midpoint).
+          - Armature 'head_tail': Tail (terminal top) is at crown of skull.
+          - Bones 'left_eye', 'right_eye', 'jaw': Branch forward from cranial base 'head'.
+          - Bone 'distal' (fingers): Head is at DIP joints (MediaPipe 3, 7, 11, 15/19).
+          - Armature 'tip' (fingers): Tail is at fingertips (MediaPipe 4, 8, 12, 16/20).
         """
         T = smpl_joints.shape[0]
         num_in_joints = smpl_joints.shape[1]
-        vrm_joints = np.zeros((T, NUM_VRM_BONES, 3), dtype=np.float64)
+        num_out = NUM_ARMATURE_NODES if include_tails else NUM_VRM_BONES
+        vrm_joints = np.zeros((T, num_out, 3), dtype=np.float64)
 
         # Work on a copy to avoid mutating caller's data
         joints = np.array(smpl_joints, dtype=np.float64, copy=True)
@@ -248,10 +260,21 @@ class KineticChainDecomposer:
             vrm_joints[:, VRMBone.NECK] = joints[:, 1]
 
             if num_in_joints > 18:
-                head_center = (joints[:, 17] + joints[:, 18]) / 2.0 + np.array([0.0, 0.04, 0.0])
-                vrm_joints[:, VRMBone.HEAD] = head_center
+                # Cranial base / atlanto-occipital joint (C1) - centered at ear canal level atop neck
+                head_joint = (joints[:, 17] + joints[:, 18]) / 2.0
+                vrm_joints[:, VRMBone.HEAD] = head_joint
+
+                neck_to_head = head_joint - joints[:, 1]
+                neck_len = np.linalg.norm(neck_to_head, axis=-1, keepdims=True) + 1e-6
+                cranial_up = neck_to_head / neck_len
+
+                if include_tails:
+                    vrm_joints[:, ArmatureTail.HEAD_TAIL] = head_joint + 0.13 * cranial_up
             else:
-                vrm_joints[:, VRMBone.HEAD] = joints[:, 0] + np.array([0.0, 0.06, -0.04])
+                head_joint = joints[:, 0] + np.array([0.0, 0.02, -0.06])
+                vrm_joints[:, VRMBone.HEAD] = head_joint
+                if include_tails:
+                    vrm_joints[:, ArmatureTail.HEAD_TAIL] = head_joint + np.array([0.0, 0.12, 0.0])
 
             # Left Arm (Shoulder root/clavicle -> Shoulder joint -> Elbow -> Wrist)
             vrm_joints[:, VRMBone.LEFT_SHOULDER] = 0.5 * joints[:, 1] + 0.5 * joints[:, 5]
@@ -283,7 +306,7 @@ class KineticChainDecomposer:
             else:
                 vrm_joints[:, VRMBone.RIGHT_TOES] = joints[:, 11] + np.array([0.0, -0.08, 0.12])
 
-            # Face (Eyes & Jaw)
+            # Face (Eyes & Jaw branching forward from cranial base HEAD)
             if num_in_joints > 16:
                 vrm_joints[:, VRMBone.LEFT_EYE] = joints[:, 16]
                 vrm_joints[:, VRMBone.RIGHT_EYE] = joints[:, 15]
@@ -303,22 +326,22 @@ class KineticChainDecomposer:
             vrm_joints[:, VRMBone.NECK] = joints[:, 12]
             vrm_joints[:, VRMBone.HEAD] = joints[:, 15]
 
-            vrm_joints[:, VRMBone.LEFT_SHOULDER] = joints[:, 13]  # Collar/Shoulder root
+            vrm_joints[:, VRMBone.LEFT_SHOULDER] = joints[:, 13]
             vrm_joints[:, VRMBone.RIGHT_SHOULDER] = joints[:, 14]
-            vrm_joints[:, VRMBone.LEFT_UPPER_ARM] = joints[:, 16] # Shoulder joint / Upper arm
+            vrm_joints[:, VRMBone.LEFT_UPPER_ARM] = joints[:, 16]
             vrm_joints[:, VRMBone.RIGHT_UPPER_ARM] = joints[:, 17]
-            vrm_joints[:, VRMBone.LEFT_LOWER_ARM] = joints[:, 18] # Elbow
+            vrm_joints[:, VRMBone.LEFT_LOWER_ARM] = joints[:, 18]
             vrm_joints[:, VRMBone.RIGHT_LOWER_ARM] = joints[:, 19]
-            vrm_joints[:, VRMBone.LEFT_HAND] = joints[:, 20]      # Wrist / Hand
+            vrm_joints[:, VRMBone.LEFT_HAND] = joints[:, 20]
             vrm_joints[:, VRMBone.RIGHT_HAND] = joints[:, 21]
 
-            vrm_joints[:, VRMBone.LEFT_UPPER_LEG] = joints[:, 1]  # Hip
+            vrm_joints[:, VRMBone.LEFT_UPPER_LEG] = joints[:, 1]
             vrm_joints[:, VRMBone.RIGHT_UPPER_LEG] = joints[:, 2]
-            vrm_joints[:, VRMBone.LEFT_LOWER_LEG] = joints[:, 4]  # Knee
+            vrm_joints[:, VRMBone.LEFT_LOWER_LEG] = joints[:, 4]
             vrm_joints[:, VRMBone.RIGHT_LOWER_LEG] = joints[:, 5]
-            vrm_joints[:, VRMBone.LEFT_FOOT] = joints[:, 7]       # Ankle
+            vrm_joints[:, VRMBone.LEFT_FOOT] = joints[:, 7]
             vrm_joints[:, VRMBone.RIGHT_FOOT] = joints[:, 8]
-            vrm_joints[:, VRMBone.LEFT_TOES] = joints[:, 10]      # Foot / Toes
+            vrm_joints[:, VRMBone.LEFT_TOES] = joints[:, 10]
             vrm_joints[:, VRMBone.RIGHT_TOES] = joints[:, 11]
 
             # Face approximation from head/neck
@@ -327,6 +350,9 @@ class KineticChainDecomposer:
             head_up = head_pos - neck_pos
             head_up_norm = np.linalg.norm(head_up, axis=-1, keepdims=True) + 1e-6
             up_dir = head_up / head_up_norm
+
+            if include_tails:
+                vrm_joints[:, ArmatureTail.HEAD_TAIL] = head_pos + 0.12 * up_dir
 
             shoulder_vec = vrm_joints[:, VRMBone.RIGHT_SHOULDER] - vrm_joints[:, VRMBone.LEFT_SHOULDER]
             shoulder_norm = np.linalg.norm(shoulder_vec, axis=-1, keepdims=True) + 1e-6
@@ -342,7 +368,7 @@ class KineticChainDecomposer:
         min_foot_y = float(np.min(vrm_joints[:, feet_indices, 1]))
         vrm_joints[:, :, 1] -= min_foot_y
 
-        # 3. Fingers (24 bones)
+        # 5. Fingers (24 bones + 8 leaf tails)
         # Map MediaPipe 21 landmarks if present, or synthesize from wrist positions
         for t in range(T):
             l_wrist = vrm_joints[t, VRMBone.LEFT_HAND]
@@ -378,28 +404,39 @@ class KineticChainDecomposer:
                 offset = l_wrist - l_lm[0]
                 aligned_l = l_lm + offset
 
-                # Thumb (1, 2, 4) -> Proximal, Intermediate, Distal
-                vrm_joints[t, VRMBone.LEFT_THUMB_PROXIMAL] = aligned_l[2]
-                vrm_joints[t, VRMBone.LEFT_THUMB_INTERMEDIATE] = aligned_l[3]
-                vrm_joints[t, VRMBone.LEFT_THUMB_DISTAL] = aligned_l[4]
+                # Thumb (1: CMC/Proximal, 2: MCP/Intermediate, 3: IP/Distal, 4: Tip)
+                vrm_joints[t, VRMBone.LEFT_THUMB_PROXIMAL] = aligned_l[1] if np.any(aligned_l[1]) else aligned_l[2]
+                vrm_joints[t, VRMBone.LEFT_THUMB_INTERMEDIATE] = aligned_l[2]
+                vrm_joints[t, VRMBone.LEFT_THUMB_DISTAL] = aligned_l[3] if np.any(aligned_l[3]) else aligned_l[4]
+                if include_tails:
+                    vrm_joints[t, ArmatureTail.LEFT_THUMB_TIP] = aligned_l[4]
 
-                # Index (5, 6, 8)
+                # Index (5: MCP/Proximal, 6: PIP/Intermediate, 7: DIP/Distal, 8: Tip)
                 vrm_joints[t, VRMBone.LEFT_INDEX_PROXIMAL] = aligned_l[5]
                 vrm_joints[t, VRMBone.LEFT_INDEX_INTERMEDIATE] = aligned_l[6]
-                vrm_joints[t, VRMBone.LEFT_INDEX_DISTAL] = aligned_l[8]
+                vrm_joints[t, VRMBone.LEFT_INDEX_DISTAL] = aligned_l[7] if np.any(aligned_l[7]) else aligned_l[8]
+                if include_tails:
+                    vrm_joints[t, ArmatureTail.LEFT_INDEX_TIP] = aligned_l[8]
 
-                # Middle (9, 10, 12)
+                # Middle (9: MCP/Proximal, 10: PIP/Intermediate, 11: DIP/Distal, 12: Tip)
                 vrm_joints[t, VRMBone.LEFT_MIDDLE_PROXIMAL] = aligned_l[9]
                 vrm_joints[t, VRMBone.LEFT_MIDDLE_INTERMEDIATE] = aligned_l[10]
-                vrm_joints[t, VRMBone.LEFT_MIDDLE_DISTAL] = aligned_l[12]
+                vrm_joints[t, VRMBone.LEFT_MIDDLE_DISTAL] = aligned_l[11] if np.any(aligned_l[11]) else aligned_l[12]
+                if include_tails:
+                    vrm_joints[t, ArmatureTail.LEFT_MIDDLE_TIP] = aligned_l[12]
 
                 # Integrated Ulnar: (Ring + Little) / 2
                 vrm_joints[t, VRMBone.LEFT_ULNAR_PROXIMAL] = (aligned_l[13] + aligned_l[17]) / 2.0
                 vrm_joints[t, VRMBone.LEFT_ULNAR_INTERMEDIATE] = (aligned_l[14] + aligned_l[18]) / 2.0
-                vrm_joints[t, VRMBone.LEFT_ULNAR_DISTAL] = (aligned_l[16] + aligned_l[20]) / 2.0
+                if np.any(aligned_l[15]) or np.any(aligned_l[19]):
+                    vrm_joints[t, VRMBone.LEFT_ULNAR_DISTAL] = (aligned_l[15] + aligned_l[19]) / 2.0
+                else:
+                    vrm_joints[t, VRMBone.LEFT_ULNAR_DISTAL] = (aligned_l[16] + aligned_l[20]) / 2.0
+                if include_tails:
+                    vrm_joints[t, ArmatureTail.LEFT_ULNAR_TIP] = (aligned_l[16] + aligned_l[20]) / 2.0
             else:
                 # Procedural finger alignment from forearm
-                self._synthesize_fingers(vrm_joints, t, is_left=True, wrist=l_wrist, fwd_dir=l_dir)
+                self._synthesize_fingers(vrm_joints, t, is_left=True, wrist=l_wrist, fwd_dir=l_dir, include_tails=include_tails)
 
             # --- Right Hand ---
             r_lm = None
@@ -414,28 +451,47 @@ class KineticChainDecomposer:
                 aligned_r = r_lm + offset
 
                 # Thumb
-                vrm_joints[t, VRMBone.RIGHT_THUMB_PROXIMAL] = aligned_r[2]
-                vrm_joints[t, VRMBone.RIGHT_THUMB_INTERMEDIATE] = aligned_r[3]
-                vrm_joints[t, VRMBone.RIGHT_THUMB_DISTAL] = aligned_r[4]
+                vrm_joints[t, VRMBone.RIGHT_THUMB_PROXIMAL] = aligned_r[1] if np.any(aligned_r[1]) else aligned_r[2]
+                vrm_joints[t, VRMBone.RIGHT_THUMB_INTERMEDIATE] = aligned_r[2]
+                vrm_joints[t, VRMBone.RIGHT_THUMB_DISTAL] = aligned_r[3] if np.any(aligned_r[3]) else aligned_r[4]
+                if include_tails:
+                    vrm_joints[t, ArmatureTail.RIGHT_THUMB_TIP] = aligned_r[4]
 
                 # Index
                 vrm_joints[t, VRMBone.RIGHT_INDEX_PROXIMAL] = aligned_r[5]
                 vrm_joints[t, VRMBone.RIGHT_INDEX_INTERMEDIATE] = aligned_r[6]
-                vrm_joints[t, VRMBone.RIGHT_INDEX_DISTAL] = aligned_r[8]
+                vrm_joints[t, VRMBone.RIGHT_INDEX_DISTAL] = aligned_r[7] if np.any(aligned_r[7]) else aligned_r[8]
+                if include_tails:
+                    vrm_joints[t, ArmatureTail.RIGHT_INDEX_TIP] = aligned_r[8]
 
                 # Middle
                 vrm_joints[t, VRMBone.RIGHT_MIDDLE_PROXIMAL] = aligned_r[9]
                 vrm_joints[t, VRMBone.RIGHT_MIDDLE_INTERMEDIATE] = aligned_r[10]
-                vrm_joints[t, VRMBone.RIGHT_MIDDLE_DISTAL] = aligned_r[12]
+                vrm_joints[t, VRMBone.RIGHT_MIDDLE_DISTAL] = aligned_r[11] if np.any(aligned_r[11]) else aligned_r[12]
+                if include_tails:
+                    vrm_joints[t, ArmatureTail.RIGHT_MIDDLE_TIP] = aligned_r[12]
 
                 # Integrated Ulnar: (Ring + Little) / 2
                 vrm_joints[t, VRMBone.RIGHT_ULNAR_PROXIMAL] = (aligned_r[13] + aligned_r[17]) / 2.0
                 vrm_joints[t, VRMBone.RIGHT_ULNAR_INTERMEDIATE] = (aligned_r[14] + aligned_r[18]) / 2.0
-                vrm_joints[t, VRMBone.RIGHT_ULNAR_DISTAL] = (aligned_r[16] + aligned_r[20]) / 2.0
+                if np.any(aligned_r[15]) or np.any(aligned_r[19]):
+                    vrm_joints[t, VRMBone.RIGHT_ULNAR_DISTAL] = (aligned_r[15] + aligned_r[19]) / 2.0
+                else:
+                    vrm_joints[t, VRMBone.RIGHT_ULNAR_DISTAL] = (aligned_r[16] + aligned_r[20]) / 2.0
+                if include_tails:
+                    vrm_joints[t, ArmatureTail.RIGHT_ULNAR_TIP] = (aligned_r[16] + aligned_r[20]) / 2.0
             else:
-                self._synthesize_fingers(vrm_joints, t, is_left=False, wrist=r_wrist, fwd_dir=r_dir)
+                self._synthesize_fingers(vrm_joints, t, is_left=False, wrist=r_wrist, fwd_dir=r_dir, include_tails=include_tails)
 
         return vrm_joints
+
+    def build_armature_skeleton(
+        self,
+        smpl_joints: np.ndarray,
+        hand_landmarks: Optional[Dict[int, Any]] = None
+    ) -> np.ndarray:
+        """Constructs full 58-node VRM Armature skeleton including leaf bone tails."""
+        return self.build_vrm_skeleton(smpl_joints, hand_landmarks=hand_landmarks, include_tails=True)
 
     def _synthesize_fingers(
         self,
@@ -443,7 +499,8 @@ class KineticChainDecomposer:
         t: int,
         is_left: bool,
         wrist: np.ndarray,
-        fwd_dir: np.ndarray
+        fwd_dir: np.ndarray,
+        include_tails: bool = False
     ):
         """Synthesizes neutral finger fan extending along hand direction."""
         side_sign = -1.0 if is_left else 1.0
@@ -452,15 +509,13 @@ class KineticChainDecomposer:
         s_len = np.linalg.norm(side)
         side = side / s_len if s_len > 1e-4 else np.array([side_sign, 0.0, 0.0])
 
-        # Finger spread angles
-        dists = [0.03, 0.06, 0.09] # Proximal, Intermediate, Distal
+        # Finger joint distances: Proximal (0.03), Intermediate (0.06), Distal (0.085)
+        dists = [0.03, 0.06, 0.085]
+        tip_dist = 0.105
 
         # Finger index offsets in VRMBone
         offset_base = 25 if is_left else 37
-        # Thumb: (offset_base + 0, 1, 2)
-        # Index: (offset_base + 3, 4, 5)
-        # Middle: (offset_base + 6, 7, 8)
-        # Ulnar: (offset_base + 9, 10, 11)
+        tail_base = ArmatureTail.LEFT_THUMB_TIP if is_left else ArmatureTail.RIGHT_THUMB_TIP
         spread_weights = [-0.03, -0.015, 0.0, 0.025] # Thumb (radial) to Ulnar
 
         for f_idx, sp in enumerate(spread_weights):
@@ -469,6 +524,8 @@ class KineticChainDecomposer:
             for seg_idx, d in enumerate(dists):
                 bone_id = offset_base + f_idx * 3 + seg_idx
                 vrm_joints[t, bone_id] = wrist + d * finger_dir
+            if include_tails:
+                vrm_joints[t, tail_base + f_idx] = wrist + tip_dist * finger_dir
 
     def decompose(self, vrm_joints: np.ndarray) -> Dict[str, ChainSkeleton]:
         """

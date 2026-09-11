@@ -155,7 +155,41 @@ VRM_PARENT_MAP: Dict[int, int] = {
     VRMBone.RIGHT_ULNAR_DISTAL: VRMBone.RIGHT_ULNAR_INTERMEDIATE,
 }
 
-# Standard VRM Edges
+# Standard VRM Edges (Bone Head to Bone Head)
 VRM_FULL_EDGES: List[Tuple[int, int]] = [
     (parent, child) for child, parent in VRM_PARENT_MAP.items() if parent != -1
+]
+
+
+class ArmatureTail(IntEnum):
+    """
+    Terminal leaf bone end points (Tails in Blender / Rigging notation).
+    In VRM humanoid specifications, the humanoid bones correspond to the joint origins (Heads).
+    These tail nodes define the physical termination / fingertips and skull crown.
+    """
+    HEAD_TAIL = 49          # Crown of skull (頭頂)
+    LEFT_THUMB_TIP = 50     # Left thumb tip (親指先端)
+    LEFT_INDEX_TIP = 51     # Left index tip (人差し指先端)
+    LEFT_MIDDLE_TIP = 52    # Left middle tip (中指先端)
+    LEFT_ULNAR_TIP = 53     # Left ulnar tip (薬指・小指統合先端)
+    RIGHT_THUMB_TIP = 54    # Right thumb tip (親指先端)
+    RIGHT_INDEX_TIP = 55    # Right index tip (人差し指先端)
+    RIGHT_MIDDLE_TIP = 56   # Right middle tip (中指先端)
+    RIGHT_ULNAR_TIP = 57    # Right ulnar tip (薬指・小指統合先端)
+
+
+NUM_ARMATURE_NODES = 58
+ARMATURE_NODE_NAMES: List[str] = VRM_BONE_NAMES + [t.name.lower() for t in ArmatureTail]
+
+# Complete Armature Edges (including leaf bone Head -> Tail)
+ARMATURE_FULL_EDGES: List[Tuple[int, int]] = list(VRM_FULL_EDGES) + [
+    (VRMBone.HEAD, ArmatureTail.HEAD_TAIL),
+    (VRMBone.LEFT_THUMB_DISTAL, ArmatureTail.LEFT_THUMB_TIP),
+    (VRMBone.LEFT_INDEX_DISTAL, ArmatureTail.LEFT_INDEX_TIP),
+    (VRMBone.LEFT_MIDDLE_DISTAL, ArmatureTail.LEFT_MIDDLE_TIP),
+    (VRMBone.LEFT_ULNAR_DISTAL, ArmatureTail.LEFT_ULNAR_TIP),
+    (VRMBone.RIGHT_THUMB_DISTAL, ArmatureTail.RIGHT_THUMB_TIP),
+    (VRMBone.RIGHT_INDEX_DISTAL, ArmatureTail.RIGHT_INDEX_TIP),
+    (VRMBone.RIGHT_MIDDLE_DISTAL, ArmatureTail.RIGHT_MIDDLE_TIP),
+    (VRMBone.RIGHT_ULNAR_DISTAL, ArmatureTail.RIGHT_ULNAR_TIP),
 ]

@@ -167,3 +167,63 @@ def test_pipeline_with_vrm_and_3chains(tmp_path):
         assert "chains/central_axial/joints" in h5
         assert "chains/radial_arm/joints" in h5
         assert "chains/ulnar_grounding/joints" in h5
+
+
+def test_armature_tails_and_filtering():
+    from src.core.vrm_bones import ArmatureTail, NUM_ARMATURE_NODES, ARMATURE_FULL_EDGES, ARMATURE_NODE_NAMES
+    from src.tracking.hand_filter import filter_hand_landmarks
+
+    # 1. Test Armature Tail Constants
+    assert NUM_ARMATURE_NODES == 58
+    assert len(ArmatureTail) == 9
+    assert len(ARMATURE_NODE_NAMES) == 58
+    assert len(ARMATURE_FULL_EDGES) == 48 + 9 # 48 parent-child + 9 leaf tail edges
+
+    # 2. Test Armature Skeleton Construction with OpenPose-25 joints
+    decomposer = KineticChainDecomposer()
+    T = 10
+    op_joints = np.zeros((T, 25, 3))
+    # Neck (1) at Y=1.5, Ears (17, 18) at Y=1.65, Z=0.0
+    op_joints[:, 1] = [0.0, 1.5, 0.0]
+    op_joints[:, 17] = [-0.08, 1.65, 0.0]
+    op_joints[:, 18] = [0.08, 1.65, 0.0]
+    op_joints[:, 8] = [0.0, 0.9, 0.0] # Pelvis
+
+    # Hand landmarks with full 21 joints
+    hand_landmarks = {}
+    for t in range(T):
+        lm = np.zeros((21, 3))
+        # Index: 5(MCP), 6(PIP), 7(DIP), 8(Tip)
+        lm[5] = [0.0, 0.03, 0.0]
+        lm[6] = [0.0, 0.06, 0.0]
+        lm[7] = [0.0, 0.085, 0.0]
+        lm[8] = [0.0, 0.105, 0.0]
+        hand_landmarks[t] = {"left": lm, "right": lm}
+
+    armature = decomposer.build_armature_skeleton(op_joints, hand_landmarks=hand_landmarks)
+    assert armature.shape == (T, 58, 3)
+
+    # Verify Head Joint is cranial base (ear midpoint) and Head Tail is crown above it
+    head_joint = armature[:, VRMBone.HEAD]
+    head_tail = armature[:, ArmatureTail.HEAD_TAIL]
+    np.testing.assert_allclose(head_joint[:, 0], 0.0, atol=1e-4) # centered between ears
+    assert np.all(head_tail[:, 1] > head_joint[:, 1]) # crown is above cranial base
+
+    # Verify Index Distal is DIP joint (not Tip) and Index Tip is the Tail
+    idx_distal = armature[:, VRMBone.LEFT_INDEX_DISTAL]
+    idx_tip = armature[:, ArmatureTail.LEFT_INDEX_TIP]
+    assert np.all(idx_tip[:, 1] > idx_distal[:, 1])
+
+    # 3. Test filter_hand_landmarks with missing frames and noise
+    noisy_data = {
+        0: {"left": np.ones((21, 3)) * 0.1},
+        1: {"left": np.ones((21, 3)) * 0.12},
+        # gap frames 2, 3, 4 missing
+        5: {"left": np.ones((21, 3)) * 0.18},
+        6: {"left": np.ones((21, 3)) * 0.20},
+    }
+    smoothed = filter_hand_landmarks(noisy_data, total_frames=7, max_gap=3, sigma=1.2)
+    assert 2 in smoothed and 3 in smoothed and 4 in smoothed
+    # Gap successfully interpolated smoothly
+    assert smoothed[2]["left"][0, 0] > 0.12
+    assert smoothed[4]["left"][0, 0] < 0.18

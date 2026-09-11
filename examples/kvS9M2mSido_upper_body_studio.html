@@ -511,11 +511,20 @@
 
       // Joint spheres
       const sphereGeo = new THREE.SphereGeometry(0.016, 12, 12);
-      const handSphereGeo = new THREE.SphereGeometry(0.009, 8, 8); // Finger joints slightly smaller
+      const handSphereGeo = new THREE.SphereGeometry(0.009, 8, 8); // Finger joints
+      const tipSphereGeo = new THREE.SphereGeometry(0.006, 8, 8);  // Fingertips (Tails)
+      const crownSphereGeo = new THREE.SphereGeometry(0.012, 10, 10); // Head crown (Tail)
 
       for (let i = 0; i < numNodes; i++) {
-        const isFinger = (i >= 25 && i <= 48);
-        const geo = isFinger ? handSphereGeo : sphereGeo;
+        const isFingerJoint = (i >= 25 && i <= 48);
+        const isFingerTip = (i >= 50 && i <= 57);
+        const isCrown = (i === 49);
+
+        let geo = sphereGeo;
+        if (isFingerTip) geo = tipSphereGeo;
+        else if (isFingerJoint) geo = handSphereGeo;
+        else if (isCrown) geo = crownSphereGeo;
+
         const mat = new THREE.MeshStandardMaterial({
           color: nodeColors[i],
           roughness: 0.3,
@@ -523,6 +532,10 @@
         });
         const mesh = new THREE.Mesh(geo, mat);
         mesh.castShadow = true;
+        mesh.userData = {
+          nodeIndex: i,
+          nodeName: (BUNDLE_DATA.skeleton_def && BUNDLE_DATA.skeleton_def.node_names) ? BUNDLE_DATA.skeleton_def.node_names[i] : `node_${i}`
+        };
         skeletonGroup.add(mesh);
         jointSpheres.push(mesh);
       }
