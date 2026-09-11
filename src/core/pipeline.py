@@ -171,14 +171,15 @@ class DanceKinematicsPipeline:
             s_uln_seg = s_uln[start:end]
             contact_seg = contact_state[start:end]
 
-            # Profile texture
+            # Profile texture using 3-tier model (Weight from lower body, Texture from upper body, Balance from whole body)
             texture = self.texture_profiler.profile_segment(
                 joints_seg=joints_seg,
                 vel_seg=vel_seg,
                 acc_seg=acc_seg,
                 jerk_seg=jerk_seg,
                 s_rad_seg=s_rad_seg,
-                s_uln_seg=s_uln_seg
+                s_uln_seg=s_uln_seg,
+                contact_seg=contact_seg
             )
 
             # Analyze the 3 isolated chains in this segment

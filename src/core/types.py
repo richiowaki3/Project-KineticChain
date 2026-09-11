@@ -23,6 +23,7 @@ class SegmentTexture:
     ulnar_dominance: float     # Lower-body / Pinky-ring coupling tension (0.0 ~ 1.0)
     apparent_stiffness: float  # Virtual joint stiffness estimate (K >= 0.0)
     apparent_damping: float = 0.0 # Virtual joint damping estimate (D >= 0.0)
+    posture_balance: float = 1.0  # Whole-body posture & dynamic equilibrium (0.0: Unstable ~ 1.0: Poised)
 
     def to_dict(self) -> Dict[str, float]:
         return {
@@ -33,7 +34,8 @@ class SegmentTexture:
             "radial_dominance": round(float(self.radial_dominance), 4),
             "ulnar_dominance": round(float(self.ulnar_dominance), 4),
             "apparent_stiffness": round(float(self.apparent_stiffness), 4),
-            "apparent_damping": round(float(self.apparent_damping), 4)
+            "apparent_damping": round(float(self.apparent_damping), 4),
+            "posture_balance": round(float(self.posture_balance), 4)
         }
 
 
