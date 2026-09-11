@@ -174,10 +174,10 @@ def test_armature_tails_and_filtering():
     from src.tracking.hand_filter import filter_hand_landmarks
 
     # 1. Test Armature Tail Constants
-    assert NUM_ARMATURE_NODES == 58
-    assert len(ArmatureTail) == 9
-    assert len(ARMATURE_NODE_NAMES) == 58
-    assert len(ARMATURE_FULL_EDGES) == 48 + 9 # 48 parent-child + 9 leaf tail edges
+    assert NUM_ARMATURE_NODES == 60
+    assert len(ArmatureTail) == 11
+    assert len(ARMATURE_NODE_NAMES) == 60
+    assert len(ARMATURE_FULL_EDGES) == 48 + 11 # 48 parent-child + 11 leaf tail edges
 
     # 2. Test Armature Skeleton Construction with OpenPose-25 joints
     decomposer = KineticChainDecomposer()
@@ -188,6 +188,9 @@ def test_armature_tails_and_filtering():
     op_joints[:, 17] = [-0.08, 1.65, 0.0]
     op_joints[:, 18] = [0.08, 1.65, 0.0]
     op_joints[:, 8] = [0.0, 0.9, 0.0] # Pelvis
+    op_joints[:, 14] = [0.08, 0.1, 0.0] # LAnkle
+    op_joints[:, 19] = [0.10, 0.0, 0.15] # LBigToe
+    op_joints[:, 20] = [0.12, 0.0, 0.13] # LSmallToe
 
     # Hand landmarks with full 21 joints
     hand_landmarks = {}
@@ -201,7 +204,7 @@ def test_armature_tails_and_filtering():
         hand_landmarks[t] = {"left": lm, "right": lm}
 
     armature = decomposer.build_armature_skeleton(op_joints, hand_landmarks=hand_landmarks)
-    assert armature.shape == (T, 58, 3)
+    assert armature.shape == (T, 60, 3)
 
     # Verify Head Joint is cranial base (ear midpoint) and Head Tail is crown above it
     head_joint = armature[:, VRMBone.HEAD]
@@ -213,6 +216,11 @@ def test_armature_tails_and_filtering():
     idx_distal = armature[:, VRMBone.LEFT_INDEX_DISTAL]
     idx_tip = armature[:, ArmatureTail.LEFT_INDEX_TIP]
     assert np.all(idx_tip[:, 1] > idx_distal[:, 1])
+
+    # Verify Toe Joint is at Ball of Foot and Toe Tip is ahead of it
+    toe_joint = armature[:, VRMBone.LEFT_TOES]
+    toe_tip = armature[:, ArmatureTail.LEFT_TOES_TIP]
+    assert np.all(toe_tip[:, 2] > toe_joint[:, 2]) # Tip is forward along +Z from ball of foot
 
     # 3. Test filter_hand_landmarks with missing frames and noise
     noisy_data = {

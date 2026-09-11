@@ -293,18 +293,32 @@ class KineticChainDecomposer:
             vrm_joints[:, VRMBone.LEFT_LOWER_LEG] = joints[:, 13]
             vrm_joints[:, VRMBone.LEFT_FOOT] = joints[:, 14]
             if num_in_joints > 20:
-                vrm_joints[:, VRMBone.LEFT_TOES] = 0.5 * joints[:, 19] + 0.5 * joints[:, 20]
+                l_toe_tip = 0.5 * joints[:, 19] + 0.5 * joints[:, 20]
+                # VRM leftToes is at the ball of foot (MP joint, ~65% from ankle to toe tip)
+                vrm_joints[:, VRMBone.LEFT_TOES] = 0.35 * joints[:, 14] + 0.65 * l_toe_tip
+                if include_tails:
+                    vrm_joints[:, ArmatureTail.LEFT_TOES_TIP] = l_toe_tip
             else:
-                vrm_joints[:, VRMBone.LEFT_TOES] = joints[:, 14] + np.array([0.0, -0.08, 0.12])
+                foot_pos = joints[:, 14]
+                vrm_joints[:, VRMBone.LEFT_TOES] = foot_pos + np.array([0.0, -0.05, 0.08])
+                if include_tails:
+                    vrm_joints[:, ArmatureTail.LEFT_TOES_TIP] = foot_pos + np.array([0.0, -0.07, 0.14])
 
             # Right Leg
             vrm_joints[:, VRMBone.RIGHT_UPPER_LEG] = joints[:, 9]
             vrm_joints[:, VRMBone.RIGHT_LOWER_LEG] = joints[:, 10]
             vrm_joints[:, VRMBone.RIGHT_FOOT] = joints[:, 11]
             if num_in_joints > 23:
-                vrm_joints[:, VRMBone.RIGHT_TOES] = 0.5 * joints[:, 22] + 0.5 * joints[:, 23]
+                r_toe_tip = 0.5 * joints[:, 22] + 0.5 * joints[:, 23]
+                # VRM rightToes is at the ball of foot (MP joint, ~65% from ankle to toe tip)
+                vrm_joints[:, VRMBone.RIGHT_TOES] = 0.35 * joints[:, 11] + 0.65 * r_toe_tip
+                if include_tails:
+                    vrm_joints[:, ArmatureTail.RIGHT_TOES_TIP] = r_toe_tip
             else:
-                vrm_joints[:, VRMBone.RIGHT_TOES] = joints[:, 11] + np.array([0.0, -0.08, 0.12])
+                foot_pos = joints[:, 11]
+                vrm_joints[:, VRMBone.RIGHT_TOES] = foot_pos + np.array([0.0, -0.05, 0.08])
+                if include_tails:
+                    vrm_joints[:, ArmatureTail.RIGHT_TOES_TIP] = foot_pos + np.array([0.0, -0.07, 0.14])
 
             # Face (Eyes & Jaw branching forward from cranial base HEAD)
             if num_in_joints > 16:
@@ -359,12 +373,18 @@ class KineticChainDecomposer:
             right_dir = shoulder_vec / shoulder_norm
             fwd_dir = np.cross(up_dir, right_dir)
 
+            if include_tails:
+                vrm_joints[:, ArmatureTail.LEFT_TOES_TIP] = joints[:, 10] + 0.06 * fwd_dir - 0.02 * up_dir
+                vrm_joints[:, ArmatureTail.RIGHT_TOES_TIP] = joints[:, 11] + 0.06 * fwd_dir - 0.02 * up_dir
+
             vrm_joints[:, VRMBone.LEFT_EYE] = head_pos + 0.05 * fwd_dir - 0.035 * right_dir + 0.02 * up_dir
             vrm_joints[:, VRMBone.RIGHT_EYE] = head_pos + 0.05 * fwd_dir + 0.035 * right_dir + 0.02 * up_dir
             vrm_joints[:, VRMBone.JAW] = head_pos + 0.04 * fwd_dir - 0.06 * up_dir
 
         # 4. Grounding (ensure feet rest naturally on Y = 0 floor across sequence)
         feet_indices = [VRMBone.LEFT_FOOT, VRMBone.RIGHT_FOOT, VRMBone.LEFT_TOES, VRMBone.RIGHT_TOES]
+        if include_tails:
+            feet_indices += [ArmatureTail.LEFT_TOES_TIP, ArmatureTail.RIGHT_TOES_TIP]
         min_foot_y = float(np.min(vrm_joints[:, feet_indices, 1]))
         vrm_joints[:, :, 1] -= min_foot_y
 

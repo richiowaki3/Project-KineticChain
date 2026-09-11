@@ -176,9 +176,11 @@ class ArmatureTail(IntEnum):
     RIGHT_INDEX_TIP = 55    # Right index tip (人差し指先端)
     RIGHT_MIDDLE_TIP = 56   # Right middle tip (中指先端)
     RIGHT_ULNAR_TIP = 57    # Right ulnar tip (薬指・小指統合先端)
+    LEFT_TOES_TIP = 58      # Left toe tip (左足つま先先端)
+    RIGHT_TOES_TIP = 59     # Right toe tip (右足つま先先端)
 
 
-NUM_ARMATURE_NODES = 58
+NUM_ARMATURE_NODES = 60
 ARMATURE_NODE_NAMES: List[str] = VRM_BONE_NAMES + [t.name.lower() for t in ArmatureTail]
 
 # Complete Armature Edges (including leaf bone Head -> Tail)
@@ -192,4 +194,6 @@ ARMATURE_FULL_EDGES: List[Tuple[int, int]] = list(VRM_FULL_EDGES) + [
     (VRMBone.RIGHT_INDEX_DISTAL, ArmatureTail.RIGHT_INDEX_TIP),
     (VRMBone.RIGHT_MIDDLE_DISTAL, ArmatureTail.RIGHT_MIDDLE_TIP),
     (VRMBone.RIGHT_ULNAR_DISTAL, ArmatureTail.RIGHT_ULNAR_TIP),
+    (VRMBone.LEFT_TOES, ArmatureTail.LEFT_TOES_TIP),
+    (VRMBone.RIGHT_TOES, ArmatureTail.RIGHT_TOES_TIP),
 ]

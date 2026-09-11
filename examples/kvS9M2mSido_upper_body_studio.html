@@ -513,15 +513,18 @@
       const sphereGeo = new THREE.SphereGeometry(0.016, 12, 12);
       const handSphereGeo = new THREE.SphereGeometry(0.009, 8, 8); // Finger joints
       const tipSphereGeo = new THREE.SphereGeometry(0.006, 8, 8);  // Fingertips (Tails)
+      const toeTipGeo = new THREE.SphereGeometry(0.010, 8, 8);  // Toe tips (Tails)
       const crownSphereGeo = new THREE.SphereGeometry(0.012, 10, 10); // Head crown (Tail)
 
       for (let i = 0; i < numNodes; i++) {
         const isFingerJoint = (i >= 25 && i <= 48);
         const isFingerTip = (i >= 50 && i <= 57);
+        const isToeTip = (i === 58 || i === 59);
         const isCrown = (i === 49);
 
         let geo = sphereGeo;
         if (isFingerTip) geo = tipSphereGeo;
+        else if (isToeTip) geo = toeTipGeo;
         else if (isFingerJoint) geo = handSphereGeo;
         else if (isCrown) geo = crownSphereGeo;
 

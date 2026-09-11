@@ -337,9 +337,9 @@ def main():
             "tail_indices": tail_indices,
             "edges": armature_edges,
             "chains": {
-                "central_axial": decomposer.CENTRAL_AXIAL_NODES + [int(ArmatureTail.HEAD_TAIL), int(ArmatureTail.LEFT_MIDDLE_TIP), int(ArmatureTail.RIGHT_MIDDLE_TIP)],
+                "central_axial": decomposer.CENTRAL_AXIAL_NODES + [int(ArmatureTail.HEAD_TAIL), int(ArmatureTail.LEFT_MIDDLE_TIP), int(ArmatureTail.RIGHT_MIDDLE_TIP), int(ArmatureTail.LEFT_TOES_TIP), int(ArmatureTail.RIGHT_TOES_TIP)],
                 "radial_arm": decomposer.RADIAL_ARM_NODES + [int(ArmatureTail.LEFT_THUMB_TIP), int(ArmatureTail.LEFT_INDEX_TIP), int(ArmatureTail.RIGHT_THUMB_TIP), int(ArmatureTail.RIGHT_INDEX_TIP)],
-                "ulnar_grounding": decomposer.ULNAR_GROUNDING_NODES + [int(ArmatureTail.LEFT_ULNAR_TIP), int(ArmatureTail.RIGHT_ULNAR_TIP)]
+                "ulnar_grounding": decomposer.ULNAR_GROUNDING_NODES + [int(ArmatureTail.LEFT_ULNAR_TIP), int(ArmatureTail.RIGHT_ULNAR_TIP), int(ArmatureTail.LEFT_TOES_TIP), int(ArmatureTail.RIGHT_TOES_TIP)]
             },
             "upper_body_nodes": [
                 VRMBone.SPINE, VRMBone.CHEST, VRMBone.UPPER_CHEST, VRMBone.NECK, VRMBone.HEAD,
