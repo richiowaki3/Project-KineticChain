@@ -366,11 +366,14 @@ class KineticChainDecomposer:
             # --- Left Hand ---
             l_lm = None
             if isinstance(lm_entry, dict) and "left" in lm_entry and lm_entry["left"] is not None:
-                l_lm = lm_entry["left"]
+                l_lm = np.array(lm_entry["left"], dtype=np.float64, copy=True)
             elif isinstance(lm_entry, np.ndarray) and lm_entry.shape[0] >= 21:
-                l_lm = lm_entry
+                l_lm = np.array(lm_entry, dtype=np.float64, copy=True)
 
             if l_lm is not None:
+                if y_inverted:
+                    l_lm[:, 1] = -l_lm[:, 1]
+                    l_lm[:, 2] = -l_lm[:, 2]
                 # Align MediaPipe coords to wrist
                 offset = l_wrist - l_lm[0]
                 aligned_l = l_lm + offset
@@ -401,9 +404,12 @@ class KineticChainDecomposer:
             # --- Right Hand ---
             r_lm = None
             if isinstance(lm_entry, dict) and "right" in lm_entry and lm_entry["right"] is not None:
-                r_lm = lm_entry["right"]
+                r_lm = np.array(lm_entry["right"], dtype=np.float64, copy=True)
 
             if r_lm is not None:
+                if y_inverted:
+                    r_lm[:, 1] = -r_lm[:, 1]
+                    r_lm[:, 2] = -r_lm[:, 2]
                 offset = r_wrist - r_lm[0]
                 aligned_r = r_lm + offset
 

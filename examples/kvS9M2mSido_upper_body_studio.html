@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KineticChain | kvS9M2mSido 4D-Humans x MediaPipe Upper-Body Studio</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Three.js & OrbitControls CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <style>
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      overflow: hidden;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #1e293b;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #64748b;
+    }
+    .glass-panel {
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .badge-punch { background-color: rgba(239, 68, 68, 0.25); color: #f87171; border: 1px solid #ef4444; }
+    .badge-float { background-color: rgba(56, 189, 248, 0.25); color: #7dd3fc; border: 1px solid #38bdf8; }
+    .badge-glide { background-color: rgba(168, 85, 247, 0.25); color: #c084fc; border: 1px solid #a855f7; }
+    .badge-slash { background-color: rgba(249, 115, 22, 0.25); color: #fb923c; border: 1px solid #f97316; }
+    .badge-dab   { background-color: rgba(34, 197, 94, 0.25);  color: #4ade80; border: 1px solid #22c55e; }
+    .badge-press { background-color: rgba(234, 179, 8, 0.25);  color: #fde047; border: 1px solid #eab308; }
+    .badge-wring { background-color: rgba(236, 72, 153, 0.25); color: #f472b6; border: 1px solid #ec4899; }
+    .badge-flick { background-color: rgba(20, 184, 166, 0.25); color: #5eead4; border: 1px solid #14b8a6; }
+  </style>
+</head>
+<body class="h-screen flex flex-col select-none">
+
+  <!-- Top Navigation Bar -->
+  <header class="h-14 bg-slate-900 border-b border-slate-800 px-4 flex items-center justify-between flex-shrink-0">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center font-bold text-white shadow-lg">
+        KC
+      </div>
+      <div>
+        <h1 class="text-sm font-bold text-slate-100 flex items-center gap-2">
+          <span>kvS9M2mSido: 4D-Humans x MediaPipe 上半身ボーン合体 & オノマトペ解析スタジオ</span>
+          <span class="text-xs px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800">VRM 49 Nodes</span>
+        </h1>
+        <p class="text-[11px] text-slate-400">身体トラッキング(4D-Humans) + 手指21関節(MediaPipe 2026) 3D空間フュージョン</p>
+      </div>
+    </div>
+
+    <!-- Stats & View Controls -->
+    <div class="flex items-center space-x-4 text-xs">
+      <div class="flex items-center space-x-2 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">
+        <span class="text-slate-400">総フレーム数:</span>
+        <span id="stat-frames" class="font-mono text-cyan-400 font-semibold">5,747 F</span>
+        <span class="text-slate-500">|</span>
+        <span class="text-slate-400">時間:</span>
+        <span id="stat-duration" class="font-mono text-cyan-400 font-semibold">191.8s</span>
+        <span class="text-slate-500">|</span>
+        <span class="text-slate-400">フレーズ:</span>
+        <span id="stat-phrases" class="font-mono text-cyan-400 font-semibold">71 ADUs</span>
+        <span class="text-slate-500">|</span>
+        <span class="text-slate-400">語彙:</span>
+        <span id="stat-words" class="font-mono text-cyan-400 font-semibold">7,356 語</span>
+      </div>
+
+      <!-- Language Filter Tabs -->
+      <div class="flex bg-slate-800 p-0.5 rounded-lg border border-slate-700 text-slate-300">
+        <button onclick="setLanguage('overall')" id="lang-btn-overall" class="px-2.5 py-1 rounded-md font-medium text-xs bg-indigo-600 text-white shadow">
+          🌐 3ヶ国総合
+        </button>
+        <button onclick="setLanguage('jp')" id="lang-btn-jp" class="px-2.5 py-1 rounded-md font-medium text-xs hover:text-white transition">
+          🇯🇵 日本語
+        </button>
+        <button onclick="setLanguage('kr')" id="lang-btn-kr" class="px-2.5 py-1 rounded-md font-medium text-xs hover:text-white transition">
+          🇰🇷 한국어
+        </button>
+        <button onclick="setLanguage('af')" id="lang-btn-af" class="px-2.5 py-1 rounded-md font-medium text-xs hover:text-white transition">
+          🌍 アフリカ
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="flex-1 flex overflow-hidden">
+
+    <!-- Left: 3D Viewport (Three.js) -->
+    <section class="w-1/2 flex flex-col border-r border-slate-800 relative">
+      <div id="canvas-container" class="w-full flex-1 relative bg-slate-950">
+        <!-- 3D Canvas inserted here -->
+        
+        <!-- Viewport Overlays -->
+        <div class="absolute top-3 left-3 flex flex-col space-y-2 pointer-events-none">
+          <div class="glass-panel px-3 py-1.5 rounded-md pointer-events-auto flex items-center space-x-2 text-xs">
+            <span class="text-slate-400">視点:</span>
+            <button onclick="setCameraView('upper')" id="btn-cam-upper" class="px-2 py-0.5 bg-cyan-600 text-white rounded font-medium">上半身集中</button>
+            <button onclick="setCameraView('full')" id="btn-cam-full" class="px-2 py-0.5 bg-slate-700 text-slate-300 hover:bg-slate-600 rounded">全身</button>
+            <button onclick="setCameraView('hands')" id="btn-cam-hands" class="px-2 py-0.5 bg-slate-700 text-slate-300 hover:bg-slate-600 rounded">手元近接</button>
+            <button onclick="resetCamera()" class="px-1.5 py-0.5 text-slate-400 hover:text-slate-200" title="カメラリセット">↺</button>
+          </div>
+
+          <div class="glass-panel px-3 py-1.5 rounded-md pointer-events-auto flex items-center space-x-3 text-xs">
+            <span class="text-slate-400">キネティック連鎖:</span>
+            <label class="flex items-center space-x-1 cursor-pointer">
+              <input type="checkbox" id="chk-chain-central" checked onchange="updateChainVisibility()" class="rounded text-green-500 focus:ring-0">
+              <span class="text-green-400">全身軸 (緑)</span>
+            </label>
+            <label class="flex items-center space-x-1 cursor-pointer">
+              <input type="checkbox" id="chk-chain-radial" checked onchange="updateChainVisibility()" class="rounded text-blue-500 focus:ring-0">
+              <span class="text-blue-400">橈側・親指人差指 (青)</span>
+            </label>
+            <label class="flex items-center space-x-1 cursor-pointer">
+              <input type="checkbox" id="chk-chain-ulnar" checked onchange="updateChainVisibility()" class="rounded text-red-500 focus:ring-0">
+              <span class="text-red-400">尺側・小指 (赤)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Frame & Realtime Status Indicator -->
+        <div class="absolute bottom-3 left-3 glass-panel px-3 py-1.5 rounded-md text-xs font-mono flex items-center space-x-3 pointer-events-none">
+          <div><span class="text-slate-400">Frame:</span> <span id="overlay-frame" class="text-cyan-300 font-semibold">0</span> / <span id="overlay-total-frames">5747</span></div>
+          <div><span class="text-slate-400">Time:</span> <span id="overlay-time" class="text-cyan-300 font-semibold">0.00s</span></div>
+          <div id="overlay-action" class="px-2 py-0.5 rounded text-[11px] font-sans font-bold badge-float">🕊️ Float</div>
+        </div>
+      </div>
+
+      <!-- Playback Timeline Bar -->
+      <div class="h-20 bg-slate-900 border-t border-slate-800 px-4 py-2 flex flex-col justify-between">
+        <!-- Scrub Slider -->
+        <div class="flex items-center space-x-3">
+          <span id="txt-current-time" class="text-xs font-mono text-slate-400 w-12 text-right">0.00s</span>
+          <div class="relative flex-1 flex items-center">
+            <input type="range" id="seek-bar" min="0" max="5746" value="0" step="1" 
+                   class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-cyan-400">
+          </div>
+          <span id="txt-total-time" class="text-xs font-mono text-slate-400 w-12">191.76s</span>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="flex items-center justify-between pt-1">
+          <div class="flex items-center space-x-2">
+            <button id="btn-play" onclick="togglePlay()" class="px-4 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold rounded-md text-xs flex items-center gap-1.5 shadow">
+              <span id="icon-play">▶ 再生</span>
+            </button>
+            <button onclick="prevPhrase()" class="px-2 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-xs">⏮ 前フレーズ</button>
+            <button onclick="nextPhrase()" class="px-2 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-xs">次フレーズ ⏭</button>
+            <label class="flex items-center space-x-1 ml-2 text-xs text-slate-300 cursor-pointer">
+              <input type="checkbox" id="chk-loop-phrase" class="rounded text-cyan-500 focus:ring-0">
+              <span>フレーズをループ</span>
+            </label>
+          </div>
+
+          <div class="flex items-center space-x-2 text-xs">
+            <span class="text-slate-400">速度:</span>
+            <button onclick="setSpeed(0.25)" class="speed-btn px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded">0.25x</button>
+            <button onclick="setSpeed(0.5)" class="speed-btn px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded">0.5x</button>
+            <button onclick="setSpeed(1.0)" class="speed-btn px-2 py-1 bg-cyan-900 text-cyan-300 border border-cyan-700 rounded font-semibold">1.0x</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Video Sync & Onomatopoeia Intelligence Center -->
+    <section class="w-1/2 flex flex-col bg-slate-900 overflow-hidden">
+
+      <!-- Top Half: Synchronized Video Reference -->
+      <div class="h-64 border-b border-slate-800 bg-black flex flex-col relative">
+        <div class="h-8 bg-slate-900 border-b border-slate-800 px-3 flex items-center justify-between text-xs">
+          <div class="flex items-center space-x-2">
+            <span class="text-slate-400 font-semibold">同期プレビュー動画:</span>
+            <button onclick="switchVideo('4dhumans')" id="btn-vid-4d" class="px-2.5 py-0.5 bg-cyan-600 text-white rounded text-[11px] font-medium">
+              4D-Humans 身体
+            </button>
+            <button onclick="switchVideo('mediapipe')" id="btn-vid-mp" class="px-2.5 py-0.5 bg-slate-800 text-slate-300 hover:bg-slate-700 rounded text-[11px]">
+              MediaPipe 手指
+            </button>
+            <button onclick="switchVideo('dual')" id="btn-vid-dual" class="px-2.5 py-0.5 bg-slate-800 text-slate-300 hover:bg-slate-700 rounded text-[11px]">
+              Side-by-Side 左右比較
+            </button>
+          </div>
+          <div class="text-[11px] text-slate-500 font-mono" id="video-status">同期待機中</div>
+        </div>
+
+        <div class="flex-1 flex overflow-hidden items-center justify-center relative bg-slate-950">
+          <!-- Video 1: 4D-Humans -->
+          <video id="video-4d" class="h-full w-full object-contain" preload="metadata" muted playsinline>
+            <source src="/videos/kvS9M2mSido__4dhumans_preview.mp4" type="video/mp4">
+          </video>
+          <!-- Video 2: MediaPipe -->
+          <video id="video-mp" class="h-full w-full object-contain hidden" preload="metadata" muted playsinline>
+            <source src="/videos/kvS9M2mSido__mediapipe_2026_preview.mp4" type="video/mp4">
+          </video>
+          
+          <!-- Fallback prompt if video server is not running -->
+          <div id="video-fallback" class="hidden absolute inset-0 bg-slate-950/90 flex flex-col items-center justify-center p-4 text-center">
+            <p class="text-sm font-semibold text-amber-400 mb-1">動画ストリーミングサーバー未検出</p>
+            <p class="text-xs text-slate-400 max-w-sm mb-3">動画を同期再生するには、付属のランチャースクリプトを実行してください：</p>
+            <code class="text-xs bg-slate-800 px-3 py-1.5 rounded text-cyan-300 font-mono">python examples/launch_kvS9M2mSido_studio.py</code>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Half: Active Phrase Onomatopoeia & Phrase List -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+
+        <!-- Active Phrase Card (Selected) -->
+        <div id="active-phrase-container" class="p-4 bg-slate-850 border-b border-slate-800 flex-shrink-0">
+          <div class="flex items-start justify-between">
+            <div class="flex items-center space-x-3">
+              <span id="active-action-badge" class="px-2.5 py-1 rounded text-xs font-bold badge-float flex items-center gap-1">
+                <span id="active-action-icon">🕊️</span>
+                <span id="active-action-name">Float (浮遊)</span>
+              </span>
+              <h2 class="text-base font-bold text-slate-100 flex items-center gap-2">
+                <span>フレーズ #<span id="active-phrase-id">1</span></span>
+                <span class="text-xs font-normal text-slate-400 font-mono">[<span id="active-phrase-time">0.00s ~ 2.77s</span> (<span id="active-phrase-dur">2.77s</span>)]</span>
+              </h2>
+            </div>
+            <div class="text-xs text-right">
+              <span class="text-slate-400">主導キネティック連鎖:</span>
+              <span id="active-dominant-chain" class="font-semibold text-cyan-400 ml-1">橈側・腕系 (親指・人差指主導)</span>
+            </div>
+          </div>
+
+          <!-- Top Onomatopoeia Big Display -->
+          <div class="mt-3 grid grid-cols-12 gap-3 items-center bg-slate-900/80 p-3 rounded-xl border border-slate-700/60">
+            <div class="col-span-4 border-r border-slate-800 pr-3">
+              <div class="text-[11px] text-slate-400 flex items-center justify-between">
+                <span>第1候補オノマトペ</span>
+                <span id="active-match-sim" class="text-xs font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800">適合度: 78.4%</span>
+              </div>
+              <div class="mt-1 flex items-baseline gap-2">
+                <span id="active-match-word" class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-400 to-orange-400">
+                  살금
+                </span>
+                <span id="active-match-ipa" class="text-xs font-mono text-slate-400">/salkɯm/</span>
+              </div>
+              <div id="active-match-meaning" class="text-xs text-slate-300 mt-1 line-clamp-2">
+                stealthy, cautious, softly creeping gesture or sound
+              </div>
+            </div>
+
+            <!-- Effort Radar / Bar comparison -->
+            <div class="col-span-5 px-3">
+              <div class="text-[11px] text-slate-400 mb-1.5 flex justify-between">
+                <span>動作テクスチャ vs 語義物理プロファイル</span>
+                <span class="font-mono text-[10px] text-slate-500">Weight | Time | Space | Flow</span>
+              </div>
+              <div class="space-y-1 text-[11px]">
+                <div class="flex items-center space-x-2">
+                  <span class="w-14 text-slate-400 text-[10px]">Weight (重)</span>
+                  <div class="flex-1 bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div id="bar-weight" class="bg-red-500 h-full rounded-full transition-all duration-300" style="width: 20%;"></div>
+                  </div>
+                  <span id="val-weight" class="font-mono text-slate-300 w-6 text-right">0.2</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span class="w-14 text-slate-400 text-[10px]">Time (急)</span>
+                  <div class="flex-1 bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div id="bar-time" class="bg-yellow-500 h-full rounded-full transition-all duration-300" style="width: 80%;"></div>
+                  </div>
+                  <span id="val-time" class="font-mono text-slate-300 w-6 text-right">0.8</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span class="w-14 text-slate-400 text-[10px]">Space (直)</span>
+                  <div class="flex-1 bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div id="bar-space" class="bg-blue-500 h-full rounded-full transition-all duration-300" style="width: 70%;"></div>
+                  </div>
+                  <span id="val-space" class="font-mono text-slate-300 w-6 text-right">0.7</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span class="w-14 text-slate-400 text-[10px]">Flow (拘)</span>
+                  <div class="flex-1 bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div id="bar-flow" class="bg-emerald-500 h-full rounded-full transition-all duration-300" style="width: 60%;"></div>
+                  </div>
+                  <span id="val-flow" class="font-mono text-slate-300 w-6 text-right">0.6</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hand Tensions & Top-2/3 Candidates -->
+            <div class="col-span-3 border-l border-slate-800 pl-3 flex flex-col justify-between h-full">
+              <div>
+                <div class="text-[10px] text-slate-400">手指張力指標</div>
+                <div class="flex items-center justify-between text-xs mt-0.5">
+                  <span class="text-blue-400">S_rad (橈側): <b id="val-s-rad">0.62</b></span>
+                  <span class="text-red-400">S_uln (尺側): <b id="val-s-uln">0.38</b></span>
+                </div>
+              </div>
+              <div class="mt-2">
+                <div class="text-[10px] text-slate-400 mb-1">次点候補 (2位・3位):</div>
+                <div class="flex flex-wrap gap-1.5" id="active-alt-matches">
+                  <!-- Injected dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filter & Search Toolbar -->
+        <div class="px-4 py-2 bg-slate-900 border-b border-slate-800 flex items-center justify-between flex-shrink-0 text-xs">
+          <!-- Action Filter Pills -->
+          <div class="flex items-center space-x-1 overflow-x-auto custom-scrollbar py-0.5" id="action-filters">
+            <button onclick="filterAction('ALL')" class="filter-btn px-2.5 py-1 rounded bg-slate-800 text-cyan-300 font-semibold border border-slate-700">
+              全て (71)
+            </button>
+            <button onclick="filterAction('PUNCH')" class="filter-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-400">👊 Punch</button>
+            <button onclick="filterAction('FLOAT')" class="filter-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-400">🕊️ Float</button>
+            <button onclick="filterAction('GLIDE')" class="filter-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-400">⛸️ Glide</button>
+            <button onclick="filterAction('SLASH')" class="filter-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-400">⚔️ Slash</button>
+            <button onclick="filterAction('DAB')"   class="filter-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-400">🎯 Dab</button>
+            <button onclick="filterAction('PRESS')" class="filter-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-400">🛡️ Press</button>
+            <button onclick="filterAction('WRING')" class="filter-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-400">🌀 Wring</button>
+            <button onclick="filterAction('FLICK')" class="filter-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-400">✨ Flick</button>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <input type="text" id="input-search" placeholder="単語・検索..." oninput="onSearchInput()" 
+                   class="bg-slate-800 border border-slate-700 rounded px-2.5 py-1 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 w-32">
+          </div>
+        </div>
+
+        <!-- Scrollable Phrase Cards List -->
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-2" id="phrase-cards-list">
+          <!-- Injected dynamically -->
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Global Application State
+    let BUNDLE_DATA = null;
+    let currentLanguage = 'overall'; // 'overall' | 'jp' | 'kr' | 'af'
+    let currentPhraseIndex = 0;
+    let currentFrame = 0;
+    let isPlaying = false;
+    let playbackSpeed = 1.0;
+    let currentFilterAction = 'ALL';
+    let searchQuery = '';
+
+    // Three.js State
+    let scene, camera, renderer, controls;
+    let boneLines = [], jointSpheres = [];
+    let skeletonGroup;
+    let cameraMode = 'upper'; // 'upper' | 'full' | 'hands'
+
+    // Video Elements
+    let video4D, videoMP;
+    let activeVideoMode = '4dhumans'; // '4dhumans' | 'mediapipe' | 'dual'
+
+    // Load Data
+    async function init() {
+      setupThreeJS();
+      setupVideos();
+
+      try {
+        const res = await fetch('/data/kvS9M2mSido_fused_bundle.json');
+        if (!res.ok) throw new Error('HTTP status ' + res.status);
+        BUNDLE_DATA = await res.json();
+        onDataLoaded();
+      } catch (err) {
+        console.warn('Direct fetch failed, falling back to relative or error banner:', err);
+        document.getElementById('video-fallback').classList.remove('hidden');
+        // Try relative path
+        try {
+          const res2 = await fetch('../data/kvS9M2mSido_fused_bundle.json');
+          if (res2.ok) {
+            BUNDLE_DATA = await res2.json();
+            onDataLoaded();
+          }
+        } catch (e2) {
+          alert('データバンドル (kvS9M2mSido_fused_bundle.json) を読み込めませんでした。\nlaunch_kvS9M2mSido_studio.py から起動してください。');
+        }
+      }
+
+      animate();
+    }
+
+    function onDataLoaded() {
+      const meta = BUNDLE_DATA.metadata;
+      document.getElementById('stat-frames').innerText = meta.total_frames.toLocaleString() + ' F';
+      document.getElementById('stat-duration').innerText = meta.total_duration + 's';
+      document.getElementById('stat-phrases').innerText = meta.num_phrases + ' ADUs';
+      document.getElementById('stat-words').innerText = meta.dictionary_info.total_words.toLocaleString() + ' 語';
+      document.getElementById('overlay-total-frames').innerText = meta.total_frames;
+      document.getElementById('txt-total-time').innerText = meta.total_duration + 's';
+      document.getElementById('seek-bar').max = meta.total_frames - 1;
+
+      buildSkeletonMeshes();
+      renderPhraseCards();
+      selectPhrase(0);
+      updateFrame(0);
+    }
+
+    // Three.js Setup
+    function setupThreeJS() {
+      const container = document.getElementById('canvas-container');
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0a0f1d);
+
+      camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+      setCameraPosition('upper');
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      container.appendChild(renderer.domElement);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.target.set(0, 1.1, 0);
+
+      // Lights
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      dirLight.position.set(3, 8, 5);
+      dirLight.castShadow = true;
+      scene.add(dirLight);
+
+      const blueRim = new THREE.DirectionalLight(0x38bdf8, 0.5);
+      blueRim.position.set(-4, 3, -3);
+      scene.add(blueRim);
+
+      // Floor Grid
+      const grid = new THREE.GridHelper(10, 20, 0x334155, 0x1e293b);
+      grid.position.y = 0;
+      scene.add(grid);
+
+      skeletonGroup = new THREE.Group();
+      scene.add(skeletonGroup);
+
+      window.addEventListener('resize', onWindowResize);
+    }
+
+    function onWindowResize() {
+      const container = document.getElementById('canvas-container');
+      if (!container) return;
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+
+    function setCameraPosition(mode) {
+      cameraMode = mode;
+      document.querySelectorAll('#btn-cam-upper, #btn-cam-full, #btn-cam-hands').forEach(b => {
+        b.className = 'px-2 py-0.5 bg-slate-700 text-slate-300 hover:bg-slate-600 rounded';
+      });
+
+      if (mode === 'upper') {
+        document.getElementById('btn-cam-upper').className = 'px-2 py-0.5 bg-cyan-600 text-white rounded font-medium';
+        camera.position.set(0, 1.4, 2.3);
+        if (controls) controls.target.set(0, 1.25, 0);
+      } else if (mode === 'full') {
+        document.getElementById('btn-cam-full').className = 'px-2 py-0.5 bg-cyan-600 text-white rounded font-medium';
+        camera.position.set(0, 1.2, 3.8);
+        if (controls) controls.target.set(0, 0.9, 0);
+      } else if (mode === 'hands') {
+        document.getElementById('btn-cam-hands').className = 'px-2 py-0.5 bg-cyan-600 text-white rounded font-medium';
+        camera.position.set(0.3, 1.3, 1.2);
+        if (controls) controls.target.set(0.2, 1.2, 0);
+      }
+    }
+
+    function resetCamera() {
+      setCameraPosition(cameraMode);
+    }
+
+    // Build 49 VRM Joint Meshes & 48 Bone Lines
+    function buildSkeletonMeshes() {
+      while (skeletonGroup.children.length > 0) {
+        skeletonGroup.remove(skeletonGroup.children[0]);
+      }
+      jointSpheres = [];
+      boneLines = [];
+
+      const numNodes = BUNDLE_DATA.metadata.num_nodes;
+      const chains = BUNDLE_DATA.skeleton_def.chains;
+
+      // Classify node color by chain
+      const nodeColors = new Array(numNodes).fill(0x94a3b8);
+      chains.central_axial.forEach(idx => nodeColors[idx] = 0x10b981); // Green
+      chains.radial_arm.forEach(idx => nodeColors[idx] = 0x3b82f6);    // Blue
+      chains.ulnar_grounding.forEach(idx => nodeColors[idx] = 0xef4444); // Red
+
+      // Joint spheres
+      const sphereGeo = new THREE.SphereGeometry(0.016, 12, 12);
+      const handSphereGeo = new THREE.SphereGeometry(0.009, 8, 8); // Finger joints slightly smaller
+
+      for (let i = 0; i < numNodes; i++) {
+        const isFinger = (i >= 25 && i <= 48);
+        const geo = isFinger ? handSphereGeo : sphereGeo;
+        const mat = new THREE.MeshStandardMaterial({
+          color: nodeColors[i],
+          roughness: 0.3,
+          metalness: 0.2
+        });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.castShadow = true;
+        skeletonGroup.add(mesh);
+        jointSpheres.push(mesh);
+      }
+
+      // Bone cylinder connections
+      const edges = BUNDLE_DATA.skeleton_def.edges;
+      edges.forEach(([p, c]) => {
+        const lineGeo = new THREE.BufferGeometry().setFromPoints([
+          new THREE.Vector3(0, 0, 0),
+          new THREE.Vector3(0, 1, 0)
+        ]);
+        
+        let boneCol = 0x64748b;
+        if (chains.radial_arm.includes(c)) boneCol = 0x60a5fa;
+        else if (chains.ulnar_grounding.includes(c)) boneCol = 0xf87171;
+        else if (chains.central_axial.includes(c)) boneCol = 0x34d399;
+
+        const lineMat = new THREE.LineBasicMaterial({ color: boneCol, linewidth: 2 });
+        const line = new THREE.Line(lineGeo, lineMat);
+        skeletonGroup.add(line);
+        boneLines.push({ line, p, c });
+      });
+    }
+
+    // Update Skeleton Pose for Frame t
+    function updateSkeletonPose(t) {
+      if (!BUNDLE_DATA || !BUNDLE_DATA.frames[t]) return;
+      const frameJoints = BUNDLE_DATA.frames[t];
+
+      // Update Spheres
+      for (let i = 0; i < jointSpheres.length; i++) {
+        if (frameJoints[i]) {
+          jointSpheres[i].position.set(frameJoints[i][0], frameJoints[i][1], frameJoints[i][2]);
+        }
+      }
+
+      // Update Bone Lines
+      boneLines.forEach(({ line, p, c }) => {
+        if (frameJoints[p] && frameJoints[c]) {
+          const pos = line.geometry.attributes.position;
+          pos.setXYZ(0, frameJoints[p][0], frameJoints[p][1], frameJoints[p][2]);
+          pos.setXYZ(1, frameJoints[c][0], frameJoints[c][1], frameJoints[c][2]);
+          pos.needsUpdate = true;
+        }
+      });
+    }
+
+    // Videos Setup & Switching
+    function setupVideos() {
+      video4D = document.getElementById('video-4d');
+      videoMP = document.getElementById('video-mp');
+
+      [video4D, videoMP].forEach(v => {
+        v.addEventListener('timeupdate', () => {
+          if (!isPlaying) return;
+          // Sync frame from primary video
+          if ((activeVideoMode === '4dhumans' && v === video4D) || 
+              (activeVideoMode === 'mediapipe' && v === videoMP) ||
+              (activeVideoMode === 'dual' && v === video4D)) {
+            const f = Math.floor(v.currentTime * 29.97003);
+            updateFrame(f, false);
+          }
+        });
+        v.addEventListener('error', () => {
+          document.getElementById('video-status').innerText = '動画ロード待機 (サーバー確認)';
+        });
+      });
+    }
+
+    function switchVideo(mode) {
+      activeVideoMode = mode;
+      document.querySelectorAll('#btn-vid-4d, #btn-vid-mp, #btn-vid-dual').forEach(b => {
+        b.className = 'px-2.5 py-0.5 bg-slate-800 text-slate-300 hover:bg-slate-700 rounded text-[11px]';
+      });
+
+      if (mode === '4dhumans') {
+        document.getElementById('btn-vid-4d').className = 'px-2.5 py-0.5 bg-cyan-600 text-white rounded text-[11px] font-medium';
+        video4D.classList.remove('hidden');
+        videoMP.classList.add('hidden');
+        video4D.className = 'h-full w-full object-contain';
+      } else if (mode === 'mediapipe') {
+        document.getElementById('btn-vid-mp').className = 'px-2.5 py-0.5 bg-cyan-600 text-white rounded text-[11px] font-medium';
+        videoMP.classList.remove('hidden');
+        video4D.classList.add('hidden');
+        videoMP.className = 'h-full w-full object-contain';
+      } else if (mode === 'dual') {
+        document.getElementById('btn-vid-dual').className = 'px-2.5 py-0.5 bg-cyan-600 text-white rounded text-[11px] font-medium';
+        video4D.classList.remove('hidden');
+        videoMP.classList.remove('hidden');
+        video4D.className = 'h-full w-1/2 object-contain border-r border-slate-800';
+        videoMP.className = 'h-full w-1/2 object-contain';
+      }
+    }
+
+    // Playback Loop
+    function animate() {
+      requestAnimationFrame(animate);
+
+      if (isPlaying && BUNDLE_DATA) {
+        currentFrame += (1.0 * playbackSpeed);
+        if (document.getElementById('chk-loop-phrase').checked) {
+          const p = BUNDLE_DATA.phrases[currentPhraseIndex];
+          if (currentFrame >= p.end_frame) {
+            currentFrame = p.start_frame;
+          }
+        } else if (currentFrame >= BUNDLE_DATA.metadata.total_frames) {
+          currentFrame = 0;
+          pause();
+        }
+        updateFrame(Math.floor(currentFrame), true);
+      }
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    function updateFrame(f, syncVideo = true) {
+      if (!BUNDLE_DATA) return;
+      currentFrame = Math.max(0, Math.min(BUNDLE_DATA.metadata.total_frames - 1, f));
+
+      // 1. Update Skeleton
+      updateSkeletonPose(currentFrame);
+
+      // 2. Update UI
+      const timeSec = (currentFrame / BUNDLE_DATA.metadata.fps).toFixed(2);
+      document.getElementById('overlay-frame').innerText = currentFrame;
+      document.getElementById('overlay-time').innerText = timeSec + 's';
+      document.getElementById('txt-current-time').innerText = timeSec + 's';
+      document.getElementById('seek-bar').value = currentFrame;
+
+      // 3. Find current phrase
+      const pIdx = BUNDLE_DATA.phrases.findIndex(p => currentFrame >= p.start_frame && currentFrame < p.end_frame);
+      if (pIdx !== -1 && pIdx !== currentPhraseIndex) {
+        selectPhrase(pIdx, false);
+      }
+
+      // 4. Sync Video
+      if (syncVideo) {
+        const targetTime = currentFrame / BUNDLE_DATA.metadata.fps;
+        if (Math.abs(video4D.currentTime - targetTime) > 0.15) video4D.currentTime = targetTime;
+        if (Math.abs(videoMP.currentTime - targetTime) > 0.15) videoMP.currentTime = targetTime;
+      }
+    }
+
+    function togglePlay() {
+      if (isPlaying) pause();
+      else play();
+    }
+
+    function play() {
+      isPlaying = true;
+      document.getElementById('icon-play').innerText = '⏸ 一時停止';
+      document.getElementById('btn-play').className = 'px-4 py-1.5 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-md text-xs flex items-center gap-1.5 shadow';
+      video4D.play().catch(() => {});
+      videoMP.play().catch(() => {});
+    }
+
+    function pause() {
+      isPlaying = false;
+      document.getElementById('icon-play').innerText = '▶ 再生';
+      document.getElementById('btn-play').className = 'px-4 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold rounded-md text-xs flex items-center gap-1.5 shadow';
+      video4D.pause();
+      videoMP.pause();
+    }
+
+    function setSpeed(speed) {
+      playbackSpeed = speed;
+      video4D.playbackRate = speed;
+      videoMP.playbackRate = speed;
+      document.querySelectorAll('.speed-btn').forEach(b => {
+        b.className = 'speed-btn px-2 py-1 bg-slate-800 hover:bg-slate-700 rounded text-slate-300';
+      });
+      event.target.className = 'speed-btn px-2 py-1 bg-cyan-900 text-cyan-300 border border-cyan-700 rounded font-semibold';
+    }
+
+    // Seek bar listener
+    document.getElementById('seek-bar').addEventListener('input', (e) => {
+      const f = parseInt(e.target.value);
+      updateFrame(f, true);
+    });
+
+    // Language Selector
+    function setLanguage(lang) {
+      currentLanguage = lang;
+      document.querySelectorAll('[id^="lang-btn-"]').forEach(b => {
+        b.className = 'px-2.5 py-1 rounded-md font-medium text-xs text-slate-300 hover:text-white transition';
+      });
+      document.getElementById(`lang-btn-${lang}`).className = 'px-2.5 py-1 rounded-md font-medium text-xs bg-indigo-600 text-white shadow';
+      
+      updateActivePhraseDisplay();
+      renderPhraseCards();
+    }
+
+    // Select Phrase
+    function selectPhrase(idx, seekToStart = true) {
+      if (!BUNDLE_DATA || !BUNDLE_DATA.phrases[idx]) return;
+      currentPhraseIndex = idx;
+      const p = BUNDLE_DATA.phrases[idx];
+
+      if (seekToStart) {
+        updateFrame(p.start_frame, true);
+      }
+
+      updateActivePhraseDisplay();
+
+      // Highlight in list
+      document.querySelectorAll('.phrase-card').forEach((el, i) => {
+        if (i === idx) {
+          el.classList.add('border-cyan-500', 'bg-slate-800');
+          el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+          el.classList.remove('border-cyan-500', 'bg-slate-800');
+        }
+      });
+    }
+
+    function updateActivePhraseDisplay() {
+      if (!BUNDLE_DATA) return;
+      const p = BUNDLE_DATA.phrases[currentPhraseIndex];
+      const action = p.laban_action;
+
+      document.getElementById('active-phrase-id').innerText = p.id;
+      document.getElementById('active-phrase-time').innerText = `${p.start_time.toFixed(2)}s ~ ${p.end_time.toFixed(2)}s`;
+      document.getElementById('active-phrase-dur').innerText = `${p.duration.toFixed(2)}s`;
+      document.getElementById('active-dominant-chain').innerText = p.dominant_chain.display;
+
+      // Action Badge
+      const badge = document.getElementById('active-action-badge');
+      badge.className = `px-2.5 py-1 rounded text-xs font-bold badge-${action.action.toLowerCase()} flex items-center gap-1`;
+      document.getElementById('active-action-icon').innerText = action.icon;
+      document.getElementById('active-action-name').innerText = action.name;
+
+      const overlayAction = document.getElementById('overlay-action');
+      overlayAction.className = `px-2 py-0.5 rounded text-[11px] font-sans font-bold badge-${action.action.toLowerCase()}`;
+      overlayAction.innerText = `${action.icon} ${action.name}`;
+
+      // Texture Bars
+      const tex = p.texture;
+      document.getElementById('val-weight').innerText = tex.weight;
+      document.getElementById('bar-weight').style.width = (tex.weight * 100) + '%';
+      document.getElementById('val-time').innerText = tex.time;
+      document.getElementById('bar-time').style.width = (tex.time * 100) + '%';
+      document.getElementById('val-space').innerText = tex.space;
+      document.getElementById('bar-space').style.width = (tex.space * 100) + '%';
+      document.getElementById('val-flow').innerText = tex.flow;
+      document.getElementById('bar-flow').style.width = (tex.flow * 100) + '%';
+
+      document.getElementById('val-s-rad').innerText = tex.s_rad;
+      document.getElementById('val-s-uln').innerText = tex.s_uln;
+
+      // Matches for active language
+      const matches = p.matches[currentLanguage] || [];
+      const topMatch = matches[0] || null;
+
+      if (topMatch) {
+        document.getElementById('active-match-word').innerText = topMatch.word;
+        document.getElementById('active-match-ipa').innerText = topMatch.ipa ? `/${topMatch.ipa}/` : '';
+        document.getElementById('active-match-sim').innerText = `適合度: ${(topMatch.similarity * 100).toFixed(1)}%`;
+        document.getElementById('active-match-meaning').innerText = topMatch.meaning_en || topMatch.rationale || '音象徴的質感適合';
+      } else {
+        document.getElementById('active-match-word').innerText = '---';
+        document.getElementById('active-match-ipa').innerText = '';
+        document.getElementById('active-match-sim').innerText = '';
+        document.getElementById('active-match-meaning').innerText = '候補なし';
+      }
+
+      // Alternative matches chips
+      const altContainer = document.getElementById('active-alt-matches');
+      altContainer.innerHTML = '';
+      matches.slice(1, 3).forEach(alt => {
+        const chip = document.createElement('span');
+        chip.className = 'px-2 py-0.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded text-[11px] border border-slate-700 cursor-pointer';
+        chip.title = `${alt.meaning_en || ''} (${(alt.similarity * 100).toFixed(1)}%)`;
+        chip.innerText = `${alt.word} (${(alt.similarity * 100).toFixed(0)}%)`;
+        chip.onclick = () => {
+          document.getElementById('active-match-word').innerText = alt.word;
+          document.getElementById('active-match-ipa').innerText = alt.ipa ? `/${alt.ipa}/` : '';
+          document.getElementById('active-match-sim').innerText = `適合度: ${(alt.similarity * 100).toFixed(1)}%`;
+          document.getElementById('active-match-meaning').innerText = alt.meaning_en || alt.rationale;
+        };
+        altContainer.appendChild(chip);
+      });
+    }
+
+    function prevPhrase() {
+      if (currentPhraseIndex > 0) selectPhrase(currentPhraseIndex - 1);
+    }
+    function nextPhrase() {
+      if (BUNDLE_DATA && currentPhraseIndex < BUNDLE_DATA.phrases.length - 1) selectPhrase(currentPhraseIndex + 1);
+    }
+
+    // Filter by Laban Action
+    function filterAction(action) {
+      currentFilterAction = action;
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        b.className = 'filter-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-400';
+      });
+      event.target.className = 'filter-btn px-2.5 py-1 rounded bg-slate-800 text-cyan-300 font-semibold border border-slate-700';
+      renderPhraseCards();
+    }
+
+    function onSearchInput() {
+      searchQuery = document.getElementById('input-search').value.toLowerCase().trim();
+      renderPhraseCards();
+    }
+
+    // Render Phrase Cards
+    function renderPhraseCards() {
+      const container = document.getElementById('phrase-cards-list');
+      if (!BUNDLE_DATA) return;
+      container.innerHTML = '';
+
+      BUNDLE_DATA.phrases.forEach((p, idx) => {
+        const action = p.laban_action;
+        if (currentFilterAction !== 'ALL' && action.action !== currentFilterAction) return;
+
+        const matches = p.matches[currentLanguage] || [];
+        const top = matches[0] || null;
+        const word = top ? top.word : '';
+        const meaning = top ? (top.meaning_en || '') : '';
+
+        if (searchQuery) {
+          const matchWord = word.toLowerCase().includes(searchQuery);
+          const matchAction = action.name.toLowerCase().includes(searchQuery);
+          const matchMeaning = meaning.toLowerCase().includes(searchQuery);
+          if (!matchWord && !matchAction && !matchMeaning) return;
+        }
+
+        const isSelected = (idx === currentPhraseIndex);
+        const card = document.createElement('div');
+        card.className = `phrase-card p-2.5 rounded-lg border border-slate-800 bg-slate-850 hover:bg-slate-800 transition cursor-pointer flex items-center justify-between ${isSelected ? 'border-cyan-500 bg-slate-800' : ''}`;
+        card.onclick = () => selectPhrase(idx, true);
+
+        card.innerHTML = `
+          <div class="flex items-center space-x-3">
+            <span class="w-7 h-7 rounded flex items-center justify-center text-sm badge-${action.action.toLowerCase()}">
+              ${action.icon}
+            </span>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-xs text-slate-200">#${p.id} ${action.name}</span>
+                <span class="text-[10px] font-mono text-slate-400">${p.start_time.toFixed(1)}s ~ ${p.end_time.toFixed(1)}s</span>
+              </div>
+              <div class="text-[11px] text-cyan-300 flex items-center gap-1.5 mt-0.5">
+                <span class="font-bold">${word || '---'}</span>
+                <span class="text-[10px] text-slate-400 truncate max-w-[200px]">${meaning}</span>
+              </div>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="text-[11px] font-bold text-emerald-400">${top ? (top.similarity * 100).toFixed(0) + '%' : ''}</span>
+            <div class="text-[9px] text-slate-500 font-mono">${p.dominant_chain.key === 'radial_arm' ? '橈側(親指)' : (p.dominant_chain.key === 'ulnar_grounding' ? '尺側(小指)' : '全身軸')}</div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function updateChainVisibility() {
+      const showCentral = document.getElementById('chk-chain-central').checked;
+      const showRadial = document.getElementById('chk-chain-radial').checked;
+      const showUlnar = document.getElementById('chk-chain-ulnar').checked;
+      const chains = BUNDLE_DATA.skeleton_def.chains;
+
+      jointSpheres.forEach((sphere, idx) => {
+        let visible = true;
+        if (chains.radial_arm.includes(idx)) visible = showRadial;
+        else if (chains.ulnar_grounding.includes(idx)) visible = showUlnar;
+        else if (chains.central_axial.includes(idx)) visible = showCentral;
+        sphere.visible = visible;
+      });
+
+      boneLines.forEach(({ line, c }) => {
+        let visible = true;
+        if (chains.radial_arm.includes(c)) visible = showRadial;
+        else if (chains.ulnar_grounding.includes(c)) visible = showUlnar;
+        else if (chains.central_axial.includes(c)) visible = showCentral;
+        line.visible = visible;
+      });
+    }
+
+    // Start App
+    window.onload = init;
+  </script>
+</body>
+</html>
