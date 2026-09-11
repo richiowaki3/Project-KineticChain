@@ -26,7 +26,8 @@ class OnomaSearcher:
         target_effort: np.ndarray, # (4,) array [weight, time, space, flow] in 0-9
         top_k: int = 5,
         weights: Optional[np.ndarray] = None, # (4,) dimension weights
-        sigma: float = 5.0
+        sigma: float = 5.0,
+        language: Optional[str] = None
     ) -> List[Tuple[OnomaEntry, float, float]]:
         """
         Finds Top-K onomatopoeia closest to the target Laban Effort vector (Category A).
@@ -42,10 +43,17 @@ class OnomaSearcher:
             diff = matrix - target
 
         distances = np.linalg.norm(diff, axis=1) # (N,)
+
+        if language is not None:
+            mask = np.array([e.language.upper() == language.upper() for e in self.dict.entries], dtype=bool)
+            distances[~mask] = np.inf
+
         sorted_indices = np.argsort(distances)[:top_k]
 
         results = []
         for idx in sorted_indices:
+            if np.isinf(distances[idx]):
+                break
             entry = self.dict[idx]
             d = float(distances[idx])
             sim = compute_similarity(d, sigma=sigma)
@@ -62,7 +70,8 @@ class OnomaSearcher:
         weight_a: float = 1.0,
         weight_b: float = 0.3,
         weight_d: float = 0.2,
-        sigma: float = 8.0
+        sigma: float = 8.0,
+        language: Optional[str] = None
     ) -> List[Tuple[OnomaEntry, float, Dict[str, float]]]:
         """
         Multi-category weighted distance search across Categories A, B, and D.
@@ -93,10 +102,17 @@ class OnomaSearcher:
             total_dist_sq += weight_d * dist_sq_d
 
         total_dist = np.sqrt(total_dist_sq)
+
+        if language is not None:
+            mask = np.array([e.language.upper() == language.upper() for e in self.dict.entries], dtype=bool)
+            total_dist[~mask] = np.inf
+
         sorted_indices = np.argsort(total_dist)[:top_k]
 
         results = []
         for idx in sorted_indices:
+            if np.isinf(total_dist[idx]):
+                break
             entry = self.dict[idx]
             d = float(total_dist[idx])
             sim = compute_similarity(d, sigma=sigma)

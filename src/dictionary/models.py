@@ -63,38 +63,61 @@ class PhrasingVector:
 
 @dataclass
 class OnomaEntry:
-    """A single Japanese onomatopoeia dictionary entry (764 words total)."""
+    """Multilingual onomatopoeia dictionary entry (7,356 words across JP, KR, AF)."""
     word: str
-    ipa_original: str
-    ipa_clean: str
-    ipa_changed: int
     effort: EffortVector
     acoustic: AcousticVector
     extended: ExtendedVector
     phrasing: PhrasingVector
+    language: str = "JP"
+    lang_code: str = "ja"
+    seed_word: str = ""
+    meaning_en: str = ""
+    category: str = ""
+    domain: str = ""
+    morph_type: str = ""
+    ipa: str = ""
+    ipa_original: str = ""
+    ipa_clean: str = ""
+    ipa_changed: int = 0
     rationale: str = ""
     flags: str = ""
-    morph_type: str = ""
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> "OnomaEntry":
+        ipa_val = d.get("ipa", d.get("ipa_clean", ""))
         return cls(
             word=d["word"],
-            ipa_original=d.get("ipa_original", ""),
-            ipa_clean=d.get("ipa_clean", ""),
-            ipa_changed=int(d.get("ipa_changed", 0)),
             effort=EffortVector(**d["effort"]),
             acoustic=AcousticVector(**d["acoustic"]),
             extended=ExtendedVector(**d["extended"]),
             phrasing=PhrasingVector(**d["phrasing"]),
+            language=d.get("language", "JP"),
+            lang_code=d.get("lang_code", "ja"),
+            seed_word=d.get("seed_word", d["word"]),
+            meaning_en=d.get("meaning_en", ""),
+            category=d.get("category", ""),
+            domain=d.get("domain", ""),
+            morph_type=d.get("morph_type", ""),
+            ipa=ipa_val,
+            ipa_original=d.get("ipa_original", ipa_val),
+            ipa_clean=d.get("ipa_clean", ipa_val),
+            ipa_changed=int(d.get("ipa_changed", 0)),
             rationale=d.get("rationale", ""),
-            flags=d.get("flags", ""),
-            morph_type=d.get("morph_type", "")
+            flags=d.get("flags", "")
         )
 
     def to_dict(self) -> Dict[str, Any]:
         return {
             "word": self.word,
+            "language": self.language,
+            "lang_code": self.lang_code,
+            "seed_word": self.seed_word,
+            "meaning_en": self.meaning_en,
+            "category": self.category,
+            "domain": self.domain,
+            "morph_type": self.morph_type,
+            "ipa": self.ipa,
             "ipa_original": self.ipa_original,
             "ipa_clean": self.ipa_clean,
             "ipa_changed": self.ipa_changed,
@@ -103,8 +126,7 @@ class OnomaEntry:
             "extended": asdict(self.extended),
             "phrasing": asdict(self.phrasing),
             "rationale": self.rationale,
-            "flags": self.flags,
-            "morph_type": self.morph_type
+            "flags": self.flags
         }
 
     def get_composite_vector(self) -> np.ndarray:

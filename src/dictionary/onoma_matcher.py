@@ -12,7 +12,7 @@ from ..core.types import AtomicDanceUnit
 from .adu_encoder import ADUVectorEncoder
 from .models import OnomaEntry
 from .dictionary import OnomaDictionary, get_default_data_path
-from .search import OnomaSearcher
+from .search import OnomaSearcher, compute_similarity
 
 
 def find_dictionary_json_path() -> Path:
@@ -54,7 +54,8 @@ class OnomaMatcher:
         weight_a: float = 1.0,
         weight_b: float = 0.3,
         weight_d: float = 0.2,
-        sigma: float = 8.0
+        sigma: float = 8.0,
+        language: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """
         Finds Top-K matching onomatopoeia for a given ADU.
@@ -73,15 +74,19 @@ class OnomaMatcher:
             weight_a=weight_a,
             weight_b=weight_b,
             weight_d=weight_d,
-            sigma=sigma
+            sigma=sigma,
+            language=language
         )
 
         tags = []
         for entry, sim, breakdown in raw_results:
             tag = {
                 "word": entry.word,
+                "language": entry.language,
+                "lang_code": entry.lang_code,
+                "meaning_en": entry.meaning_en,
                 "similarity": round(float(sim), 3),
-                "ipa": entry.ipa_clean or entry.ipa_original,
+                "ipa": entry.ipa or entry.ipa_clean or entry.ipa_original,
                 "morph_type": entry.morph_type,
                 "effort": {
                     "weight": entry.effort.weight,
@@ -102,7 +107,8 @@ class OnomaMatcher:
         top_k: int = 3,
         weight_a: float = 1.0,
         weight_b: float = 0.3,
-        weight_d: float = 0.2
+        weight_d: float = 0.2,
+        language: Optional[str] = None
     ) -> None:
         """Annotates a list of ADU segments in-place with their top onomatopoeia tags."""
         for seg in segments:
@@ -111,7 +117,8 @@ class OnomaMatcher:
                 top_k=top_k,
                 weight_a=weight_a,
                 weight_b=weight_b,
-                weight_d=weight_d
+                weight_d=weight_d,
+                language=language
             )
             seg.onomatopoeia_tags = tags
 
@@ -120,13 +127,15 @@ class OnomaMatcher:
         word: str,
         segments: List[AtomicDanceUnit],
         min_similarity: float = 0.70,
-        top_k: int = 5
+        top_k: int = 5,
+        sigma: float = 6.0,
+        language: Optional[str] = None
     ) -> List[Tuple[AtomicDanceUnit, float]]:
         """
         Finds dance segments in a performance matching a specific onomatopoeia word.
         Returns list of (segment, similarity).
         """
-        entry = self.dictionary.get(word)
+        entry = self.dictionary.get(word, language=language)
         if entry is None:
             return []
 
@@ -135,7 +144,7 @@ class OnomaMatcher:
         for seg in segments:
             encoded_a = ADUVectorEncoder.encode_category_a(seg.texture_profile)
             dist = float(np.linalg.norm(encoded_a - target_a))
-            sim = float(np.exp(-dist / 3.0))
+            sim = compute_similarity(dist, sigma=sigma)
             if sim >= min_similarity:
                 matches.append((seg, round(sim, 3)))
 

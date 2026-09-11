@@ -89,8 +89,31 @@ def test_adu_vector_encoder():
 
 def test_onoma_matcher_loading():
     matcher = OnomaMatcher()
-    assert len(matcher.dictionary) == 764
-    assert "あたふた" in matcher.dictionary.words()
+    assert len(matcher.dictionary) == 7356
+    counts = matcher.dictionary.language_counts()
+    assert counts["JP"] == 2061
+    assert counts["KR"] == 5050
+    assert counts["AF"] == 245
+    assert "あたふた" in matcher.dictionary.words(language="JP")
+    assert "달랑" in matcher.dictionary.words(language="KR")
+    assert "rederede" in matcher.dictionary.words(language="AF")
+
+
+def test_multilingual_matching():
+    matcher = OnomaMatcher()
+    adu_heavy = make_dummy_adu(weight=0.9, impulsive=0.8, fluid=0.2)
+
+    # Korean matching filter
+    kr_tags = matcher.match_adu(adu_heavy, top_k=3, language="KR")
+    assert len(kr_tags) == 3
+    for t in kr_tags:
+        assert t["language"] == "KR"
+
+    # Japanese matching filter
+    jp_tags = matcher.match_adu(adu_heavy, top_k=3, language="JP")
+    assert len(jp_tags) == 3
+    for t in jp_tags:
+        assert t["language"] == "JP"
 
 
 def test_matching_heavy_stomp():

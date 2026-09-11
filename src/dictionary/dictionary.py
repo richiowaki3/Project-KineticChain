@@ -29,13 +29,14 @@ def get_default_data_path() -> Path:
 
 class OnomaDictionary:
     """
-    Manages 764 onomatopoeia entries and provides fast vectorized lookups.
+    Manages 7,356 onomatopoeia entries (JP, KR, AF) and provides fast vectorized lookups.
     """
 
     def __init__(self, data_path: Optional[Path] = None):
         self.data_path = Path(data_path) if data_path else get_default_data_path()
         self.entries: List[OnomaEntry] = []
         self._by_word: Dict[str, OnomaEntry] = {}
+        self._by_word_and_lang: Dict[tuple, OnomaEntry] = {}
         self._matrix_a: Optional[np.ndarray] = None # (N, 4)
         self._matrix_composite: Optional[np.ndarray] = None
         self._load()
@@ -45,7 +46,13 @@ class OnomaDictionary:
             raw_list = json.load(f)
 
         self.entries = [OnomaEntry.from_dict(item) for item in raw_list]
-        self._by_word = {entry.word: entry for entry in self.entries}
+        self._by_word = {}
+        self._by_word_and_lang = {}
+        for entry in self.entries:
+            if entry.word not in self._by_word:
+                self._by_word[entry.word] = entry
+            self._by_word_and_lang[(entry.word, entry.language.upper())] = entry
+
         self._build_matrices()
 
     def _build_matrices(self):
@@ -69,12 +76,26 @@ class OnomaDictionary:
     def __getitem__(self, idx: int) -> OnomaEntry:
         return self.entries[idx]
 
-    def get(self, word: str) -> Optional[OnomaEntry]:
-        """Lookup by headword (e.g. 'あたふた', 'ピシッ', 'ぴたっ')."""
+    def get(self, word: str, language: Optional[str] = None) -> Optional[OnomaEntry]:
+        """Lookup by headword (e.g. 'あたふた', '달랑', 'tititi'), optionally filtered by language."""
+        if language:
+            key = (word, language.upper())
+            if key in self._by_word_and_lang:
+                return self._by_word_and_lang[key]
         return self._by_word.get(word)
 
-    def words(self) -> List[str]:
+    def words(self, language: Optional[str] = None) -> List[str]:
+        if language:
+            return [e.word for e in self.entries if e.language.upper() == language.upper()]
         return list(self._by_word.keys())
+
+    def language_counts(self) -> Dict[str, int]:
+        """Returns vocabulary distribution across languages."""
+        counts: Dict[str, int] = {}
+        for e in self.entries:
+            counts[e.language] = counts.get(e.language, 0) + 1
+        counts["total"] = len(self.entries)
+        return counts
 
     @property
     def matrix_a(self) -> np.ndarray:
@@ -88,6 +109,7 @@ class OnomaDictionary:
 
     def filter(
         self,
+        language: Optional[str] = None,
         morph_type: Optional[str] = None,
         min_weight: Optional[int] = None,
         max_weight: Optional[int] = None,
@@ -98,9 +120,11 @@ class OnomaDictionary:
         min_flow: Optional[int] = None,
         max_flow: Optional[int] = None,
     ) -> List[OnomaEntry]:
-        """Filters entries by morphology or Laban Effort bounds."""
+        """Filters entries by language, morphology, or Laban Effort bounds."""
         results = []
         for e in self.entries:
+            if language and e.language.upper() != language.upper():
+                continue
             if morph_type and morph_type not in e.morph_type:
                 continue
             eff = e.effort
