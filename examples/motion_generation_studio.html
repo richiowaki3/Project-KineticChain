@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KineticChain - モーション生成アーキテクチャ・スタジオ</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --border: #1e293b;
+      --radial-blue: #38bdf8;
+      --ulnar-red: #f43f5e;
+      --axial-green: #10b981;
+      --lower-amber: #f59e0b;
+      --purple-accent: #a855f7;
+    }
+    body {
+      background-color: var(--bg);
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    .glass-panel {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+    }
+    .tab-btn.active {
+      background-color: #3b82f6;
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+    }
+    input[type=range] {
+      accent-color: #3b82f6;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden bg-slate-950 text-slate-100">
+
+  <!-- TOP NAVIGATION HEADER -->
+  <header class="flex-none h-16 border-b border-slate-800 bg-slate-900/90 backdrop-blur px-6 flex items-center justify-between z-20">
+    <div class="flex items-center space-x-4">
+      <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-500 flex items-center justify-center font-bold text-lg shadow-lg shadow-blue-500/20">
+        KC
+      </div>
+      <div>
+        <h1 class="text-base font-bold tracking-wide flex items-center gap-2">
+          <span>Project KineticChain</span>
+          <span class="text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">Phase 3: Generation Architecture</span>
+        </h1>
+        <p class="text-xs text-slate-400">3階層分離モーション生成パイプライン（下半身：重さ × 上半身：質感 × 全体：バランス）</p>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="flex bg-slate-800/80 p-1 rounded-lg border border-slate-700/60 text-xs font-medium">
+      <button id="tabBtn1" onclick="switchTab('tab1')" class="tab-btn active px-3.5 py-1.5 rounded-md transition-all flex items-center gap-1.5">
+        <span>🗺️</span> 全体アーキテクチャ
+      </button>
+      <button id="tabBtn2" onclick="switchTab('tab2')" class="tab-btn px-3.5 py-1.5 rounded-md transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
+        <span>🕹️</span> リアルタイム生成シミュレータ
+      </button>
+      <button id="tabBtn3" onclick="switchTab('tab3')" class="tab-btn px-3.5 py-1.5 rounded-md transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
+        <span>💃</span> AIパートナー対話ループ
+      </button>
+      <button id="tabBtn4" onclick="switchTab('tab4')" class="tab-btn px-3.5 py-1.5 rounded-md transition-all flex items-center gap-1.5 text-slate-400 hover:text-slate-200">
+        <span>💻</span> 実装モジュール設計
+      </button>
+    </div>
+
+    <div class="flex items-center space-x-3 text-xs">
+      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        Coupled Synthesis Engine Ready
+      </span>
+    </div>
+  </header>
+
+  <!-- MAIN VIEW CONTAINER -->
+  <main class="flex-1 relative overflow-hidden">
+
+    <!-- ==================== TAB 1: SYSTEM ARCHITECTURE & DATAFLOW ==================== -->
+    <div id="tab1" class="absolute inset-0 p-6 overflow-y-auto custom-scrollbar flex flex-col gap-6">
+      <!-- HERO BANNER -->
+      <div class="glass-panel p-5 rounded-xl border border-blue-900/50 bg-gradient-to-r from-blue-950/40 via-slate-900/80 to-purple-950/30">
+        <div class="max-w-4xl">
+          <h2 class="text-lg font-bold text-white mb-1.5 flex items-center gap-2">
+            <span>なぜ「下半身」と「上半身」を分離して生成するのか？</span>
+          </h2>
+          <p class="text-xs text-slate-300 leading-relaxed mb-3">
+            従来の全身一括生成AI（Diffusionモデル等）では、<strong>足の滑り（Foot Skating）</strong>や、全身がのっぺりと平均化されてダンス特有のキレ・質感が失われる問題がありました。
+            本アーキテクチャでは、<strong>「重さ・リズム・接地」を司る下半身</strong>と、<strong>「オノマトペ・感情・運動連鎖」を司る上半身</strong>を独立して生成し、<strong>「生体力学バランス（CoM/ZMP）」を司る体幹カプラー</strong>で物理的に結合することで、滑らない力強いステップと繊細な表現質感を両立します。
+          </p>
+          <div class="grid grid-cols-3 gap-3 text-xs">
+            <div class="bg-amber-950/40 border border-amber-500/40 p-2.5 rounded-lg">
+              <span class="font-bold text-amber-400 block mb-0.5">① 下半身：重さ・リズム軸</span>
+              <span class="text-slate-300">接地拘束（速度=0）、ビート同期、衝撃加速度、垂直ドロップによる重厚感</span>
+            </div>
+            <div class="bg-blue-950/40 border border-blue-500/40 p-2.5 rounded-lg">
+              <span class="font-bold text-blue-400 block mb-0.5">② 上半身：質感・オノマトペ軸</span>
+              <span class="text-slate-300">橈骨系（開き）vs 尺骨系（巻き）、仮想剛性・粘性（K, B）、急峻度（Jerk）</span>
+            </div>
+            <div class="bg-emerald-950/40 border border-emerald-500/40 p-2.5 rounded-lg">
+              <span class="font-bold text-emerald-400 block mb-0.5">③ 体幹・全体：生体力学カプラー</span>
+              <span class="text-slate-300">重心（CoM）と圧力中心（ZMP）の足底支持面（BoS）制御、脊柱カウンターバランス</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FULL PIPELINE FLOWCHART -->
+      <div class="glass-panel p-6 rounded-xl">
+        <h3 class="text-sm font-bold text-slate-200 mb-4 flex items-center justify-between">
+          <span class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+            エンド・ツー・エンド モーション生成データフロー（入力 〜 3層生成 〜 VRM出力）
+          </span>
+          <span class="text-xs font-normal text-slate-400">Interactive Pipeline Architecture</span>
+        </h3>
+
+        <!-- Flowchart Cards -->
+        <div class="grid grid-cols-12 gap-4 items-stretch">
+          
+          <!-- INPUT STAGE (Col 3) -->
+          <div class="col-span-3 flex flex-col gap-3">
+            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+              <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300">Stage 0</span> 入力シグナル (Prompts)
+            </div>
+            
+            <!-- Music Input -->
+            <div class="p-3.5 rounded-lg bg-slate-900 border border-slate-700/80 hover:border-blue-500/60 transition-all">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-bold text-sky-400">🎵 音楽 / ビート解析</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-sky-950 text-sky-300 border border-sky-800">Audio Stream</span>
+              </div>
+              <p class="text-[11px] text-slate-400">BPM, ドラムオンセット, 小節フレーズ, エネルギーエンベロープ</p>
+            </div>
+
+            <!-- Onomatopoeia Prompt -->
+            <div class="p-3.5 rounded-lg bg-slate-900 border border-slate-700/80 hover:border-purple-500/60 transition-all">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-bold text-purple-400">🏷️ 質感オノマトペ指令</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-purple-950 text-purple-300 border border-purple-800">764語 辞書</span>
+              </div>
+              <p class="text-[11px] text-slate-400">「ドシッ」「サラッ」「パキッ」等から Effort / 音響 / 流体ベクトルを展開</p>
+            </div>
+
+            <!-- Partner State -->
+            <div class="p-3.5 rounded-lg bg-slate-900 border border-slate-700/80 hover:border-emerald-500/60 transition-all">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-bold text-emerald-400">👤 パートナー姿勢・位置</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-800">Webcam / VR</span>
+              </div>
+              <p class="text-[11px] text-slate-400">人間のステップ位相, 間合い距離, 上半身の質感傾向をリアルタイム追従</p>
+            </div>
+          </div>
+
+          <!-- CONNECTOR ARROW -->
+          <div class="col-span-1 flex flex-col justify-around items-center text-slate-600 font-mono text-xl select-none">
+            <div>➔</div>
+            <div>➔</div>
+            <div>➔</div>
+          </div>
+
+          <!-- GENERATION CORE (Col 5) -->
+          <div class="col-span-5 flex flex-col gap-3">
+            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+              <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300">Stage 1</span> 3層非同期生成エンジン (Core Tiers)
+            </div>
+
+            <!-- Tier 1: Lower Body -->
+            <div class="p-3.5 rounded-lg bg-gradient-to-r from-amber-950/40 to-slate-900 border border-amber-600/50 shadow-sm">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                  下半身シーケンサー (LowerBodySequencer)
+                </span>
+                <span class="text-[10px] text-amber-300 font-mono">Weight & Grounding</span>
+              </div>
+              <ul class="text-[11px] text-slate-300 space-y-1">
+                <li>• <strong>接地状態決定:</strong> 両足支持(Double Stance) / 遊脚(Swing Phase)</li>
+                <li>• <strong>物理的接地拘束:</strong> 接地中の足裏速度を厳密にゼロ拘束 ($v_{foot} = 0$)</li>
+                <li>• <strong>重さ変調:</strong> 沈み込み深さ $\Delta y_{pelvis}$ と着地衝撃度 $a_{impact}$ を制御</li>
+              </ul>
+            </div>
+
+            <!-- Tier 2: Upper Body -->
+            <div class="p-3.5 rounded-lg bg-gradient-to-r from-blue-950/40 to-slate-900 border border-blue-600/50 shadow-sm">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                  上半身テクスチャ変調器 (UpperBodyTextureModulator)
+                </span>
+                <span class="text-[10px] text-blue-300 font-mono">Texture & 3-Chain</span>
+              </div>
+              <ul class="text-[11px] text-slate-300 space-y-1">
+                <li>• <strong>運動連鎖分離:</strong> 橈骨系(外向リーチ/胸郭) vs 尺骨系(ホールド/巻き込み)</li>
+                <li>• <strong>インピーダンス制御:</strong> 仮想剛性 $K$・粘性 $B$ でキレと脱力を動的変化</li>
+                <li>• <strong>オノマトペ反映:</strong> 急峻性(Time), 直接性(Space), 流動性(Flow)を関節軌道へ注入</li>
+              </ul>
+            </div>
+
+            <!-- Tier 3: Balance Coupler -->
+            <div class="p-3.5 rounded-lg bg-gradient-to-r from-emerald-950/40 to-slate-900 border border-emerald-600/50 shadow-sm">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  全体生体力学カプラー (WholeBodyBalanceCoupler)
+                </span>
+                <span class="text-[10px] text-emerald-300 font-mono">ZMP & Spine Integration</span>
+              </div>
+              <ul class="text-[11px] text-slate-300 space-y-1">
+                <li>• <strong>重心制御:</strong> 上半身の慣性モーメントを骨盤逆位相シフトで相殺</li>
+                <li>• <strong>転倒防止:</strong> ゼロモーメントポイント(ZMP)を足底支持多角形(BoS)内に維持</li>
+                <li>• <strong>脊柱キネマティクス:</strong> 骨盤から胸郭・頭部への連続曲率伝播</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- CONNECTOR ARROW -->
+          <div class="col-span-1 flex flex-col justify-center items-center text-slate-600 font-mono text-xl select-none">
+            <div>➔</div>
+          </div>
+
+          <!-- OUTPUT STAGE (Col 3) -->
+          <div class="col-span-2 flex flex-col gap-3">
+            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+              <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300">Stage 2</span> 出力 & 描画
+            </div>
+
+            <!-- Output Spec -->
+            <div class="p-3.5 rounded-lg bg-slate-900 border border-indigo-600/60 shadow-sm flex-1 flex flex-col justify-between">
+              <div>
+                <div class="text-xs font-bold text-indigo-400 mb-2">🎭 VRM 49ノード アニメーション</div>
+                <div class="text-[11px] text-slate-300 space-y-2">
+                  <div class="p-2 rounded bg-slate-800/80 border border-slate-700">
+                    <span class="text-slate-400 block text-[10px]">階層ボーン回転</span>
+                    <span class="font-mono text-xs text-white">49 Humanoid Quaternions</span>
+                  </div>
+                  <div class="p-2 rounded bg-slate-800/80 border border-slate-700">
+                    <span class="text-slate-400 block text-[10px]">ルート軌道</span>
+                    <span class="font-mono text-xs text-white">Pelvis Pos [x, y, z]</span>
+                  </div>
+                  <div class="p-2 rounded bg-slate-800/80 border border-slate-700">
+                    <span class="text-slate-400 block text-[10px]">配信プロトコル</span>
+                    <span class="font-mono text-xs text-emerald-400">VMC / WebSocket (60 FPS)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-slate-800 text-[10px] text-slate-400">
+                Unity / Three.js / WebGL / XR に直接同期描画
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- COMPARISON TABLE: MONOLITHIC vs DECOUPLED -->
+      <div class="glass-panel p-5 rounded-xl">
+        <h3 class="text-sm font-bold text-slate-200 mb-3">比較検証：従来の一括生成 vs KineticChain 3層分離生成</h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="border-b border-slate-800 text-slate-400 bg-slate-900/50">
+                <th class="p-2.5">評価項目</th>
+                <th class="p-2.5 text-rose-400">従来手法（全身一括Diffusion / VAE）</th>
+                <th class="p-2.5 text-emerald-400">KineticChain 3層分離アーキテクチャ</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60 text-slate-300">
+              <tr>
+                <td class="p-2.5 font-semibold text-white">足の接地・滑り</td>
+                <td class="p-2.5 text-slate-400">高頻度でスケート（滑り）が発生。後処理IKで補正すると腰が不自然に沈む。</td>
+                <td class="p-2.5 text-emerald-300 font-medium">下半身生成時に接地拘束（速度=0）を強制。完全に滑らないステップを実現。</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-semibold text-white">質感・オノマトペのキレ</td>
+                <td class="p-2.5 text-slate-400">「ドシッ」「サラッ」の違いが全身の平均値に埋もれ、のっぺりとした動きになる。</td>
+                <td class="p-2.5 text-emerald-300 font-medium">上半身の剛性(K)とJerkを変調。橈骨/尺骨チェーンの張り分けでキレと脱力を極限まで表現。</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-semibold text-white">パートナーへの即時適応</td>
+                <td class="p-2.5 text-slate-400">相手の動きが変わると全身を再計算するため遅延が大きく、リアルタイム追従が困難。</td>
+                <td class="p-2.5 text-emerald-300 font-medium">下半身でビート・距離をキープしつつ、上半身のみで瞬時にCall & Response対話が可能。</td>
+              </tr>
+              <tr>
+                <td class="p-2.5 font-semibold text-white">物理的安定性（転倒）</td>
+                <td class="p-2.5 text-slate-400">腕を強く振った際に重心が支持基底面を外れ、物理的に破綻した姿勢になりやすい。</td>
+                <td class="p-2.5 text-emerald-300 font-medium">ZMP/CoMバランサーが骨盤と背骨を自動補正。どんな極端な質感でも常に安定。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: INTERACTIVE 3D SIMULATOR ==================== -->
+    <div id="tab2" class="absolute inset-0 p-4 flex gap-4 hidden">
+      <!-- 3D VIEWPORT (Left / Center) -->
+      <div class="flex-1 rounded-xl glass-panel relative overflow-hidden flex flex-col">
+        <!-- Viewport Top Bar -->
+        <div class="h-10 px-4 border-b border-slate-800 bg-slate-900/60 flex items-center justify-between z-10">
+          <div class="flex items-center space-x-3 text-xs">
+            <span class="font-bold text-slate-200">3D パラメトリック・シンセサイザー</span>
+            <div class="flex items-center space-x-1.5 text-[11px] bg-slate-800 px-2 py-0.5 rounded">
+              <span class="w-2 h-2 rounded-full" style="background-color: var(--radial-blue)"></span><span>橈骨系(外向)</span>
+              <span class="w-2 h-2 rounded-full ml-2" style="background-color: var(--ulnar-red)"></span><span>尺骨系(内向)</span>
+              <span class="w-2 h-2 rounded-full ml-2" style="background-color: var(--axial-green)"></span><span>体幹(軸)</span>
+              <span class="w-2 h-2 rounded-full ml-2" style="background-color: var(--lower-amber)"></span><span>下半身(接地)</span>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="resetCamera()" class="px-2 py-1 rounded bg-slate-800 text-[11px] text-slate-300 hover:bg-slate-700">視点リセット</button>
+            <button id="togglePlayBtn" onclick="togglePlay()" class="px-3 py-1 rounded bg-blue-600 text-[11px] text-white font-medium hover:bg-blue-500">一時停止</button>
+          </div>
+        </div>
+
+        <!-- Canvas Area -->
+        <div class="flex-1 relative cursor-grab active:cursor-grabbing bg-slate-950" id="canvasContainer">
+          <canvas id="simCanvas" class="w-full h-full block"></canvas>
+          
+          <!-- On-screen physics status overlay -->
+          <div class="absolute bottom-4 left-4 p-3 rounded-lg bg-slate-900/90 border border-slate-800 text-[11px] font-mono pointer-events-none space-y-1">
+            <div class="text-slate-400 text-[10px] font-sans font-bold mb-1">REAL-TIME BIOMECHANIC TELEMETRY</div>
+            <div class="flex justify-between gap-4">
+              <span class="text-slate-400">CoM X-Offset (重心偏位):</span>
+              <span id="telemetryCom" class="text-emerald-400 font-bold">0.00 m</span>
+            </div>
+            <div class="flex justify-between gap-4">
+              <span class="text-slate-400">BoS Margin (支持面余裕):</span>
+              <span id="telemetryBos" class="text-sky-400 font-bold">+0.18 m (Stable)</span>
+            </div>
+            <div class="flex justify-between gap-4">
+              <span class="text-slate-400">Left / Right Foot Contact:</span>
+              <span id="telemetryFoot" class="text-amber-400 font-bold">[STANCE, SWING]</span>
+            </div>
+            <div class="flex justify-between gap-4">
+              <span class="text-slate-400">Virtual Impedance K:</span>
+              <span id="telemetryK" class="text-purple-400 font-bold">120 N·m/rad</span>
+            </div>
+          </div>
+
+          <!-- Mode Badge Overlay -->
+          <div class="absolute top-4 left-4 flex flex-col gap-1.5 pointer-events-none">
+            <div id="activePresetBadge" class="px-3 py-1 rounded-full bg-blue-600/80 backdrop-blur text-white text-xs font-bold border border-blue-400/40 shadow-lg">
+              プリセット: 「サラッ (Fluid Glide)」
+            </div>
+            <div id="couplerStatusBadge" class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-medium border border-emerald-500/30">
+              ⚡ 体幹生体力学カプラー: 稼働中 (ZMP Stabilized)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE CONTROL DECK (Right Sidebar) -->
+      <div class="w-96 flex-none flex flex-col gap-3 overflow-y-auto custom-scrollbar pr-1">
+
+        <!-- PRESETS SECTION -->
+        <div class="glass-panel p-4 rounded-xl border border-slate-800">
+          <div class="text-xs font-bold text-slate-300 mb-2 flex items-center justify-between">
+            <span>✨ オノマトペ質感プリセット</span>
+            <span class="text-[10px] text-slate-500">ワンクリック適用</span>
+          </div>
+          <div class="grid grid-cols-2 gap-1.5">
+            <button onclick="applyPreset('dosi')" class="px-2.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-left border border-amber-900/40 text-xs">
+              <span class="font-bold text-amber-400 block">ドシッ</span>
+              <span class="text-[10px] text-slate-400">超重厚・高衝撃・瞬間停止</span>
+            </button>
+            <button onclick="applyPreset('sara')" class="px-2.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-left border border-sky-900/40 text-xs">
+              <span class="font-bold text-sky-400 block">サラッ</span>
+              <span class="text-[10px] text-slate-400">軽快・高流動・滑らか</span>
+            </button>
+            <button onclick="applyPreset('gunya')" class="px-2.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-left border border-rose-900/40 text-xs">
+              <span class="font-bold text-rose-400 block">グニャリ</span>
+              <span class="text-[10px] text-slate-400">高粘性・遅延・尺骨巻き</span>
+            </button>
+            <button onclick="applyPreset('paki')" class="px-2.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-left border border-purple-900/40 text-xs">
+              <span class="font-bold text-purple-400 block">パキッ</span>
+              <span class="text-[10px] text-slate-400">高剛性・鋭敏Jerk・キレ</span>
+            </button>
+            <button onclick="applyPreset('fuwa')" class="px-2.5 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-left border border-emerald-900/40 text-xs col-span-2">
+              <span class="font-bold text-emerald-400 block">フワッ</span>
+              <span class="text-[10px] text-slate-400">低重力・浮遊感・滞空ステップ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- LOWER BODY CONTROLS (Amber) -->
+        <div class="glass-panel p-4 rounded-xl border border-amber-900/40">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+              下半身パラメータ（重さ・ステップ）
+            </span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-950 text-amber-300 font-mono">Tier 1</span>
+          </div>
+
+          <!-- Weight Heaviness Slider -->
+          <div class="mb-3">
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-300">荷重の重さ (Weight Heaviness)</span>
+              <span id="valWeight" class="font-mono text-amber-400 font-bold">0.45</span>
+            </div>
+            <input type="range" id="sliderWeight" min="0" max="1" step="0.01" value="0.45" class="w-full h-1.5 bg-slate-700 rounded-lg cursor-pointer" oninput="updateParams()">
+            <div class="flex justify-between text-[10px] text-slate-500 mt-0.5">
+              <span>0.0 (軽快・浮遊)</span>
+              <span>1.0 (重厚・沈み込み)</span>
+            </div>
+          </div>
+
+          <!-- Step Tempo BPM Slider -->
+          <div class="mb-3">
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-300">ステップ速度 (Tempo BPM)</span>
+              <span id="valBpm" class="font-mono text-amber-400 font-bold">115</span>
+            </div>
+            <input type="range" id="sliderBpm" min="60" max="180" step="1" value="115" class="w-full h-1.5 bg-slate-700 rounded-lg cursor-pointer" oninput="updateParams()">
+          </div>
+
+          <!-- Foot Contact Lock -->
+          <div class="flex items-center justify-between pt-2 border-t border-slate-800">
+            <span class="text-xs text-slate-300">接地ゼロ速度拘束 (Foot Lock)</span>
+            <input type="checkbox" id="checkFootLock" checked class="w-4 h-4 rounded text-blue-600 focus:ring-blue-500" onchange="updateParams()">
+          </div>
+        </div>
+
+        <!-- UPPER BODY CONTROLS (Blue / Purple) -->
+        <div class="glass-panel p-4 rounded-xl border border-blue-900/40">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+              上半身パラメータ（質感・運動連鎖）
+            </span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-950 text-blue-300 font-mono">Tier 2</span>
+          </div>
+
+          <!-- Virtual Stiffness Slider -->
+          <div class="mb-3">
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-300">仮想関節剛性 $K$ (Stiffness)</span>
+              <span id="valStiffness" class="font-mono text-blue-400 font-bold">120</span>
+            </div>
+            <input type="range" id="sliderStiffness" min="20" max="300" step="5" value="120" class="w-full h-1.5 bg-slate-700 rounded-lg cursor-pointer" oninput="updateParams()">
+            <div class="flex justify-between text-[10px] text-slate-500 mt-0.5">
+              <span>脱力・柔軟</span>
+              <span>キレ・硬直</span>
+            </div>
+          </div>
+
+          <!-- Radial vs Ulnar Chain Dominance -->
+          <div class="mb-3">
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-300">運動連鎖バランス (Chain Bias)</span>
+              <span id="valChain" class="font-mono text-purple-400 font-bold">中立 (50:50)</span>
+            </div>
+            <input type="range" id="sliderChain" min="-1" max="1" step="0.05" value="0.0" class="w-full h-1.5 bg-slate-700 rounded-lg cursor-pointer" oninput="updateParams()">
+            <div class="flex justify-between text-[10px] text-slate-500 mt-0.5">
+              <span class="text-sky-400">橈骨系優位(外向リーチ)</span>
+              <span class="text-rose-400">尺骨系優位(巻き込み)</span>
+            </div>
+          </div>
+
+          <!-- Flow Fluidity -->
+          <div class="mb-1">
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-300">流動性 (Flow Fluidity)</span>
+              <span id="valFlow" class="font-mono text-blue-400 font-bold">0.65</span>
+            </div>
+            <input type="range" id="sliderFlow" min="0" max="1" step="0.01" value="0.65" class="w-full h-1.5 bg-slate-700 rounded-lg cursor-pointer" oninput="updateParams()">
+          </div>
+        </div>
+
+        <!-- WHOLE BODY COUPLER (Emerald) -->
+        <div class="glass-panel p-4 rounded-xl border border-emerald-900/40">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              全体生体力学カプラー (Coupler)
+            </span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 font-mono">Tier 3</span>
+          </div>
+
+          <!-- Coupler Active Toggle -->
+          <div class="flex items-center justify-between mb-3 p-2 rounded bg-slate-800/80 border border-slate-700">
+            <div>
+              <span class="text-xs font-bold text-white block">生体力学カプラー</span>
+              <span class="text-[10px] text-slate-400">OFFにすると物理破綻・転倒</span>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="checkCoupler" checked class="sr-only peer" onchange="toggleCoupler()">
+              <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+            </label>
+          </div>
+
+          <!-- Pelvic Counter-Balance Sway -->
+          <div class="mb-2">
+            <div class="flex justify-between text-xs mb-1">
+              <span class="text-slate-300">骨盤カウンターバランス感度</span>
+              <span id="valPelvisSway" class="font-mono text-emerald-400 font-bold">1.0×</span>
+            </div>
+            <input type="range" id="sliderPelvisSway" min="0" max="2" step="0.1" value="1.0" class="w-full h-1.5 bg-slate-700 rounded-lg cursor-pointer" oninput="updateParams()">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== TAB 3: DANCE PARTNER INTERACTION LOOP ==================== -->
+    <div id="tab3" class="absolute inset-0 p-6 overflow-y-auto custom-scrollbar flex flex-col gap-6 hidden">
+      <div class="glass-panel p-5 rounded-xl border border-purple-900/50 bg-gradient-to-r from-purple-950/40 via-slate-900/80 to-blue-950/30">
+        <h2 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+          <span>AIダンスパートナーとのリアルタイム対話（Call & Response）機構</span>
+        </h2>
+        <p class="text-xs text-slate-300 leading-relaxed max-w-4xl">
+          下半身と上半身を分けた真価は、<strong>「相手のステップに合わせながら、上半身の表情（質感）で掛け合いを行う」</strong>というプロダンサーの即興対話が計算機上で実現できる点にあります。
+          下半身レイヤーが相手との距離とグルーヴ（リズム）を一定に保ち、上半身レイヤーが相手の繰り出したオノマトペ質感に呼応して「同調」「対比」「受け流し」を生成します。
+        </p>
+      </div>
+
+      <!-- INTERACTION MODES -->
+      <div class="grid grid-cols-3 gap-4">
+        <!-- Mode 1 -->
+        <div class="glass-panel p-4 rounded-xl border border-blue-800/40">
+          <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm mb-3">1</div>
+          <h3 class="text-sm font-bold text-white mb-1">同調モード (Unison / Mirroring)</h3>
+          <p class="text-xs text-slate-400 mb-3 leading-relaxed">
+            人間のダンサーが「パキッ」と鋭くアクセントを打った時、AIパートナーも同じタイミングで高剛性(K)とJerkを発動し、一体感を強調します。
+          </p>
+          <div class="p-2.5 rounded bg-slate-900 border border-slate-800 text-[11px] font-mono text-blue-300">
+            TargetTexture = PartnerTexture<br>
+            PhaseDelay = 0 frames
+          </div>
+        </div>
+
+        <!-- Mode 2 -->
+        <div class="glass-panel p-4 rounded-xl border border-purple-800/40">
+          <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-sm mb-3">2</div>
+          <h3 class="text-sm font-bold text-white mb-1">対比・応答 (Call & Response)</h3>
+          <p class="text-xs text-slate-400 mb-3 leading-relaxed">
+            人間の「ドシッ」とした強い着地アタックに対し、AIパートナーは「サラッ」と浮遊感のある脱力旋回で受け流し、ダンスの劇的なダイナミクスを生み出します。
+          </p>
+          <div class="p-2.5 rounded bg-slate-900 border border-slate-800 text-[11px] font-mono text-purple-300">
+            TargetTexture = Invert(Weight, Flow)<br>
+            ResponseDelay = 1 bar (小節応答)
+          </div>
+        </div>
+
+        <!-- Mode 3 -->
+        <div class="glass-panel p-4 rounded-xl border border-emerald-800/40">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm mb-3">3</div>
+          <h3 class="text-sm font-bold text-white mb-1">ポリリズム対位法 (Counterpoint)</h3>
+          <p class="text-xs text-slate-400 mb-3 leading-relaxed">
+            人間が上半身の大きな表現を行っている間、AIは裏拍の細やかな足元ステップ（尺骨系ステップ）を刻み、互いの空白を補い合います。
+          </p>
+          <div class="p-2.5 rounded bg-slate-900 border border-slate-800 text-[11px] font-mono text-emerald-300">
+            LowerBody = SyncBeat(Offset=0.5)<br>
+            UpperBody = FocusComplement()
+          </div>
+        </div>
+      </div>
+
+      <!-- REAL-TIME INTERACTION TIMELINE SCHEMATIC -->
+      <div class="glass-panel p-5 rounded-xl border border-slate-800">
+        <h3 class="text-sm font-bold text-slate-200 mb-3">リアルタイム対話タイムライン（16ms 制御ループ）</h3>
+        <div class="space-y-3 text-xs">
+          <div class="flex items-center gap-4 p-3 rounded-lg bg-slate-900 border border-slate-800">
+            <span class="w-24 flex-none font-bold text-sky-400">Step 1: 計測</span>
+            <span class="text-slate-300">相手のカメラ映像 / センサーから 4D-Humans または MediaPipe で 3D ポーズ推定（16ms）</span>
+          </div>
+          <div class="flex items-center gap-4 p-3 rounded-lg bg-slate-900 border border-slate-800">
+            <span class="w-24 flex-none font-bold text-amber-400">Step 2: 特徴抽出</span>
+            <span class="text-slate-300">当リポジトリの <code>TextureProfiler</code> と <code>FootContactAnalyzer</code> により、相手の接地状態・オノマトペベクトル（6D）を瞬時推定</span>
+          </div>
+          <div class="flex items-center gap-4 p-3 rounded-lg bg-slate-900 border border-slate-800">
+            <span class="w-24 flex-none font-bold text-purple-400">Step 3: 方針決定</span>
+            <span class="text-slate-300">対話戦略（同調・応答・対位法）に基づき、AI側の下半身目標ステップと上半身目標オノマトペを計算</span>
+          </div>
+          <div class="flex items-center gap-4 p-3 rounded-lg bg-slate-900 border border-slate-800">
+            <span class="w-24 flex-none font-bold text-emerald-400">Step 4: 統合生成</span>
+            <span class="text-slate-300">下半身シーケンサー＋上半身変調器＋生体力学カプラーにより、VRM 49ノードポーズを生成してアバターにストリーミング</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 4: IMPLEMENTATION MODULE DESIGN ==================== -->
+    <div id="tab4" class="absolute inset-0 p-6 overflow-y-auto custom-scrollbar flex flex-col gap-6 hidden">
+      <div class="glass-panel p-5 rounded-xl border border-slate-800">
+        <h2 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+          <span>Python 実装アーキテクチャ & モジュール構成</span>
+        </h2>
+        <p class="text-xs text-slate-300 leading-relaxed max-w-4xl">
+          当リポジトリ（<code>d:\Antigravity_Work\MotionAnalysis</code>）の既存資産（<code>src/core</code>, <code>src/dictionary</code>）を直接活用し、第3フェーズとして追加する <code>src/generation</code> パッケージのクラス設計です。
+        </p>
+      </div>
+
+      <!-- FILE TREE & CODE SNIPPETS -->
+      <div class="grid grid-cols-12 gap-6">
+        
+        <!-- Left: Directory Structure -->
+        <div class="col-span-4 glass-panel p-4 rounded-xl border border-slate-800 font-mono text-xs">
+          <div class="font-bold text-slate-300 mb-3 text-sm font-sans flex items-center gap-2">
+            <span>📁</span> 追加する生成モジュール構成
+          </div>
+          <pre class="text-slate-400 leading-relaxed select-text">
+src/
+├── core/                  <span class="text-emerald-500"># 既存: 解析パイプライン</span>
+│   ├── types.py           <span class="text-slate-500"># ADU, SegmentTexture</span>
+│   ├── texture_profiler.py<span class="text-slate-500"># 3階層分離プロファイル</span>
+│   └── chain_decomposer.py<span class="text-slate-500"># 橈骨/尺骨/体幹分解</span>
+├── dictionary/            <span class="text-blue-400"># 既存: オノマトペ辞書</span>
+│   ├── models.py          <span class="text-slate-500"># 764語 4カテゴリベクトル</span>
+│   └── adu_encoder.py     <span class="text-slate-500"># 潜在特徴エンコーダー</span>
+└── <span class="text-amber-400 font-bold">generation/</span>            <span class="text-amber-400 font-bold"># ★ 新規追加: 生成エンジン</span>
+    ├── __init__.py
+    ├── <span class="text-amber-300">lower_body_sequencer.py</span>
+    ├── <span class="text-sky-300">upper_body_modulator.py</span>
+    ├── <span class="text-emerald-300">balance_coupler.py</span>
+    └── <span class="text-purple-300">dance_generator.py</span>
+          </pre>
+        </div>
+
+        <!-- Right: Code Snippet Previews -->
+        <div class="col-span-8 flex flex-col gap-4">
+          
+          <!-- Code Block 1 -->
+          <div class="glass-panel p-4 rounded-xl border border-slate-800 font-mono text-xs">
+            <div class="flex items-center justify-between mb-2 text-slate-300 font-sans">
+              <span class="font-bold text-amber-400">src/generation/lower_body_sequencer.py</span>
+              <span class="text-[11px] text-slate-500">足元接地・重さシーケンサー</span>
+            </div>
+            <pre class="text-slate-300 bg-slate-950 p-3 rounded-lg overflow-x-auto custom-scrollbar leading-relaxed">
+<span class="text-blue-400">class</span> <span class="text-yellow-300">LowerBodySequencer</span>:
+    <span class="text-emerald-400">"""下半身の接地フェーズ、重さ衝撃度、ビート同期ステップを生成"""</span>
+    <span class="text-blue-400">def</span> <span class="text-yellow-300">generate_step_phase</span>(<span class="text-purple-300">self</span>, bpm: <span class="text-teal-300">float</span>, weight_heaviness: <span class="text-teal-300">float</span>, duration_frames: <span class="text-teal-300">int</span>):
+        <span class="text-slate-500"># 重さが高いほど接地時間(Stance Phase)比率が増加、垂直降下幅大</span>
+        stance_ratio = <span class="text-orange-400">0.5</span> + <span class="text-orange-400">0.25</span> * weight_heaviness
+        pelvis_drop = <span class="text-orange-400">0.05</span> * weight_heaviness  <span class="text-slate-500"># 沈み込み (m)</span>
+        
+        <span class="text-slate-500"># 接地中の足裏速度をゼロに固定 (Foot-Locking Constraint)</span>
+        foot_poses = <span class="text-purple-300">self</span>._solve_leg_ik(pelvis_drop, stance_ratio, lock_velocity=<span class="text-blue-400">True</span>)
+        <span class="text-blue-400">return</span> foot_poses, pelvis_drop
+            </pre>
+          </div>
+
+          <!-- Code Block 2 -->
+          <div class="glass-panel p-4 rounded-xl border border-slate-800 font-mono text-xs">
+            <div class="flex items-center justify-between mb-2 text-slate-300 font-sans">
+              <span class="font-bold text-sky-400">src/generation/upper_body_modulator.py</span>
+              <span class="text-[11px] text-slate-500">上半身質感・オノマトペ変調器</span>
+            </div>
+            <pre class="text-slate-300 bg-slate-950 p-3 rounded-lg overflow-x-auto custom-scrollbar leading-relaxed">
+<span class="text-blue-400">class</span> <span class="text-yellow-300">UpperBodyTextureModulator</span>:
+    <span class="text-emerald-400">"""764語オノマトペ辞書と連動し、仮想インピーダンス(K, B)で腕・胸郭軌道を制御"""</span>
+    <span class="text-blue-400">def</span> <span class="text-yellow-300">synthesize_arm_chains</span>(<span class="text-purple-300">self</span>, onoma_entry: <span class="text-teal-300">OnomaEntry</span>, base_gesture: <span class="text-teal-300">np.ndarray</span>):
+        K_stiffness = onoma_entry.acoustic.hardness * <span class="text-orange-400">25.0</span>
+        flow_damping = (<span class="text-orange-400">9</span> - onoma_entry.effort.flow) * <span class="text-orange-400">3.5</span>
+        radial_bias = onoma_entry.effort.space / <span class="text-orange-400">9.0</span>  <span class="text-slate-500"># 橈骨系(リーチ) vs 尺骨系(巻き)</span>
+        
+        <span class="text-slate-500"># 2次遅れ系微分方程式: M*x'' + B*x' + K*(x - x_target) = 0</span>
+        modulated_rotations = <span class="text-purple-300">self</span>._solve_impedance(base_gesture, K_stiffness, flow_damping, radial_bias)
+        <span class="text-blue-400">return</span> modulated_rotations
+            </pre>
+          </div>
+
+          <!-- Code Block 3 -->
+          <div class="glass-panel p-4 rounded-xl border border-slate-800 font-mono text-xs">
+            <div class="flex items-center justify-between mb-2 text-slate-300 font-sans">
+              <span class="font-bold text-emerald-400">src/generation/balance_coupler.py</span>
+              <span class="text-[11px] text-slate-500">体幹生体力学カプラー (ZMP / CoM)</span>
+            </div>
+            <pre class="text-slate-300 bg-slate-950 p-3 rounded-lg overflow-x-auto custom-scrollbar leading-relaxed">
+<span class="text-blue-400">class</span> <span class="text-yellow-300">WholeBodyBalanceCoupler</span>:
+    <span class="text-emerald-400">"""下半身足位置と上半身慣性を結合し、転倒防止と自然な脊柱曲率を保証"""</span>
+    <span class="text-blue-400">def</span> <span class="text-yellow-300">couple_and_stabilize</span>(<span class="text-purple-300">self</span>, lower_poses, upper_poses):
+        com = <span class="text-purple-300">self</span>.calculate_center_of_mass(lower_poses, upper_poses)
+        bos_polygon = <span class="text-purple-300">self</span>.get_base_of_support(lower_poses)
+        
+        <span class="text-slate-500"># 上半身の傾きに対して骨盤を逆位相シフト (Pelvic Sway Compensation)</span>
+        <span class="text-blue-400">if not</span> bos_polygon.contains(com.xy):
+            pelvis_offset = <span class="text-purple-300">self</span>.solve_zmp_equilibrium(com, bos_polygon)
+            upper_poses, lower_poses = <span class="text-purple-300">self</span>.adjust_spine_chain(pelvis_offset)
+            
+        <span class="text-blue-400">return</span> <span class="text-purple-300">self</span>.assemble_vrm_humanoid(lower_poses, upper_poses)
+            </pre>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- JAVASCRIPT LOGIC & 3D PROCEDURAL SYNTHESIS ENGINE -->
+  <script>
+    // Tab switching logic
+    function switchTab(tabId) {
+      ['tab1', 'tab2', 'tab3', 'tab4'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById(tabId).classList.remove('hidden');
+
+      ['tabBtn1', 'tabBtn2', 'tabBtn3', 'tabBtn4'].forEach(btnId => {
+        const btn = document.getElementById(btnId);
+        btn.classList.remove('active', 'text-white');
+        btn.classList.add('text-slate-400');
+      });
+
+      const activeBtnMap = {
+        'tab1': 'tabBtn1',
+        'tab2': 'tabBtn2',
+        'tab3': 'tabBtn3',
+        'tab4': 'tabBtn4'
+      };
+      const activeBtn = document.getElementById(activeBtnMap[tabId]);
+      activeBtn.classList.add('active', 'text-white');
+      activeBtn.classList.remove('text-slate-400');
+
+      if (tabId === 'tab2') {
+        resizeCanvas();
+      }
+    }
+
+    // --- 3D CANVAS RENDERING & KINEMATIC SIMULATOR ---
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      if (!canvas || !canvas.parentElement) return;
+      canvas.width = canvas.parentElement.clientWidth * window.devicePixelRatio;
+      canvas.height = canvas.parentElement.clientHeight * window.devicePixelRatio;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    setTimeout(resizeCanvas, 100);
+
+    // Camera State
+    const camera = {
+      yaw: 0.35,
+      pitch: 0.22,
+      distance: 3.3,
+      panX: 0.0,
+      panY: 0.88,
+      isDragging: false,
+      lastMouseX: 0,
+      lastMouseY: 0
+    };
+
+    function resetCamera() {
+      camera.yaw = 0.35;
+      camera.pitch = 0.22;
+      camera.distance = 3.3;
+      camera.panX = 0.0;
+      camera.panY = 0.88;
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+      camera.isDragging = true;
+      camera.lastMouseX = e.clientX;
+      camera.lastMouseY = e.clientY;
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (!camera.isDragging) return;
+      const dx = e.clientX - camera.lastMouseX;
+      const dy = e.clientY - camera.lastMouseY;
+      camera.yaw += dx * 0.008;
+      camera.pitch = Math.max(-0.2, Math.min(1.2, camera.pitch + dy * 0.008));
+      camera.lastMouseX = e.clientX;
+      camera.lastMouseY = e.clientY;
+    });
+    window.addEventListener('mouseup', () => { camera.isDragging = false; });
+    canvas.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      camera.distance = Math.max(1.5, Math.min(7.0, camera.distance + e.deltaY * 0.003));
+    }, { passive: false });
+
+    // Simulation Parameters
+    const simParams = {
+      weightHeaviness: 0.45,
+      bpm: 115,
+      footLock: true,
+      stiffnessK: 120,
+      chainBias: 0.0, // -1 (Radial) to +1 (Ulnar)
+      flowFluidity: 0.65,
+      couplerActive: true,
+      pelvisSway: 1.0,
+      isPlaying: true
+    };
+
+    function updateParams() {
+      simParams.weightHeaviness = parseFloat(document.getElementById('sliderWeight').value);
+      simParams.bpm = parseInt(document.getElementById('sliderBpm').value);
+      simParams.footLock = document.getElementById('checkFootLock').checked;
+      simParams.stiffnessK = parseFloat(document.getElementById('sliderStiffness').value);
+      simParams.chainBias = parseFloat(document.getElementById('sliderChain').value);
+      simParams.flowFluidity = parseFloat(document.getElementById('sliderFlow').value);
+      simParams.pelvisSway = parseFloat(document.getElementById('sliderPelvisSway').value);
+
+      document.getElementById('valWeight').textContent = simParams.weightHeaviness.toFixed(2);
+      document.getElementById('valBpm').textContent = simParams.bpm;
+      document.getElementById('valStiffness').textContent = Math.round(simParams.stiffnessK);
+      document.getElementById('valFlow').textContent = simParams.flowFluidity.toFixed(2);
+      document.getElementById('valPelvisSway').textContent = simParams.pelvisSway.toFixed(1) + '×';
+
+      let chainText = "中立 (50:50)";
+      if (simParams.chainBias < -0.2) chainText = `橈骨系優位 (${Math.round((0.5 - simParams.chainBias * 0.5) * 100)}%)`;
+      if (simParams.chainBias > 0.2) chainText = `尺骨系優位 (${Math.round((0.5 + simParams.chainBias * 0.5) * 100)}%)`;
+      document.getElementById('valChain').textContent = chainText;
+
+      document.getElementById('telemetryK').textContent = Math.round(simParams.stiffnessK) + " N·m/rad";
+    }
+
+    function togglePlay() {
+      simParams.isPlaying = !simParams.isPlaying;
+      document.getElementById('togglePlayBtn').textContent = simParams.isPlaying ? '一時停止' : '再開';
+    }
+
+    function toggleCoupler() {
+      simParams.couplerActive = document.getElementById('checkCoupler').checked;
+      const badge = document.getElementById('couplerStatusBadge');
+      if (simParams.couplerActive) {
+        badge.className = "px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-medium border border-emerald-500/30";
+        badge.textContent = "⚡ 体幹生体力学カプラー: 稼働中 (ZMP Stabilized)";
+      } else {
+        badge.className = "px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 text-xs font-medium border border-rose-500/30 animate-pulse";
+        badge.textContent = "⚠️ 体幹カプラーOFF: 重心未補正・転倒不安定";
+      }
+    }
+
+    function applyPreset(type) {
+      const presets = {
+        'dosi': {
+          name: "プリセット: 「ドシッ (Heavy Stomp)」",
+          weight: 0.95, bpm: 92, footLock: true, stiffness: 260, chain: 0.7, flow: 0.15, sway: 1.4
+        },
+        'sara': {
+          name: "プリセット: 「サラッ (Fluid Glide)」",
+          weight: 0.18, bpm: 122, footLock: true, stiffness: 85, chain: -0.4, flow: 0.92, sway: 0.8
+        },
+        'gunya': {
+          name: "プリセット: 「グニャリ (Viscous Wrap)」",
+          weight: 0.55, bpm: 80, footLock: true, stiffness: 45, chain: 0.85, flow: 0.88, sway: 1.2
+        },
+        'paki': {
+          name: "プリセット: 「パキッ (Sharp Staccato)」",
+          weight: 0.35, bpm: 135, footLock: true, stiffness: 290, chain: -0.65, flow: 0.10, sway: 0.9
+        },
+        'fuwa': {
+          name: "プリセット: 「フワッ (Floaty Light)」",
+          weight: 0.08, bpm: 105, footLock: false, stiffness: 70, chain: -0.3, flow: 0.95, sway: 0.5
+        }
+      };
+
+      const p = presets[type];
+      if (!p) return;
+
+      document.getElementById('sliderWeight').value = p.weight;
+      document.getElementById('sliderBpm').value = p.bpm;
+      document.getElementById('checkFootLock').checked = p.footLock;
+      document.getElementById('sliderStiffness').value = p.stiffness;
+      document.getElementById('sliderChain').value = p.chain;
+      document.getElementById('sliderFlow').value = p.flow;
+      document.getElementById('sliderPelvisSway').value = p.sway;
+      document.getElementById('activePresetBadge').textContent = p.name;
+
+      updateParams();
+    }
+
+    // Kinematics State & Skeleton Topology
+    let simTime = 0.0;
+
+    // 3D Projection Helper
+    function project3Dto2D(pt, width, height) {
+      const cosY = Math.cos(camera.yaw);
+      const sinY = Math.sin(camera.yaw);
+      const cosP = Math.cos(camera.pitch);
+      const sinP = Math.sin(camera.pitch);
+
+      // Translate by pan
+      const dx = pt.x - camera.panX;
+      const dy = pt.y - camera.panY;
+      const dz = pt.z;
+
+      // Yaw rotation (Y axis)
+      const x1 = cosY * dx - sinY * dz;
+      const z1 = sinY * dx + cosY * dz;
+
+      // Pitch rotation (X axis)
+      const y2 = cosP * dy - sinP * z1;
+      const z2 = sinP * dy + cosP * z1 + camera.distance;
+
+      if (z2 < 0.2) return null;
+
+      const fov = 1.6;
+      const scale = (height / 2) * fov / z2;
+      const screenX = width / 2 + x1 * scale;
+      const screenY = height / 2 - y2 * scale;
+
+      return { x: screenX, y: screenY, z: z2 };
+    }
+
+    // Main Simulation & Render Loop
+    function render() {
+      requestAnimationFrame(render);
+      if (!canvas) return;
+
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      if (simParams.isPlaying) {
+        simTime += (simParams.bpm / 60.0) * 0.035;
+      }
+
+      // --- PROCEDURAL 3-TIER GENERATOR ---
+      // 1. Lower Body (Step & Heaviness)
+      const stepPhase = simTime % (Math.PI * 2);
+      const isLeftStance = Math.sin(stepPhase) >= 0;
+      const stanceRatio = 0.5 + 0.25 * simParams.weightHeaviness;
+
+      // Weight impact drop
+      const dropDepth = 0.08 * simParams.weightHeaviness;
+      const bounce = Math.abs(Math.sin(stepPhase * 2)) * dropDepth;
+      let hipY = 0.92 - bounce;
+
+      // Stride
+      const strideWidth = 0.28;
+      const strideLength = 0.35 * (1.0 - simParams.weightHeaviness * 0.4);
+      
+      let leftFoot = { x: -strideWidth, y: 0.05, z: 0.0 };
+      let rightFoot = { x: strideWidth, y: 0.05, z: 0.0 };
+
+      if (isLeftStance) {
+        // Left foot locked to floor
+        leftFoot.y = 0.05;
+        leftFoot.z = -strideLength * 0.5;
+        // Right foot swinging
+        const swingT = (Math.sin(stepPhase) + 1.0) * 0.5;
+        rightFoot.y = 0.05 + Math.sin(swingT * Math.PI) * (0.12 * (1.0 - simParams.weightHeaviness * 0.5));
+        rightFoot.z = -strideLength * 0.5 + strideLength * swingT;
+      } else {
+        // Right foot locked to floor
+        rightFoot.y = 0.05;
+        rightFoot.z = -strideLength * 0.5;
+        // Left foot swinging
+        const swingT = (-Math.sin(stepPhase) + 1.0) * 0.5;
+        leftFoot.y = 0.05 + Math.sin(swingT * Math.PI) * (0.12 * (1.0 - simParams.weightHeaviness * 0.5));
+        leftFoot.z = -strideLength * 0.5 + strideLength * swingT;
+      }
+
+      // 2. Upper Body Texture Modulation (K, Flow, Chains)
+      const armFreq = stepPhase;
+      // High stiffness = sharp jerk, low stiffness = smooth wave
+      const stiffnessFactor = simParams.stiffnessK / 150.0;
+      const jerkModifier = Math.sin(armFreq) > 0.7 ? (stiffnessFactor > 1.2 ? 1.4 : 1.0) : 1.0;
+      const armSwing = Math.sin(armFreq * jerkModifier) * 0.45 * simParams.flowFluidity;
+
+      // Chain bias:
+      // Radial bias (-1) -> arm extends outwards like wings (reaching)
+      // Ulnar bias (+1) -> arm wraps tightly into torso (wrapping / brace)
+      const radialSpread = 0.38 + (-simParams.chainBias) * 0.25;
+      const ulnarWrapZ = simParams.chainBias > 0 ? simParams.chainBias * 0.2 : 0.0;
+
+      // 3. Whole Body Biomechanical Coupler (Spine, Pelvis Counter-balance, CoM)
+      let pelvisShiftX = 0.0;
+      let spineLeanX = Math.sin(stepPhase) * 0.15;
+      let spineLeanZ = Math.cos(stepPhase) * 0.12;
+
+      if (simParams.couplerActive) {
+        // Active counterbalance: pelvis shifts opposite to chest/head to stabilize CoM
+        pelvisShiftX = -spineLeanX * 0.65 * simParams.pelvisSway;
+      } else {
+        // Uncoupled: pelvis drifts with upper body -> instability!
+        pelvisShiftX = spineLeanX * 1.2;
+      }
+
+      // Joint Positions in 3D
+      const pelvis = { x: pelvisShiftX, y: hipY, z: 0.0 };
+      const spine = { x: pelvis.x + spineLeanX * 0.5, y: hipY + 0.22, z: spineLeanZ * 0.4 };
+      const chest = { x: pelvis.x + spineLeanX, y: hipY + 0.42, z: spineLeanZ * 0.8 };
+      const neck = { x: chest.x + spineLeanX * 0.3, y: chest.y + 0.14, z: chest.z + spineLeanZ * 0.2 };
+      const head = { x: neck.x, y: neck.y + 0.16, z: neck.z };
+
+      // Knees (Simple analytical IK)
+      const leftKnee = {
+        x: (pelvis.x - strideWidth * 0.7 + leftFoot.x) * 0.5,
+        y: (pelvis.y + leftFoot.y) * 0.5,
+        z: (pelvis.z + leftFoot.z) * 0.5 + 0.14 * (1.0 + simParams.weightHeaviness * 0.6)
+      };
+      const rightKnee = {
+        x: (pelvis.x + strideWidth * 0.7 + rightFoot.x) * 0.5,
+        y: (pelvis.y + rightFoot.y) * 0.5,
+        z: (pelvis.z + rightFoot.z) * 0.5 + 0.14 * (1.0 + simParams.weightHeaviness * 0.6)
+      };
+
+      // Arms (Shoulders, Elbows, Wrists, Hands)
+      // Left Arm (Ulnar Chain focus if bias > 0)
+      const leftShoulder = { x: chest.x - 0.22, y: chest.y - 0.02, z: chest.z };
+      const leftElbow = {
+        x: leftShoulder.x - radialSpread * 0.6,
+        y: leftShoulder.y - 0.22 + armSwing * 0.3,
+        z: leftShoulder.z + armSwing * 0.4 + ulnarWrapZ
+      };
+      const leftWrist = {
+        x: leftElbow.x - radialSpread * 0.4,
+        y: leftElbow.y - 0.20 - armSwing * 0.4,
+        z: leftElbow.z + armSwing * 0.5 + ulnarWrapZ * 1.5
+      };
+
+      // Right Arm (Radial Chain focus if bias < 0)
+      const rightShoulder = { x: chest.x + 0.22, y: chest.y - 0.02, z: chest.z };
+      const rightElbow = {
+        x: rightShoulder.x + radialSpread * 0.6,
+        y: rightShoulder.y - 0.22 - armSwing * 0.3,
+        z: rightShoulder.z - armSwing * 0.4 + ulnarWrapZ
+      };
+      const rightWrist = {
+        x: rightElbow.x + radialSpread * 0.4,
+        y: rightElbow.y - 0.20 + armSwing * 0.4,
+        z: rightElbow.z - armSwing * 0.5 + ulnarWrapZ * 1.5
+      };
+
+      // CoM Calculation (Approximation)
+      const com = {
+        x: (pelvis.x * 0.4 + chest.x * 0.3 + head.x * 0.1 + (leftFoot.x + rightFoot.x) * 0.1),
+        y: hipY + 0.12,
+        z: (pelvis.z * 0.4 + chest.z * 0.3 + (leftFoot.z + rightFoot.z) * 0.15)
+      };
+
+      // Telemetry updates
+      document.getElementById('telemetryCom').textContent = (com.x >= 0 ? "+" : "") + com.x.toFixed(3) + " m";
+      const isLeftLocked = isLeftStance;
+      document.getElementById('telemetryFoot').textContent = isLeftLocked ? "[L: LOCKED, R: SWING]" : "[L: SWING, R: LOCKED]";
+      const bosMargin = 0.22 - Math.abs(com.x - (leftFoot.x + rightFoot.x) * 0.5);
+      const isStable = bosMargin > 0.03 && simParams.couplerActive;
+      document.getElementById('telemetryBos').textContent = (bosMargin >= 0 ? "+" : "") + bosMargin.toFixed(2) + " m (" + (isStable ? "Stable" : "Unstable") + ")";
+      document.getElementById('telemetryBos').className = isStable ? "text-sky-400 font-bold" : "text-rose-400 font-bold animate-pulse";
+
+      // --- 3D RENDERING PIPELINE ---
+      // Ground Grid & Base of Support (BoS)
+      drawGroundGrid(w, h);
+      drawSupportPolygon(leftFoot, rightFoot, com, w, h, isStable);
+
+      // Render Bones with 3-Chain Color Coding
+      // 1. Lower Limbs (Amber)
+      drawLimb(pelvis, leftKnee, '#f59e0b', 5, w, h);
+      drawLimb(leftKnee, leftFoot, '#f59e0b', 4, w, h);
+      drawLimb(pelvis, rightKnee, '#f59e0b', 5, w, h);
+      drawLimb(rightKnee, rightFoot, '#f59e0b', 4, w, h);
+
+      // Foot Stance Rings
+      drawFootLockRing(leftFoot, isLeftStance, w, h);
+      drawFootLockRing(rightFoot, !isLeftStance, w, h);
+
+      // 2. Central Axial Spine Chain (Emerald Green)
+      drawLimb(pelvis, spine, '#10b981', 6, w, h);
+      drawLimb(spine, chest, '#10b981', 6, w, h);
+      drawLimb(chest, neck, '#10b981', 5, w, h);
+      drawJoint(head, '#10b981', 12, w, h); // Head
+
+      // 3. Upper Limbs: Radial vs Ulnar Chain Color Modulation
+      // Left Arm: Ulnar Red dominance
+      drawLimb(chest, leftShoulder, '#64748b', 4, w, h);
+      drawLimb(leftShoulder, leftElbow, simParams.chainBias > 0 ? '#f43f5e' : '#38bdf8', 5, w, h);
+      drawLimb(leftElbow, leftWrist, simParams.chainBias > 0 ? '#f43f5e' : '#38bdf8', 4, w, h);
+      drawJoint(leftWrist, '#f43f5e', 6, w, h);
+
+      // Right Arm: Radial Blue dominance
+      drawLimb(chest, rightShoulder, '#64748b', 4, w, h);
+      drawLimb(rightShoulder, rightElbow, simParams.chainBias < 0 ? '#38bdf8' : '#f43f5e', 5, w, h);
+      drawLimb(rightElbow, rightWrist, simParams.chainBias < 0 ? '#38bdf8' : '#f43f5e', 4, w, h);
+      drawJoint(rightWrist, '#38bdf8', 6, w, h);
+
+      // Joint Nodes
+      [pelvis, leftKnee, rightKnee, spine, chest, neck].forEach(pt => drawJoint(pt, '#ffffff', 4.5, w, h));
+
+      // CoM Gravity Plumb Line
+      drawCoMVector(com, w, h, isStable);
+    }
+
+    // Render Helpers
+    function drawGroundGrid(w, h) {
+      ctx.save();
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 1;
+      const size = 1.6;
+      const step = 0.4;
+      for (let x = -size; x <= size; x += step) {
+        const p1 = project3Dto2D({ x: x, y: 0.0, z: -size }, w, h);
+        const p2 = project3Dto2D({ x: x, y: 0.0, z: size }, w, h);
+        if (p1 && p2) {
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        }
+      }
+      for (let z = -size; z <= size; z += step) {
+        const p1 = project3Dto2D({ x: -size, y: 0.0, z: z }, w, h);
+        const p2 = project3Dto2D({ x: size, y: 0.0, z: z }, w, h);
+        if (p1 && p2) {
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        }
+      }
+      ctx.restore();
+    }
+
+    function drawSupportPolygon(fl, fr, com, w, h, isStable) {
+      const pL1 = project3Dto2D({ x: fl.x - 0.08, y: 0.0, z: fl.z - 0.12 }, w, h);
+      const pL2 = project3Dto2D({ x: fl.x + 0.08, y: 0.0, z: fl.z + 0.12 }, w, h);
+      const pR1 = project3Dto2D({ x: fr.x + 0.08, y: 0.0, z: fr.z + 0.12 }, w, h);
+      const pR2 = project3Dto2D({ x: fr.x - 0.08, y: 0.0, z: fr.z - 0.12 }, w, h);
+
+      if (pL1 && pL2 && pR1 && pR2) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(pL1.x, pL1.y);
+        ctx.lineTo(pL2.x, pL2.y);
+        ctx.lineTo(pR1.x, pR1.y);
+        ctx.lineTo(pR2.x, pR2.y);
+        ctx.closePath();
+        ctx.fillStyle = isStable ? 'rgba(16, 185, 129, 0.15)' : 'rgba(244, 63, 94, 0.25)';
+        ctx.fill();
+        ctx.strokeStyle = isStable ? 'rgba(16, 185, 129, 0.6)' : 'rgba(244, 63, 94, 0.8)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([4, 4]);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    function drawFootLockRing(foot, isLocked, w, h) {
+      const p = project3Dto2D({ x: foot.x, y: 0.0, z: foot.z }, w, h);
+      if (!p) return;
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, isLocked ? 14 : 7, 0, Math.PI * 2);
+      ctx.fillStyle = isLocked ? 'rgba(245, 158, 11, 0.35)' : 'rgba(100, 116, 139, 0.2)';
+      ctx.fill();
+      ctx.strokeStyle = isLocked ? '#f59e0b' : '#64748b';
+      ctx.lineWidth = isLocked ? 2 : 1;
+      ctx.stroke();
+      if (isLocked) {
+        ctx.fillStyle = '#f59e0b';
+        ctx.font = '10px monospace';
+        ctx.fillText('LOCK (v=0)', p.x + 16, p.y + 4);
+      }
+      ctx.restore();
+    }
+
+    function drawLimb(p1, p2, color, thickness, w, h) {
+      const s1 = project3Dto2D(p1, w, h);
+      const s2 = project3Dto2D(p2, w, h);
+      if (!s1 || !s2) return;
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(s1.x, s1.y);
+      ctx.lineTo(s2.x, s2.y);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = thickness;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawJoint(p, color, radius, w, h) {
+      const s = project3Dto2D(p, w, h);
+      if (!s) return;
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawCoMVector(com, w, h, isStable) {
+      const top = project3Dto2D(com, w, h);
+      const ground = project3Dto2D({ x: com.x, y: 0.0, z: com.z }, w, h);
+      if (!top || !ground) return;
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(top.x, top.y);
+      ctx.lineTo(ground.x, ground.y);
+      ctx.strokeStyle = isStable ? '#10b981' : '#f43f5e';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([3, 3]);
+      ctx.stroke();
+
+      // CoM Sphere
+      ctx.beginPath();
+      ctx.arc(top.x, top.y, 7, 0, Math.PI * 2);
+      ctx.fillStyle = isStable ? '#10b981' : '#f43f5e';
+      ctx.fill();
+
+      // Ground ZMP circle
+      ctx.beginPath();
+      ctx.arc(ground.x, ground.y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.font = '10px sans-serif';
+      ctx.fillText('CoM/ZMP', ground.x + 8, ground.y + 3);
+      ctx.restore();
+    }
+
+    // Initialize
+    updateParams();
+    requestAnimationFrame(render);
+  </script>
+</body>
+</html>
