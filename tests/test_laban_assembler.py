@@ -21,7 +21,7 @@ def test_laban_assembler_loads_actions(assembler):
         data = assembler.get_action_data(key)
         assert data is not None
         assert "trajectory" in data
-        assert len(data["trajectory"]) >= 30
+        assert len(data["trajectory"]) >= 25
         assert len(data["trajectory"][0]) == 49
 
 

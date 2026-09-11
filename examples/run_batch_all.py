@@ -38,7 +38,7 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    pkl_files = sorted(list(data_dir.glob("*.pkl")))
+    pkl_files = sorted([f for f in data_dir.glob("*.pkl") if "mediapipe" not in f.name and "BVuxWr8YTcQ" not in f.name])
     json_files = sorted(list(data_dir.glob("*_tracks.json")))
 
     print("=" * 70)
