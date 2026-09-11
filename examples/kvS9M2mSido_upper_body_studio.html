@@ -391,7 +391,7 @@
         }
       }
 
-      animate();
+      requestAnimationFrame(animate);
     }
 
     function onDataLoaded() {
@@ -618,11 +618,12 @@
       requestAnimationFrame(animate);
 
       if (isPlaying && BUNDLE_DATA) {
+        if (!now) now = performance.now();
         const fps = BUNDLE_DATA.metadata.fps || 29.97003;
-        const dt = Math.min((now - lastClockTime) / 1000.0, 0.1);
+        const dt = Math.min(Math.max((now - lastClockTime) / 1000.0, 0.0), 0.1);
         lastClockTime = now;
 
-        // Advance frames based on actual elapsed time
+        // Advance frames based on actual elapsed delta time
         currentFrame += (dt * fps * playbackSpeed);
 
         // Handle Phrase Loop or End
@@ -638,18 +639,18 @@
           pause();
         }
 
-        // Resync video only when drift exceeds 0.4s to prevent decoder thrashing
+        // Resync video only when drift exceeds 0.5s to prevent decoder thrashing
         const primaryVideo = (activeVideoMode === 'mediapipe') ? videoMP : video4D;
         if (!primaryVideo.paused && !primaryVideo.seeking && !isNaN(primaryVideo.duration) && primaryVideo.duration > 0) {
           const targetTime = currentFrame / fps;
-          if (Math.abs(primaryVideo.currentTime - targetTime) > 0.4) {
+          if (Math.abs(primaryVideo.currentTime - targetTime) > 0.5) {
             try { primaryVideo.currentTime = targetTime; } catch(e){}
           }
         }
 
-        updateFrame(Math.floor(currentFrame), false);
+        updateFrame(currentFrame, false);
       } else {
-        lastClockTime = now;
+        lastClockTime = now || performance.now();
       }
 
       controls.update();
@@ -658,27 +659,27 @@
 
     function updateFrame(f, syncVideo = false) {
       if (!BUNDLE_DATA) return;
-      currentFrame = Math.max(0, Math.min(BUNDLE_DATA.metadata.total_frames - 1, f));
+      const fInt = Math.floor(Math.max(0, Math.min(BUNDLE_DATA.metadata.total_frames - 1, f)));
 
       // 1. Update Skeleton
-      updateSkeletonPose(currentFrame);
+      updateSkeletonPose(fInt);
 
       // 2. Update UI
-      const timeSec = (currentFrame / BUNDLE_DATA.metadata.fps).toFixed(2);
-      document.getElementById('overlay-frame').innerText = currentFrame;
+      const timeSec = (fInt / BUNDLE_DATA.metadata.fps).toFixed(2);
+      document.getElementById('overlay-frame').innerText = fInt;
       document.getElementById('overlay-time').innerText = timeSec + 's';
       document.getElementById('txt-current-time').innerText = timeSec + 's';
-      document.getElementById('seek-bar').value = currentFrame;
+      document.getElementById('seek-bar').value = fInt;
 
       // 3. Find current phrase
-      const pIdx = BUNDLE_DATA.phrases.findIndex(p => currentFrame >= p.start_frame && currentFrame < p.end_frame);
+      const pIdx = BUNDLE_DATA.phrases.findIndex(p => fInt >= p.start_frame && fInt < p.end_frame);
       if (pIdx !== -1 && pIdx !== currentPhraseIndex) {
         selectPhrase(pIdx, false);
       }
 
       // 4. Sync Video if requested
       if (syncVideo) {
-        const targetTime = currentFrame / BUNDLE_DATA.metadata.fps;
+        const targetTime = fInt / BUNDLE_DATA.metadata.fps;
         if (!isNaN(video4D.duration) && video4D.duration > 0) {
           try { video4D.currentTime = targetTime; } catch(e){}
         }
@@ -775,7 +776,9 @@
       document.querySelectorAll('.phrase-card').forEach((el, i) => {
         if (i === idx) {
           el.classList.add('border-cyan-500', 'bg-slate-800');
-          el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          if (seekToStart) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
         } else {
           el.classList.remove('border-cyan-500', 'bg-slate-800');
         }
