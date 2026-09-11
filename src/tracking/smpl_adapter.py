@@ -85,9 +85,8 @@ class SmplTrackAdapter:
             tids = fval.get("tracked_ids", [])
             if target_track_id in tids:
                 idx = tids.index(target_track_id)
-                # 3D joints (first 24 joints correspond to SMPL body joints)
-                joints_all = fval["3d_joints"][idx] # (45, 3)
-                joints_24 = joints_all[:24, :].astype(np.float64)
+                # 3D joints (45 joints where first 25 are OpenPose-25)
+                joints_all = fval["3d_joints"][idx].astype(np.float64) # (45, 3)
 
                 # SMPL parameters
                 smpl_item = fval["smpl"][idx]
@@ -104,7 +103,7 @@ class SmplTrackAdapter:
                 if "betas" in smpl_item:
                     betas_accum.append(smpl_item["betas"].astype(np.float64))
 
-                raw_joints.append(joints_24)
+                raw_joints.append(joints_all)
                 raw_poses_mat.append(all_mats)
                 raw_poses_aa.append(aa.reshape(72))
                 valid_indices.append(frame_idx)
@@ -131,7 +130,8 @@ class SmplTrackAdapter:
         end_f = valid_indices[-1] + 1
         full_T = end_f - start_f
 
-        interp_joints = np.zeros((full_T, 24, 3), dtype=np.float64)
+        num_joints = raw_joints[0].shape[0]
+        interp_joints = np.zeros((full_T, num_joints, 3), dtype=np.float64)
         interp_poses = np.zeros((full_T, 72), dtype=np.float64)
         is_interp = np.zeros(full_T, dtype=bool)
 
@@ -143,7 +143,7 @@ class SmplTrackAdapter:
 
         # Interpolate 1D for each coordinate/channel
         all_indices = np.arange(full_T)
-        for j in range(24):
+        for j in range(num_joints):
             for c in range(3):
                 interp_joints[:, j, c] = np.interp(
                     all_indices, valid_rel, [rj[j, c] for rj in raw_joints]

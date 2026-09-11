@@ -67,7 +67,8 @@ class TextureProfiler:
             )
 
         # 1. Space Directness: Wrist trajectory linearity
-        wrist_pts = joints_seg[:, min(self.wrist_idx, joints_seg.shape[1] - 1), :]
+        wrist_idx = 12 if joints_seg.shape[1] >= 49 else min(self.wrist_idx, joints_seg.shape[1] - 1)
+        wrist_pts = joints_seg[:, wrist_idx, :]
         net_disp = float(np.linalg.norm(wrist_pts[-1] - wrist_pts[0]))
         step_diffs = np.linalg.norm(np.diff(wrist_pts, axis=0), axis=-1)
         cum_dist = float(np.sum(step_diffs)) + 1e-6
@@ -82,7 +83,7 @@ class TextureProfiler:
         time_impulsiveness = float(np.clip((jerk_ratio - 1.0) / 4.0, 0.0, 1.0))
 
         # 3. Weight Heaviness: Downward vertical acceleration of Pelvis/CoM + loading
-        pelvis_idx = min(self.pelvis_idx, joints_seg.shape[1] - 1)
+        pelvis_idx = 0 if joints_seg.shape[1] >= 49 else min(self.pelvis_idx, joints_seg.shape[1] - 1)
         vert_acc = acc_seg[:, pelvis_idx, 1] # Y-axis assumed vertical
         # Strong downward acceleration or heavy impact
         min_vert = float(np.min(vert_acc))

@@ -142,7 +142,7 @@ class DanceKinematicsPipeline:
         chains = self.chain_decomposer.decompose(vrm_joints)
 
         # 2. Kinematic & Dynamic Feature Extraction (Module 2)
-        features = self.feature_store.extract_features(smpl_joints)
+        features = self.feature_store.extract_features(vrm_joints)
         vel = features["vel"]
         acc = features["acc"]
         jerk = features["jerk"]
@@ -163,7 +163,7 @@ class DanceKinematicsPipeline:
         adu_list: List[AtomicDanceUnit] = []
         for seg_idx, (start, end, hierarchy) in enumerate(raw_segments):
             # Extract slices
-            joints_seg = smpl_joints[start:end]
+            joints_seg = vrm_joints[start:end]
             vel_seg = vel[start:end]
             acc_seg = acc[start:end]
             jerk_seg = jerk[start:end]

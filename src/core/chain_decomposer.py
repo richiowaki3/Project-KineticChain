@@ -195,61 +195,152 @@ class KineticChainDecomposer:
         hand_landmarks: Optional[Dict[int, Any]] = None
     ) -> np.ndarray:
         """
-        Maps SMPL joints (T, 24, 3) or (T, 45, 3) and MediaPipe hand landmarks into VRM 49-node array (T, 49, 3).
+        Maps raw input joints (OpenPose-25 from 4D-Humans or SMPL-24) and MediaPipe hand landmarks
+        into standard VRM 49-node array (T, 49, 3).
+        Automatically corrects coordinate orientation (ensuring +Y is up, +Z is forward) and grounds feet at Y=0.
         """
         T = smpl_joints.shape[0]
+        num_in_joints = smpl_joints.shape[1]
         vrm_joints = np.zeros((T, NUM_VRM_BONES, 3), dtype=np.float64)
 
-        # 1. Map Body & Limbs (22 bones) from SMPL 24 joints
-        # SMPL 24 indices:
-        # 0: Pelvis, 1: L_Hip, 2: R_Hip, 3: Spine1, 4: L_Knee, 5: R_Knee, 6: Spine2
-        # 7: L_Ankle, 8: R_Ankle, 9: Spine3, 10: L_Foot, 11: R_Foot, 12: Neck
-        # 13: L_Collar, 14: R_Collar, 15: Head, 16: L_Shoulder, 17: R_Shoulder
-        # 18: L_Elbow, 19: R_Elbow, 20: L_Wrist, 21: R_Wrist
+        # Work on a copy to avoid mutating caller's data
+        joints = np.array(smpl_joints, dtype=np.float64, copy=True)
 
-        vrm_joints[:, VRMBone.HIPS] = smpl_joints[:, 0]
-        vrm_joints[:, VRMBone.SPINE] = smpl_joints[:, 3]
-        vrm_joints[:, VRMBone.CHEST] = smpl_joints[:, 6]
-        vrm_joints[:, VRMBone.UPPER_CHEST] = smpl_joints[:, 9]
-        vrm_joints[:, VRMBone.NECK] = smpl_joints[:, 12]
-        vrm_joints[:, VRMBone.HEAD] = smpl_joints[:, 15]
+        # 1. Automatic Joint Format Discrimination
+        # In OpenPose-25: 0 is Nose, 15 is REye -> distance is ~0.05m
+        # In SMPL-24: 0 is Pelvis, 15 is Head -> distance is ~0.8m
+        if num_in_joints > 15:
+            d0_15 = float(np.mean(np.linalg.norm(joints[:, 0] - joints[:, 15], axis=-1)))
+            is_openpose = bool(d0_15 < 0.25)
+        else:
+            is_openpose = False
 
-        vrm_joints[:, VRMBone.LEFT_SHOULDER] = smpl_joints[:, 13]  # Collar/Shoulder root
-        vrm_joints[:, VRMBone.RIGHT_SHOULDER] = smpl_joints[:, 14]
-        vrm_joints[:, VRMBone.LEFT_UPPER_ARM] = smpl_joints[:, 16] # Shoulder joint / Upper arm
-        vrm_joints[:, VRMBone.RIGHT_UPPER_ARM] = smpl_joints[:, 17]
-        vrm_joints[:, VRMBone.LEFT_LOWER_ARM] = smpl_joints[:, 18] # Elbow
-        vrm_joints[:, VRMBone.RIGHT_LOWER_ARM] = smpl_joints[:, 19]
-        vrm_joints[:, VRMBone.LEFT_HAND] = smpl_joints[:, 20]      # Wrist / Hand
-        vrm_joints[:, VRMBone.RIGHT_HAND] = smpl_joints[:, 21]
+        # 2. Coordinate System Standardization (+Y up, +Z forward)
+        # Check if +Y is pointing downwards (e.g. camera coordinate frame)
+        if is_openpose:
+            # In OpenPose: Neck is 1, MidHip is 8. If Neck Y < MidHip Y, Y points down.
+            y_inverted = bool(np.mean(joints[:, 1, 1]) < np.mean(joints[:, 8, 1]))
+        else:
+            # In SMPL: Head is 15, Pelvis is 0. If Head Y < Pelvis Y, Y points down.
+            head_idx = 15 if num_in_joints > 15 else 0
+            y_inverted = bool(np.mean(joints[:, head_idx, 1]) < np.mean(joints[:, 0, 1]))
 
-        vrm_joints[:, VRMBone.LEFT_UPPER_LEG] = smpl_joints[:, 1]  # Hip
-        vrm_joints[:, VRMBone.RIGHT_UPPER_LEG] = smpl_joints[:, 2]
-        vrm_joints[:, VRMBone.LEFT_LOWER_LEG] = smpl_joints[:, 4]  # Knee
-        vrm_joints[:, VRMBone.RIGHT_LOWER_LEG] = smpl_joints[:, 5]
-        vrm_joints[:, VRMBone.LEFT_FOOT] = smpl_joints[:, 7]       # Ankle
-        vrm_joints[:, VRMBone.RIGHT_FOOT] = smpl_joints[:, 8]
-        vrm_joints[:, VRMBone.LEFT_TOES] = smpl_joints[:, 10]      # Foot / Toes
-        vrm_joints[:, VRMBone.RIGHT_TOES] = smpl_joints[:, 11]
+        if y_inverted:
+            # 180-degree rotation around X axis: (x, -y, -z)
+            joints[:, :, 1] = -joints[:, :, 1]
+            joints[:, :, 2] = -joints[:, :, 2]
 
-        # 2. Face (3 bones: LeftEye, RightEye, Jaw)
-        # If SMPL has 45 joints (HMR 2.0 with face keypoints):
-        head_pos = vrm_joints[:, VRMBone.HEAD]
-        neck_pos = vrm_joints[:, VRMBone.NECK]
-        head_up = head_pos - neck_pos
-        head_up_norm = np.linalg.norm(head_up, axis=-1, keepdims=True) + 1e-6
-        up_dir = head_up / head_up_norm
+        # 3. Map to VRM Standard Skeleton
+        if is_openpose:
+            # OpenPose 25 keypoints:
+            #  0: Nose, 1: Neck, 2: RShoulder, 3: RElbow, 4: RWrist
+            #  5: LShoulder, 6: LElbow, 7: LWrist, 8: MidHip (Pelvis)
+            #  9: RHip, 10: RKnee, 11: RAnkle, 12: LHip, 13: LKnee, 14: LAnkle
+            # 15: REye, 16: LEye, 17: REar, 18: LEar
+            # 19: LBigToe, 20: LSmallToe, 21: LHeel
+            # 22: RBigToe, 23: RSmallToe, 24: RHeel
 
-        # Approximate face offset: Eyes forward (+Z in standard SMPL or camera) and slightly apart
-        # Forward is perpendicular to shoulder line and up_dir
-        shoulder_vec = vrm_joints[:, VRMBone.RIGHT_SHOULDER] - vrm_joints[:, VRMBone.LEFT_SHOULDER]
-        shoulder_norm = np.linalg.norm(shoulder_vec, axis=-1, keepdims=True) + 1e-6
-        right_dir = shoulder_vec / shoulder_norm
-        fwd_dir = np.cross(up_dir, right_dir)
+            # Axial Spine & Pelvis
+            vrm_joints[:, VRMBone.HIPS] = joints[:, 8]
+            vrm_joints[:, VRMBone.SPINE] = 0.67 * joints[:, 8] + 0.33 * joints[:, 1]
+            vrm_joints[:, VRMBone.CHEST] = 0.33 * joints[:, 8] + 0.67 * joints[:, 1]
+            vrm_joints[:, VRMBone.UPPER_CHEST] = 0.15 * joints[:, 8] + 0.85 * joints[:, 1]
+            vrm_joints[:, VRMBone.NECK] = joints[:, 1]
 
-        vrm_joints[:, VRMBone.LEFT_EYE] = head_pos + 0.05 * fwd_dir - 0.035 * right_dir + 0.02 * up_dir
-        vrm_joints[:, VRMBone.RIGHT_EYE] = head_pos + 0.05 * fwd_dir + 0.035 * right_dir + 0.02 * up_dir
-        vrm_joints[:, VRMBone.JAW] = head_pos + 0.04 * fwd_dir - 0.06 * up_dir
+            if num_in_joints > 18:
+                head_center = (joints[:, 17] + joints[:, 18]) / 2.0 + np.array([0.0, 0.04, 0.0])
+                vrm_joints[:, VRMBone.HEAD] = head_center
+            else:
+                vrm_joints[:, VRMBone.HEAD] = joints[:, 0] + np.array([0.0, 0.06, -0.04])
+
+            # Left Arm (Shoulder root/clavicle -> Shoulder joint -> Elbow -> Wrist)
+            vrm_joints[:, VRMBone.LEFT_SHOULDER] = 0.5 * joints[:, 1] + 0.5 * joints[:, 5]
+            vrm_joints[:, VRMBone.LEFT_UPPER_ARM] = joints[:, 5]
+            vrm_joints[:, VRMBone.LEFT_LOWER_ARM] = joints[:, 6]
+            vrm_joints[:, VRMBone.LEFT_HAND] = joints[:, 7]
+
+            # Right Arm
+            vrm_joints[:, VRMBone.RIGHT_SHOULDER] = 0.5 * joints[:, 1] + 0.5 * joints[:, 2]
+            vrm_joints[:, VRMBone.RIGHT_UPPER_ARM] = joints[:, 2]
+            vrm_joints[:, VRMBone.RIGHT_LOWER_ARM] = joints[:, 3]
+            vrm_joints[:, VRMBone.RIGHT_HAND] = joints[:, 4]
+
+            # Left Leg
+            vrm_joints[:, VRMBone.LEFT_UPPER_LEG] = joints[:, 12]
+            vrm_joints[:, VRMBone.LEFT_LOWER_LEG] = joints[:, 13]
+            vrm_joints[:, VRMBone.LEFT_FOOT] = joints[:, 14]
+            if num_in_joints > 20:
+                vrm_joints[:, VRMBone.LEFT_TOES] = 0.5 * joints[:, 19] + 0.5 * joints[:, 20]
+            else:
+                vrm_joints[:, VRMBone.LEFT_TOES] = joints[:, 14] + np.array([0.0, -0.08, 0.12])
+
+            # Right Leg
+            vrm_joints[:, VRMBone.RIGHT_UPPER_LEG] = joints[:, 9]
+            vrm_joints[:, VRMBone.RIGHT_LOWER_LEG] = joints[:, 10]
+            vrm_joints[:, VRMBone.RIGHT_FOOT] = joints[:, 11]
+            if num_in_joints > 23:
+                vrm_joints[:, VRMBone.RIGHT_TOES] = 0.5 * joints[:, 22] + 0.5 * joints[:, 23]
+            else:
+                vrm_joints[:, VRMBone.RIGHT_TOES] = joints[:, 11] + np.array([0.0, -0.08, 0.12])
+
+            # Face (Eyes & Jaw)
+            if num_in_joints > 16:
+                vrm_joints[:, VRMBone.LEFT_EYE] = joints[:, 16]
+                vrm_joints[:, VRMBone.RIGHT_EYE] = joints[:, 15]
+                vrm_joints[:, VRMBone.JAW] = 0.6 * joints[:, 0] + 0.4 * joints[:, 1] + np.array([0.0, -0.02, 0.03])
+            else:
+                head_pos = vrm_joints[:, VRMBone.HEAD]
+                vrm_joints[:, VRMBone.LEFT_EYE] = head_pos + np.array([0.035, 0.02, 0.05])
+                vrm_joints[:, VRMBone.RIGHT_EYE] = head_pos + np.array([-0.035, 0.02, 0.05])
+                vrm_joints[:, VRMBone.JAW] = head_pos + np.array([0.0, -0.06, 0.04])
+
+        else:
+            # Standard SMPL 24 mapping
+            vrm_joints[:, VRMBone.HIPS] = joints[:, 0]
+            vrm_joints[:, VRMBone.SPINE] = joints[:, 3]
+            vrm_joints[:, VRMBone.CHEST] = joints[:, 6]
+            vrm_joints[:, VRMBone.UPPER_CHEST] = joints[:, 9]
+            vrm_joints[:, VRMBone.NECK] = joints[:, 12]
+            vrm_joints[:, VRMBone.HEAD] = joints[:, 15]
+
+            vrm_joints[:, VRMBone.LEFT_SHOULDER] = joints[:, 13]  # Collar/Shoulder root
+            vrm_joints[:, VRMBone.RIGHT_SHOULDER] = joints[:, 14]
+            vrm_joints[:, VRMBone.LEFT_UPPER_ARM] = joints[:, 16] # Shoulder joint / Upper arm
+            vrm_joints[:, VRMBone.RIGHT_UPPER_ARM] = joints[:, 17]
+            vrm_joints[:, VRMBone.LEFT_LOWER_ARM] = joints[:, 18] # Elbow
+            vrm_joints[:, VRMBone.RIGHT_LOWER_ARM] = joints[:, 19]
+            vrm_joints[:, VRMBone.LEFT_HAND] = joints[:, 20]      # Wrist / Hand
+            vrm_joints[:, VRMBone.RIGHT_HAND] = joints[:, 21]
+
+            vrm_joints[:, VRMBone.LEFT_UPPER_LEG] = joints[:, 1]  # Hip
+            vrm_joints[:, VRMBone.RIGHT_UPPER_LEG] = joints[:, 2]
+            vrm_joints[:, VRMBone.LEFT_LOWER_LEG] = joints[:, 4]  # Knee
+            vrm_joints[:, VRMBone.RIGHT_LOWER_LEG] = joints[:, 5]
+            vrm_joints[:, VRMBone.LEFT_FOOT] = joints[:, 7]       # Ankle
+            vrm_joints[:, VRMBone.RIGHT_FOOT] = joints[:, 8]
+            vrm_joints[:, VRMBone.LEFT_TOES] = joints[:, 10]      # Foot / Toes
+            vrm_joints[:, VRMBone.RIGHT_TOES] = joints[:, 11]
+
+            # Face approximation from head/neck
+            head_pos = vrm_joints[:, VRMBone.HEAD]
+            neck_pos = vrm_joints[:, VRMBone.NECK]
+            head_up = head_pos - neck_pos
+            head_up_norm = np.linalg.norm(head_up, axis=-1, keepdims=True) + 1e-6
+            up_dir = head_up / head_up_norm
+
+            shoulder_vec = vrm_joints[:, VRMBone.RIGHT_SHOULDER] - vrm_joints[:, VRMBone.LEFT_SHOULDER]
+            shoulder_norm = np.linalg.norm(shoulder_vec, axis=-1, keepdims=True) + 1e-6
+            right_dir = shoulder_vec / shoulder_norm
+            fwd_dir = np.cross(up_dir, right_dir)
+
+            vrm_joints[:, VRMBone.LEFT_EYE] = head_pos + 0.05 * fwd_dir - 0.035 * right_dir + 0.02 * up_dir
+            vrm_joints[:, VRMBone.RIGHT_EYE] = head_pos + 0.05 * fwd_dir + 0.035 * right_dir + 0.02 * up_dir
+            vrm_joints[:, VRMBone.JAW] = head_pos + 0.04 * fwd_dir - 0.06 * up_dir
+
+        # 4. Grounding (ensure feet rest naturally on Y = 0 floor across sequence)
+        feet_indices = [VRMBone.LEFT_FOOT, VRMBone.RIGHT_FOOT, VRMBone.LEFT_TOES, VRMBone.RIGHT_TOES]
+        min_foot_y = float(np.min(vrm_joints[:, feet_indices, 1]))
+        vrm_joints[:, :, 1] -= min_foot_y
 
         # 3. Fingers (24 bones)
         # Map MediaPipe 21 landmarks if present, or synthesize from wrist positions

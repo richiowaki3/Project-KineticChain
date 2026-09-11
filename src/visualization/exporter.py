@@ -83,12 +83,19 @@ class VisualizerDataExporter:
                 seg_dict["chain_profiles"] = adu.chain_profiles.to_dict()
             segments_payload.append(seg_dict)
 
+        # Build union of standard hierarchical edges and chain edges (including ulnar flank edges)
+        all_edges_set = set(VRM_FULL_EDGES)
+        all_edges_set.update(decomposer.central_global_edges)
+        all_edges_set.update(decomposer.radial_global_edges)
+        all_edges_set.update(decomposer.ulnar_global_edges)
+        all_edges = sorted(list(all_edges_set))
+
         payload = {
             "video_id": result.video_id,
             "fps": float(result.fps),
             "total_frames": int(T),
             "bones": VRM_BONE_NAMES,
-            "edges": [[int(u), int(v)] for u, v in VRM_FULL_EDGES],
+            "edges": [[int(u), int(v)] for u, v in all_edges],
             "chains": chains_def,
             "joints": rounded_joints, # (T, 49, 3)
             "segments": segments_payload,

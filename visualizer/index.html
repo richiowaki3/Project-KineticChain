@@ -786,9 +786,20 @@
           const inRed   = chainRedEdges.has(key)   || chainRedEdges.has(rkey);
 
           if (activeChain === 'all') {
-            if (inGreen) { color = '#10B981'; width = 3.5; alpha = 0.9; }
-            else if (inBlue) { color = '#3B82F6'; width = 3.5; alpha = 0.9; }
-            else if (inRed) { color = '#EF4444'; width = 3.5; alpha = 0.9; }
+            const isUlnarSpecific = (u >= 34 && u <= 36) || (v >= 34 && v <= 36) || (u >= 46 && u <= 48) || (v >= 46 && v <= 48) || (u === 6 && v === 14) || (u === 7 && v === 15);
+            const isRadialSpecific = (u >= 25 && u <= 30) || (v >= 25 && v <= 30) || (u >= 37 && u <= 42) || (v >= 37 && v <= 42) || (u === 6 && v === 7);
+
+            if (isUlnarSpecific) {
+              color = '#EF4444'; width = 3.5; alpha = 0.95; // Coral Red (Ulnar)
+            } else if (isRadialSpecific) {
+              color = '#3B82F6'; width = 3.5; alpha = 0.95; // Bright Blue (Radial)
+            } else if (inGreen) {
+              color = '#10B981'; width = 3.5; alpha = 0.95; // Emerald Green (Central Axial)
+            } else if (inBlue) {
+              color = '#3B82F6'; width = 3.5; alpha = 0.95;
+            } else if (inRed) {
+              color = '#EF4444'; width = 3.5; alpha = 0.95;
+            }
           } else if (activeChain === 'central_axial' && inGreen) {
             color = '#10B981'; width = 4.5; alpha = 1.0; isHighlighted = true;
           } else if (activeChain === 'radial_arm' && inBlue) {
@@ -796,8 +807,8 @@
           } else if (activeChain === 'ulnar_grounding' && inRed) {
             color = '#EF4444'; width = 4.5; alpha = 1.0; isHighlighted = true;
           } else {
-            alpha = 0.15; // Dimmed out
-            width = 1.2;
+            alpha = 0.12; // Dimmed out
+            width = 1.0;
           }
 
           const avgZ = (p1.z + p2.z) / 2;
@@ -815,6 +826,9 @@
           let color = '#9CA3AF';
           if (idx === 5) { radius = 6.0; color = '#F3F4F6'; } // Head
           else if (idx === 0) { radius = 5.0; color = '#F59E0B'; } // Hips
+          else if (idx === 4) { radius = 4.0; color = '#E2E8F0'; } // Neck
+          else if (idx === 18 || idx === 19) { radius = 4.0; color = '#EF4444'; } // Feet
+          else if (idx === 12 || idx === 13) { radius = 4.0; color = '#3B82F6'; } // Hands
 
           drawItems.push({
             type: 'joint',
