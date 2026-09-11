@@ -56,9 +56,9 @@
       <div>
         <h1 class="text-sm font-bold text-slate-100 flex items-center gap-2">
           <span>kvS9M2mSido: 4D-Humans x MediaPipe 上半身ボーン合体 & オノマトペ解析スタジオ</span>
-          <span class="text-xs px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800">VRM 49 Nodes</span>
+          <span class="text-xs px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800">VRM 49 Nodes + 11 Tails (60 Nodes)</span>
         </h1>
-        <p class="text-[11px] text-slate-400">身体トラッキング(4D-Humans) + 手指21関節(MediaPipe 2026) 3D空間フュージョン</p>
+        <p class="text-[11px] text-slate-400">身体トラッキング(4D-Humans 平滑化) + 手指21関節(MediaPipe 2026 平滑化) 3D空間フュージョン</p>
       </div>
     </div>
 
@@ -563,24 +563,56 @@
       });
     }
 
-    // Update Skeleton Pose for Frame t
-    function updateSkeletonPose(t) {
-      if (!BUNDLE_DATA || !BUNDLE_DATA.frames[t]) return;
-      const frameJoints = BUNDLE_DATA.frames[t];
+    // Update Skeleton Pose for Frame f (Supports continuous sub-frame floating point with lerp)
+    function updateSkeletonPose(f) {
+      if (!BUNDLE_DATA || !BUNDLE_DATA.frames || BUNDLE_DATA.frames.length === 0) return;
+      const totalF = BUNDLE_DATA.frames.length;
+      const clampedF = Math.max(0, Math.min(totalF - 1, f));
+      const f0 = Math.floor(clampedF);
+      const f1 = Math.min(totalF - 1, f0 + 1);
+      const alpha = clampedF - f0;
 
-      // Update Spheres
+      const frame0 = BUNDLE_DATA.frames[f0];
+      const frame1 = BUNDLE_DATA.frames[f1];
+      if (!frame0) return;
+
+      const hasNext = (frame1 && alpha > 0.0001);
+
+      // Update Spheres with continuous interpolation
       for (let i = 0; i < jointSpheres.length; i++) {
-        if (frameJoints[i]) {
-          jointSpheres[i].position.set(frameJoints[i][0], frameJoints[i][1], frameJoints[i][2]);
+        const p0 = frame0[i];
+        if (p0) {
+          if (hasNext && frame1[i]) {
+            const p1 = frame1[i];
+            jointSpheres[i].position.set(
+              p0[0] + (p1[0] - p0[0]) * alpha,
+              p0[1] + (p1[1] - p0[1]) * alpha,
+              p0[2] + (p1[2] - p0[2]) * alpha
+            );
+          } else {
+            jointSpheres[i].position.set(p0[0], p0[1], p0[2]);
+          }
         }
       }
 
-      // Update Bone Lines
+      // Update Bone Lines with continuous interpolation
       boneLines.forEach(({ line, p, c }) => {
-        if (frameJoints[p] && frameJoints[c]) {
+        if (frame0[p] && frame0[c]) {
           const pos = line.geometry.attributes.position;
-          pos.setXYZ(0, frameJoints[p][0], frameJoints[p][1], frameJoints[p][2]);
-          pos.setXYZ(1, frameJoints[c][0], frameJoints[c][1], frameJoints[c][2]);
+          let px, py, pz, cx, cy, cz;
+          if (hasNext && frame1[p] && frame1[c]) {
+            px = frame0[p][0] + (frame1[p][0] - frame0[p][0]) * alpha;
+            py = frame0[p][1] + (frame1[p][1] - frame0[p][1]) * alpha;
+            pz = frame0[p][2] + (frame1[p][2] - frame0[p][2]) * alpha;
+            cx = frame0[c][0] + (frame1[c][0] - frame0[c][0]) * alpha;
+            cy = frame0[c][1] + (frame1[c][1] - frame0[c][1]) * alpha;
+            cz = frame0[c][2] + (frame1[c][2] - frame0[c][2]) * alpha;
+          } else {
+            px = frame0[p][0]; py = frame0[p][1]; pz = frame0[p][2];
+            cx = frame0[c][0]; cy = frame0[c][1]; cz = frame0[c][2];
+          }
+          pos.setXYZ(0, px, py, pz);
+          pos.setXYZ(1, cx, cy, cz);
           pos.needsUpdate = true;
         }
       });
@@ -675,13 +707,15 @@
 
     function updateFrame(f, syncVideo = false) {
       if (!BUNDLE_DATA) return;
-      const fInt = Math.floor(Math.max(0, Math.min(BUNDLE_DATA.metadata.total_frames - 1, f)));
+      const totalF = BUNDLE_DATA.metadata.total_frames;
+      const clampedF = Math.max(0, Math.min(totalF - 1, f));
+      const fInt = Math.floor(clampedF);
 
-      // 1. Update Skeleton
-      updateSkeletonPose(fInt);
+      // 1. Update Skeleton (Sub-frame continuous linear interpolation)
+      updateSkeletonPose(clampedF);
 
       // 2. Update UI
-      const timeSec = (fInt / BUNDLE_DATA.metadata.fps).toFixed(2);
+      const timeSec = (clampedF / BUNDLE_DATA.metadata.fps).toFixed(2);
       document.getElementById('overlay-frame').innerText = fInt;
       document.getElementById('overlay-time').innerText = timeSec + 's';
       document.getElementById('txt-current-time').innerText = timeSec + 's';

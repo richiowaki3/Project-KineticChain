@@ -24,6 +24,7 @@ if str(project_root) not in sys.path:
 
 from src.tracking.smpl_adapter import SmplTrackAdapter
 from src.tracking.hand_filter import filter_hand_landmarks
+from src.tracking.body_filter import filter_body_trajectories
 from src.core.vrm_bones import (
     VRMBone, NUM_VRM_BONES, VRM_BONE_NAMES, VRM_FULL_EDGES,
     ArmatureTail, NUM_ARMATURE_NODES, ARMATURE_NODE_NAMES, ARMATURE_FULL_EDGES
@@ -116,15 +117,19 @@ def main():
     filtered_hand_landmarks = filter_hand_landmarks(hand_landmarks, total_frames=total_frames, max_gap=15, sigma=1.5)
     print(f"  -> 補間・平滑化完了: 有効フレーム {len(filtered_hand_landmarks)} / {total_frames} ({len(filtered_hand_landmarks)/total_frames*100:.1f}%)")
 
-    # 3. Fuse into VRM 49-Node Skeleton & 58-Node Full Armature
-    print("\n[3] 4D-Humans 身体骨格と平滑化MediaPipe手指骨格の 3D空間完全合体処理中...")
+    # 3. Smooth Body Trajectories & Fuse into VRM 49-Node Skeleton & 60-Node Full Armature
+    print("\n[3] 4D-Humans 身体骨格のノイズ除去 & スパイク除去 & 平滑化処理中 (Median filter k=3, Gaussian sigma=1.5)...")
+    joints_4d_smoothed = filter_body_trajectories(joints_4d, sigma=1.5, use_median=True, median_kernel=3, max_jump_threshold=0.25)
+    print("  -> 身体平滑化完了: 微小振動（ジッター）およびオクルージョン飛翔を解消")
+
+    print("  -> 平滑化4D-Humans身体骨格と平滑化MediaPipe手指骨格の 3D空間完全合体処理中...")
     decomposer = KineticChainDecomposer()
     # 1. Pure VRM 49-Node Humanoid Skeleton (Bone Heads/Joint Pivots compliant with VRM standard)
-    vrm_joints = decomposer.build_vrm_skeleton(joints_4d, filtered_hand_landmarks, include_tails=False)
-    # 2. Full 58-Node Armature Skeleton (Including Leaf Bone Tails: Cranial Crown & Fingertips)
-    armature_joints = decomposer.build_armature_skeleton(joints_4d, filtered_hand_landmarks)
+    vrm_joints = decomposer.build_vrm_skeleton(joints_4d_smoothed, filtered_hand_landmarks, include_tails=False)
+    # 2. Full 60-Node Armature Skeleton (Including Leaf Bone Tails: Cranial Crown, Fingertips & Toe Tips)
+    armature_joints = decomposer.build_armature_skeleton(joints_4d_smoothed, filtered_hand_landmarks)
     print(f"  -> VRM 49ノード規格骨格生成完了: shape {vrm_joints.shape}")
-    print(f"  -> Armature 58ノード完全アーマチュア（Head/Tail対応）生成完了: shape {armature_joints.shape}")
+    print(f"  -> Armature {NUM_ARMATURE_NODES}ノード完全アーマチュア（Head/Tail対応）生成完了: shape {armature_joints.shape}")
 
     # 4. Extract Upper-Body Kinematics & Hand-Body Coupler
     print("\n[4] 上半身キネティックチェーンおよび張力指標の計算中...")

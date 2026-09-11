@@ -510,7 +510,7 @@ class KineticChainDecomposer:
         smpl_joints: np.ndarray,
         hand_landmarks: Optional[Dict[int, Any]] = None
     ) -> np.ndarray:
-        """Constructs full 58-node VRM Armature skeleton including leaf bone tails."""
+        """Constructs full 60-node VRM Armature skeleton including leaf bone tails."""
         return self.build_vrm_skeleton(smpl_joints, hand_landmarks=hand_landmarks, include_tails=True)
 
     def _synthesize_fingers(
