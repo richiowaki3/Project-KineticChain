@@ -127,7 +127,7 @@ class AduLibraryIndexer:
             bundle_json_path.parent.mkdir(parents=True, exist_ok=True)
             self.export_browser_bundle(bundle_json_path)
 
-    def export_browser_bundle(self, bundle_path: Path, max_words: int = 50) -> None:
+    def export_browser_bundle(self, bundle_path: Path, max_words: int = 70) -> None:
         """
         Exports a compact JSON file containing key onomatopoeia words and their
         full 3D VRM trajectories so HTML/JS visualizers can run client-side with zero latency.
@@ -160,9 +160,13 @@ class AduLibraryIndexer:
 
             bundle["words"][w] = {
                 "key": key,
+                "video_id": adu_meta["video_id"],
+                "start_frame": adu_meta["start_frame"],
+                "end_frame": adu_meta["end_frame"],
                 "similarity": best_ref["similarity"],
                 "duration_sec": adu_meta["duration_sec"],
                 "hierarchy": adu_meta["hierarchy"],
+                "primary_driver": adu_meta.get("primary_driver", "unknown"),
                 "focus_chain": adu_meta["focus_chain"],
                 "texture": adu_meta["texture"],
                 "trajectory": traj_list  # [L][49][3]
