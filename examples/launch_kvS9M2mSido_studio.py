@@ -26,6 +26,27 @@ VIDEO_DIR = Path(r"D:\motion_capture\output_results")
 PORT = 8085
 
 
+import re
+
+class _RangeFileWrapper:
+    """Wraps a file object to read only a specified byte range."""
+    def __init__(self, file_obj, length):
+        self.file_obj = file_obj
+        self.remaining = length
+
+    def read(self, size=-1):
+        if self.remaining <= 0:
+            return b""
+        if size < 0 or size > self.remaining:
+            size = self.remaining
+        chunk = self.file_obj.read(size)
+        self.remaining -= len(chunk)
+        return chunk
+
+    def close(self):
+        self.file_obj.close()
+
+
 class StudioHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
     """
     HTTP Request Handler that routes requests for HTML, data bundle, and video files
@@ -57,6 +78,42 @@ class StudioHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             return str(candidate)
 
         return super().translate_path(path)
+
+    def send_head(self):
+        path = self.translate_path(self.path)
+        if not os.path.exists(path) or os.path.isdir(path):
+            return super().send_head()
+
+        range_header = self.headers.get("Range")
+        if not range_header:
+            return super().send_head()
+
+        # Parse range header: e.g. "bytes=0-1024" or "bytes=1000-"
+        m = re.match(r"^bytes=(\d+)-(\d*)$", range_header.strip())
+        if not m:
+            return super().send_head()
+
+        file_size = os.path.getsize(path)
+        start = int(m.group(1))
+        end = int(m.group(2)) if m.group(2) else file_size - 1
+
+        if start >= file_size or end >= file_size or start > end:
+            self.send_error(416, "Requested Range Not Satisfiable")
+            return None
+
+        content_length = end - start + 1
+        ctype = self.guess_type(path)
+
+        self.send_response(206, "Partial Content")
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Range", f"bytes {start}-{end}/{file_size}")
+        self.send_header("Content-Length", str(content_length))
+        self.send_header("Accept-Ranges", "bytes")
+        self.end_headers()
+
+        f = open(path, "rb")
+        f.seek(start)
+        return _RangeFileWrapper(f, content_length)
 
     def end_headers(self):
         # Add CORS and caching headers

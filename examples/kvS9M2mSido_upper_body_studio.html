@@ -576,15 +576,9 @@
       videoMP = document.getElementById('video-mp');
 
       [video4D, videoMP].forEach(v => {
-        v.addEventListener('timeupdate', () => {
-          if (!isPlaying) return;
-          // Sync frame from primary video
-          if ((activeVideoMode === '4dhumans' && v === video4D) || 
-              (activeVideoMode === 'mediapipe' && v === videoMP) ||
-              (activeVideoMode === 'dual' && v === video4D)) {
-            const f = Math.floor(v.currentTime * 29.97003);
-            updateFrame(f, false);
-          }
+        v.muted = true; // Ensure browser allows programmatic play
+        v.addEventListener('canplay', () => {
+          document.getElementById('video-status').innerText = '動画準備完了 (同期中)';
         });
         v.addEventListener('error', () => {
           document.getElementById('video-status').innerText = '動画ロード待機 (サーバー確認)';
@@ -617,29 +611,52 @@
       }
     }
 
-    // Playback Loop
-    function animate() {
+    // High-Resolution Playback Loop
+    let lastClockTime = performance.now();
+
+    function animate(now) {
       requestAnimationFrame(animate);
 
       if (isPlaying && BUNDLE_DATA) {
-        currentFrame += (1.0 * playbackSpeed);
+        const fps = BUNDLE_DATA.metadata.fps || 29.97003;
+        const dt = Math.min((now - lastClockTime) / 1000.0, 0.1);
+        lastClockTime = now;
+
+        // Advance frames based on actual elapsed time
+        currentFrame += (dt * fps * playbackSpeed);
+
+        // Handle Phrase Loop or End
         if (document.getElementById('chk-loop-phrase').checked) {
           const p = BUNDLE_DATA.phrases[currentPhraseIndex];
           if (currentFrame >= p.end_frame) {
             currentFrame = p.start_frame;
+            seekToFrame(p.start_frame);
           }
         } else if (currentFrame >= BUNDLE_DATA.metadata.total_frames) {
           currentFrame = 0;
+          seekToFrame(0);
           pause();
         }
-        updateFrame(Math.floor(currentFrame), true);
+
+        // Resync video only when drift exceeds 0.4s to prevent decoder thrashing
+        const primaryVideo = (activeVideoMode === 'mediapipe') ? videoMP : video4D;
+        if (!primaryVideo.paused && !primaryVideo.seeking && !isNaN(primaryVideo.duration) && primaryVideo.duration > 0) {
+          const targetTime = currentFrame / fps;
+          if (Math.abs(primaryVideo.currentTime - targetTime) > 0.4) {
+            try { primaryVideo.currentTime = targetTime; } catch(e){}
+          }
+        }
+
+        updateFrame(Math.floor(currentFrame), false);
+      } else {
+        lastClockTime = now;
       }
 
       controls.update();
       renderer.render(scene, camera);
     }
 
-    function updateFrame(f, syncVideo = true) {
+    function updateFrame(f, syncVideo = false) {
       if (!BUNDLE_DATA) return;
       currentFrame = Math.max(0, Math.min(BUNDLE_DATA.metadata.total_frames - 1, f));
 
@@ -659,12 +676,22 @@
         selectPhrase(pIdx, false);
       }
 
-      // 4. Sync Video
+      // 4. Sync Video if requested
       if (syncVideo) {
         const targetTime = currentFrame / BUNDLE_DATA.metadata.fps;
-        if (Math.abs(video4D.currentTime - targetTime) > 0.15) video4D.currentTime = targetTime;
-        if (Math.abs(videoMP.currentTime - targetTime) > 0.15) videoMP.currentTime = targetTime;
+        if (!isNaN(video4D.duration) && video4D.duration > 0) {
+          try { video4D.currentTime = targetTime; } catch(e){}
+        }
+        if (!isNaN(videoMP.duration) && videoMP.duration > 0) {
+          try { videoMP.currentTime = targetTime; } catch(e){}
+        }
       }
+    }
+
+    function seekToFrame(f) {
+      if (!BUNDLE_DATA) return;
+      currentFrame = Math.max(0, Math.min(BUNDLE_DATA.metadata.total_frames - 1, f));
+      updateFrame(currentFrame, true);
     }
 
     function togglePlay() {
@@ -673,11 +700,27 @@
     }
 
     function play() {
+      if (!BUNDLE_DATA) return;
       isPlaying = true;
+      lastClockTime = performance.now();
       document.getElementById('icon-play').innerText = '⏸ 一時停止';
       document.getElementById('btn-play').className = 'px-4 py-1.5 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-md text-xs flex items-center gap-1.5 shadow';
-      video4D.play().catch(() => {});
-      videoMP.play().catch(() => {});
+
+      const targetTime = currentFrame / BUNDLE_DATA.metadata.fps;
+      if (!isNaN(video4D.duration) && video4D.duration > 0) {
+        if (Math.abs(video4D.currentTime - targetTime) > 0.2) {
+          try { video4D.currentTime = targetTime; } catch(e){}
+        }
+        video4D.playbackRate = playbackSpeed;
+        video4D.play().catch(e => console.log('video4D play error:', e));
+      }
+      if (!isNaN(videoMP.duration) && videoMP.duration > 0) {
+        if (Math.abs(videoMP.currentTime - targetTime) > 0.2) {
+          try { videoMP.currentTime = targetTime; } catch(e){}
+        }
+        videoMP.playbackRate = playbackSpeed;
+        videoMP.play().catch(e => console.log('videoMP play error:', e));
+      }
     }
 
     function pause() {
@@ -701,7 +744,7 @@
     // Seek bar listener
     document.getElementById('seek-bar').addEventListener('input', (e) => {
       const f = parseInt(e.target.value);
-      updateFrame(f, true);
+      seekToFrame(f);
     });
 
     // Language Selector
@@ -723,7 +766,7 @@
       const p = BUNDLE_DATA.phrases[idx];
 
       if (seekToStart) {
-        updateFrame(p.start_frame, true);
+        seekToFrame(p.start_frame);
       }
 
       updateActivePhraseDisplay();
