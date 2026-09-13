@@ -66,7 +66,13 @@ class StudioHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         if clean_path.startswith("/videos/"):
             rel = clean_path[len("/videos/"):]
-            return str(VIDEO_DIR / rel)
+            p1 = VIDEO_DIR / rel
+            if p1.exists():
+                return str(p1)
+            p2 = Path(r"D:\motion_capture\justvv2_batch\output_results") / rel
+            if p2.exists():
+                return str(p2)
+            return str(p1)
 
         if clean_path.startswith("/examples/"):
             rel = clean_path[len("/examples/"):]
@@ -84,16 +90,28 @@ class StudioHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         if not os.path.exists(path) or os.path.isdir(path):
             return super().send_head()
 
+        file_size = os.path.getsize(path)
+        ctype = self.guess_type(path)
         range_header = self.headers.get("Range")
+
         if not range_header:
-            return super().send_head()
+            self.send_response(200, "OK")
+            self.send_header("Content-Type", ctype)
+            self.send_header("Content-Length", str(file_size))
+            self.send_header("Accept-Ranges", "bytes")
+            self.end_headers()
+            return open(path, "rb")
 
         # Parse range header: e.g. "bytes=0-1024" or "bytes=1000-"
         m = re.match(r"^bytes=(\d+)-(\d*)$", range_header.strip())
         if not m:
-            return super().send_head()
+            self.send_response(200, "OK")
+            self.send_header("Content-Type", ctype)
+            self.send_header("Content-Length", str(file_size))
+            self.send_header("Accept-Ranges", "bytes")
+            self.end_headers()
+            return open(path, "rb")
 
-        file_size = os.path.getsize(path)
         start = int(m.group(1))
         end = int(m.group(2)) if m.group(2) else file_size - 1
 
@@ -102,7 +120,6 @@ class StudioHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             return None
 
         content_length = end - start + 1
-        ctype = self.guess_type(path)
 
         self.send_response(206, "Partial Content")
         self.send_header("Content-Type", ctype)

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KineticChain | 3Yb5JOB_75M: 5大ノイズ除去・オクルージョン補間 比較スタジオ</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Three.js & OrbitControls -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <style>
+    body {
+      background-color: #0b0f19;
+      color: #f1f5f9;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      overflow: hidden;
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body class="h-screen flex flex-col select-none">
+
+  <!-- Header -->
+  <header class="h-14 bg-slate-900 border-b border-slate-800 px-4 flex items-center justify-between flex-shrink-0">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 to-emerald-500 flex items-center justify-center font-bold text-white shadow-lg text-xs">
+        5F
+      </div>
+      <div>
+        <h1 class="text-sm font-bold text-slate-100 flex items-center gap-2">
+          <span>3Yb5JOB_75M: MediaPipe 5大フィルター・オクルージョン補間 比較スタジオ</span>
+          <span class="text-xs px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono">Before vs After</span>
+        </h1>
+        <p class="text-[11px] text-slate-400">Savitzky-Golay平滑化 + 短区間線形補間 + Hand Pose Invariance Prior + チャタリングゲート + 解剖学的境界</p>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="flex items-center space-x-3 text-xs">
+      <div class="bg-slate-800/90 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-3">
+        <span class="text-slate-400">左手有効率:</span>
+        <span class="font-mono text-red-400 font-semibold">19.5%</span>
+        <span class="text-slate-500">➔</span>
+        <span class="font-mono text-emerald-400 font-bold">83.5%</span>
+        <span class="text-slate-600">|</span>
+        <span class="text-slate-400">右手有効率:</span>
+        <span class="font-mono text-red-400 font-semibold">32.1%</span>
+        <span class="text-slate-500">➔</span>
+        <span class="font-mono text-emerald-400 font-bold">86.3%</span>
+      </div>
+      <a href="http://localhost:8085/" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded border border-slate-700 text-xs transition">
+        kvS9M2mSido スタジオへ
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex overflow-hidden">
+
+    <!-- Left: 3D Three.js Viewport (60%) -->
+    <div class="flex-1 flex flex-col relative border-r border-slate-800">
+      
+      <!-- Canvas Container -->
+      <div id="canvas-container" class="flex-1 w-full h-full relative">
+        
+        <!-- Camera & Visual Mode Presets (Top Left Overlay) -->
+        <div class="absolute top-3 left-3 z-10 flex flex-col gap-2">
+          <div class="glass-panel px-3 py-2 rounded-lg flex items-center space-x-2 text-xs">
+            <span class="text-slate-400 font-medium">カメラ視点:</span>
+            <button onclick="setCamera('upper')" id="btn-cam-upper" class="px-2 py-0.5 bg-cyan-600 text-white rounded font-medium">上半身</button>
+            <button onclick="setCamera('hands')" id="btn-cam-hands" class="px-2 py-0.5 bg-slate-700 text-slate-300 hover:bg-slate-600 rounded">手元ズーム</button>
+            <button onclick="setCamera('full')" id="btn-cam-full" class="px-2 py-0.5 bg-slate-700 text-slate-300 hover:bg-slate-600 rounded">全身</button>
+            <button onclick="resetCamera()" class="px-2 py-0.5 bg-slate-800 text-slate-400 hover:text-white rounded ml-1">↺</button>
+          </div>
+
+          <!-- Layer Toggles -->
+          <div class="glass-panel px-3 py-2 rounded-lg flex items-center space-x-4 text-xs">
+            <label class="flex items-center space-x-1.5 cursor-pointer">
+              <input type="checkbox" id="chk-show-raw" checked onchange="updateVisibility()" class="rounded text-red-500 focus:ring-0">
+              <span class="text-red-400 font-semibold flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block"></span> 除去前 生データ (Raw)
+              </span>
+            </label>
+            <label class="flex items-center space-x-1.5 cursor-pointer">
+              <input type="checkbox" id="chk-show-filtered" checked onchange="updateVisibility()" class="rounded text-emerald-500 focus:ring-0">
+              <span class="text-emerald-400 font-semibold flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span> 5大フィルター後 (Filtered)
+              </span>
+            </label>
+            <label class="flex items-center space-x-1.5 cursor-pointer">
+              <input type="checkbox" id="chk-show-pose" checked onchange="updateVisibility()" class="rounded text-slate-400 focus:ring-0">
+              <span class="text-slate-300 flex items-center gap-1">
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-400 inline-block"></span> 身体ポーズ
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Real-time HUD Status (Top Right Overlay) -->
+        <div class="absolute top-3 right-3 z-10 glass-panel p-3 rounded-lg text-xs w-64 space-y-2">
+          <div class="flex items-center justify-between border-b border-slate-700 pb-1 font-semibold text-slate-300">
+            <span>リアルタイム検出ステータス</span>
+            <span id="hud-frame-indicator" class="font-mono text-cyan-400">F: 0</span>
+          </div>
+
+          <!-- Left Hand Status -->
+          <div class="space-y-1">
+            <div class="text-[11px] text-slate-400 font-medium">左手 (Left Hand)</div>
+            <div class="grid grid-cols-2 gap-1 text-[10px]">
+              <div class="bg-slate-900/80 p-1.5 rounded border border-slate-800 flex items-center justify-between">
+                <span class="text-slate-400">生データ:</span>
+                <span id="hud-raw-l" class="font-bold text-red-400 font-mono">LOST</span>
+              </div>
+              <div class="bg-slate-900/80 p-1.5 rounded border border-slate-800 flex items-center justify-between">
+                <span class="text-slate-400">フィルター後:</span>
+                <span id="hud-filt-l" class="font-bold text-emerald-400 font-mono">ACTIVE</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Hand Status -->
+          <div class="space-y-1">
+            <div class="text-[11px] text-slate-400 font-medium">右手 (Right Hand)</div>
+            <div class="grid grid-cols-2 gap-1 text-[10px]">
+              <div class="bg-slate-900/80 p-1.5 rounded border border-slate-800 flex items-center justify-between">
+                <span class="text-slate-400">生データ:</span>
+                <span id="hud-raw-r" class="font-bold text-red-400 font-mono">LOST</span>
+              </div>
+              <div class="bg-slate-900/80 p-1.5 rounded border border-slate-800 flex items-center justify-between">
+                <span class="text-slate-400">フィルター後:</span>
+                <span id="hud-filt-r" class="font-bold text-emerald-400 font-mono">ACTIVE</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fallback Badge -->
+          <div id="hud-fallback-badge" class="hidden text-center py-1 rounded bg-amber-950/80 text-amber-300 border border-amber-800 font-bold text-[10px] animate-pulse">
+            ⚠️ オクルージョン発生: Hand Pose Invariance 補間中
+          </div>
+        </div>
+
+        <!-- 3D View Helper Legend (Bottom Left) -->
+        <div class="absolute bottom-3 left-3 z-10 glass-panel px-3 py-1.5 rounded-lg text-[10px] text-slate-400 flex items-center gap-3">
+          <span>🖱️ 左ドラッグ: 回転</span>
+          <span>🖱️ 右ドラッグ: 平行移動</span>
+          <span>🖱️ ホイール: ズーム</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Sync Preview Video & Detailed Diagnostics (40%) -->
+    <div class="w-[45%] flex flex-col bg-slate-900/60 overflow-y-auto custom-scrollbar">
+      
+      <!-- Video Player Container -->
+      <div class="p-4 border-b border-slate-800 flex flex-col">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> 元動画トラッキング プレビュー (MediaPipe 2026)
+          </span>
+          <span class="text-[11px] text-slate-400 font-mono" id="video-timer">00:00.00 / 03:04.80</span>
+        </div>
+        <div class="w-full aspect-video bg-black rounded-xl overflow-hidden border border-slate-800 relative shadow-2xl flex items-center justify-center">
+          <video id="preview-video" class="w-full h-full object-contain" preload="auto" muted playsinline>
+            <source src="/videos/3Yb5JOB_75M__mediapipe_2026_preview.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <!-- Diagnostic Explanations -->
+      <div class="p-4 flex-1 flex flex-col space-y-4">
+        
+        <!-- Filter Stages Cards -->
+        <div class="bg-slate-850 p-3.5 rounded-xl border border-slate-800">
+          <h3 class="text-xs font-bold text-slate-200 mb-2 flex items-center gap-2">
+            <span>✨ 適用されている5大フィルター処理</span>
+          </h3>
+          <ul class="text-xs text-slate-400 space-y-2 leading-relaxed">
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 font-bold font-mono">1.</span>
+              <span><strong class="text-slate-200">Savitzky-Golay 平滑化 ($w=9, poly=3$)</strong>: 生データの細かな微震動・ジッターを位相遅延なしに平滑化。</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 font-bold font-mono">2.</span>
+              <span><strong class="text-slate-200">Pose/SMPL フォールバック + 短区間線形補間</strong>: 手部が顔・体幹と重なってロストした際、Pose手首座標と前腕ベクトルにフォールバック。</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 font-bold font-mono">3.</span>
+              <span><strong class="text-slate-200">Hand Pose Invariance Prior</strong>: 遮蔽直前の手形状（開き・握り）を固定維持し、オクルージョン中の指つぶれ・消失を防止。</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 font-bold font-mono">4.</span>
+              <span><strong class="text-slate-200">チャタリングノイズゲート ($< 3$F)</strong>: 1〜2フレームだけ瞬間的に現れるゴースト検出を破棄。</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-cyan-400 font-bold font-mono">5.</span>
+              <span><strong class="text-slate-200">解剖学的境界外れ値除去</strong>: 手首から指先まで 0.28m 超の異常伸長、1Fで 0.35m 超のテレポートを排除。</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Metric Table Comparison -->
+        <div class="bg-slate-850 p-3.5 rounded-xl border border-slate-800 flex-1">
+          <h3 class="text-xs font-bold text-slate-200 mb-2 flex items-center justify-between">
+            <span>📊 3Yb5JOB_75M 処理実績メトリクス</span>
+            <span class="text-[10px] text-slate-400 font-mono">計 5,544 フレーム</span>
+          </h3>
+          <table class="w-full text-xs text-left">
+            <thead>
+              <tr class="text-slate-400 border-b border-slate-800 text-[11px]">
+                <th class="py-1.5 font-medium">項目</th>
+                <th class="py-1.5 font-medium text-red-400 text-right">除去前 (Raw)</th>
+                <th class="py-1.5 font-medium text-emerald-400 text-right">除去後 (Filtered)</th>
+                <th class="py-1.5 font-medium text-cyan-400 text-right">改善効果</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/60 font-mono text-[11px]">
+              <tr>
+                <td class="py-2 text-slate-300 font-sans">左手 有効フレーム</td>
+                <td class="py-2 text-right text-slate-400">1,081 F (19.5%)</td>
+                <td class="py-2 text-right text-emerald-400 font-bold">4,627 F (83.5%)</td>
+                <td class="py-2 text-right text-cyan-400 font-bold">+64.0% 回復</td>
+              </tr>
+              <tr>
+                <td class="py-2 text-slate-300 font-sans">右手 有効フレーム</td>
+                <td class="py-2 text-right text-slate-400">1,780 F (32.1%)</td>
+                <td class="py-2 text-right text-emerald-400 font-bold">4,783 F (86.3%)</td>
+                <td class="py-2 text-right text-cyan-400 font-bold">+54.2% 回復</td>
+              </tr>
+              <tr>
+                <td class="py-2 text-slate-300 font-sans">チャタリング破棄 (L/R)</td>
+                <td class="py-2 text-right text-slate-400">-</td>
+                <td class="py-2 text-right text-amber-400">102 F / 111 F</td>
+                <td class="py-2 text-right text-slate-400">誤検出排除</td>
+              </tr>
+              <tr>
+                <td class="py-2 text-slate-300 font-sans">オクルージョン補間 (L/R)</td>
+                <td class="py-2 text-right text-slate-400">-</td>
+                <td class="py-2 text-right text-cyan-400">3,520 F / 2,875 F</td>
+                <td class="py-2 text-right text-slate-400">欠損を完全架橋</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Timeline & Playback Controller -->
+  <footer class="h-16 bg-slate-900 border-t border-slate-800 px-4 flex items-center space-x-4 flex-shrink-0">
+    
+    <!-- Play / Pause Button -->
+    <button id="btn-play" onclick="togglePlay()" class="w-10 h-10 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 flex items-center justify-center shadow-lg transition transform active:scale-95 font-bold text-sm">
+      ▶
+    </button>
+
+    <!-- Speed Selector -->
+    <div class="flex items-center space-x-1 bg-slate-800 p-1 rounded-lg border border-slate-700 text-xs">
+      <button onclick="setSpeed(0.25)" id="spd-025" class="px-2 py-0.5 rounded text-slate-300 hover:text-white">0.25x</button>
+      <button onclick="setSpeed(0.5)" id="spd-05" class="px-2 py-0.5 rounded text-slate-300 hover:text-white">0.5x</button>
+      <button onclick="setSpeed(1.0)" id="spd-10" class="px-2 py-0.5 rounded bg-cyan-600 text-white font-medium">1.0x</button>
+    </div>
+
+    <!-- Timeline Slider & Time Counter -->
+    <div class="flex-1 flex flex-col justify-center space-y-1">
+      <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+        <div>
+          <span id="time-current" class="text-cyan-400 font-semibold">00:00.00</span> / <span id="time-total">03:04.80</span>
+        </div>
+        <div>
+          フレーム: <span id="frame-current" class="text-slate-200 font-semibold">0</span> / <span id="frame-total">5544</span>
+        </div>
+      </div>
+      <input type="range" id="timeline-slider" min="0" max="5543" value="0" step="1"
+             oninput="onSliderInput(this.value)"
+             class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-cyan-400">
+    </div>
+
+  </footer>
+
+  <!-- Main Visualizer Script -->
+  <script>
+    // State variables
+    let bundleData = null;
+    let totalFrames = 0;
+    let fps = 30.0;
+    let currentFrame = 0;
+    let isPlaying = false;
+    let playbackSpeed = 1.0;
+    let animFrameId = null;
+    let lastAnimTime = 0;
+
+    // Three.js variables
+    let scene, camera, renderer, controls;
+    let poseJoints = [], poseLines = [];
+    let rawLeftJoints = [], rawLeftLines = [];
+    let rawRightJoints = [], rawRightLines = [];
+    let filtLeftJoints = [], filtLeftLines = [];
+    let filtRightJoints = [], filtRightLines = [];
+    let rawGroup, filtGroup, poseGroup;
+    let cameraMode = 'upper';
+
+    // DOM Elements
+    const video = document.getElementById('preview-video');
+    const btnPlay = document.getElementById('btn-play');
+    const slider = document.getElementById('timeline-slider');
+    const timeCurrent = document.getElementById('time-current');
+    const timeTotal = document.getElementById('time-total');
+    const frameCurrent = document.getElementById('frame-current');
+    const frameTotal = document.getElementById('frame-total');
+    const hudFrame = document.getElementById('hud-frame-indicator');
+    const hudRawL = document.getElementById('hud-raw-l');
+    const hudFiltL = document.getElementById('hud-filt-l');
+    const hudRawR = document.getElementById('hud-raw-r');
+    const hudFiltR = document.getElementById('hud-filt-r');
+    const hudFallback = document.getElementById('hud-fallback-badge');
+
+    // MediaPipe Hand Canonical Bone connections (21 joints)
+    const HAND_CONNECTIONS = [
+      [0, 1], [1, 2], [2, 3], [3, 4],       // Thumb
+      [0, 5], [5, 6], [6, 7], [7, 8],       // Index
+      [0, 9], [9, 10], [10, 11], [11, 12],  // Middle
+      [0, 13], [13, 14], [14, 15], [15, 16],// Ring
+      [0, 17], [17, 18], [18, 19], [19, 20],// Pinky
+      [5, 9], [9, 13], [13, 17]             // Palm base
+    ];
+
+    // MediaPipe Pose Bone connections (33 joints)
+    const POSE_CONNECTIONS = [
+      [11, 12],                             // Shoulders
+      [11, 13], [13, 15],                   // Left Arm
+      [12, 14], [14, 16],                   // Right Arm
+      [11, 23], [12, 24], [23, 24],         // Torso
+      [23, 25], [25, 27],                   // Left Leg
+      [24, 26], [26, 28],                   // Right Leg
+      [0, 11], [0, 12]                      // Neck/Head anchor
+    ];
+
+    // Initialize Application
+    async function init() {
+      initThree();
+      buildSkeletonMeshes();
+      await loadBundle();
+
+      // Video synchronization
+      video.addEventListener('timeupdate', onVideoTimeUpdate);
+      video.addEventListener('ended', () => {
+        isPlaying = false;
+        btnPlay.innerText = '▶';
+      });
+
+      // Keyboard spacebar shortcut
+      window.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') {
+          e.preventDefault();
+          togglePlay();
+        }
+      });
+
+      // Start render loop
+      lastAnimTime = performance.now();
+      animate(lastAnimTime);
+    }
+
+    // Initialize Three.js Scene
+    function initThree() {
+      const container = document.getElementById('canvas-container');
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x0a0f1d);
+
+      camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
+      setCamera('upper');
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+      renderer.setSize(w, h);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
+      controls.target.set(0, 1.2, 0);
+
+      // Lights
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+      dirLight.position.set(3, 8, 5);
+      scene.add(dirLight);
+
+      const blueRim = new THREE.DirectionalLight(0x38bdf8, 0.4);
+      blueRim.position.set(-4, 3, -3);
+      scene.add(blueRim);
+
+      // Floor Grid
+      const grid = new THREE.GridHelper(10, 20, 0x1e293b, 0x0f172a);
+      grid.position.y = 0;
+      scene.add(grid);
+
+      // Groups
+      poseGroup = new THREE.Group();
+      rawGroup = new THREE.Group();
+      filtGroup = new THREE.Group();
+      scene.add(poseGroup);
+      scene.add(rawGroup);
+      scene.add(filtGroup);
+
+      window.addEventListener('resize', onWindowResize);
+    }
+
+    function onWindowResize() {
+      const container = document.getElementById('canvas-container');
+      if (!container) return;
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+
+    function setCamera(mode) {
+      cameraMode = mode;
+      document.querySelectorAll('#btn-cam-upper, #btn-cam-hands, #btn-cam-full').forEach(b => {
+        b.className = 'px-2 py-0.5 bg-slate-700 text-slate-300 hover:bg-slate-600 rounded';
+      });
+
+      if (mode === 'upper') {
+        document.getElementById('btn-cam-upper').className = 'px-2 py-0.5 bg-cyan-600 text-white rounded font-medium';
+        camera.position.set(0, 1.35, 2.2);
+        if (controls) controls.target.set(0, 1.25, 0);
+      } else if (mode === 'hands') {
+        document.getElementById('btn-cam-hands').className = 'px-2 py-0.5 bg-cyan-600 text-white rounded font-medium';
+        camera.position.set(0.25, 1.25, 1.1);
+        if (controls) controls.target.set(0.15, 1.2, 0);
+      } else if (mode === 'full') {
+        document.getElementById('btn-cam-full').className = 'px-2 py-0.5 bg-cyan-600 text-white rounded font-medium';
+        camera.position.set(0, 1.1, 3.6);
+        if (controls) controls.target.set(0, 0.9, 0);
+      }
+    }
+
+    function resetCamera() {
+      setCamera(cameraMode);
+    }
+
+    // Build Joint Spheres & Bone Lines
+    function buildSkeletonMeshes() {
+      // 1. Pose Meshes (33 joints)
+      const poseMat = new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.5 });
+      const poseGeom = new THREE.SphereGeometry(0.015, 8, 8);
+      for (let i = 0; i < 33; i++) {
+        const mesh = new THREE.Mesh(poseGeom, poseMat);
+        poseJoints.push(mesh);
+        poseGroup.add(mesh);
+      }
+      const poseLineMat = new THREE.LineBasicMaterial({ color: 0x475569, linewidth: 2 });
+      for (let i = 0; i < POSE_CONNECTIONS.length; i++) {
+        const geom = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]);
+        const line = new THREE.Line(geom, poseLineMat);
+        poseLines.push(line);
+        poseGroup.add(line);
+      }
+
+      // 2. Raw Hands Meshes (Red)
+      const rawMat = new THREE.MeshStandardMaterial({ color: 0xef4444, roughness: 0.3, emissive: 0x7f1d1d, emissiveIntensity: 0.3 });
+      const rawGeom = new THREE.SphereGeometry(0.011, 8, 8);
+      const rawLineMat = new THREE.LineBasicMaterial({ color: 0xf87171, linewidth: 2 });
+
+      for (let s = 0; s < 2; s++) { // 0: Left, 1: Right
+        const jList = (s === 0) ? rawLeftJoints : rawRightJoints;
+        const lList = (s === 0) ? rawLeftLines : rawRightLines;
+        for (let i = 0; i < 21; i++) {
+          const mesh = new THREE.Mesh(rawGeom, rawMat);
+          jList.push(mesh);
+          rawGroup.add(mesh);
+        }
+        for (let i = 0; i < HAND_CONNECTIONS.length; i++) {
+          const geom = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]);
+          const line = new THREE.Line(geom, rawLineMat);
+          lList.push(line);
+          rawGroup.add(line);
+        }
+      }
+
+      // 3. Filtered Hands Meshes (Cyan / Emerald)
+      const filtMat = new THREE.MeshStandardMaterial({ color: 0x10b981, roughness: 0.2, emissive: 0x064e3b, emissiveIntensity: 0.5 });
+      const filtGeom = new THREE.SphereGeometry(0.013, 8, 8);
+      const filtLineMat = new THREE.LineBasicMaterial({ color: 0x34d399, linewidth: 3 });
+
+      for (let s = 0; s < 2; s++) { // 0: Left, 1: Right
+        const jList = (s === 0) ? filtLeftJoints : filtRightJoints;
+        const lList = (s === 0) ? filtLeftLines : filtRightLines;
+        for (let i = 0; i < 21; i++) {
+          const mesh = new THREE.Mesh(filtGeom, filtMat);
+          jList.push(mesh);
+          filtGroup.add(mesh);
+        }
+        for (let i = 0; i < HAND_CONNECTIONS.length; i++) {
+          const geom = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]);
+          const line = new THREE.Line(geom, filtLineMat);
+          lList.push(line);
+          filtGroup.add(line);
+        }
+      }
+    }
+
+    // Load JSON Bundle
+    async function loadBundle() {
+      try {
+        const res = await fetch('/data/3Yb5JOB_75M_filter_comparison.json');
+        bundleData = await res.json();
+        totalFrames = bundleData.total_frames;
+        fps = bundleData.fps || 30.0;
+
+        slider.max = totalFrames - 1;
+        frameTotal.innerText = totalFrames;
+        timeTotal.innerText = formatTime(totalFrames / fps);
+        document.getElementById('video-timer').innerText = `00:00.00 / ${formatTime(totalFrames / fps)}`;
+
+        updatePose(0);
+        console.log(`Loaded comparison bundle for ${bundleData.video_id}: ${totalFrames} frames`);
+      } catch (err) {
+        console.error("Failed to load comparison bundle:", err);
+      }
+    }
+
+    // Coordinate conversion: MediaPipe world to Three.js (flip Y and center)
+    function mpToThree(pt, outVec) {
+      if (!pt) {
+        outVec.set(0, -999, 0); // hide offscreen
+        return false;
+      }
+      // World landmarks: Y is down (-Y is up). Hip at ~0, so add 1.0 to stand at ground level.
+      outVec.set(pt[0], -pt[1] + 1.0, -pt[2]);
+      return true;
+    }
+
+    // Update Pose and HUD for frame f
+    function updatePose(f) {
+      if (!bundleData || !bundleData.frames) return;
+      const fInt = Math.floor(Math.max(0, Math.min(totalFrames - 1, f)));
+      const frame = bundleData.frames[fInt];
+      if (!frame) return;
+
+      currentFrame = fInt;
+      slider.value = fInt;
+      frameCurrent.innerText = fInt;
+      timeCurrent.innerText = formatTime(fInt / fps);
+      hudFrame.innerText = `F: ${fInt}`;
+
+      const tmpV1 = new THREE.Vector3();
+      const tmpV2 = new THREE.Vector3();
+
+      // 1. Update Pose (33 points)
+      if (frame.p && frame.p.length === 33) {
+        for (let i = 0; i < 33; i++) {
+          mpToThree(frame.p[i], poseJoints[i].position);
+        }
+        for (let i = 0; i < POSE_CONNECTIONS.length; i++) {
+          const [idxA, idxB] = POSE_CONNECTIONS[i];
+          const posA = poseJoints[idxA].position;
+          const posB = poseJoints[idxB].position;
+          const positions = poseLines[i].geometry.attributes.position.array;
+          positions[0] = posA.x; positions[1] = posA.y; positions[2] = posA.z;
+          positions[3] = posB.x; positions[4] = posB.y; positions[5] = posB.z;
+          poseLines[i].geometry.attributes.position.needsUpdate = true;
+        }
+      }
+
+      // 2. Update Raw Hands
+      const updateHandMesh = (landmarks, joints, lines) => {
+        if (!landmarks || landmarks.length !== 21) {
+          joints.forEach(j => j.position.set(0, -999, 0));
+          lines.forEach(l => {
+            const arr = l.geometry.attributes.position.array;
+            arr[0]=0; arr[1]=-999; arr[2]=0; arr[3]=0; arr[4]=-999; arr[5]=0;
+            l.geometry.attributes.position.needsUpdate = true;
+          });
+          return false;
+        }
+        for (let i = 0; i < 21; i++) {
+          mpToThree(landmarks[i], joints[i].position);
+        }
+        for (let i = 0; i < HAND_CONNECTIONS.length; i++) {
+          const [idxA, idxB] = HAND_CONNECTIONS[i];
+          const pA = joints[idxA].position;
+          const pB = joints[idxB].position;
+          const arr = lines[i].geometry.attributes.position.array;
+          arr[0] = pA.x; arr[1] = pA.y; arr[2] = pA.z;
+          arr[3] = pB.x; arr[4] = pB.y; arr[5] = pB.z;
+          lines[i].geometry.attributes.position.needsUpdate = true;
+        }
+        return true;
+      };
+
+      const hasRawL = updateHandMesh(frame.rl, rawLeftJoints, rawLeftLines);
+      const hasRawR = updateHandMesh(frame.rr, rawRightJoints, rawRightLines);
+      const hasFiltL = updateHandMesh(frame.fl, filtLeftJoints, filtLeftLines);
+      const hasFiltR = updateHandMesh(frame.fr, filtRightJoints, filtRightLines);
+
+      // HUD Indicators
+      hudRawL.innerText = hasRawL ? "DETECTED" : "LOST";
+      hudRawL.className = hasRawL ? "font-bold text-emerald-400 font-mono" : "font-bold text-red-500 font-mono";
+
+      hudRawR.innerText = hasRawR ? "DETECTED" : "LOST";
+      hudRawR.className = hasRawR ? "font-bold text-emerald-400 font-mono" : "font-bold text-red-500 font-mono";
+
+      hudFiltL.innerText = hasFiltL ? (frame.fbl ? "FALLBACK" : "ACTIVE") : "LOST";
+      hudFiltL.className = hasFiltL ? (frame.fbl ? "font-bold text-amber-400 font-mono" : "font-bold text-emerald-400 font-mono") : "font-bold text-red-500 font-mono";
+
+      hudFiltR.innerText = hasFiltR ? (frame.fbr ? "FALLBACK" : "ACTIVE") : "LOST";
+      hudFiltR.className = hasFiltR ? (frame.fbr ? "font-bold text-amber-400 font-mono" : "font-bold text-emerald-400 font-mono") : "font-bold text-red-500 font-mono";
+
+      // Show fallback warning badge if either hand is using fallback prior
+      if (frame.fbl || frame.fbr) {
+        hudFallback.classList.remove('hidden');
+      } else {
+        hudFallback.classList.add('hidden');
+      }
+    }
+
+    // Layer visibility
+    function updateVisibility() {
+      rawGroup.visible = document.getElementById('chk-show-raw').checked;
+      filtGroup.visible = document.getElementById('chk-show-filtered').checked;
+      poseGroup.visible = document.getElementById('chk-show-pose').checked;
+    }
+
+    // Playback Controls
+    function togglePlay() {
+      isPlaying = !isPlaying;
+      btnPlay.innerText = isPlaying ? '❚❚' : '▶';
+
+      if (isPlaying) {
+        video.playbackRate = playbackSpeed;
+        video.play().catch(e => console.warn("Video play prevented:", e));
+      } else {
+        video.pause();
+      }
+    }
+
+    function setSpeed(spd) {
+      playbackSpeed = spd;
+      document.querySelectorAll('#spd-025, #spd-05, #spd-10').forEach(b => {
+        b.className = 'px-2 py-0.5 rounded text-slate-300 hover:text-white';
+      });
+      if (spd === 0.25) document.getElementById('spd-025').className = 'px-2 py-0.5 rounded bg-cyan-600 text-white font-medium';
+      if (spd === 0.5) document.getElementById('spd-05').className = 'px-2 py-0.5 rounded bg-cyan-600 text-white font-medium';
+      if (spd === 1.0) document.getElementById('spd-10').className = 'px-2 py-0.5 rounded bg-cyan-600 text-white font-medium';
+
+      if (video) video.playbackRate = spd;
+    }
+
+    function onSliderInput(val) {
+      const f = parseInt(val, 10);
+      currentFrame = f;
+      if (video && Math.abs(video.currentTime - (f / fps)) > 0.1) {
+        video.currentTime = f / fps;
+      }
+      updatePose(f);
+    }
+
+    function onVideoTimeUpdate() {
+      if (!isPlaying) return;
+      const f = video.currentTime * fps;
+      updatePose(f);
+    }
+
+    // Animation Loop
+    function animate(now) {
+      animFrameId = requestAnimationFrame(animate);
+
+      if (isPlaying && video.paused) {
+        // Fallback drive if video isn't loaded or buffering
+        const dt = (now - lastAnimTime) / 1000.0;
+        currentFrame += dt * fps * playbackSpeed;
+        if (currentFrame >= totalFrames) {
+          currentFrame = 0;
+          isPlaying = false;
+          btnPlay.innerText = '▶';
+        }
+        updatePose(currentFrame);
+      }
+      lastAnimTime = now;
+
+      if (controls) controls.update();
+      if (renderer && scene && camera) {
+        renderer.render(scene, camera);
+      }
+    }
+
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      const ms = Math.floor((sec % 1) * 100);
+      return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}.${String(ms).padStart(2, '0')}`;
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
