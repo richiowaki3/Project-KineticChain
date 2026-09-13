@@ -165,20 +165,50 @@
     </div>
 
     <!-- Right: Sync Preview Video & Detailed Diagnostics (40%) -->
-    <div class="w-[45%] flex flex-col bg-slate-900/60 overflow-y-auto custom-scrollbar">
+    <!-- Right: Sync Preview Video & Detailed Diagnostics (45%) -->
+    <div id="right-panel" class="w-[45%] flex flex-col bg-slate-900/60 overflow-y-auto custom-scrollbar transition-all duration-300">
       
-      <!-- Video Player Container -->
+      <!-- Video Player Container with 2D Direct Overlay -->
       <div class="p-4 border-b border-slate-800 flex flex-col">
         <div class="flex items-center justify-between mb-2">
-          <span class="text-xs font-bold text-slate-300 flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> 元動画トラッキング プレビュー (MediaPipe 2026)
-          </span>
+          <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span class="text-xs font-bold text-slate-200">元映像 × 2D骨格マッピング</span>
+            <select id="video-source-select" onchange="changeVideoSource(this.value)" class="bg-slate-800 border border-slate-700 text-slate-200 text-[11px] rounded px-2 py-0.5 ml-2 focus:ring-0">
+              <option value="raw_clean">🎥 クリーン元映像 (3Yb5JOB_75M.mp4)</option>
+              <option value="mediapipe_preview">🔬 MediaPipe 2D検出プレビュー</option>
+            </select>
+          </div>
           <span class="text-[11px] text-slate-400 font-mono" id="video-timer">00:00.00 / 03:04.80</span>
         </div>
-        <div class="w-full aspect-video bg-black rounded-xl overflow-hidden border border-slate-800 relative shadow-2xl flex items-center justify-center">
+
+        <!-- 2D Overlay Controls Bar -->
+        <div class="flex items-center justify-between bg-slate-850 px-3 py-1.5 rounded-t-xl border border-b-0 border-slate-700 text-xs">
+          <div class="flex items-center space-x-4">
+            <label class="flex items-center space-x-1.5 cursor-pointer">
+              <input type="checkbox" id="chk-overlay-raw" checked onchange="requestOverlayRedraw()" class="rounded text-red-500 focus:ring-0">
+              <span class="text-red-400 font-semibold flex items-center gap-1 text-[11px]">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block"></span> 映像上に 赤：生データ
+              </span>
+            </label>
+            <label class="flex items-center space-x-1.5 cursor-pointer">
+              <input type="checkbox" id="chk-overlay-filtered" checked onchange="requestOverlayRedraw()" class="rounded text-emerald-500 focus:ring-0">
+              <span class="text-emerald-400 font-semibold flex items-center gap-1 text-[11px]">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 inline-block"></span> 映像上に 緑：フィルター後
+              </span>
+            </label>
+          </div>
+          <button onclick="toggleVideoLayout()" id="btn-toggle-layout" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-[10px] transition">
+            🔲 動画拡大表示
+          </button>
+        </div>
+
+        <!-- Video & Canvas Overlay Wrapper -->
+        <div id="video-wrapper" class="w-full aspect-video bg-black rounded-b-xl overflow-hidden border border-slate-700 relative shadow-2xl flex items-center justify-center">
           <video id="preview-video" class="w-full h-full object-contain" preload="auto" muted playsinline>
-            <source src="/videos/3Yb5JOB_75M__mediapipe_2026_preview.mp4" type="video/mp4">
+            <source id="video-source-elem" src="/input_videos/3Yb5JOB_75M.mp4" type="video/mp4">
           </video>
+          <canvas id="video-overlay-canvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
         </div>
       </div>
 
@@ -319,6 +349,12 @@
 
     // DOM Elements
     const video = document.getElementById('preview-video');
+    const overlayCanvas = document.getElementById('video-overlay-canvas');
+    const overlayCtx = overlayCanvas ? overlayCanvas.getContext('2d') : null;
+    const chkOverlayRaw = document.getElementById('chk-overlay-raw');
+    const chkOverlayFiltered = document.getElementById('chk-overlay-filtered');
+    let isWideVideo = false;
+
     const btnPlay = document.getElementById('btn-play');
     const slider = document.getElementById('timeline-slider');
     const timeCurrent = document.getElementById('time-current');
@@ -364,6 +400,12 @@
         video.muted = true;
         video.addEventListener('ended', () => {
           pause();
+        });
+        video.addEventListener('loadedmetadata', () => {
+          requestOverlayRedraw();
+        });
+        video.addEventListener('seeked', () => {
+          requestOverlayRedraw();
         });
       }
 
@@ -438,6 +480,7 @@
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+      requestOverlayRedraw();
     }
 
     function setCamera(mode) {
@@ -679,6 +722,282 @@
       } else {
         hudFallback.classList.add('hidden');
       }
+
+      // 3. Render 2D Overlays directly on top of video frame
+      drawVideoOverlay(clampedF);
+    }
+
+    // 2D Video Overlay Canvas Rendering Logic
+    function resizeOverlayCanvas() {
+      if (!overlayCanvas) return;
+      const rect = overlayCanvas.getBoundingClientRect();
+      if (rect.width <= 0 || rect.height <= 0) return;
+      const dpr = window.devicePixelRatio || 1;
+      const targetW = Math.round(rect.width * dpr);
+      const targetH = Math.round(rect.height * dpr);
+      if (overlayCanvas.width !== targetW || overlayCanvas.height !== targetH) {
+        overlayCanvas.width = targetW;
+        overlayCanvas.height = targetH;
+      }
+    }
+
+    function getVideoDrawRect() {
+      const cw = overlayCanvas.width;
+      const ch = overlayCanvas.height;
+      if (!video || !video.videoWidth || !video.videoHeight) {
+        return { x: 0, y: 0, w: cw, h: ch };
+      }
+      const videoRatio = video.videoWidth / video.videoHeight;
+      const canvasRatio = cw / ch;
+      let dw, dh, dx, dy;
+      if (Math.abs(canvasRatio - videoRatio) < 0.01) {
+        return { x: 0, y: 0, w: cw, h: ch };
+      }
+      if (canvasRatio > videoRatio) {
+        dh = ch;
+        dw = ch * videoRatio;
+        dx = (cw - dw) / 2;
+        dy = 0;
+      } else {
+        dw = cw;
+        dh = cw / videoRatio;
+        dx = 0;
+        dy = (ch - dh) / 2;
+      }
+      return { x: dx, y: dy, w: dw, h: dh };
+    }
+
+    function getLerped2D(pts0, pts1, idx, alpha) {
+      if (!pts0 || !pts0[idx]) return null;
+      const p0 = pts0[idx];
+      if (!pts1 || !pts1[idx] || alpha <= 0.001) return p0;
+      const p1 = pts1[idx];
+      return [
+        p0[0] + (p1[0] - p0[0]) * alpha,
+        p0[1] + (p1[1] - p0[1]) * alpha
+      ];
+    }
+
+    function draw2DHand(ctx, landmarks0, landmarks1, alpha, rect, dpr, opts) {
+      if (!landmarks0 || landmarks0.length !== 21) return;
+
+      const pts = [];
+      for (let i = 0; i < 21; i++) {
+        const pt = getLerped2D(landmarks0, landmarks1, i, alpha);
+        if (!pt || pt.length < 2 || isNaN(pt[0]) || isNaN(pt[1])) return;
+        pts.push({
+          x: rect.x + pt[0] * rect.w,
+          y: rect.y + pt[1] * rect.h
+        });
+      }
+
+      ctx.save();
+
+      // 1. Draw Bones
+      ctx.lineWidth = opts.lineWidth * dpr;
+      ctx.strokeStyle = opts.lineColor;
+      if (opts.dash) {
+        ctx.setLineDash(opts.dash.map(v => v * dpr));
+      } else {
+        ctx.setLineDash([]);
+      }
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      for (let i = 0; i < HAND_CONNECTIONS.length; i++) {
+        const [idxA, idxB] = HAND_CONNECTIONS[i];
+        const pA = pts[idxA];
+        const pB = pts[idxB];
+        ctx.beginPath();
+        ctx.moveTo(pA.x, pA.y);
+        ctx.lineTo(pB.x, pB.y);
+        ctx.stroke();
+      }
+
+      // 2. Draw Joints
+      for (let i = 0; i < 21; i++) {
+        const p = pts[i];
+        ctx.beginPath();
+        const isKeyJoint = (i === 0 || i === 4 || i === 8 || i === 12 || i === 16 || i === 20);
+        const r = (isKeyJoint ? opts.jointRadius * 1.25 : opts.jointRadius) * dpr;
+        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = opts.jointColor;
+        ctx.fill();
+        ctx.lineWidth = 1.0 * dpr;
+        ctx.strokeStyle = opts.jointBorder;
+        ctx.stroke();
+      }
+
+      // 3. Draw Badge at Wrist (joint 0)
+      if (opts.badge) {
+        const p0 = pts[0];
+        ctx.font = `bold ${Math.round(10 * dpr)}px sans-serif`;
+        const text = opts.badge.text;
+        const textWidth = ctx.measureText(text).width;
+        const padX = 5 * dpr;
+        const padY = 2 * dpr;
+        const badgeW = textWidth + padX * 2;
+        const badgeH = 15 * dpr;
+        const bx = Math.max(4 * dpr, Math.min(rect.x + rect.w - badgeW - 4 * dpr, p0.x - badgeW / 2));
+        const by = Math.max(4 * dpr, p0.y - 20 * dpr);
+
+        ctx.fillStyle = opts.badge.bgColor;
+        ctx.strokeStyle = opts.badge.borderColor;
+        ctx.lineWidth = 1 * dpr;
+        ctx.beginPath();
+        if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(bx, by, badgeW, badgeH, 3 * dpr);
+        } else {
+          ctx.rect(bx, by, badgeW, badgeH);
+        }
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = opts.badge.textColor;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text, bx + badgeW / 2, by + badgeH / 2);
+      }
+
+      ctx.restore();
+    }
+
+    function drawVideoOverlay(clampedF) {
+      if (!overlayCanvas || !overlayCtx || !bundleData || !bundleData.frames) return;
+      resizeOverlayCanvas();
+
+      const w = overlayCanvas.width;
+      const h = overlayCanvas.height;
+      overlayCtx.clearRect(0, 0, w, h);
+
+      const showRaw = chkOverlayRaw ? chkOverlayRaw.checked : true;
+      const showFiltered = chkOverlayFiltered ? chkOverlayFiltered.checked : true;
+      if (!showRaw && !showFiltered) return;
+
+      const totalF = bundleData.frames.length;
+      const f0 = Math.floor(clampedF);
+      const f1 = Math.min(totalF - 1, f0 + 1);
+      const alpha = clampedF - f0;
+      const frame0 = bundleData.frames[f0];
+      const frame1 = bundleData.frames[f1];
+      if (!frame0) return;
+
+      const rect = getVideoDrawRect();
+      const dpr = window.devicePixelRatio || 1;
+
+      // Draw Raw Hands (Red)
+      if (showRaw) {
+        if (frame0.rl2d) {
+          draw2DHand(overlayCtx, frame0.rl2d, frame1 ? frame1.rl2d : null, alpha, rect, dpr, {
+            lineColor: 'rgba(239, 68, 68, 0.85)',
+            lineWidth: 2.2,
+            dash: [4, 3],
+            jointColor: '#ef4444',
+            jointBorder: '#ffffff',
+            jointRadius: 2.8,
+            badge: { text: '生: 左手', bgColor: 'rgba(185, 28, 28, 0.9)', borderColor: '#ef4444', textColor: '#ffffff' }
+          });
+        }
+        if (frame0.rr2d) {
+          draw2DHand(overlayCtx, frame0.rr2d, frame1 ? frame1.rr2d : null, alpha, rect, dpr, {
+            lineColor: 'rgba(239, 68, 68, 0.85)',
+            lineWidth: 2.2,
+            dash: [4, 3],
+            jointColor: '#ef4444',
+            jointBorder: '#ffffff',
+            jointRadius: 2.8,
+            badge: { text: '生: 右手', bgColor: 'rgba(185, 28, 28, 0.9)', borderColor: '#ef4444', textColor: '#ffffff' }
+          });
+        }
+      }
+
+      // Draw Filtered Hands (Green / Amber on Fallback)
+      if (showFiltered) {
+        if (frame0.fl2d) {
+          const isFb = Boolean(frame0.fbl);
+          draw2DHand(overlayCtx, frame0.fl2d, frame1 ? frame1.fl2d : null, alpha, rect, dpr, {
+            lineColor: isFb ? '#f59e0b' : '#10b981',
+            lineWidth: 3.2,
+            dash: null,
+            jointColor: isFb ? '#fbbf24' : '#34d399',
+            jointBorder: isFb ? '#78350f' : '#064e3b',
+            jointRadius: 3.8,
+            badge: isFb
+              ? { text: '補間維持: 左手', bgColor: 'rgba(146, 64, 14, 0.95)', borderColor: '#f59e0b', textColor: '#fef3c7' }
+              : { text: '緑: 左手', bgColor: 'rgba(6, 95, 70, 0.9)', borderColor: '#10b981', textColor: '#d1fae5' }
+          });
+        }
+        if (frame0.fr2d) {
+          const isFb = Boolean(frame0.fbr);
+          draw2DHand(overlayCtx, frame0.fr2d, frame1 ? frame1.fr2d : null, alpha, rect, dpr, {
+            lineColor: isFb ? '#f59e0b' : '#10b981',
+            lineWidth: 3.2,
+            dash: null,
+            jointColor: isFb ? '#fbbf24' : '#34d399',
+            jointBorder: isFb ? '#78350f' : '#064e3b',
+            jointRadius: 3.8,
+            badge: isFb
+              ? { text: '補間維持: 右手', bgColor: 'rgba(146, 64, 14, 0.95)', borderColor: '#f59e0b', textColor: '#fef3c7' }
+              : { text: '緑: 右手', bgColor: 'rgba(6, 95, 70, 0.9)', borderColor: '#10b981', textColor: '#d1fae5' }
+          });
+        }
+      }
+    }
+
+    function requestOverlayRedraw() {
+      if (bundleData) {
+        drawVideoOverlay(currentFrame);
+      }
+    }
+
+    function changeVideoSource(val) {
+      if (!video) return;
+      const wasPlaying = isPlaying;
+      if (wasPlaying) pause();
+
+      let newSrc = '/input_videos/3Yb5JOB_75M.mp4';
+      if (val === 'mediapipe_preview') {
+        newSrc = '/videos/3Yb5JOB_75M__mediapipe_2026_preview.mp4';
+      }
+
+      video.src = newSrc;
+      video.load();
+      video.currentTime = currentFrame / fps;
+      if (wasPlaying) {
+        video.play().catch(e => console.warn(e));
+        isPlaying = true;
+        btnPlay.innerText = '❚❚';
+      }
+      setTimeout(requestOverlayRedraw, 250);
+    }
+
+    function toggleVideoLayout() {
+      const rightPanel = document.getElementById('right-panel');
+      const leftContainer = document.getElementById('canvas-container');
+      const leftPanel = leftContainer ? leftContainer.parentElement : null;
+      const btn = document.getElementById('btn-toggle-layout');
+      if (!rightPanel || !leftPanel) return;
+
+      isWideVideo = !isWideVideo;
+      if (isWideVideo) {
+        rightPanel.classList.remove('w-[45%]');
+        rightPanel.classList.add('w-[70%]');
+        leftPanel.classList.remove('flex-1');
+        leftPanel.classList.add('w-[30%]');
+        btn.innerHTML = '🔲 通常表示 (45%)';
+        btn.classList.add('bg-cyan-700', 'text-white');
+      } else {
+        rightPanel.classList.remove('w-[70%]');
+        rightPanel.classList.add('w-[45%]');
+        leftPanel.classList.remove('w-[30%]');
+        leftPanel.classList.add('flex-1');
+        btn.innerHTML = '🔲 動画拡大表示';
+        btn.classList.remove('bg-cyan-700', 'text-white');
+      }
+      setTimeout(() => {
+        onWindowResize();
+        requestOverlayRedraw();
+      }, 320);
     }
 
     // Layer visibility

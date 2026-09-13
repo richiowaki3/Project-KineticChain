@@ -74,6 +74,12 @@ class StudioHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                 return str(p2)
             return str(p1)
 
+        if clean_path.startswith("/input_videos/"):
+            rel = clean_path[len("/input_videos/"):]
+            p = Path(r"D:\motion_capture\justvv2_batch\input_videos") / rel
+            if p.exists():
+                return str(p)
+
         if clean_path.startswith("/examples/"):
             rel = clean_path[len("/examples/"):]
             return str(EXAMPLES_DIR / rel)
