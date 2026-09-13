@@ -72,6 +72,13 @@
       <!-- Canvas Container -->
       <div id="canvas-container" class="flex-1 w-full h-full relative">
         
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="absolute inset-0 z-30 bg-slate-950/90 flex flex-col items-center justify-center p-4">
+          <div class="w-10 h-10 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mb-3"></div>
+          <p id="loading-text" class="text-sm font-bold text-cyan-400">モーションデータ読み込み中 (10MB)...</p>
+          <p class="text-xs text-slate-400 mt-1">5,544フレームの3D骨格・トラッキング座標を展開しています</p>
+        </div>
+
         <!-- Camera & Visual Mode Presets (Top Left Overlay) -->
         <div class="absolute top-3 left-3 z-10 flex flex-col gap-2">
           <div class="glass-panel px-3 py-2 rounded-lg flex items-center space-x-2 text-xs">
@@ -520,6 +527,7 @@
 
     // Load JSON Bundle
     async function loadBundle() {
+      const overlay = document.getElementById('loading-overlay');
       try {
         const res = await fetch('/data/3Yb5JOB_75M_filter_comparison.json');
         bundleData = await res.json();
@@ -531,10 +539,26 @@
         timeTotal.innerText = formatTime(totalFrames / fps);
         document.getElementById('video-timer').innerText = `00:00.00 / ${formatTime(totalFrames / fps)}`;
 
-        updatePose(0);
+        // Start at Frame 100 (where dancer is active and both hands/pose are detected)
+        const startFrame = 100;
+        currentFrame = startFrame;
+        slider.value = startFrame;
+        if (video) {
+          video.currentTime = startFrame / fps;
+        }
+        updatePose(startFrame);
+
+        if (overlay) {
+          overlay.style.opacity = '0';
+          overlay.style.transition = 'opacity 0.4s ease';
+          setTimeout(() => overlay.style.display = 'none', 400);
+        }
         console.log(`Loaded comparison bundle for ${bundleData.video_id}: ${totalFrames} frames`);
       } catch (err) {
         console.error("Failed to load comparison bundle:", err);
+        if (overlay) {
+          overlay.innerHTML = `<div class="p-4 bg-red-900/80 rounded border border-red-700 text-white text-xs"><strong>データ読み込みエラー:</strong> ${err.message}</div>`;
+        }
       }
     }
 

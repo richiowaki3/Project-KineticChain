@@ -139,15 +139,25 @@ class StudioHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Headers", "Range, Content-Type")
         super().end_headers()
 
+    def copyfile(self, source, outputfile):
+        """Copy data between file objects, gracefully ignoring client aborts/seeks."""
+        try:
+            super().copyfile(source, outputfile)
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass
+
     def do_OPTIONS(self):
         self.send_response(200)
         self.end_headers()
 
 
+class ThreadingHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
+    daemon_threads = True
+    allow_reuse_address = True
+
+
 def start_server(port: int = PORT):
-    # Allow port reuse
-    socketserver.TCPServer.allow_reuse_address = True
-    server = socketserver.TCPServer(("127.0.0.1", port), StudioHTTPRequestHandler)
+    server = ThreadingHTTPServer(("127.0.0.1", port), StudioHTTPRequestHandler)
     print("=" * 75)
     print(f"KineticChain: kvS9M2mSido 4D-Humans x MediaPipe Upper-Body Studio")
     print(f"サーバー起動: http://127.0.0.1:{port}/")
