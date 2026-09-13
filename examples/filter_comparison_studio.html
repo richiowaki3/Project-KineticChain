@@ -359,12 +359,13 @@
       buildSkeletonMeshes();
       await loadBundle();
 
-      // Video synchronization
-      video.addEventListener('timeupdate', onVideoTimeUpdate);
-      video.addEventListener('ended', () => {
-        isPlaying = false;
-        btnPlay.innerText = '▶';
-      });
+      // Video configuration
+      if (video) {
+        video.muted = true;
+        video.addEventListener('ended', () => {
+          pause();
+        });
+      }
 
       // Keyboard spacebar shortcut
       window.addEventListener('keydown', (e) => {
@@ -573,26 +574,48 @@
       return true;
     }
 
-    // Update Pose and HUD for frame f
+    // Clock-driven high-resolution playback state
+    let lastClockTime = performance.now();
+
+    // Helper: interpolate 3D joint between frame0 and frame1
+    function getLerpedJoint(pts0, pts1, idx, alpha) {
+      if (!pts0 || !pts0[idx]) return null;
+      const p0 = pts0[idx];
+      if (!pts1 || !pts1[idx] || alpha <= 0.001) {
+        return p0;
+      }
+      const p1 = pts1[idx];
+      return [
+        p0[0] + (p1[0] - p0[0]) * alpha,
+        p0[1] + (p1[1] - p0[1]) * alpha,
+        p0[2] + (p1[2] - p0[2]) * alpha
+      ];
+    }
+
+    // Update Pose and HUD for Frame f (Supports continuous sub-frame floating point with lerp)
     function updatePose(f) {
-      if (!bundleData || !bundleData.frames) return;
-      const fInt = Math.floor(Math.max(0, Math.min(totalFrames - 1, f)));
-      const frame = bundleData.frames[fInt];
-      if (!frame) return;
+      if (!bundleData || !bundleData.frames || bundleData.frames.length === 0) return;
+      const totalF = bundleData.frames.length;
+      const clampedF = Math.max(0, Math.min(totalF - 1, f));
+      const f0 = Math.floor(clampedF);
+      const f1 = Math.min(totalF - 1, f0 + 1);
+      const alpha = clampedF - f0;
 
-      currentFrame = fInt;
-      slider.value = fInt;
-      frameCurrent.innerText = fInt;
-      timeCurrent.innerText = formatTime(fInt / fps);
-      hudFrame.innerText = `F: ${fInt}`;
+      const frame0 = bundleData.frames[f0];
+      const frame1 = bundleData.frames[f1];
+      if (!frame0) return;
 
-      const tmpV1 = new THREE.Vector3();
-      const tmpV2 = new THREE.Vector3();
+      currentFrame = clampedF;
+      slider.value = f0;
+      frameCurrent.innerText = f0;
+      timeCurrent.innerText = formatTime(clampedF / fps);
+      hudFrame.innerText = `F: ${f0}`;
 
-      // 1. Update Pose (33 points)
-      if (frame.p && frame.p.length === 33) {
+      // 1. Update Pose (33 points) with Lerp
+      if (frame0.p && frame0.p.length === 33) {
         for (let i = 0; i < 33; i++) {
-          mpToThree(frame.p[i], poseJoints[i].position);
+          const pt = getLerpedJoint(frame0.p, frame1 ? frame1.p : null, i, alpha);
+          mpToThree(pt, poseJoints[i].position);
         }
         for (let i = 0; i < POSE_CONNECTIONS.length; i++) {
           const [idxA, idxB] = POSE_CONNECTIONS[i];
@@ -605,9 +628,9 @@
         }
       }
 
-      // 2. Update Raw Hands
-      const updateHandMesh = (landmarks, joints, lines) => {
-        if (!landmarks || landmarks.length !== 21) {
+      // 2. Update Hands with Lerp
+      const updateHandMesh = (landmarks0, landmarks1, joints, lines) => {
+        if (!landmarks0 || landmarks0.length !== 21) {
           joints.forEach(j => j.position.set(0, -999, 0));
           lines.forEach(l => {
             const arr = l.geometry.attributes.position.array;
@@ -617,7 +640,8 @@
           return false;
         }
         for (let i = 0; i < 21; i++) {
-          mpToThree(landmarks[i], joints[i].position);
+          const pt = getLerpedJoint(landmarks0, landmarks1, i, alpha);
+          mpToThree(pt, joints[i].position);
         }
         for (let i = 0; i < HAND_CONNECTIONS.length; i++) {
           const [idxA, idxB] = HAND_CONNECTIONS[i];
@@ -631,10 +655,10 @@
         return true;
       };
 
-      const hasRawL = updateHandMesh(frame.rl, rawLeftJoints, rawLeftLines);
-      const hasRawR = updateHandMesh(frame.rr, rawRightJoints, rawRightLines);
-      const hasFiltL = updateHandMesh(frame.fl, filtLeftJoints, filtLeftLines);
-      const hasFiltR = updateHandMesh(frame.fr, filtRightJoints, filtRightLines);
+      const hasRawL = updateHandMesh(frame0.rl, frame1 ? frame1.rl : null, rawLeftJoints, rawLeftLines);
+      const hasRawR = updateHandMesh(frame0.rr, frame1 ? frame1.rr : null, rawRightJoints, rawRightLines);
+      const hasFiltL = updateHandMesh(frame0.fl, frame1 ? frame1.fl : null, filtLeftJoints, filtLeftLines);
+      const hasFiltR = updateHandMesh(frame0.fr, frame1 ? frame1.fr : null, filtRightJoints, filtRightLines);
 
       // HUD Indicators
       hudRawL.innerText = hasRawL ? "DETECTED" : "LOST";
@@ -643,14 +667,14 @@
       hudRawR.innerText = hasRawR ? "DETECTED" : "LOST";
       hudRawR.className = hasRawR ? "font-bold text-emerald-400 font-mono" : "font-bold text-red-500 font-mono";
 
-      hudFiltL.innerText = hasFiltL ? (frame.fbl ? "FALLBACK" : "ACTIVE") : "LOST";
-      hudFiltL.className = hasFiltL ? (frame.fbl ? "font-bold text-amber-400 font-mono" : "font-bold text-emerald-400 font-mono") : "font-bold text-red-500 font-mono";
+      hudFiltL.innerText = hasFiltL ? (frame0.fbl ? "FALLBACK" : "ACTIVE") : "LOST";
+      hudFiltL.className = hasFiltL ? (frame0.fbl ? "font-bold text-amber-400 font-mono" : "font-bold text-emerald-400 font-mono") : "font-bold text-red-500 font-mono";
 
-      hudFiltR.innerText = hasFiltR ? (frame.fbr ? "FALLBACK" : "ACTIVE") : "LOST";
-      hudFiltR.className = hasFiltR ? (frame.fbr ? "font-bold text-amber-400 font-mono" : "font-bold text-emerald-400 font-mono") : "font-bold text-red-500 font-mono";
+      hudFiltR.innerText = hasFiltR ? (frame0.fbr ? "FALLBACK" : "ACTIVE") : "LOST";
+      hudFiltR.className = hasFiltR ? (frame0.fbr ? "font-bold text-amber-400 font-mono" : "font-bold text-emerald-400 font-mono") : "font-bold text-red-500 font-mono";
 
       // Show fallback warning badge if either hand is using fallback prior
-      if (frame.fbl || frame.fbr) {
+      if (frame0.fbl || frame0.fbr) {
         hudFallback.classList.remove('hidden');
       } else {
         hudFallback.classList.add('hidden');
@@ -666,13 +690,28 @@
 
     // Playback Controls
     function togglePlay() {
-      isPlaying = !isPlaying;
-      btnPlay.innerText = isPlaying ? '❚❚' : '▶';
-
       if (isPlaying) {
-        video.playbackRate = playbackSpeed;
-        video.play().catch(e => console.warn("Video play prevented:", e));
+        pause();
       } else {
+        play();
+      }
+    }
+
+    function play() {
+      isPlaying = true;
+      lastClockTime = performance.now();
+      btnPlay.innerText = '❚❚';
+      if (video) {
+        video.playbackRate = playbackSpeed;
+        video.currentTime = currentFrame / fps;
+        video.play().catch(e => console.warn("Video play error:", e));
+      }
+    }
+
+    function pause() {
+      isPlaying = false;
+      btnPlay.innerText = '▶';
+      if (video) {
         video.pause();
       }
     }
@@ -690,36 +729,43 @@
     }
 
     function onSliderInput(val) {
-      const f = parseInt(val, 10);
+      const f = parseFloat(val);
       currentFrame = f;
-      if (video && Math.abs(video.currentTime - (f / fps)) > 0.1) {
+      if (video) {
         video.currentTime = f / fps;
       }
       updatePose(f);
     }
 
-    function onVideoTimeUpdate() {
-      if (!isPlaying) return;
-      const f = video.currentTime * fps;
-      updatePose(f);
-    }
-
-    // Animation Loop
+    // High-Resolution 60FPS Render & Animation Loop
     function animate(now) {
       animFrameId = requestAnimationFrame(animate);
 
-      if (isPlaying && video.paused) {
-        // Fallback drive if video isn't loaded or buffering
-        const dt = (now - lastAnimTime) / 1000.0;
-        currentFrame += dt * fps * playbackSpeed;
+      if (isPlaying && bundleData) {
+        if (!now) now = performance.now();
+        const dt = Math.min(Math.max((now - lastClockTime) / 1000.0, 0.0), 0.1);
+        lastClockTime = now;
+
+        // Advance frame based on real elapsed time
+        currentFrame += (dt * fps * playbackSpeed);
+
         if (currentFrame >= totalFrames) {
           currentFrame = 0;
-          isPlaying = false;
-          btnPlay.innerText = '▶';
+          pause();
         }
+
+        // Soft sync video without thrashing the decoder
+        if (video && !video.paused && !video.seeking && !isNaN(video.duration) && video.duration > 0) {
+          const targetTime = currentFrame / fps;
+          if (Math.abs(video.currentTime - targetTime) > 0.4) {
+            try { video.currentTime = targetTime; } catch(e){}
+          }
+        }
+
         updatePose(currentFrame);
+      } else {
+        lastClockTime = now || performance.now();
       }
-      lastAnimTime = now;
 
       if (controls) controls.update();
       if (renderer && scene && camera) {
