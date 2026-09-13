@@ -34,34 +34,45 @@ def export_comparison_bundle(video_id: str = "3Yb5JOB_75M", output_dir: Path = N
         if pw and len(pw) == 33:
             pose_3d = [[round(float(coord), 4) for coord in pt[:3]] for pt in pw]
 
-        # Extract Raw hands
+        # Pose wrist anchors
+        pw_arr = np.array(pw, dtype=np.float64)[:, :3] if pw and len(pw) == 33 else None
+
+        # Extract and Anchor Raw hands
         raw_left = None
         raw_right = None
         for h in f.get("hands_raw", []):
-            side = h.get("handedness", "")
+            side = h.get("handedness", "").lower()
             lm = h.get("world_landmarks")
             if lm and len(lm) == 21:
-                coords = [[round(float(c), 4) for c in pt[:3]] for pt in lm]
-                if side.lower() == "left":
+                arr = np.array(lm, dtype=np.float64)[:, :3]
+                if pw_arr is not None:
+                    wrist_target = pw_arr[15] if side == "left" else pw_arr[16]
+                    arr = arr + (wrist_target - arr[0])
+                coords = [[round(float(c), 4) for c in pt] for pt in arr]
+                if side == "left":
                     raw_left = coords
-                elif side.lower() == "right":
+                elif side == "right":
                     raw_right = coords
 
-        # Extract Filtered hands
+        # Extract and Anchor Filtered hands
         filt_left = None
         filt_right = None
         fallback_l = False
         fallback_r = False
         for h in f.get("hands", []):
-            side = h.get("handedness", "")
+            side = h.get("handedness", "").lower()
             lm = h.get("world_landmarks")
             fb = bool(h.get("is_fallback", False))
             if lm and len(lm) == 21:
-                coords = [[round(float(c), 4) for c in pt[:3]] for pt in lm]
-                if side.lower() == "left":
+                arr = np.array(lm, dtype=np.float64)[:, :3]
+                if pw_arr is not None:
+                    wrist_target = pw_arr[15] if side == "left" else pw_arr[16]
+                    arr = arr + (wrist_target - arr[0])
+                coords = [[round(float(c), 4) for c in pt] for pt in arr]
+                if side == "left":
                     filt_left = coords
                     fallback_l = fb
-                elif side.lower() == "right":
+                elif side == "right":
                     filt_right = coords
                     fallback_r = fb
 
