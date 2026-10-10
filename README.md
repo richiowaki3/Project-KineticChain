@@ -1,152 +1,129 @@
-# Dance Kinematics & Hierarchical Segmentation Pipeline
-### AI Dance Partner Project: Bone Acquisition, Decomposition, and ADU Extraction Engine
+# OnomaFoley
 
-4D-Humans (HMR 2.0 / PHALP) による全身 3D メッシュ（SMPL 24 関節シーケンス）および手部トラッキング（MediaPipe Hands）を統合し、ダンスの運動連鎖を「動きの切れ目（階層的セグメンテーション）」と「質感（テクスチャ・エフォート・機械インピーダンス）」として解体・抽出・蓄積する解析パイプラインです。
-
-解析結果は **Atomic Dance Unit (ADU)** として構造化され、オノマトペ照合辞書チームおよび XR 再生チームに JSON / HDF5 形式で引き渡されます。
-
-### 📚 ドキュメント＆連携ガイド
-- **[VRM 49ノード＆3機能連鎖 実装計画書](docs/IMPLEMENTATION_PLAN.md)**: 3系統の分離定義・骨格トポロジー
-- **[辞書チーム向け ADU活用ガイド](docs/DICTIONARY_GUIDE.md)**: オノマトペ（ピシッ・ズシン・サッ等）とのマッピング仕様
-- **[サンプルデータ＆クエリスクリプト](samples/)**: 即座に試せるADU JSONと検索Pythonコード
+**声モデル（Vocal Tract Formants）× 物理衝撃モデル（Physical Impact Modal Resonators）のハイブリッド交差点合成 ＆ TTS音響解析パイプライン**
 
 ---
 
-## 1. パイプライン全体アーキテクチャ
+## 概要
 
-```
-[YouTube / ローカル動画 (MP4)]
-       │
-       ├───► 4D-Humans (HMR 2.0 / PHALP) ──► SMPLシーケンス (Joints, Poses, Betas)
-       │                                            │
-       └───► MediaPipe Hands (HandLandmarker) ──► 手部21ランドマーク (2D/3D)
-                                                    │
-       ┌────────────────────────────────────────────┘
-       ▼
-【モジュール1: Hand-Body Synchronizer & Coupler】 (`src/core/hand_synchronizer.py`)
-   - SMPL手首位置・前腕軸と手先ランドマークの幾何学的アラインメント
-   - 橈側指標 S_rad（親指・人差し指・回内）と尺側指標 S_uln（薬指・小指・尺屈）の抽出
-       │
-       ▼
-【モジュール2: Kinematic & Dynamic Feature Store】 (`src/core/feature_store.py`)
-   - Savitzky-Golay フィルタによる高次微分：速度、加速度、加加速度（Jerk）
-   - 身体の分節化：Full-Body / Upper-Body / Lower-Body
-   - 簡易動力学：骨盤・重心運動エネルギー E_k, 垂直加速度, 接地判定（Contact State）
-       │
-       ▼
-【モジュール3: Multiscale Hierarchical Segmenter】 (`src/core/segmenter.py`)
-   - 下半身マクロ境界：足先接地（Stance/Swing）遷移 ＆ 骨盤運動エネルギー極小点
-   - 上半身ミクロ境界：手先・胸郭 Jerk 変曲点・アクセント ＆ 橈側/尺側テンション反転点
-   - 境界統合：階層木構造（Major Macro-cuts / Minor Micro-cuts）の決定
-       │
-       ▼
-【モジュール4: Texture & Impedance Profiler】 (`src/core/texture_profiler.py`)
-   - 拡張ラバンエフォート（Space, Time, Weight, Flow）
-   - 機械インピーダンス特性（推定剛性 K, 粘性減衰 D, 尖鋭度/Impulsiveness）
-       │
-       ▼
-【出力: Standardized ADU Dataset (JSON / HDF5)】 (`src/storage/adu_exporter.py`)
-   - 辞書チーム・XRチーム仕様の厳密な JSON スキーマ適合バリデーション
-```
+`OnomaFoley` は、オノマトペ・擬音語・擬態語を対象として、**「人間の発声モデル（声帯振動・声道フォルマント）」** と **「物理世界の衝突・摩擦・流体モデル（剛性・減衰・重低音過渡衝撃・モーダル共鳴）」** をミリ秒単位で交差（クロスモーダル合成）させ、プロシージャルに物理効果音（Foley SFX）を自動生成・解析する音響工学プラットフォームです。
+
+多言語オノマトペ多次元ベクトル辞書 [OnomaDict](https://github.com/richiowaki3/OnomaDict)（JP: 2,061語 / KR: 5,050語 / AF: 245語）の音響バックエンドとして機能し、TTS（音声合成）音声からの物理・音響特徴量自動抽出、ならびに外部WAVに依存しない数学的・物理的DSP合成エンジンを提供します。
 
 ---
 
-## 2. ディレクトリ構成
+## 主要コンポーネント
+
+### 1. デュアル・エンジン・ハイブリッド交差点シンセサイザー (`modular_dsp`)
+従来の音声合成（人間の声に偏る）やサンプラー（物理打撃に偏る）の限界を突破するため、2つのエンジンを音素構造に応じて動的にルーティング・モーフィングします。
 
 ```
-MotionAnalysis/
-├── configs/
-│   └── default_pipeline_config.json # パイプライン設定・閾値・関節インデックス
-├── src/
-│   ├── core/                        # コア解析エンジン
-│   │   ├── types.py                 # SegmentTexture, AtomicDanceUnit, DanceAnalysisResult
-│   │   ├── hand_synchronizer.py     # Module 1: S_rad, S_uln 抽出
-│   │   ├── feature_store.py         # Module 2: 微分・エネルギー・接地判定
-│   │   ├── segmenter.py             # Module 3: 階層的セグメンテーション
-│   │   ├── texture_profiler.py      # Module 4: 6D質感・インピーダンス推定
-│   │   └── pipeline.py              # DanceKinematicsPipeline 統括クラス
-│   ├── tracking/                    # トラッキング・アダプタ
-│   │   ├── smpl_adapter.py          # 4D-Humans (.pkl) & 3D骨格 (.json) ローダー
-│   │   └── hand_tracker.py          # MediaPipe Hands 21点ランドマーク抽出
-│   ├── ingestion/                   # 動画取得・フレーム抽出
-│   │   └── video_loader.py          # yt-dlp & OpenCV
-│   ├── storage/                     # データセット保存・シリアライザ
-│   │   └── adu_exporter.py          # JSON / HDF5 エクスポータ ＆ スキーマ検証
-│   └── utils/
-│       └── math_helpers.py          # Savitzky-Golay微分, 回転変換, インピーダンス回帰
-├── tests/                           # 単体・結合テストスイート (pytest)
-├── examples/
-│   ├── run_synthetic_dance.py       # 合成ダンス動作を用いたデモ実行スクリプト
-│   └── run_batch_all.py             # D:\motion_capture\output_results の一括解析スクリプト
-├── main.py                          # CLI解析実行エントリーポイント
-└── README.md
+                ┌─── [Engine A: 人間の声モデル] ──────┐
+                │   Glottal Pulse Source              │
+                │   + Vocal Tract Formants (F1, F2)   │
+[入力オノマトペ] ─┤                                     ├─► [モーフィング] ─► [合成音]
+                │                                     │     (Vocalness)
+                └─── [Engine B: 物理衝撃モデル] ──────┘
+                    Shockwave Transient (Sub-Kick)
+                    + Modal Resonators (Wood/Metal/Glass)
+                    + Vocal Tract Bypass
 ```
+
+- **Pattern A (重打撃・爆発音 / 例: ドカン, ズシン)**: 声道をバイパスし、Sub-Kick（超低域衝撃波 40-80Hz）＋過渡スパイク＋モーダル共鳴を発動。
+- **Pattern B (硬質打撃・金属・ガラス / 例: カツン, パリン)**: 声道をバイパスし、高域通過＋ビットクラッシャー＋急峻な減衰共鳴。
+- **Pattern C (流体・摩擦・環境 / 例: サラサラ, シュー)**: ホワイトノイズ／ピンクノイズ＋バンドパス／フェイザー。
+- **Pattern D (発声・生体・状態 / 例: オギャー, アハハ)**: 声帯パルス励起＋声道フォルマントフィルター。
+
+### 2. TTS音響解析によるフィルター・特徴量抽出パイプライン (`onomato-audio-analyzer`)
+TTS読み上げ音声および効果音実音から、以下の物理・音響特徴量を自動解析・抽出します：
+- **剛性（Stiffness Estimate）**: 高域スペクトル成分の立ち上がりとエネルギー比率
+- **減衰比（Damping Ratio）**: 音響エンベロープの減衰時定数
+- **スペクトル重心（Spectral Centroid）**: 音色の明るさ・硬さの物理指標
+- **低域過渡強度（Sub-Kick / Crest Factor）**: 瞬間的な衝撃波の尖鋭度
+- **母音フォルマント周波数（F1, F2）**: 声の調音点・共鳴構造
+
+### 4. 段階的検証プロシージャル・シンセサイザー（Step 1 〜 Step 3 Ver 3.0）
+音響音声学（Gunnar Fantの音響モデル、Locus理論）と接触力学（Hertz弾性衝突）に基づき、日本語50音およびオノマトペを段階的かつ透明に設計・検証するモジュール群です：
+
+* **【Step 1】母音空間フォルマント・シンセサイザー (`step1_vowel_synthesizer.py` / `step1_vowel_demo.py`)**:
+  * 3並列Biquadフォルマント共鳴器（F1, F2, F3）＋口唇放射（+6dB/oct）により、純粋な母音（a, i, u, e, o）を生成。
+* **【Step 2】子音基音（14音素）物理過渡シンセサイザー (`step2_consonant_synthesizer.py` / `step2_consonant_demo.py`)**:
+  * 14種の子音（k, sh, t, n, h, m, r, w, p, b, d, z, j, v）の物理過渡励起（Hertz接触スパイク、気流乱流ノイズ、鼻腔共鳴、舌先タップ）を4系統のエフェクト（Jerk Slope, Waveshaper Drive, Decay Gate, Sub-Bass Boost）で造形。
+* **【Step 3 Ver 3.0】明瞭弁別 子音 ✕ 母音 統合シンセサイザー (`step3_consonant_vowel_synthesizer.py` / `step3_consonant_vowel_demo.py`)**:
+  * 高域共鳴（F2, F3）のコントラストを完全保持し、VOT（Voice Onset Time）およびLocus時変滑走により、日本語50音の「母音と子音の完全一体化（ひとつの口での発声）」を実現する最新統合Web UI。
+  * **🔊 母音音量 5段階ダイナミックバランス調整 (Lv 1: 18% 〜 Lv 5: 100%)**: 子音アタックと母音持続音の比率をワンクリックで調整可能（初期値: Lv 2 自然バランス推奨）。
+  * **動的ディケイ連動**: 母音音量に応じて持続音の減衰カーブを最適化し、歯切れの良いアタック感を担保。
+  * **プレイヤー一本化 ＆ キャッシュバスター**: HTML5 Base64 Data URI直接指定によりブラウザキャッシュを物理的に無効化し、ボタン押下時に即時自動発声（Autoplay）。
+
+詳細な仕様および解析パイプライン連携については、[PROJECT_STATUS_AND_SPEC.md](PROJECT_STATUS_AND_SPEC.md) をご覧ください。
 
 ---
 
-## 3. 使い方 (Usage)
+## クイックスタート
 
-### 3.1 単一動画（4D-Humans .pkl または .json）の解析実行
-
+### 1. 依存ライブラリのインストール
 ```bash
-# 4D-Humans の推論結果 (.pkl) を解析し、JSON および HDF5 を出力
-python main.py -i "D:\motion_capture\output_results\MRka5p5qTxw__4dhumans_tracks.pkl" -o output --hdf5
-
-# 3D 骨格 JSON (.json) を解析
-python main.py -i "D:\motion_capture\output_results\tbxr2_tracks.json" -o output --hdf5
+pip install numpy scipy matplotlib streamlit
 ```
 
-### 3.2 全動画の一括解析（バッチ処理）
-
-`D:\motion_capture\output_results` 内にあるすべての 4D-Humans トラックを一括処理します：
-
+### 2. 【2D XYパッド】オノマトペテクスチャ空間マッピング ＆ リピートシンセサイザー (最新推奨)
+中心(0, 0)を起点に、粒度（上: サラサラ ➔ 下: ガタガタ）✕ 湿度（左: ぱさぱさ ➔ 右: びちゃびちゃ）をパッド上でクリックすると、音が小気味よくリピート再生されます。
 ```bash
-python examples/run_batch_all.py
+# Windows バッチで起動 (ポート 8522)
+launch_xy_pad_demo.bat
+
+# またはスクリプト直接起動
+python run_xy_pad.py
+# => http://localhost:8522
 ```
 
-### 3.3 合成ダンス動作による動作確認
-
+### 3. 【決定版】3-Stage 直列パイプライン・オノマトペシンセサイザーの起動
+言葉の基礎音 ➔ 物理テンポ適応 ➔ 物理エフェクター仕上げの各段階を並列に聴き比べできるWeb UIです。
 ```bash
-python examples/run_synthetic_dance.py
+# Windows バッチで起動 (ポート 8520)
+launch_pipeline_demo.bat
+
+# またはスクリプト直接起動
+python run_pipeline_demo.py
+# => http://localhost:8520
 ```
 
-### 3.4 テストスイートの実行
+### 4. 子音 ✕ 母音 統合シンセサイザーの起動 (Step 3 Ver 3.0)
+```bash
+# Windows バッチで起動 (ポート 8517)
+launch_step3_consonant_vowel_demo.bat
+
+# またはスクリプト直接起動
+python run_step3.py
+```
+
+### 3. デュアル・エンジン・デモの起動 (Web UI)
+ブラウザ上で声モデル、物理衝撃モデル、ハイブリッド交差点合成の波形・スペクトログラムをリアルタイムに比較・試聴できます。
 
 ```bash
-python -m pytest tests/ -v
+# Windows バッチで起動
+launch_dual_engine_demo.bat
+
+# またはコマンドラインから起動
+streamlit run dual_engine_demo.py
+```
+
+### 4. 単語の自動物理音響解析
+```bash
+python auto_physical_sound_analyzer.py --word ドカン
 ```
 
 ---
 
-## 4. 辞書チーム・XRチームへの引渡しデータ仕様（JSONスキーマ）
+## 大容量音声データ（WAV/MP3）の取り扱い方針
 
-出力される各 ADU セグメントは、以下の厳密な JSON スキーマに準拠しています：
+Gitリポジトリの肥大化を防ぎ、常にクリーンな状態を維持するため、**読み上げ音声や生録音マスター音源（数GB級のWAV/MP3）はGit追跡の対象外（`.gitignore`）** としています。
 
-```json
-{
-  "video_id": "MRka5p5qTxw_track1",
-  "fps": 30.0,
-  "total_frames": 650,
-  "segments": [
-    {
-      "adu_id": 14,
-      "time_range": [4.23, 4.80],
-      "frames": [127, 144],
-      "hierarchy": "micro",
-      "kinematic_summary": {
-        "focus_chain": "radial_reach",
-        "primary_driver": "upper_body"
-      },
-      "texture_profile": {
-        "space_directness": 0.88,
-        "time_impulsiveness": 0.76,
-        "weight_heaviness": 0.21,
-        "flow_fluidity": 0.35,
-        "radial_dominance": 0.82,
-        "ulnar_dominance": 0.14,
-        "apparent_stiffness": 4.12
-      }
-    }
-  ]
-}
-```
+- 本リポジトリには、**解析済みの軽量メタデータ（JSON / CSV）および音声合成・解析プログラムコード** のみを完全収録しています。
+- 音声データセットの全生データは、必要に応じて外部クラウドストレージ（Google Drive / Hugging Face Datasets 等）経由でダウンロード可能な構成をとっています。
+
+---
+
+## 関連プロジェクト
+
+- **[OnomaDict](https://github.com/richiowaki3/OnomaDict)**: 多言語オノマトペ・多次元ベクトル辞書（本家マスターリポジトリ）

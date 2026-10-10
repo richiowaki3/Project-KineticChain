@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>オノマトペ 2D 質感パッド・BPMモジュラーシンセサイザー</title>
+<style>
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #1e1e2e; color: #cdd6f4; text-align: center; margin: 20px; }
+  #controls { margin-bottom: 15px; background: #313244; padding: 12px; border-radius: 8px; display: inline-block; }
+  label { font-weight: bold; margin-right: 10px; }
+  input[type=range] { vertical-align: middle; width: 180px; }
+  #pad-container { position: relative; width: 450px; height: 450px; margin: 0 auto; border: 2px solid #585b70; border-radius: 12px; background: #181825; cursor: crosshair; }
+  canvas { width: 100%; height: 100%; border-radius: 10px; }
+  #info { margin-top: 15px; font-family: monospace; background: #313244; padding: 12px; border-radius: 8px; display: inline-block; font-size: 0.88em; text-align: left; width: 420px; }
+  .val { color: #f9e2af; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h3>2D オノマトペ質感パッド・連打シンセサイザー</h3>
+
+<div id="controls">
+  <label for="bpm">BPM テンポ:</label>
+  <input type="range" id="bpm" min="60" max="240" value="130" oninput="updateBpm(this.value)">
+  <span id="bpm-val" class="val">130</span> BPM
+</div>
+
+<br>
+
+<div id="pad-container">
+  <canvas id="pad" width="450" height="450"></canvas>
+</div>
+
+<div id="info">
+  <div>座標 (X:湿度, Y:粒度): <span id="pos-val" class="val">(0.00, 0.00)</span></div>
+  <div>推定量感: <span id="word-val" class="val">中央 (ニュートラル)</span></div>
+  <div>発音状態: <span id="voice-val" class="val">待機中 (クリック/ドラッグで再生)</span></div>
+</div>
+
+<script>
+const canvas = document.getElementById('pad');
+const ctx = canvas.getContext('2d');
+const posVal = document.getElementById('pos-val');
+const wordVal = document.getElementById('word-val');
+const voiceVal = document.getElementById('voice-val');
+const bpmValDisplay = document.getElementById('bpm-val');
+
+let isMouseDown = false;
+let currentMouseX = 225, currentMouseY = 225;
+let audioCtx = null;
+let timerId = null;
+let currentBpm = 130;
+let activeVoiceCount = 0;
+
+function updateBpm(val) {
+  currentBpm = parseInt(val);
+  bpmValDisplay.innerText = currentBpm;
+}
+
+function initAudio() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+// 次のトリガーの瞬間に最新のマウス位置の音を生成（前の音を切らず完奏させる）
+function triggerSynthAtCurrentPos() {
+  if (!audioCtx) return;
+
+  // 1. 最新のマウス位置をサンプリング (範囲 -1.0 〜 +1.0)
+  let normX = (currentMouseX - 225) / 225;
+  let normY = -(currentMouseY - 225) / 225; // Y軸上向きが正
+  normX = Math.max(-1, Math.min(1, normX));
+  normY = Math.max(-1, Math.min(1, normY));
+
+  const humidity = (normX + 1) / 2; // 0.0(ぱさぱさ) ~ 1.0(びちゃびちゃ)
+  const fineness = (normY + 1) / 2; // 0.0(ガタガタ) ~ 1.0(サラサラ)
+
+  const now = audioCtx.currentTime;
+  activeVoiceCount++;
+
+  // --- A. ノイズ/粒子オシレーター (粒度用) ---
+  const bufferSize = audioCtx.sampleRate * 0.2; // 最大0.2秒のバッファ
+  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+  const channelData = buffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) channelData[i] = Math.random() * 2 - 1;
+
+  const noise = audioCtx.createBufferSource();
+  noise.buffer = buffer;
+
+  // --- B. 湿度Biquad共鳴フィルター ---
+  const filter = audioCtx.createBiquadFilter();
+  if (humidity < 0.5) {
+    filter.type = 'highpass';
+    filter.frequency.setValueAtTime(600 + (0.5 - humidity) * 3000, now);
+  } else {
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(3200 - (humidity - 0.5) * 2600, now);
+    filter.Q.setValueAtTime(1.0 + humidity * 8.0, now); // 水分共鳴Q値
+  }
+
+  // --- C. ガタガタ領域 (低域重打撃 Sub-Kick) ---
+  if (fineness < 0.45) {
+    const subOsc = audioCtx.createOscillator();
+    const subGain = audioCtx.createGain();
+    subOsc.type = 'sine';
+    subOsc.frequency.setValueAtTime(75 + (0.45 - fineness) * 60, now);
+    subOsc.frequency.exponentialRampToValueAtTime(25, now + 0.12);
+
+    const kickLevel = (0.45 - fineness) * 2.0;
+    subGain.gain.setValueAtTime(kickLevel, now);
+    subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+
+    subOsc.connect(subGain);
+    subGain.connect(audioCtx.destination);
+    subOsc.start(now);
+    subOsc.stop(now + 0.14);
+  }
+
+  // --- D. エンベロープ成形 (音を切らず完奏して自動消滅) ---
+  const mainGain = audioCtx.createGain();
+  const dur = 0.03 + fineness * 0.15; // 減衰時間
+
+  mainGain.gain.setValueAtTime(0.7, now);
+  mainGain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+
+  noise.connect(filter);
+  filter.connect(mainGain);
+  mainGain.connect(audioCtx.destination);
+
+  noise.start(now);
+  noise.stop(now + dur);
+
+  // 発声終了時にアクティブ数を減算
+  setTimeout(() => {
+    activeVoiceCount = Math.max(0, activeVoiceCount - 1);
+    if (!isMouseDown && activeVoiceCount === 0) {
+      voiceVal.innerText = '待機中';
+    }
+  }, dur * 1000);
+
+  // UI表示更新
+  posVal.innerText = `(${normX.toFixed(2)}, ${normY.toFixed(2)})`;
+  wordVal.innerText = (normY > 0.35 ? 'サラサラ系' : normY < -0.35 ? 'ガタガタ系' : '中間粒度') + 
+                      ' / ' + (normX > 0.35 ? 'びちゃびちゃ系' : normX < -0.35 ? 'ぱさぱさ系' : '中間湿度');
+  voiceVal.innerText = `発音中 (同時発音数: ${activeVoiceCount})`;
+}
+
+// クロックタイマー処理（BPMスライダー連動）
+function scheduler() {
+  if (!isMouseDown) return;
+
+  triggerSynthAtCurrentPos();
+
+  // BPMに基づく16分音符のTick間隔 (ms)
+  const intervalMs = (60 / currentBpm) / 4 * 1000;
+  timerId = setTimeout(scheduler, intervalMs);
+}
+
+function startPlaying() {
+  if (timerId) clearTimeout(timerId);
+  scheduler();
+}
+
+function stopPlaying() {
+  isMouseDown = false;
+  if (timerId) clearTimeout(timerId);
+}
+
+// 描画処理
+function drawPad() {
+  ctx.clearRect(0, 0, 450, 450);
+
+  // グリッド線
+  ctx.strokeStyle = '#313244';
+  ctx.lineWidth = 1;
+  for (let i = 45; i < 450; i += 45) {
+    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 450); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(450, i); ctx.stroke();
+  }
+
+  // 軸線 (原点 0,0)
+  ctx.strokeStyle = '#89b4fa';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(225, 0); ctx.lineTo(225, 450); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, 225); ctx.lineTo(450, 225); ctx.stroke();
+
+  // ラベル表示
+  ctx.fillStyle = '#f38ba8'; ctx.font = '12px sans-serif';
+  ctx.fillText('▲ 細かい (サラサラ)', 160, 20);
+  ctx.fillText('▼ 粗い (ガタガタ)', 160, 440);
+  ctx.fillText('◀ 乾いた (ぱさぱさ)', 10, 220);
+  ctx.fillText('湿った (びちゃびちゃ) ▶', 310, 220);
+
+  // 現在のマウスポイント描画
+  if (isMouseDown) {
+    ctx.fillStyle = '#a6e3a1';
+    ctx.beginPath();
+    ctx.arc(currentMouseX, currentMouseY, 9, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#a6e3a1';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(currentMouseX, currentMouseY, 15, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+}
+
+// マウスイベントリスナー
+canvas.addEventListener('mousedown', (e) => {
+  initAudio();
+  isMouseDown = true;
+  const rect = canvas.getBoundingClientRect();
+  currentMouseX = e.clientX - rect.left;
+  currentMouseY = e.clientY - rect.top;
+  drawPad();
+  startPlaying();
+});
+
+canvas.addEventListener('mousemove', (e) => {
+  if (isMouseDown) {
+    const rect = canvas.getBoundingClientRect();
+    currentMouseX = e.clientX - rect.left;
+    currentMouseY = e.clientY - rect.top;
+    drawPad();
+  }
+});
+
+window.addEventListener('mouseup', () => {
+  stopPlaying();
+  drawPad();
+});
+
+drawPad();
+</script>
+</body>
+</html>

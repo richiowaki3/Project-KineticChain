@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>オノマトペ 2D 質感パッド 楽器 (プロシージャル・シンセ方式)</title>
+<style>
+  body { font-family: sans-serif; background: #1e1e2e; color: #cdd6f4; text-align: center; margin: 0; padding: 20px; }
+  #pad-container { position: relative; width: 450px; height: 450px; margin: 0 auto; border: 2px solid #585b70; border-radius: 12px; background: #181825; cursor: crosshair; }
+  canvas { width: 100%; height: 100%; border-radius: 10px; }
+  #info { margin-top: 15px; font-family: monospace; background: #313244; padding: 10px; border-radius: 8px; display: inline-block; font-size: 0.85em; }
+</style>
+</head>
+<body>
+
+<h3>オノマトペ 2D 質感パッド楽器 (プロシージャル・シンセ方式)</h3>
+<p>パッド上をクリック/ドラッグすると、連続補間された音がリアルタイム連打再生されます</p>
+
+<div id="pad-container">
+  <canvas id="pad" width="450" height="450"></canvas>
+</div>
+
+<div id="info">
+  <div>位置 (X, Y): <span id="pos-val">(0.00, 0.00)</span></div>
+  <div>推定量感: <span id="word-val" style="color:#f9e2af; font-weight:bold;">中央 (ニュートラル)</span></div>
+  <div>DSPパラメータ: <span id="dsp-val">-</span></div>
+</div>
+
+<script>
+const canvas = document.getElementById('pad');
+const ctx = canvas.getContext('2d');
+const posVal = document.getElementById('pos-val');
+const wordVal = document.getElementById('word-val');
+const dspVal = document.getElementById('dsp-val');
+
+let isMouseDown = false;
+let mouseX = 225, mouseY = 225;
+let audioCtx = null;
+let loopTimer = null;
+
+function initAudio() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+// マウス座標に応じたWeb Audio API プロシージャル合成
+function playPulse(normX, normY) {
+  if (!audioCtx) return;
+  const now = audioCtx.currentTime;
+
+  const humidity = (normX + 1) / 2; // 0.0 (ぱさぱさ) ~ 1.0 (びちゃびちゃ)
+  const fineness = (normY + 1) / 2; // 0.0 (ガタガタ) ~ 1.0 (サラサラ)
+
+  // 1. ノイズ生成（粒度用）
+  const bufferSize = audioCtx.sampleRate * 0.15;
+  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+
+  const noise = audioCtx.createBufferSource();
+  noise.buffer = buffer;
+
+  // 2. 湿度Biquadフィルター
+  const filter = audioCtx.createBiquadFilter();
+  if (humidity < 0.5) {
+    filter.type = 'highpass';
+    filter.frequency.setValueAtTime(800 + (1 - humidity*2) * 2200, now);
+  } else {
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(2500 - (humidity - 0.5)*2 * 2000, now);
+    filter.Q.setValueAtTime(1.0 + humidity * 6.0, now); // 水分共鳴Q値
+  }
+
+  // 3. 重底打撃 Sub-Kick（ガタガタ領域で起動）
+  if (fineness < 0.4) {
+    const osc = audioCtx.createOscillator();
+    const kickEnv = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(60 + (1 - fineness) * 50, now);
+    osc.frequency.exponentialRampToValueAtTime(30, now + 0.1);
+
+    const kickVol = (0.4 - fineness) * 2.5;
+    kickEnv.gain.setValueAtTime(kickVol, now);
+    kickEnv.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+
+    osc.connect(kickEnv);
+    kickEnv.connect(audioCtx.destination);
+    osc.start(now);
+    osc.stop(now + 0.12);
+  }
+
+  // 4. アタック・ディケイエンベロープ
+  const gainNode = audioCtx.createGain();
+  const dur = 0.04 + fineness * 0.12;
+  gainNode.gain.setValueAtTime(0.8, now);
+  gainNode.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+  noise.connect(filter);
+  filter.connect(gainNode);
+  gainNode.connect(audioCtx.destination);
+
+  noise.start(now);
+  noise.stop(now + dur);
+}
+
+function startLoop() {
+  if (loopTimer) clearTimeout(loopTimer);
+  function trigger() {
+    let normX = (mouseX - 225) / 225;
+    let normY = -(mouseY - 225) / 225;
+    normX = Math.max(-1, Math.min(1, normX));
+    normY = Math.max(-1, Math.min(1, normY));
+
+    playPulse(normX, normY);
+
+    posVal.innerText = `(${normX.toFixed(2)}, ${normY.toFixed(2)})`;
+    wordVal.innerText = (normY > 0.4 ? 'サラサラ系' : normY < -0.4 ? 'ガタガタ系' : '中間') + 
+                        ' / ' + (normX > 0.4 ? 'びちゃびちゃ系' : normX < -0.4 ? 'ぱさぱさ系' : '中間');
+    dspVal.innerText = `湿度Q: ${((normX+1)*5).toFixed(1)} | 粒度パイル: ${((normY+1)*100).toFixed(0)}%`;
+
+    const fineness = (normY + 1) / 2;
+    const interval = 80 + fineness * 120; // 粒度に応じた連打速度
+    if (isMouseDown) loopTimer = setTimeout(trigger, interval);
+  }
+  trigger();
+}
+
+function stopLoop() { isMouseDown = false; if (loopTimer) clearTimeout(loopTimer); }
+
+function drawPad() {
+  ctx.clearRect(0, 0, 450, 450);
+  ctx.strokeStyle = '#313244';
+  for (let i = 45; i < 450; i += 45) {
+    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 450); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(450, i); ctx.stroke();
+  }
+  ctx.strokeStyle = '#89b4fa'; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(225, 0); ctx.lineTo(225, 450); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0, 225); ctx.lineTo(450, 225); ctx.stroke();
+
+  ctx.fillStyle = '#f38ba8'; ctx.font = '13px sans-serif';
+  ctx.fillText('▲ 細かい (サラサラ)', 160, 20);
+  ctx.fillText('▼ 粗い (ガタガタ)', 160, 440);
+  ctx.fillText('◀ 乾いた (ぱさぱさ)', 10, 220);
+  ctx.fillText('湿った (びちゃびちゃ) ▶', 310, 220);
+
+  if (isMouseDown) {
+    ctx.fillStyle = '#a6e3a1';
+    ctx.beginPath(); ctx.arc(mouseX, mouseY, 8, 0, Math.PI * 2); ctx.fill();
+  }
+}
+
+canvas.addEventListener('mousedown', (e) => {
+  initAudio(); isMouseDown = true;
+  const rect = canvas.getBoundingClientRect();
+  mouseX = e.clientX - rect.left; mouseY = e.clientY - rect.top;
+  drawPad(); startLoop();
+});
+canvas.addEventListener('mousemove', (e) => {
+  if (isMouseDown) {
+    const rect = canvas.getBoundingClientRect();
+    mouseX = e.clientX - rect.left; mouseY = e.clientY - rect.top;
+    drawPad();
+  }
+});
+window.addEventListener('mouseup', stopLoop);
+drawPad();
+</script>
+</body>
+</html>

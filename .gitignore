@@ -15,6 +15,10 @@ __pycache__/
 *.h5
 *.hdf5
 *.task
+*.wav
+*.zip
+onomato-audio-recorder/dataset_output/audio_files/
+onomato-audio-recorder/dataset_output/audio_files_wav_archive.zip
 
 # Output & Downloads
 output/
