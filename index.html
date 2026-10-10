@@ -1038,6 +1038,7 @@
               const stickG = audioCtx.createGain();
               stickOsc.type = "triangle";
               stickOsc.frequency.setValueAtTime(150.0 + w * 120.0, now);
+              stickG.gain.setValueAtTime(0.0001, now);
               stickG.gain.setValueAtTime(w * 0.35, now + 0.02);
               stickG.gain.exponentialRampToValueAtTime(0.001, now + dur);
               stickOsc.connect(stickG); stickG.connect(dest);
@@ -1162,7 +1163,7 @@
 
             const g = audioCtx.createGain();
             g.gain.setValueAtTime(0.9, now);
-            g.exponentialRampToValueAtTime(0.0001, now + gateMs);
+            g.gain.exponentialRampToValueAtTime(0.0001, now + gateMs);
             click.connect(f); f.connect(g); g.connect(dest);
             click.start(now); click.stop(now + gateMs);
 
@@ -1196,8 +1197,9 @@
               const rate = 3.0 + (y + 1.0) * 6.0;
               lfo.frequency.setValueAtTime(rate, now);
               lfoG.gain.setValueAtTime(Math.max(0, y + 0.5) * 22.0, now);
-              lfo.connect(osc1.frequency);
-              lfo.connect(osc2.frequency);
+              lfo.connect(lfoG);
+              lfoG.connect(osc1.frequency);
+              lfoG.connect(osc2.frequency);
               lfo.start(now); lfo.stop(now + dur);
             }
 
@@ -1293,7 +1295,7 @@
               nasalOsc.type = "triangle";
               nasalOsc.frequency.setValueAtTime(220.0, now);
               nasalG.gain.setValueAtTime(0.001, now);
-              nasalG.linearRampToValueAtTime(v * 0.5, now + 0.04);
+              nasalG.gain.linearRampToValueAtTime(v * 0.5, now + 0.04);
               nasalG.gain.exponentialRampToValueAtTime(0.001, now + dur);
               nasalOsc.connect(nasalG); nasalG.connect(dest);
               nasalOsc.start(now); nasalOsc.stop(now + dur);
@@ -1310,7 +1312,15 @@
 
         } catch (err) {
           console.error("Audio error in playPadSound:", key, err);
+          const st = padStates[key];
+          if (st) st.activeVoices = Math.max(0, st.activeVoices - 1);
         }
+      }
+
+      function anchorHex(a) {
+        if (typeof a.color === "string" && a.color.startsWith("#")) return a.color;
+        if (typeof a.v === "string" && a.v.startsWith("#")) return a.v;
+        return "#94a3b8";
       }
 
       // =======================================================================
@@ -1363,9 +1373,9 @@
                 const py = CY - ay * (H/2 - 25);
                 ctx.beginPath();
                 ctx.arc(px, py, 3, 0, Math.PI * 2);
-                ctx.fillStyle = a.color + "99";
+                ctx.fillStyle = anchorHex(a) + "99";
                 ctx.fill();
-                ctx.fillStyle = a.color;
+                ctx.fillStyle = anchorHex(a);
                 ctx.font = "10px sans-serif";
                 ctx.fillText(a.word, px + 5, py + 3);
               });
@@ -1428,9 +1438,9 @@
               const py = CY - a.y * (H/2 - 25);
               ctx.beginPath();
               ctx.arc(px, py, 4, 0, Math.PI * 2);
-              ctx.fillStyle = a.color + "88";
+              ctx.fillStyle = anchorHex(a) + "88";
               ctx.fill();
-              ctx.fillStyle = a.color;
+              ctx.fillStyle = anchorHex(a);
               ctx.font = "11px sans-serif";
               ctx.fillText(a.word, px + 6, py + 4);
             });
