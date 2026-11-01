@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【デモ2】575（定型律動・フレーズ）リズム変調テスト</title>
+  <style>
+    :root {
+      --bg: #0b1329;
+      --card-bg: #152238;
+      --accent-a: #f59e0b;
+      --accent-b: #06b6d4;
+      --accent-pink: #ec4899;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+      --border: #243553;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 24px; min-height: 100vh; }
+    .container { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+    header { border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    h1 { font-size: 24px; font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 10px; }
+    .subtitle { color: var(--text-dim); font-size: 14px; margin-top: 6px; }
+
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+    .card-title { font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
+
+    /* 比較再生ボタン */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .btn-play {
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-a { background: linear-gradient(135deg, #d97706, #b45309); color: white; }
+    .btn-a:hover { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4); transform: translateY(-2px); }
+    .btn-b { background: linear-gradient(135deg, #0891b2, #0e7490); color: white; }
+    .btn-b:hover { background: linear-gradient(135deg, #06b6d4, #0891b2); box-shadow: 0 4px 14px rgba(6, 182, 212, 0.4); transform: translateY(-2px); }
+    .btn-play.playing { animation: pulse 1s infinite alternate; }
+    @keyframes pulse {
+      from { box-shadow: 0 0 10px rgba(255,255,255,0.2); }
+      to { box-shadow: 0 0 25px rgba(255,255,255,0.6); }
+    }
+
+    /* 575フレーズセレクター */
+    .phrase-display {
+      background: #090e1a;
+      border: 1px solid #1e2c47;
+      border-radius: 8px;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+    .phrase-seg { padding: 4px 12px; border-radius: 6px; transition: background 0.2s; }
+    .phrase-seg.active { background: rgba(56, 189, 248, 0.25); color: #38bdf8; text-shadow: 0 0 8px rgba(56,189,248,0.5); }
+
+    /* タイムライン Canvas */
+    .timeline-container { background: #070b14; border: 1px solid #1e2c47; border-radius: 10px; padding: 12px; position: relative; }
+    canvas { width: 100%; height: 160px; display: block; }
+
+    /* コントロールスライダー */
+    .controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .control-row { display: flex; flex-direction: column; gap: 6px; }
+    .control-header { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); }
+    .val-badge { font-family: monospace; font-weight: 700; color: #38bdf8; }
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #243553;
+      border-radius: 3px;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #38bdf8;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+    /* 説明ボックス */
+    .explain-box { background: rgba(6, 182, 212, 0.08); border-left: 4px solid var(--accent-b); padding: 14px 18px; border-radius: 0 8px 8px 0; font-size: 13px; line-height: 1.6; }
+    .explain-box strong { color: var(--accent-b); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><span>📜</span> 575（定型律動・フレーズ）リズム変調テストデモ</h1>
+      <div class="subtitle">完全平坦メトロノーム打ち込みと、句境界ブレス・句末ピッチブレーキ・初拍Sub-Kickアクセントの比較検証</div>
+    </header>
+
+    <!-- フレーズ表示 & 選択 -->
+    <div class="card" style="padding: 16px 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 13px; font-weight: 600; color: var(--text-dim);">フレーズ選択:</span>
+          <select id="sel_phrase" style="background: #243553; color: white; border: 1px solid #334e7a; padding: 6px 12px; border-radius: 6px; font-size: 13px; cursor: pointer; outline: none;">
+            <option value="0">さらさらと (5) / かぜがそよぎて (7) / さわさわと (5) [オノマトペ自然]</option>
+            <option value="1">ふるいけや (5) / かわずとびこむ (7) / みずのおと (5) [松尾芭蕉]</option>
+            <option value="2">どきどきと (5) / むねがたかなり (7) / はらはらと (5) [オノマトペ感情]</option>
+            <option value="3">ごつごつと (5) / いわばをふみて (7) / ざくざくと (5) [オノマトペ触感]</option>
+          </select>
+        </div>
+        <div style="font-size: 12px; color: var(--text-dim);">
+          総モーラ数: <strong style="color: #38bdf8;">17モーラ</strong> (初句:5 / 中七:7 / 結句:5)
+        </div>
+      </div>
+
+      <div class="phrase-display">
+        <span class="phrase-seg" id="seg_1">さ・ら・さ・ら・と</span>
+        <span style="color: var(--text-dim); opacity: 0.5;">/</span>
+        <span class="phrase-seg" id="seg_2">か・ぜ・が・そ・よ・ぎ・て</span>
+        <span style="color: var(--text-dim); opacity: 0.5;">/</span>
+        <span class="phrase-seg" id="seg_3">さ・わ・さ・わ・と</span>
+      </div>
+    </div>
+
+    <!-- 17拍タイムライン可視化 (Canvas) -->
+    <div class="card">
+      <div class="card-title">
+        <span>📊 17拍時間軸タイムライン ＆ ピッチスロープ可視化</span>
+        <div style="display: flex; gap: 14px; font-size: 12px;">
+          <span style="display: flex; align-items: center; gap: 5px;"><span style="display: inline-block; width: 12px; height: 12px; background: #f59e0b; border-radius: 2px;"></span> モードA (平坦)</span>
+          <span style="display: flex; align-items: center; gap: 5px;"><span style="display: inline-block; width: 12px; height: 12px; background: #06b6d4; border-radius: 2px;"></span> モードB (575律動)</span>
+          <span style="display: flex; align-items: center; gap: 5px;"><span style="display: inline-block; width: 12px; height: 12px; background: rgba(236,72,153,0.3); border: 1px dashed #ec4899; border-radius: 2px;"></span> 句境界ポーズ</span>
+        </div>
+      </div>
+      <div class="timeline-container">
+        <canvas id="cv_timeline"></canvas>
+      </div>
+    </div>
+
+    <!-- 比較再生カード (2列) -->
+    <div class="grid-2">
+      <!-- モードA: 平坦メトロノーム -->
+      <div class="card" style="border-top: 4px solid var(--accent-a);">
+        <div class="card-title">
+          <span style="color: var(--accent-a);">モード A: 「平坦メトロノーム」</span>
+          <span style="font-size: 11px; background: rgba(245,158,11,0.2); color: #fbbf24; padding: 2px 8px; border-radius: 12px;">完全平坦 / 機械的</span>
+        </div>
+        <div style="font-size: 12px; color: var(--text-dim); line-height: 1.6;">
+          • 全17モーラを一切の休符なく等間隔（完全メトロノーム）で連続発声<br>
+          • ピッチ・音量・音色は終始一定（F0 = 320Hz固定）<br>
+          • 句の区切りや終止感がなく、単調なビートマシン状態
+        </div>
+        <button class="btn-play btn-a" id="btn_play_a">
+          <span>▶</span> モードA (平坦メトロノーム) を再生
+        </button>
+      </div>
+
+      <!-- モードB: 575律動変調 -->
+      <div class="card" style="border-top: 4px solid var(--accent-b);">
+        <div class="card-title">
+          <span style="color: var(--accent-b);">モード B: 「575律動変調」</span>
+          <span style="font-size: 11px; background: rgba(6,182,212,0.2); color: #67e8f9; padding: 2px 8px; border-radius: 12px;">文脈息づかい / 詩的律動</span>
+        </div>
+        <div style="font-size: 12px; color: var(--text-dim); line-height: 1.6;">
+          • <strong>句境界ポーズ</strong>: 5拍目・12拍目後に自動でブレス静寂（1.5拍）を挿入<br>
+          • <strong>句末ピッチスロープ</strong>: 各句末（5・12・17拍）へ向けピッチが下降（終止ブレーキ）<br>
+          • <strong>モーラ初拍アクセント</strong>: 1拍目・6拍目・13拍目に重厚なSub-Kick低域打撃
+        </div>
+        <button class="btn-play btn-b" id="btn_play_b">
+          <span>▶</span> モードB (575律動変調音) を再生
+        </button>
+      </div>
+    </div>
+
+    <!-- 律動変調パラメータ調整スライダー -->
+    <div class="card">
+      <div class="card-title">
+        <span>🎛️ モードB 律動パラメータ微調整</span>
+        <button id="btn_reset_params" style="background: none; border: 1px solid var(--border); color: var(--text-dim); font-size: 12px; padding: 4px 10px; border-radius: 6px; cursor: pointer;">初期値に戻す</button>
+      </div>
+
+      <div class="controls-grid">
+        <!-- 句境界ポーズ長 -->
+        <div class="control-row">
+          <div class="control-header">
+            <span>句境界ブレスポーズ (静寂拍数)</span>
+            <span class="val-badge" id="disp_pause">1.5 拍</span>
+          </div>
+          <input type="range" id="sl_pause" min="0.5" max="2.5" value="1.5" step="0.1">
+          <div style="font-size: 11px; color: #64748b;">5拍目・12拍目直後の間（ま）の長さ</div>
+        </div>
+
+        <!-- 句末ピッチスロープ降下量 -->
+        <div class="control-row">
+          <div class="control-header">
+            <span>句末ピッチブレーキ降下量 (ΔF0)</span>
+            <span class="val-badge" id="disp_slope">-260 Hz</span>
+          </div>
+          <input type="range" id="sl_slope" min="50" max="450" value="260" step="10">
+          <div style="font-size: 11px; color: #64748b;">各句の終止に向かうブレーキ感</div>
+        </div>
+
+        <!-- 初拍Sub-Kick強度 -->
+        <div class="control-row">
+          <div class="control-header">
+            <span>初拍Sub-Kickアクセント強度</span>
+            <span class="val-badge" id="disp_kick">70 %</span>
+          </div>
+          <input type="range" id="sl_kick" min="0" max="100" value="70" step="5">
+          <div style="font-size: 11px; color: #64748b;">句頭（1拍目）の重み・着地感</div>
+        </div>
+
+        <!-- テンポ BPM -->
+        <div class="control-row">
+          <div class="control-header">
+            <span>基本テンポ (BPM)</span>
+            <span class="val-badge" id="disp_bpm">130 BPM</span>
+          </div>
+          <input type="range" id="sl_bpm" min="70" max="200" value="130" step="5">
+          <div style="font-size: 11px; color: #64748b;">1モーラあたりの発音周期</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 解説 -->
+    <div class="explain-box">
+      <strong>💡 日本語オノマトペ・定型詩（575）の韻律構造:</strong><br>
+      日本語の「575」リズムは、等時的なビートではなく、<strong>「句の開始（重い初拍アタック）」➔「連続拍」➔「句末のブレーキ（F0低下＆エネルギー減衰）」➔「呼吸（ブレスポーズ）」</strong>という身体的運動サイクルによって成立しています。
+      平坦な打音と聴き比べることで、わずかなブレスの間と句末スロープが入るだけで、機械音が劇的に「日本語らしい情緒と躍動感を持ったフレーズ」へと変容することを実感できます。
+    </div>
+  </div>
+
+  <script>
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+      return audioCtx;
+    }
+
+    const phrases = [
+      { text: ["さ・ら・さ・ら・と", "か・ぜ・が・そ・よ・ぎ・て", "さ・わ・さ・わ・と"], moras: ["さ","ら","さ","ら","と", "か","ぜ","が","そ","よ","ぎ","て", "さ","わ","さ","わ","と"] },
+      { text: ["ふ・る・い・け・や", "か・わ・ず・と・び・こ・む", "み・ず・の・お・と"], moras: ["ふ","る","い","け","や", "か","わ","ず","と","び","こ","む", "み","ず","の","お","と"] },
+      { text: ["ど・き・ど・き・と", "む・ね・が・た・か・な・り", "は・ら・は・ら・と"], moras: ["ど","き","ど","き","と", "む","ね","が","た","か","な","り", "は","ら","は","ら","と"] },
+      { text: ["ご・つ・ご・つ・と", "い・わ・ば・を・ふ・み・て", "ざ・く・ざ・く・と"], moras: ["ご","つ","ご","つ","と", "い","わ","ば","を","ふ","み","て", "ざ","く","ざ","く","と"] }
+    ];
+
+    let currentPhraseIdx = 0;
+    let playingMode = null; // 'A' or 'B'
+    let timerChain = [];
+
+    // パラメータ
+    let paramPauseBeats = 1.5;
+    let paramSlopeHz = 260;
+    let paramKickPct = 70;
+    let paramBpm = 130;
+
+    // UI要素
+    const selPhrase = document.getElementById("sel_phrase");
+    const seg1 = document.getElementById("seg_1");
+    const seg2 = document.getElementById("seg_2");
+    const seg3 = document.getElementById("seg_3");
+
+    const btnPlayA = document.getElementById("btn_play_a");
+    const btnPlayB = document.getElementById("btn_play_b");
+
+    const slPause = document.getElementById("sl_pause");
+    const slSlope = document.getElementById("sl_slope");
+    const slKick = document.getElementById("sl_kick");
+    const slBpm = document.getElementById("sl_bpm");
+
+    const dispPause = document.getElementById("disp_pause");
+    const dispSlope = document.getElementById("disp_slope");
+    const dispKick = document.getElementById("disp_kick");
+    const dispBpm = document.getElementById("disp_bpm");
+
+    selPhrase.addEventListener("change", (e) => {
+      currentPhraseIdx = parseInt(e.target.value);
+      updatePhraseDisplay();
+      drawTimeline();
+    });
+
+    function updatePhraseDisplay() {
+      const p = phrases[currentPhraseIdx];
+      seg1.innerText = p.text[0];
+      seg2.innerText = p.text[1];
+      seg3.innerText = p.text[2];
+    }
+
+    slPause.addEventListener("input", (e) => {
+      paramPauseBeats = parseFloat(e.target.value);
+      dispPause.innerText = `${paramPauseBeats.toFixed(1)} 拍`;
+      drawTimeline();
+    });
+    slSlope.addEventListener("input", (e) => {
+      paramSlopeHz = parseInt(e.target.value);
+      dispSlope.innerText = `-${paramSlopeHz} Hz`;
+      drawTimeline();
+    });
+    slKick.addEventListener("input", (e) => {
+      paramKickPct = parseInt(e.target.value);
+      dispKick.innerText = `${paramKickPct} %`;
+      drawTimeline();
+    });
+    slBpm.addEventListener("input", (e) => {
+      paramBpm = parseInt(e.target.value);
+      dispBpm.innerText = `${paramBpm} BPM`;
+      drawTimeline();
+    });
+
+    document.getElementById("btn_reset_params").addEventListener("click", () => {
+      slPause.value = 1.5; paramPauseBeats = 1.5; dispPause.innerText = "1.5 拍";
+      slSlope.value = 260; paramSlopeHz = 260; dispSlope.innerText = "-260 Hz";
+      slKick.value = 70; paramKickPct = 70; dispKick.innerText = "70 %";
+      slBpm.value = 130; paramBpm = 130; dispBpm.innerText = "130 BPM";
+      drawTimeline();
+    });
+
+    btnPlayA.addEventListener("click", () => {
+      if (playingMode === 'A') stopAll();
+      else playSequence('A');
+    });
+
+    btnPlayB.addEventListener("click", () => {
+      if (playingMode === 'B') stopAll();
+      else playSequence('B');
+    });
+
+    function stopAll() {
+      timerChain.forEach(id => clearTimeout(id));
+      timerChain = [];
+      playingMode = null;
+      btnPlayA.classList.remove("playing");
+      btnPlayA.innerHTML = "<span>▶</span> モードA (平坦メトロノーム) を再生";
+      btnPlayB.classList.remove("playing");
+      btnPlayB.innerHTML = "<span>▶</span> モードB (575律動変調音) を再生";
+      highlightMora(-1);
+    }
+
+    // =======================================================================
+    // 音響合成エンジン
+    // =======================================================================
+    function synthMoraSound(time, freq, amp, hasSubKick) {
+      const ctx = getAudioCtx();
+      const dur = 0.16;
+
+      // 主音 (Triangle + LPF)
+      const osc = ctx.createOscillator();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(freq, time);
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(Math.min(3200, freq * 3.5), time);
+
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.0001, time);
+      gain.gain.linearRampToValueAtTime(amp, time + 0.008);
+      gain.gain.exponentialRampToValueAtTime(0.0001, time + dur);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(time);
+      osc.stop(time + dur);
+
+      // 初拍の Sub-Kick (重低音アクセント)
+      if (hasSubKick && paramKickPct > 0) {
+        const kickAmp = (paramKickPct / 100.0) * 0.9;
+        const kickOsc = ctx.createOscillator();
+        kickOsc.type = "sine";
+        kickOsc.frequency.setValueAtTime(140.0, time);
+        kickOsc.frequency.exponentialRampToValueAtTime(45.0, time + 0.12);
+
+        const kickG = ctx.createGain();
+        kickG.gain.setValueAtTime(kickAmp, time);
+        kickG.gain.exponentialRampToValueAtTime(0.0001, time + 0.14);
+
+        kickOsc.connect(kickG);
+        kickG.connect(ctx.destination);
+
+        kickOsc.start(time);
+        kickOsc.stop(time + 0.14);
+      }
+    }
+
+    // =======================================================================
+    // 575 シーケンサー
+    // =======================================================================
+    function playSequence(mode) {
+      stopAll();
+      playingMode = mode;
+      const ctx = getAudioCtx();
+      const beatSec = 60.0 / paramBpm;
+      const now = ctx.currentTime;
+
+      const p = phrases[currentPhraseIdx];
+      const btn = (mode === 'A') ? btnPlayA : btnPlayB;
+      btn.classList.add("playing");
+      btn.innerHTML = `<span>⏹</span> モード${mode} を停止`;
+
+      let currentOffsetSec = 0;
+
+      for (let i = 0; i < 17; i++) {
+        const moraIndex = i; // 0..16
+        // 句判定: 0..4 (初句5), 5..11 (中七7), 12..16 (結句5)
+        let phraseNum = (i < 5) ? 1 : (i < 12 ? 2 : 3);
+        let isFirstInPhrase = (i === 0 || i === 5 || i === 12);
+        let isLastInPhrase = (i === 4 || i === 11 || i === 16);
+
+        let freq = 340.0;
+        let amp = 0.85;
+        let hasKick = false;
+
+        if (mode === 'A') {
+          // モードA: 完全平坦
+          freq = 320.0;
+          amp = 0.85;
+          hasKick = false;
+        } else {
+          // モードB: 575律動変調
+          hasKick = isFirstInPhrase;
+          amp = isFirstInPhrase ? 0.95 : 0.78;
+
+          // 句末スロープ（句末に向かってブレーキ降下）
+          if (phraseNum === 1) { // 0..4
+            const prog = i / 4.0;
+            freq = 380.0 - (prog * paramSlopeHz * 0.8);
+          } else if (phraseNum === 2) { // 5..11
+            const prog = (i - 5) / 6.0;
+            freq = 410.0 - (prog * paramSlopeHz);
+          } else { // 12..16
+            const prog = (i - 12) / 4.0;
+            freq = 360.0 - (prog * paramSlopeHz * 1.1);
+          }
+        }
+
+        const scheduledTime = now + currentOffsetSec;
+        synthMoraSound(scheduledTime, freq, amp, hasKick);
+
+        // UIハイライトタイマー
+        const delayMs = currentOffsetSec * 1000;
+        const tid = setTimeout(() => {
+          highlightMora(moraIndex);
+        }, delayMs);
+        timerChain.push(tid);
+
+        // 次モーラまでの時間進捗
+        currentOffsetSec += beatSec;
+
+        // モードBなら、句末後にポーズを挿入
+        if (mode === 'B' && isLastInPhrase && i < 16) {
+          currentOffsetSec += (beatSec * paramPauseBeats);
+        }
+      }
+
+      // 終了タイマー
+      const endTid = setTimeout(() => {
+        stopAll();
+      }, (currentOffsetSec + beatSec) * 1000);
+      timerChain.push(endTid);
+    }
+
+    function highlightMora(idx) {
+      if (idx < 0) {
+        seg1.classList.remove("active");
+        seg2.classList.remove("active");
+        seg3.classList.remove("active");
+        drawTimeline(-1);
+        return;
+      }
+      if (idx < 5) {
+        seg1.classList.add("active");
+        seg2.classList.remove("active");
+        seg3.classList.remove("active");
+      } else if (idx < 12) {
+        seg1.classList.remove("active");
+        seg2.classList.add("active");
+        seg3.classList.remove("active");
+      } else {
+        seg1.classList.remove("active");
+        seg2.classList.remove("active");
+        seg3.classList.add("active");
+      }
+      drawTimeline(idx);
+    }
+
+    // =======================================================================
+    // タイムライン描画 (Canvas)
+    // =======================================================================
+    const cvTimeline = document.getElementById("cv_timeline");
+
+    function setupCanvas(cv) {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = cv.getBoundingClientRect();
+      cv.width = rect.width * dpr;
+      cv.height = 160 * dpr;
+      const ctx = cv.getContext("2d");
+      ctx.scale(dpr, dpr);
+      return { ctx, W: rect.width, H: 160 };
+    }
+
+    function drawTimeline(activeMora = -1) {
+      const { ctx, W, H } = setupCanvas(cvTimeline);
+      ctx.clearRect(0, 0, W, H);
+
+      const p = phrases[currentPhraseIdx];
+      const totalSteps = 17 + (playingMode === 'B' || !playingMode ? paramPauseBeats * 2 : 0);
+      const stepWidth = (W - 30) / totalSteps;
+
+      // ガイド背景
+      ctx.fillStyle = "#0d1527";
+      ctx.fillRect(10, 20, W - 20, H - 40);
+
+      let currentX = 15;
+
+      for (let i = 0; i < 17; i++) {
+        let phraseNum = (i < 5) ? 1 : (i < 12 ? 2 : 3);
+        let isFirstInPhrase = (i === 0 || i === 5 || i === 12);
+        let isLastInPhrase = (i === 4 || i === 11 || i === 16);
+
+        let freqProg = 0;
+        if (phraseNum === 1) freqProg = i / 4.0;
+        else if (phraseNum === 2) freqProg = (i - 5) / 6.0;
+        else freqProg = (i - 12) / 4.0;
+
+        const pitchY = (H - 50) - (1.0 - freqProg * 0.7) * 45;
+        const barH = isFirstInPhrase ? 55 : 35;
+        const color = isFirstInPhrase ? "#ec4899" : (phraseNum === 2 ? "#06b6d4" : "#38bdf8");
+
+        // 発音バー
+        ctx.fillStyle = (i === activeMora) ? "#ffffff" : color;
+        ctx.fillRect(currentX, H - 35 - barH, Math.max(6, stepWidth * 0.65), barH);
+
+        // モーラ文字
+        ctx.fillStyle = (i === activeMora) ? "#38bdf8" : "#94a3b8";
+        ctx.font = (i === activeMora) ? "bold 12px sans-serif" : "10px sans-serif";
+        ctx.fillText(p.moras[i], currentX - 1, H - 15);
+
+        // ピッチポイント
+        ctx.beginPath();
+        ctx.arc(currentX + stepWidth * 0.3, pitchY, isFirstInPhrase ? 4.5 : 3, 0, Math.PI * 2);
+        ctx.fillStyle = isFirstInPhrase ? "#ec4899" : "#38bdf8";
+        ctx.fill();
+
+        currentX += stepWidth;
+
+        // 句境界ポーズの可視化
+        if (isLastInPhrase && i < 16) {
+          const pauseWidth = stepWidth * paramPauseBeats;
+          ctx.fillStyle = "rgba(236, 72, 153, 0.12)";
+          ctx.strokeStyle = "rgba(236, 72, 153, 0.4)";
+          ctx.lineWidth = 1;
+          ctx.setLineDash([3, 3]);
+          ctx.fillRect(currentX, 25, pauseWidth, H - 55);
+          ctx.strokeRect(currentX, 25, pauseWidth, H - 55);
+          ctx.setLineDash([]);
+
+          ctx.fillStyle = "#f472b6";
+          ctx.font = "9px monospace";
+          ctx.fillText(`ブレス休符 (${paramPauseBeats}拍)`, currentX + 4, 42);
+
+          currentX += pauseWidth;
+        }
+      }
+    }
+
+    window.addEventListener("resize", () => drawTimeline(-1));
+    window.addEventListener("DOMContentLoaded", () => {
+      updatePhraseDisplay();
+      setTimeout(() => drawTimeline(-1), 100);
+    });
+  </script>
+</body>
+</html>

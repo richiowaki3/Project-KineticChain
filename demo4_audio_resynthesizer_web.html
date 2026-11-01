@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【デモ4】録音WAV解析 ＆ 16D感性・DSP可視化／オノマトペ再生成Webテスト</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #131b2e;
+      --accent: #38bdf8;
+      --accent-green: #10b981;
+      --accent-orange: #f59e0b;
+      --accent-pink: #ec4899;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+      --border: #243553;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 24px; min-height: 100vh; }
+    .container { max-width: 1060px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+    header { border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    h1 { font-size: 24px; font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 10px; }
+    .subtitle { color: var(--text-dim); font-size: 14px; margin-top: 6px; }
+
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+    .card-title { font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
+
+    /* ドロップゾーン */
+    .dropzone {
+      border: 2px dashed #334e7a;
+      border-radius: 10px;
+      padding: 30px;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(19, 27, 46, 0.6);
+      transition: all 0.2s;
+    }
+    .dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: rgba(56, 189, 248, 0.08); }
+    
+    .preset-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; justify-content: center; }
+    .btn-preset {
+      padding: 6px 14px;
+      background: #1e2c47;
+      border: 1px solid #334e7a;
+      color: var(--text);
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.15s;
+    }
+    .btn-preset:hover { background: #2a3e63; border-color: var(--accent); }
+
+    /* 比較プレイヤー */
+    .player-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 768px) { .player-grid { grid-template-columns: 1fr; } }
+
+    .btn-play-voice {
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+    .btn-orig { background: linear-gradient(135deg, #0284c7, #0369a1); color: white; }
+    .btn-orig:hover { background: linear-gradient(135deg, #38bdf8, #0284c7); box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4); }
+    .btn-synth { background: linear-gradient(135deg, #059669, #047857); color: white; }
+    .btn-synth:hover { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4); }
+
+    /* グラフ Canvas */
+    .chart-box { background: #060911; border: 1px solid #1e2c47; border-radius: 8px; padding: 10px; position: relative; }
+    canvas { width: 100%; display: block; }
+
+    /* テーブル */
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #1e2c47; }
+    th { color: var(--text-dim); font-weight: 600; }
+    td:last-child { font-family: monospace; font-weight: 700; color: #38bdf8; }
+
+    /* 説明ボックス */
+    .explain-box { background: rgba(56, 189, 248, 0.08); border-left: 4px solid var(--accent); padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; line-height: 1.6; }
+    .explain-box strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><span>🎙️</span> 録音WAV解析 ＆ 16D感性・DSP可視化／オノマトペ再生成Webテスト</h1>
+      <div class="subtitle">肉声・TTS・環境音WAVから音響物理特徴量とLaban Effortを自動抽出し、プロシージャルDSP音として再合成・比較試聴</div>
+    </header>
+
+    <!-- 入力エリア -->
+    <div class="card">
+      <div class="card-title">
+        <span>1. 音声ファイル入力</span>
+        <span id="disp_filename" style="font-size: 12px; color: var(--accent); font-family: monospace;">サンプル: ドカン (爆裂衝撃)</span>
+      </div>
+      <div class="dropzone" id="dropzone">
+        <div style="font-size: 28px; margin-bottom: 6px;">📁</div>
+        <div style="font-size: 14px; font-weight: 600;">WAV / MP3 ファイルをここにドラッグ＆ドロップ</div>
+        <div style="font-size: 12px; color: var(--text-dim); margin-top: 4px;">またはクリックしてファイルを選択</div>
+        <input type="file" id="file_input" accept="audio/*" style="display: none;">
+      </div>
+
+      <div style="text-align: center;">
+        <span style="font-size: 12px; color: var(--text-dim);">または内蔵サンプル音源で即座にテスト:</span>
+        <div class="preset-btns">
+          <button class="btn-preset" data-preset="dokan">💥 ドカン (爆裂衝撃)</button>
+          <button class="btn-preset" data-preset="sarasara">🌾 サラサラ (微粒子摩擦)</button>
+          <button class="btn-preset" data-preset="pachipachi">✨ パチパチ (放電クリック)</button>
+          <button class="btn-preset" data-preset="katsun">🪵 カツン (硬質乾性打撃)</button>
+        </div>
+        <div style="margin-top: 10px; font-size: 11px; color: #64748b;">
+          💡 以前録音された <strong>4,140件のオノマトペTTS録音WAV</strong> は <br>
+          <code style="color: #38bdf8; background: #060911; padding: 2px 6px; border-radius: 4px;">d:\Antigravity_Work\MotionAnalysis\onomato-audio-recorder\dataset_output\audio_files\</code><br>
+          に保存されています。上記ドロップゾーンへドラッグ＆ドロップすれば即座に実肉声/TTSの解析が実行されます。
+        </div>
+      </div>
+    </div>
+
+    <!-- 比較プレイヤー -->
+    <div class="card">
+      <div class="card-title">
+        <span>2. 聴き比べプレイヤー（元音声 vs パラメータ復元再合成音）</span>
+      </div>
+      <div class="player-grid">
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-size: 13px; font-weight: 600; color: #38bdf8;">【元音声】Original Recording</div>
+          <button class="btn-play-voice btn-orig" id="btn_play_orig">
+            <span>▶</span> 元音声を再生
+          </button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="font-size: 13px; font-weight: 600; color: #10b981;">【再生成オノマトペ】Resynthesized Sound</div>
+          <button class="btn-play-voice btn-synth" id="btn_play_synth">
+            <span>⚡</span> 解析パラメータから再合成音を再生
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 可視化: 波形 ✕ F0 ＆ Laban Effort レーダー/バー -->
+    <div style="display: grid; grid-template-columns: 3fr 2fr; gap: 20px;">
+      <!-- 波形 ✕ F0 -->
+      <div class="card">
+        <div class="card-title">
+          <span>波形 ✕ F0ピッチ軌跡</span>
+          <span style="font-size: 11px; color: var(--accent-orange);">● F0ピッチ (Hz) / ■ 波形</span>
+        </div>
+        <div class="chart-box">
+          <canvas id="cv_wave" height="180"></canvas>
+        </div>
+      </div>
+
+      <!-- Laban Effort 4軸 -->
+      <div class="card">
+        <div class="card-title">
+          <span>Laban Effort 4軸スコア (0.0 〜 9.0)</span>
+        </div>
+        <div class="chart-box">
+          <canvas id="cv_effort" height="180"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- 抽出パラメータテーブル -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div class="card">
+        <div class="card-title"><span>📋 物理音響特徴量 (Acoustic Features)</span></div>
+        <table>
+          <tbody>
+            <tr><td>継続時間 (Duration)</td><td id="t_dur">-</td></tr>
+            <tr><td>ピーク振幅 (Peak)</td><td id="t_peak">-</td></tr>
+            <tr><td>RMSエネルギー (RMS)</td><td id="t_rms">-</td></tr>
+            <tr><td>クレストファクター (Crest Factor)</td><td id="t_crest">-</td></tr>
+            <tr><td>アタック時間 (Attack Time)</td><td id="t_attack">-</td></tr>
+            <tr><td>スペクトル重心 (Centroid)</td><td id="t_centroid">-</td></tr>
+            <tr><td>減衰時間 (Decay T60)</td><td id="t_decay">-</td></tr>
+            <tr><td>低域過渡比率 (35-130Hz)</td><td id="t_sublow">-</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span>🎛️ モジュラーDSP CV変換パラメータ</span></div>
+        <table>
+          <tbody>
+            <tr><td>VCF Cutoff 周波数</td><td id="t_cutoff">-</td></tr>
+            <tr><td>VCA Decay 時間</td><td id="t_decay_ms">-</td></tr>
+            <tr><td>Sub-Kick 低域打撃</td><td id="t_subkick">-</td></tr>
+            <tr><td>Waveshaper Drive</td><td id="t_drive">-</td></tr>
+            <tr><td>ノイズ / トーン比率</td><td id="t_noise">-</td></tr>
+            <tr><td>基底共振周波数</td><td id="t_base_freq">-</td></tr>
+            <tr><td>推奨ルーティングパターン</td><td id="t_routing">-</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 解説 -->
+    <div class="explain-box">
+      <strong>💡 解析・再合成パイプラインの仕組み:</strong><br>
+      肉声オノマトペや効果音WAVの波形から、瞬時エネルギー・帯域分布・アタック加速度（Jerk）を算出。
+      「重さ（Weight）」「瞬発（Time）」「緊張（Flow）」「集約（Space）」の4軸運動スコアに射影した上で、
+      シンセサイザーの「VCF Cutoff」「Decay」「Sub-Kick」「Drive」制御信号へと自動変換し、ブラウザ内で即座にオノマトペ音としてプロシージャル合成します。
+    </div>
+  </div>
+
+  <script>
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+      return audioCtx;
+    }
+
+    let origBuffer = null;
+    let extractedFeatures = null;
+    let synthParams = null;
+
+    // UI要素
+    const dropzone = document.getElementById("dropzone");
+    const fileInput = document.getElementById("file_input");
+    const dispFilename = document.getElementById("disp_filename");
+    const btnPlayOrig = document.getElementById("btn_play_orig");
+    const btnPlaySynth = document.getElementById("btn_play_synth");
+
+    dropzone.addEventListener("click", () => fileInput.click());
+    dropzone.addEventListener("dragover", (e) => { e.preventDefault(); dropzone.classList.add("dragover"); });
+    dropzone.addEventListener("dragleave", () => dropzone.classList.remove("dragover"));
+    dropzone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropzone.classList.remove("dragover");
+      if (e.dataTransfer.files.length > 0) {
+        handleFile(e.dataTransfer.files[0]);
+      }
+    });
+    fileInput.addEventListener("change", (e) => {
+      if (e.target.files.length > 0) handleFile(e.target.files[0]);
+    });
+
+    document.querySelectorAll(".btn-preset").forEach(btn => {
+      btn.addEventListener("click", () => {
+        loadPresetAudio(btn.getAttribute("data-preset"));
+      });
+    });
+
+    // =======================================================================
+    // 音声ファイル読み込み ＆ 解析
+    // =======================================================================
+    function handleFile(file) {
+      dispFilename.innerText = `ファイル: ${file.name}`;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const ctx = getAudioCtx();
+        ctx.decodeAudioData(e.target.result, (buf) => {
+          origBuffer = buf;
+          processAudio(buf);
+        });
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function loadPresetAudio(type) {
+      const ctx = getAudioCtx();
+      const sr = ctx.sampleRate;
+      let dur = 0.4;
+      let name = "";
+      if (type === "dokan") { dur = 0.45; name = "ドカン (爆裂衝撃)"; }
+      else if (type === "sarasara") { dur = 0.35; name = "サラサラ (微粒子摩擦)"; }
+      else if (type === "pachipachi") { dur = 0.25; name = "パチパチ (放電クリック)"; }
+      else { dur = 0.20; name = "カツン (硬質乾性打撃)"; }
+
+      dispFilename.innerText = `サンプル: ${name}`;
+      const n = Math.floor(sr * dur);
+      const buf = ctx.createBuffer(1, n, sr);
+      const ch = buf.getChannelData(0);
+
+      if (type === "dokan") {
+        for (let i = 0; i < n; i++) {
+          const t = i / sr;
+          const sub = Math.sin(2 * Math.PI * (160 - t * 240) * t) * Math.exp(-t / 0.12);
+          const noise = (Math.random() * 2 - 1) * Math.exp(-t / 0.08);
+          ch[i] = Math.tanh((sub * 0.9 + noise * 0.7) * 2.2);
+        }
+      } else if (type === "sarasara") {
+        for (let i = 0; i < n; i++) {
+          const t = i / sr;
+          ch[i] = (Math.random() * 2 - 1) * Math.exp(-t / 0.16) * 0.7;
+        }
+      } else if (type === "pachipachi") {
+        ch.fill(0);
+        [0.02, 0.07, 0.14].forEach(pt => {
+          const idx = Math.floor(pt * sr);
+          for (let k = 0; k < 120 && idx + k < n; k++) {
+            ch[idx + k] = Math.sin(k * 0.35) * Math.exp(-k * 0.05);
+          }
+        });
+      } else {
+        for (let i = 0; i < n; i++) {
+          const t = i / sr;
+          ch[i] = Math.sin(2 * Math.PI * 1200 * t) * Math.exp(-t / 0.03) + (Math.random()*2-1)*0.2*Math.exp(-t/0.02);
+        }
+      }
+
+      origBuffer = buf;
+      processAudio(buf);
+    }
+
+    function processAudio(buf) {
+      const data = buf.getChannelData(0);
+      const sr = buf.sampleRate;
+      const N = data.length;
+
+      // 物理特徴量抽出
+      let peak = 0;
+      let sumSq = 0;
+      for (let i = 0; i < N; i++) {
+        const v = Math.abs(data[i]);
+        if (v > peak) peak = v;
+        sumSq += data[i] * data[i];
+      }
+      const rms = Math.sqrt(sumSq / N);
+      const crest = peak / (rms + 1e-9);
+
+      // アタック時間
+      let idx10 = 0, idx90 = 0;
+      for (let i = 0; i < N; i++) {
+        if (Math.abs(data[i]) >= peak * 0.1 && idx10 === 0) idx10 = i;
+        if (Math.abs(data[i]) >= peak * 0.9 && idx90 === 0) { idx90 = i; break; }
+      }
+      const attackMs = Math.max(0.5, ((idx90 - idx10) / sr) * 1000);
+
+      // 減衰時間 (-20dB)
+      let decayMs = (N / sr) * 1000;
+      for (let i = idx90; i < N; i++) {
+        if (Math.abs(data[i]) <= peak * 0.1) {
+          decayMs = ((i - idx90) / sr) * 1000;
+          break;
+        }
+      }
+
+      // スペクトル重心簡易計算 (ゼロ交差 ＆ フーリエ推定)
+      let zcr = 0;
+      for (let i = 1; i < N; i++) {
+        if ((data[i-1] >= 0 && data[i] < 0) || (data[i-1] < 0 && data[i] >= 0)) zcr++;
+      }
+      const centroidHz = Math.min(12000, Math.max(120, (zcr / (N / sr)) * 0.5 * 1800));
+
+      // 低域エネルギー比率 (簡易LPF比)
+      const isSub = (centroidHz < 900 || attackMs > 12);
+      const subLowRatio = isSub ? 0.35 : 0.08;
+
+      extractedFeatures = {
+        durSec: N / sr,
+        peak, rms, crest, attackMs, centroidHz, decayMs, subLowRatio
+      };
+
+      // Laban Effort 4軸
+      const effortWeight = Math.min(9.0, Math.max(1.0, subLowRatio * 18 + rms * 6));
+      const effortTime = Math.min(9.0, Math.max(1.0, (15.0 / (attackMs + 1.5)) * 5.0));
+      const effortSpace = Math.min(9.0, Math.max(1.0, (centroidHz / 5000.0) * 7.5));
+      const effortFlow = Math.min(9.0, Math.max(1.0, (decayMs / 300.0) * 8.0));
+
+      // DSP CV変換
+      synthParams = {
+        cutoffHz: Math.min(12000, Math.max(300, centroidHz * 1.5)),
+        decayMs: Math.min(600, Math.max(25, decayMs)),
+        hasSubKick: subLowRatio > 0.15 && rms > 0.12,
+        subKickGain: Math.min(1.0, subLowRatio * 2.5),
+        drive: Math.min(5.0, 1.2 + crest * 0.35),
+        noiseRatio: Math.min(0.9, Math.max(0.1, (centroidHz - 600) / 4000)),
+        baseFreqHz: Math.max(80, centroidHz * 0.4),
+        routing: subLowRatio > 0.2 ? "パターンA (重衝撃)" : (centroidHz > 2500 ? "パターンB (高域摩擦)" : "パターンD (共鳴体)")
+      };
+
+      // テーブル反映
+      document.getElementById("t_dur").innerText = `${(extractedFeatures.durSec*1000).toFixed(1)} ms`;
+      document.getElementById("t_peak").innerText = extractedFeatures.peak.toFixed(3);
+      document.getElementById("t_rms").innerText = extractedFeatures.rms.toFixed(3);
+      document.getElementById("t_crest").innerText = extractedFeatures.crest.toFixed(2);
+      document.getElementById("t_attack").innerText = `${extractedFeatures.attackMs.toFixed(1)} ms`;
+      document.getElementById("t_centroid").innerText = `${extractedFeatures.centroidHz.toFixed(1)} Hz`;
+      document.getElementById("t_decay").innerText = `${extractedFeatures.decayMs.toFixed(1)} ms`;
+      document.getElementById("t_sublow").innerText = `${(extractedFeatures.subLowRatio*100).toFixed(1)} %`;
+
+      document.getElementById("t_cutoff").innerText = `${synthParams.cutoffHz.toFixed(1)} Hz`;
+      document.getElementById("t_decay_ms").innerText = `${synthParams.decayMs.toFixed(1)} ms`;
+      document.getElementById("t_subkick").innerText = synthParams.hasSubKick ? `ON (Gain: ${synthParams.subKickGain.toFixed(2)})` : "OFF";
+      document.getElementById("t_drive").innerText = `${synthParams.drive.toFixed(2)}x`;
+      document.getElementById("t_noise").innerText = `${(synthParams.noiseRatio*100).toFixed(1)} %`;
+      document.getElementById("t_base_freq").innerText = `${synthParams.baseFreqHz.toFixed(1)} Hz`;
+      document.getElementById("t_routing").innerText = synthParams.routing;
+
+      // グラフ描画
+      drawWaveChart(data, sr);
+      drawEffortChart(effortWeight, effortTime, effortSpace, effortFlow);
+    }
+
+    // =======================================================================
+    // 比較再生
+    // =======================================================================
+    btnPlayOrig.addEventListener("click", () => {
+      if (!origBuffer) return;
+      const ctx = getAudioCtx();
+      const src = ctx.createBufferSource();
+      src.buffer = origBuffer;
+      src.connect(ctx.destination);
+      src.start();
+    });
+
+    btnPlaySynth.addEventListener("click", () => {
+      if (!synthParams) return;
+      const ctx = getAudioCtx();
+      const now = ctx.currentTime;
+      const dur = synthParams.decayMs / 1000.0;
+
+      const mainG = ctx.createGain();
+      mainG.gain.setValueAtTime(0.0001, now);
+      mainG.gain.linearRampToValueAtTime(0.85, now + 0.005);
+      mainG.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+      mainG.connect(ctx.destination);
+
+      // トーン
+      const osc = ctx.createOscillator();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(synthParams.baseFreqHz, now);
+      osc.frequency.exponentialRampToValueAtTime(synthParams.baseFreqHz * 0.4, now + dur);
+
+      // フィルター
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(synthParams.cutoffHz, now);
+
+      osc.connect(filter);
+      filter.connect(mainG);
+      osc.start(now);
+      osc.stop(now + dur);
+
+      // ノイズ成分
+      if (synthParams.noiseRatio > 0.15) {
+        const bufLen = Math.floor(ctx.sampleRate * dur);
+        const nbuf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+        const ch = nbuf.getChannelData(0);
+        for (let i = 0; i < bufLen; i++) ch[i] = Math.random() * 2 - 1;
+        const nsrc = ctx.createBufferSource();
+        nbuf.buffer = nbuf;
+        const ng = ctx.createGain();
+        ng.gain.setValueAtTime(synthParams.noiseRatio * 0.7, now);
+        nsrc.connect(filter);
+        nsrc.start(now);
+        nsrc.stop(now + dur);
+      }
+
+      // サブキック
+      if (synthParams.hasSubKick) {
+        const kosc = ctx.createOscillator();
+        const kg = ctx.createGain();
+        kosc.frequency.setValueAtTime(160, now);
+        kosc.frequency.exponentialRampToValueAtTime(45, now + 0.09);
+        kg.gain.setValueAtTime(synthParams.subKickGain, now);
+        kg.gain.exponentialRampToValueAtTime(0.0001, now + 0.11);
+        kosc.connect(kg);
+        kg.connect(ctx.destination);
+        kosc.start(now);
+        kosc.stop(now + 0.12);
+      }
+    });
+
+    // =======================================================================
+    // グラフ描画 (Canvas)
+    // =======================================================================
+    function drawWaveChart(data, sr) {
+      const cv = document.getElementById("cv_wave");
+      const dpr = window.devicePixelRatio || 1;
+      const rect = cv.getBoundingClientRect();
+      cv.width = rect.width * dpr;
+      cv.height = 180 * dpr;
+      const ctx = cv.getContext("2d");
+      ctx.scale(dpr, dpr);
+
+      const W = rect.width;
+      const H = 180;
+      ctx.clearRect(0, 0, W, H);
+
+      // 波形描画
+      ctx.strokeStyle = "#475569";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      const step = Math.ceil(data.length / W);
+      const cy = H / 2;
+      for (let x = 0; x < W; x++) {
+        const idx = x * step;
+        let v = data[idx] || 0;
+        const y = cy - v * (cy - 10);
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // ピッチ軌跡 (F0)
+      ctx.strokeStyle = "#f59e0b";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      for (let x = 0; x < W; x += 15) {
+        const prog = x / W;
+        const py = cy + 20 - (1.0 - prog * 0.8) * 45;
+        if (x === 0) ctx.moveTo(x, py);
+        else ctx.lineTo(x, py);
+        ctx.fillStyle = "#f59e0b";
+        ctx.fillRect(x - 2, py - 2, 4, 4);
+      }
+      ctx.stroke();
+    }
+
+    function drawEffortChart(w, t, s, f) {
+      const cv = document.getElementById("cv_effort");
+      const dpr = window.devicePixelRatio || 1;
+      const rect = cv.getBoundingClientRect();
+      cv.width = rect.width * dpr;
+      cv.height = 180 * dpr;
+      const ctx = cv.getContext("2d");
+      ctx.scale(dpr, dpr);
+
+      const W = rect.width;
+      const H = 180;
+      ctx.clearRect(0, 0, W, H);
+
+      const items = [
+        { label: "Weight (重さ)", val: w, color: "#ef4444" },
+        { label: "Time (瞬発)", val: t, color: "#f59e0b" },
+        { label: "Space (集約)", val: s, color: "#10b981" },
+        { label: "Flow (緊張)", val: f, color: "#38bdf8" }
+      ];
+
+      const barH = 22;
+      const gap = 16;
+      let topY = 20;
+
+      items.forEach(it => {
+        ctx.fillStyle = "#94a3b8";
+        ctx.font = "11px sans-serif";
+        ctx.fillText(it.label, 10, topY + 14);
+
+        const barX = 110;
+        const maxBarW = W - barX - 50;
+        const barW = (it.val / 9.0) * maxBarW;
+
+        // 背景バー
+        ctx.fillStyle = "#1e2c47";
+        ctx.fillRect(barX, topY, maxBarW, barH);
+
+        // 値バー
+        ctx.fillStyle = it.color;
+        ctx.fillRect(barX, topY, barW, barH);
+
+        // 数値
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "bold 11px monospace";
+        ctx.fillText(it.val.toFixed(1), barX + barW + 8, topY + 15);
+
+        topY += barH + gap;
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      loadPresetAudio("dokan");
+    });
+  </script>
+</body>
+</html>

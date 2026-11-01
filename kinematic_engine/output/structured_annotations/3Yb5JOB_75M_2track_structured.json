@@ -1,0 +1,1676 @@
+[
+  {
+    "segment_id": "3Yb5JOB_75M_seg_000",
+    "time_stamps": {
+      "start": 0.0,
+      "end": 2.0,
+      "stroke_peak_recommendation": 1.0
+    },
+    "raw_text": "ディズニー映画『リトルマーメード』に登場する、魔女アースラ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "姿勢提示・身体静止",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_001",
+    "time_stamps": {
+      "start": 2.0,
+      "end": 4.0,
+      "stroke_peak_recommendation": 3.0
+    },
+    "raw_text": "傲慢なポーズ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "姿勢提示・身体静止",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_002",
+    "time_stamps": {
+      "start": 4.0,
+      "end": 5.948,
+      "stroke_peak_recommendation": 4.4
+    },
+    "raw_text": "髪が上に向かってふさりとウェーブしている。",
+    "annotation": {
+      "main_onomatopoeia": "ふさり",
+      "context_conditions": {
+        "action_state": "流動・波動揺らぎ",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_003",
+    "time_stamps": {
+      "start": 6.317,
+      "end": 7.353,
+      "stroke_peak_recommendation": 6.835
+    },
+    "raw_text": "傲慢なポーズ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "姿勢提示・身体静止",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_004",
+    "time_stamps": {
+      "start": 7.353,
+      "end": 9.353,
+      "stroke_peak_recommendation": 7.753
+    },
+    "raw_text": "頬はぽったりとして",
+    "annotation": {
+      "main_onomatopoeia": "ぽったり",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_005",
+    "time_stamps": {
+      "start": 9.354,
+      "end": 11.218,
+      "stroke_peak_recommendation": 10.286
+    },
+    "raw_text": "うちは大きく輪を出して笑っている",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_006",
+    "time_stamps": {
+      "start": 11.218,
+      "end": 13.218,
+      "stroke_peak_recommendation": 12.218
+    },
+    "raw_text": "目はぱっちりまつげが長く見開いている。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_007",
+    "time_stamps": {
+      "start": 13.219,
+      "end": 15.219,
+      "stroke_peak_recommendation": 14.219
+    },
+    "raw_text": "胸も大きく腹も大きくグラマーだ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "胸部・体幹",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_008",
+    "time_stamps": {
+      "start": 15.22,
+      "end": 19.912,
+      "stroke_peak_recommendation": 17.566
+    },
+    "raw_text": "タコなのでにょろりと長い手",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_009",
+    "time_stamps": {
+      "start": 19.912,
+      "end": 21.912,
+      "stroke_peak_recommendation": 20.912
+    },
+    "raw_text": "大きな声でお金持ちの女性のように甲高く笑う",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "姿勢提示・身体静止",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_010",
+    "time_stamps": {
+      "start": 21.913,
+      "end": 24.28,
+      "stroke_peak_recommendation": 22.313
+    },
+    "raw_text": "泳ぐと時は顔から、ぐっと前に出て、そして体中の腕を揺るがしぷしゅーっと素早く泳ぐ。",
+    "annotation": {
+      "main_onomatopoeia": "ぐっ",
+      "context_conditions": {
+        "action_state": "直進推進・突入",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_011",
+    "time_stamps": {
+      "start": 24.564,
+      "end": 26.564,
+      "stroke_peak_recommendation": 25.564
+    },
+    "raw_text": "ディズニー映画『アラジン』に登場する、ジャファー",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "姿勢提示・身体静止",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_012",
+    "time_stamps": {
+      "start": 27.267,
+      "end": 29.267,
+      "stroke_peak_recommendation": 27.667
+    },
+    "raw_text": "ゆっくりとゆったりと腕を組み",
+    "annotation": {
+      "main_onomatopoeia": "ゆっくり",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_013",
+    "time_stamps": {
+      "start": 29.666,
+      "end": 31.247,
+      "stroke_peak_recommendation": 30.456
+    },
+    "raw_text": "大きなターバンを巻いている。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_014",
+    "time_stamps": {
+      "start": 31.247,
+      "end": 33.247,
+      "stroke_peak_recommendation": 32.247
+    },
+    "raw_text": "猫には宝石があり、そこから羽が上へ伸びている。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_015",
+    "time_stamps": {
+      "start": 33.248,
+      "end": 36.442,
+      "stroke_peak_recommendation": 34.845
+    },
+    "raw_text": "青和細く肩は吊り上がっていて腰は細い。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "肩部・上腕",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_016",
+    "time_stamps": {
+      "start": 36.442,
+      "end": 38.442,
+      "stroke_peak_recommendation": 37.442
+    },
+    "raw_text": "貫禄のある手組。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "手首・前腕",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_017",
+    "time_stamps": {
+      "start": 39.15,
+      "end": 40.123,
+      "stroke_peak_recommendation": 39.636
+    },
+    "raw_text": "髭は鼻の下に細くあり。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_018",
+    "time_stamps": {
+      "start": 40.123,
+      "end": 42.417,
+      "stroke_peak_recommendation": 41.27
+    },
+    "raw_text": "あごひげは下ににょろりと伸びる。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_019",
+    "time_stamps": {
+      "start": 42.417,
+      "end": 44.417,
+      "stroke_peak_recommendation": 43.417
+    },
+    "raw_text": "貫禄のある腕組み",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_020",
+    "time_stamps": {
+      "start": 44.418,
+      "end": 48.094,
+      "stroke_peak_recommendation": 46.256
+    },
+    "raw_text": "素早く脇から仕掛けのある短剣を抜き",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_021",
+    "time_stamps": {
+      "start": 48.094,
+      "end": 50.094,
+      "stroke_peak_recommendation": 49.094
+    },
+    "raw_text": "低く底意地の悪い笑いを浮かべる。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_022",
+    "time_stamps": {
+      "start": 50.83,
+      "end": 52.83,
+      "stroke_peak_recommendation": 52.03
+    },
+    "raw_text": "映画『ムーラン』に登場するムーシュー",
+    "annotation": {
+      "main_onomatopoeia": "ムーシュー",
+      "context_conditions": {
+        "action_state": "姿勢提示・身体静止",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_023",
+    "time_stamps": {
+      "start": 52.831,
+      "end": 54.831,
+      "stroke_peak_recommendation": 53.831
+    },
+    "raw_text": "鼻は長細く。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_024",
+    "time_stamps": {
+      "start": 54.832,
+      "end": 56.622,
+      "stroke_peak_recommendation": 55.727
+    },
+    "raw_text": "ヒゲガニョロリと伸びる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_025",
+    "time_stamps": {
+      "start": 56.622,
+      "end": 57.585,
+      "stroke_peak_recommendation": 57.103
+    },
+    "raw_text": "顔がっちりと。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_026",
+    "time_stamps": {
+      "start": 57.586,
+      "end": 59.052,
+      "stroke_peak_recommendation": 57.986
+    },
+    "raw_text": "耳はシュッと横に細長い",
+    "annotation": {
+      "main_onomatopoeia": "シュッ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_027",
+    "time_stamps": {
+      "start": 59.052,
+      "end": 60.581,
+      "stroke_peak_recommendation": 59.452
+    },
+    "raw_text": "遅い角がスッと伸びる。",
+    "annotation": {
+      "main_onomatopoeia": "スッ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_028",
+    "time_stamps": {
+      "start": 60.582,
+      "end": 62.582,
+      "stroke_peak_recommendation": 61.582
+    },
+    "raw_text": "胴体はくねくねしている。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "胸部・体幹",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_029",
+    "time_stamps": {
+      "start": 63.504,
+      "end": 65.504,
+      "stroke_peak_recommendation": 63.904
+    },
+    "raw_text": "ちょっと自慢げに。",
+    "annotation": {
+      "main_onomatopoeia": "ちょっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_030",
+    "time_stamps": {
+      "start": 66.185,
+      "end": 67.661,
+      "stroke_peak_recommendation": 66.585
+    },
+    "raw_text": "口からボット火を吹く",
+    "annotation": {
+      "main_onomatopoeia": "ボット",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_031",
+    "time_stamps": {
+      "start": 67.661,
+      "end": 68.161,
+      "stroke_peak_recommendation": 67.911
+    },
+    "raw_text": "めらめら",
+    "annotation": {
+      "main_onomatopoeia": "めらめら",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_032",
+    "time_stamps": {
+      "start": 68.65,
+      "end": 69.697,
+      "stroke_peak_recommendation": 69.174
+    },
+    "raw_text": "じゃじゃーん",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_033",
+    "time_stamps": {
+      "start": 69.698,
+      "end": 71.698,
+      "stroke_peak_recommendation": 70.698
+    },
+    "raw_text": "『アナと雪の女王』に登場するオラフ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "姿勢提示・身体静止",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_034",
+    "time_stamps": {
+      "start": 71.698,
+      "end": 73.499,
+      "stroke_peak_recommendation": 72.599
+    },
+    "raw_text": "頭の毛が逆立っている",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_035",
+    "time_stamps": {
+      "start": 73.499,
+      "end": 75.049,
+      "stroke_peak_recommendation": 74.274
+    },
+    "raw_text": "顔は丸くうちは大きく",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_036",
+    "time_stamps": {
+      "start": 75.05,
+      "end": 75.856,
+      "stroke_peak_recommendation": 75.413
+    },
+    "raw_text": "目はぎょろぎょろと",
+    "annotation": {
+      "main_onomatopoeia": "ぎょろぎょろ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_037",
+    "time_stamps": {
+      "start": 75.856,
+      "end": 76.494,
+      "stroke_peak_recommendation": 76.143
+    },
+    "raw_text": "眉毛はぴっぴっ",
+    "annotation": {
+      "main_onomatopoeia": "ぴっぴっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_038",
+    "time_stamps": {
+      "start": 76.494,
+      "end": 77.063,
+      "stroke_peak_recommendation": 76.779
+    },
+    "raw_text": "ボタンがあって",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_039",
+    "time_stamps": {
+      "start": 77.063,
+      "end": 78.494,
+      "stroke_peak_recommendation": 77.779
+    },
+    "raw_text": "体はずんぐりむっくり",
+    "annotation": {
+      "main_onomatopoeia": "ずんぐり",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_040",
+    "time_stamps": {
+      "start": 78.495,
+      "end": 81.951,
+      "stroke_peak_recommendation": 80.223
+    },
+    "raw_text": "手が枝のよう。ごきげんなダンス",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_041",
+    "time_stamps": {
+      "start": 81.952,
+      "end": 85.43,
+      "stroke_peak_recommendation": 83.691
+    },
+    "raw_text": "鼻がむずむずする",
+    "annotation": {
+      "main_onomatopoeia": "むずむず",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_042",
+    "time_stamps": {
+      "start": 85.43,
+      "end": 87.43,
+      "stroke_peak_recommendation": 86.43
+    },
+    "raw_text": "後ろからたたかれて鼻が飛んでいく",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_043",
+    "time_stamps": {
+      "start": 87.43,
+      "end": 88.718,
+      "stroke_peak_recommendation": 88.074
+    },
+    "raw_text": "なんか楽しい",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_044",
+    "time_stamps": {
+      "start": 88.718,
+      "end": 89.807,
+      "stroke_peak_recommendation": 89.263
+    },
+    "raw_text": "ディズニー映画『リロ＆スティッチ』のスティッチ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_045",
+    "time_stamps": {
+      "start": 89.807,
+      "end": 91.199,
+      "stroke_peak_recommendation": 90.503
+    },
+    "raw_text": "ガメツラで顔は横長に丸い。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_046",
+    "time_stamps": {
+      "start": 91.199,
+      "end": 92.874,
+      "stroke_peak_recommendation": 91.599
+    },
+    "raw_text": "目は細く。チラチラとして。",
+    "annotation": {
+      "main_onomatopoeia": "チラチラ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_047",
+    "time_stamps": {
+      "start": 92.874,
+      "end": 94.11,
+      "stroke_peak_recommendation": 93.492
+    },
+    "raw_text": "うちは大きく歯がガタガタして",
+    "annotation": {
+      "main_onomatopoeia": "ガタガタ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_048",
+    "time_stamps": {
+      "start": 94.11,
+      "end": 95.733,
+      "stroke_peak_recommendation": 94.922
+    },
+    "raw_text": "大きくシュルッとパッとしている",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "急拡大・破裂展開",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_049",
+    "time_stamps": {
+      "start": 95.733,
+      "end": 97.733,
+      "stroke_peak_recommendation": 96.733
+    },
+    "raw_text": "おでこから触覚が出ている。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_050",
+    "time_stamps": {
+      "start": 97.733,
+      "end": 99.733,
+      "stroke_peak_recommendation": 98.733
+    },
+    "raw_text": "うごうごうとした腕が脇から出ている。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_051",
+    "time_stamps": {
+      "start": 99.734,
+      "end": 101.734,
+      "stroke_peak_recommendation": 100.134
+    },
+    "raw_text": "バシッと腕が伸びる。爬虫類のような口をしていて",
+    "annotation": {
+      "main_onomatopoeia": "バシッ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_052",
+    "time_stamps": {
+      "start": 101.734,
+      "end": 103.734,
+      "stroke_peak_recommendation": 102.734
+    },
+    "raw_text": "舌がにょろりと伸びる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_053",
+    "time_stamps": {
+      "start": 104.049,
+      "end": 106.049,
+      "stroke_peak_recommendation": 105.049
+    },
+    "raw_text": "映画『Mr.インクレディブル』のジャック・ジャック",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_054",
+    "time_stamps": {
+      "start": 106.369,
+      "end": 107.583,
+      "stroke_peak_recommendation": 106.769
+    },
+    "raw_text": "それは小さくてパッと消えてバッと現れる。",
+    "annotation": {
+      "main_onomatopoeia": "パッ",
+      "context_conditions": {
+        "action_state": "急拡大・破裂展開",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_055",
+    "time_stamps": {
+      "start": 107.583,
+      "end": 108.525,
+      "stroke_peak_recommendation": 107.983
+    },
+    "raw_text": "落ち着きがなく手をカタカタとさす。もしくはキーボードをすばやく打っている。",
+    "annotation": {
+      "main_onomatopoeia": "カタカタ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_056",
+    "time_stamps": {
+      "start": 108.525,
+      "end": 110.525,
+      "stroke_peak_recommendation": 109.525
+    },
+    "raw_text": "ぐるぐるっと消えて再び別の場所に現れカタカタと動く。",
+    "annotation": {
+      "main_onomatopoeia": "ぐるぐる",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_057",
+    "time_stamps": {
+      "start": 110.525,
+      "end": 111.561,
+      "stroke_peak_recommendation": 110.925
+    },
+    "raw_text": "ちょっと消えてまた現れる。",
+    "annotation": {
+      "main_onomatopoeia": "ちょっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_058",
+    "time_stamps": {
+      "start": 111.562,
+      "end": 113.562,
+      "stroke_peak_recommendation": 112.562
+    },
+    "raw_text": "顔はマルク耳がチロチロ。",
+    "annotation": {
+      "main_onomatopoeia": "チロチロ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_059",
+    "time_stamps": {
+      "start": 113.842,
+      "end": 114.404,
+      "stroke_peak_recommendation": 114.123
+    },
+    "raw_text": "一本の角のような髪の毛。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_060",
+    "time_stamps": {
+      "start": 114.404,
+      "end": 116.0,
+      "stroke_peak_recommendation": 115.202
+    },
+    "raw_text": "好奇心旺盛でなんでも挑戦したい。何でも手を出したい。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_061",
+    "time_stamps": {
+      "start": 116.0,
+      "end": 118.608,
+      "stroke_peak_recommendation": 117.304
+    },
+    "raw_text": "目からビーム　ビー　ビー　ビー",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_062",
+    "time_stamps": {
+      "start": 118.608,
+      "end": 119.801,
+      "stroke_peak_recommendation": 119.204
+    },
+    "raw_text": "喜んで握手。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_063",
+    "time_stamps": {
+      "start": 119.801,
+      "end": 121.413,
+      "stroke_peak_recommendation": 120.607
+    },
+    "raw_text": "どうしても触りたい",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_064",
+    "time_stamps": {
+      "start": 121.413,
+      "end": 122.994,
+      "stroke_peak_recommendation": 122.203
+    },
+    "raw_text": "変わったらどかんと爆発",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_065",
+    "time_stamps": {
+      "start": 122.994,
+      "end": 124.994,
+      "stroke_peak_recommendation": 123.994
+    },
+    "raw_text": "くろこげになって髪はもじゃもじゃ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_066",
+    "time_stamps": {
+      "start": 124.994,
+      "end": 125.852,
+      "stroke_peak_recommendation": 125.38
+    },
+    "raw_text": "あっという間に体を元通り",
+    "annotation": {
+      "main_onomatopoeia": "あっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_067",
+    "time_stamps": {
+      "start": 125.852,
+      "end": 127.852,
+      "stroke_peak_recommendation": 126.852
+    },
+    "raw_text": "嬉しくて好奇心旺盛でまた触りたい",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_068",
+    "time_stamps": {
+      "start": 127.853,
+      "end": 129.818,
+      "stroke_peak_recommendation": 128.835
+    },
+    "raw_text": "突然鬼に返信し、",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_069",
+    "time_stamps": {
+      "start": 129.818,
+      "end": 131.343,
+      "stroke_peak_recommendation": 130.581
+    },
+    "raw_text": "口から牙が生えて頭に角も映えて。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_070",
+    "time_stamps": {
+      "start": 131.343,
+      "end": 132.136,
+      "stroke_peak_recommendation": 131.739
+    },
+    "raw_text": "恐ろしい表情で襲いかかってくる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_071",
+    "time_stamps": {
+      "start": 132.136,
+      "end": 134.136,
+      "stroke_peak_recommendation": 133.136
+    },
+    "raw_text": "ピクサー映画『モンスターズ・インク』に登場する主人公の相棒、マイク・ワゾウスキ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "姿勢提示・身体静止",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_072",
+    "time_stamps": {
+      "start": 134.137,
+      "end": 135.519,
+      "stroke_peak_recommendation": 134.828
+    },
+    "raw_text": "上空から起こしてくるシューンドカン",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_073",
+    "time_stamps": {
+      "start": 135.519,
+      "end": 136.43,
+      "stroke_peak_recommendation": 135.975
+    },
+    "raw_text": "プライムなのでブヨブヨで衝撃を吸収して。ふにゃふにゃふにゃ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_074",
+    "time_stamps": {
+      "start": 136.43,
+      "end": 138.168,
+      "stroke_peak_recommendation": 136.83
+    },
+    "raw_text": "それは小さく。ぷにょっぷにょしている。",
+    "annotation": {
+      "main_onomatopoeia": "ぷにょっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_075",
+    "time_stamps": {
+      "start": 138.168,
+      "end": 139.246,
+      "stroke_peak_recommendation": 138.707
+    },
+    "raw_text": "ぷにょっぷにょは小刻みにだんだん早く",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_076",
+    "time_stamps": {
+      "start": 139.246,
+      "end": 142.0,
+      "stroke_peak_recommendation": 140.623
+    },
+    "raw_text": "ロビー上がり見事に着地。ゆらゆら。",
+    "annotation": {
+      "main_onomatopoeia": "ゆらゆら",
+      "context_conditions": {
+        "action_state": "着地・床面衝撃",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_077",
+    "time_stamps": {
+      "start": 142.0,
+      "end": 144.0,
+      "stroke_peak_recommendation": 143.0
+    },
+    "raw_text": "お腹もユラユラ。たぷたぷ。",
+    "annotation": {
+      "main_onomatopoeia": "ユラユラ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "胸部・体幹",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_078",
+    "time_stamps": {
+      "start": 144.001,
+      "end": 145.048,
+      "stroke_peak_recommendation": 144.524
+    },
+    "raw_text": "頭は丸く。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_079",
+    "time_stamps": {
+      "start": 145.048,
+      "end": 147.048,
+      "stroke_peak_recommendation": 146.048
+    },
+    "raw_text": "小刻みにカクカク。",
+    "annotation": {
+      "main_onomatopoeia": "カクカク",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_080",
+    "time_stamps": {
+      "start": 148.133,
+      "end": 150.133,
+      "stroke_peak_recommendation": 148.533
+    },
+    "raw_text": "ぶらぶらとぶら下がる。",
+    "annotation": {
+      "main_onomatopoeia": "ぶらぶら",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_081",
+    "time_stamps": {
+      "start": 150.624,
+      "end": 152.624,
+      "stroke_peak_recommendation": 151.024
+    },
+    "raw_text": "お腹かも、ぶらぶらと動く",
+    "annotation": {
+      "main_onomatopoeia": "ぶらぶら",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "胸部・体幹",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_082",
+    "time_stamps": {
+      "start": 152.625,
+      "end": 154.0,
+      "stroke_peak_recommendation": 153.025
+    },
+    "raw_text": "あっちゃこっちゃに動く。",
+    "annotation": {
+      "main_onomatopoeia": "あっちゃ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_083",
+    "time_stamps": {
+      "start": 154.0,
+      "end": 155.361,
+      "stroke_peak_recommendation": 154.68
+    },
+    "raw_text": "素早く、くにゃくにゃ。",
+    "annotation": {
+      "main_onomatopoeia": "くにゃくにゃ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_084",
+    "time_stamps": {
+      "start": 155.76,
+      "end": 157.76,
+      "stroke_peak_recommendation": 156.16
+    },
+    "raw_text": "リズムに合わせてボインボインと歩く",
+    "annotation": {
+      "main_onomatopoeia": "ボインボイン",
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_085",
+    "time_stamps": {
+      "start": 158.001,
+      "end": 160.001,
+      "stroke_peak_recommendation": 158.401
+    },
+    "raw_text": "ボインボインと歩く。俯瞰して見せている時とお腹が揺れている当事者の動きが織り交ざる。",
+    "annotation": {
+      "main_onomatopoeia": "ボインボイン",
+      "context_conditions": {
+        "action_state": "流動・波動揺らぎ",
+        "spatial_mode": "通常スケール",
+        "body_part": "胸部・体幹",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_086",
+    "time_stamps": {
+      "start": 161.257,
+      "end": 163.257,
+      "stroke_peak_recommendation": 162.257
+    },
+    "raw_text": "リズムに乗って。ご機嫌に歩く",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_087",
+    "time_stamps": {
+      "start": 163.316,
+      "end": 165.316,
+      "stroke_peak_recommendation": 164.316
+    },
+    "raw_text": "だんだん高く跳ね上がるボインボイン",
+    "annotation": {
+      "main_onomatopoeia": "ボインボイン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_088",
+    "time_stamps": {
+      "start": 165.317,
+      "end": 167.317,
+      "stroke_peak_recommendation": 166.317
+    },
+    "raw_text": "激しく上下に飛び上がる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_089",
+    "time_stamps": {
+      "start": 168.0,
+      "end": 170.0,
+      "stroke_peak_recommendation": 168.4
+    },
+    "raw_text": "脅威よく床に着地。衝撃の振動で胴体がプニプニプニと小刻みに上下に動く。",
+    "annotation": {
+      "main_onomatopoeia": "プニプニプニ",
+      "context_conditions": {
+        "action_state": "着地・床面衝撃",
+        "spatial_mode": "通常スケール",
+        "body_part": "胸部・体幹",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_090",
+    "time_stamps": {
+      "start": 170.001,
+      "end": 172.001,
+      "stroke_peak_recommendation": 171.001
+    },
+    "raw_text": "全然平気と言った様子で走り出す。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_091",
+    "time_stamps": {
+      "start": 172.062,
+      "end": 175.885,
+      "stroke_peak_recommendation": 172.462
+    },
+    "raw_text": "わたしは全然平気お腹が上下にパプタプと揺れる。",
+    "annotation": {
+      "main_onomatopoeia": "パプタプ",
+      "context_conditions": {
+        "action_state": "流動・波動揺らぎ",
+        "spatial_mode": "通常スケール",
+        "body_part": "胸部・体幹",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "3Yb5JOB_75M_seg_092",
+    "time_stamps": {
+      "start": 175.885,
+      "end": 177.885,
+      "stroke_peak_recommendation": 176.885
+    },
+    "raw_text": "僕はとても調子がいいよ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  }
+]

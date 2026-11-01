@@ -1,0 +1,1496 @@
+[
+  {
+    "segment_id": "4PeYpRbg18Y_seg_000",
+    "time_stamps": {
+      "start": 3.032,
+      "end": 6.779,
+      "stroke_peak_recommendation": 3.432
+    },
+    "raw_text": "両面がチラチラとした地面",
+    "annotation": {
+      "main_onomatopoeia": "チラチラ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_001",
+    "time_stamps": {
+      "start": 7.924,
+      "end": 9.77,
+      "stroke_peak_recommendation": 8.847
+    },
+    "raw_text": "地面をなにかが押し上げてニュっと飛び出る",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "直進推進・突入",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_002",
+    "time_stamps": {
+      "start": 9.77,
+      "end": 10.892,
+      "stroke_peak_recommendation": 10.331
+    },
+    "raw_text": "にょきにょき",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_003",
+    "time_stamps": {
+      "start": 10.892,
+      "end": 11.894,
+      "stroke_peak_recommendation": 11.292
+    },
+    "raw_text": "ぱっ",
+    "annotation": {
+      "main_onomatopoeia": "ぱっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_004",
+    "time_stamps": {
+      "start": 11.894,
+      "end": 13.894,
+      "stroke_peak_recommendation": 12.894
+    },
+    "raw_text": "にょき、にゅー",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_005",
+    "time_stamps": {
+      "start": 16.302,
+      "end": 18.302,
+      "stroke_peak_recommendation": 17.302
+    },
+    "raw_text": "何かが近づいてい来る",
+    "annotation": {
+      "main_onomatopoeia": "づいてい",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_006",
+    "time_stamps": {
+      "start": 18.302,
+      "end": 20.91,
+      "stroke_peak_recommendation": 19.606
+    },
+    "raw_text": "にょきにょき",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_007",
+    "time_stamps": {
+      "start": 21.14,
+      "end": 22.702,
+      "stroke_peak_recommendation": 21.921
+    },
+    "raw_text": "短い角",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_008",
+    "time_stamps": {
+      "start": 22.702,
+      "end": 24.263,
+      "stroke_peak_recommendation": 23.102
+    },
+    "raw_text": "短い脚もぞもぞ、わっせわっせ",
+    "annotation": {
+      "main_onomatopoeia": "わっせわっせ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_009",
+    "time_stamps": {
+      "start": 24.263,
+      "end": 25.909,
+      "stroke_peak_recommendation": 25.086
+    },
+    "raw_text": "ぴょうこぴょっこ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_010",
+    "time_stamps": {
+      "start": 27.79,
+      "end": 29.79,
+      "stroke_peak_recommendation": 28.79
+    },
+    "raw_text": "ニョッキニョッキ、先ほど芽生えた植物に近づく",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_011",
+    "time_stamps": {
+      "start": 31.11,
+      "end": 33.11,
+      "stroke_peak_recommendation": 32.11
+    },
+    "raw_text": "上を見上げる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_012",
+    "time_stamps": {
+      "start": 33.11,
+      "end": 35.11,
+      "stroke_peak_recommendation": 34.11
+    },
+    "raw_text": "目の前の幹をがっちりつかむ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "胸前描画空間",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_013",
+    "time_stamps": {
+      "start": 37.186,
+      "end": 39.186,
+      "stroke_peak_recommendation": 38.186
+    },
+    "raw_text": "全身を使ってニョッキニョッキわっせわっせと幹を登",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_014",
+    "time_stamps": {
+      "start": 41.511,
+      "end": 43.511,
+      "stroke_peak_recommendation": 42.711
+    },
+    "raw_text": "ふーんふーんの鼻息が荒くなる",
+    "annotation": {
+      "main_onomatopoeia": "ふーんふーん",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "の"
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_015",
+    "time_stamps": {
+      "start": 43.817,
+      "end": 48.909,
+      "stroke_peak_recommendation": 46.363
+    },
+    "raw_text": "ニョッキニョッキ、せっさほいさ、と登る",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_016",
+    "time_stamps": {
+      "start": 49.225,
+      "end": 51.225,
+      "stroke_peak_recommendation": 49.625
+    },
+    "raw_text": "やっと葉の手前までたどりつく",
+    "annotation": {
+      "main_onomatopoeia": "やっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_017",
+    "time_stamps": {
+      "start": 51.741,
+      "end": 53.741,
+      "stroke_peak_recommendation": 52.141
+    },
+    "raw_text": "ぐっと足を広げて立ち",
+    "annotation": {
+      "main_onomatopoeia": "ぐっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_018",
+    "time_stamps": {
+      "start": 53.824,
+      "end": 55.824,
+      "stroke_peak_recommendation": 54.224
+    },
+    "raw_text": "きょろきょろとあちこちを見渡す",
+    "annotation": {
+      "main_onomatopoeia": "きょろきょろ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_019",
+    "time_stamps": {
+      "start": 55.946,
+      "end": 57.288,
+      "stroke_peak_recommendation": 56.617
+    },
+    "raw_text": "なにか紐のようなものを巻き上げる。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_020",
+    "time_stamps": {
+      "start": 57.289,
+      "end": 58.192,
+      "stroke_peak_recommendation": 57.74
+    },
+    "raw_text": "その紐を結ぶ。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_021",
+    "time_stamps": {
+      "start": 59.132,
+      "end": 61.132,
+      "stroke_peak_recommendation": 59.532
+    },
+    "raw_text": "紐を下に向かってくるくるポーンと落とし。",
+    "annotation": {
+      "main_onomatopoeia": "ポーン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_022",
+    "time_stamps": {
+      "start": 62.442,
+      "end": 63.933,
+      "stroke_peak_recommendation": 62.842
+    },
+    "raw_text": "紐をつんつんつんと引く。",
+    "annotation": {
+      "main_onomatopoeia": "つんつんつん",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_023",
+    "time_stamps": {
+      "start": 63.934,
+      "end": 65.934,
+      "stroke_peak_recommendation": 64.934
+    },
+    "raw_text": "ピンと触覚を立てて",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_024",
+    "time_stamps": {
+      "start": 65.935,
+      "end": 67.935,
+      "stroke_peak_recommendation": 66.335
+    },
+    "raw_text": "目をつぶって",
+    "annotation": {
+      "main_onomatopoeia": "つぶっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_025",
+    "time_stamps": {
+      "start": 67.935,
+      "end": 69.416,
+      "stroke_peak_recommendation": 68.675
+    },
+    "raw_text": "プールに飛び込むように。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_026",
+    "time_stamps": {
+      "start": 69.416,
+      "end": 71.052,
+      "stroke_peak_recommendation": 70.234
+    },
+    "raw_text": "飛び込む。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_027",
+    "time_stamps": {
+      "start": 71.052,
+      "end": 72.443,
+      "stroke_peak_recommendation": 71.887
+    },
+    "raw_text": "ピョーン",
+    "annotation": {
+      "main_onomatopoeia": "ピョーン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_028",
+    "time_stamps": {
+      "start": 72.443,
+      "end": 73.052,
+      "stroke_peak_recommendation": 72.748
+    },
+    "raw_text": "ピーン、ぶらぶらぶら",
+    "annotation": {
+      "main_onomatopoeia": "ぶらぶら",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_029",
+    "time_stamps": {
+      "start": 73.392,
+      "end": 74.793,
+      "stroke_peak_recommendation": 73.792
+    },
+    "raw_text": "体をグッと起こして",
+    "annotation": {
+      "main_onomatopoeia": "グッ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_030",
+    "time_stamps": {
+      "start": 74.793,
+      "end": 75.392,
+      "stroke_peak_recommendation": 75.093
+    },
+    "raw_text": "ぶら下がる。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_031",
+    "time_stamps": {
+      "start": 76.769,
+      "end": 78.44,
+      "stroke_peak_recommendation": 77.605
+    },
+    "raw_text": "自慢気に微笑む",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_032",
+    "time_stamps": {
+      "start": 78.44,
+      "end": 80.44,
+      "stroke_peak_recommendation": 79.64
+    },
+    "raw_text": "よーく見てるよー。",
+    "annotation": {
+      "main_onomatopoeia": "るよー",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_033",
+    "time_stamps": {
+      "start": 80.441,
+      "end": 80.941,
+      "stroke_peak_recommendation": 80.741
+    },
+    "raw_text": "ふーん。",
+    "annotation": {
+      "main_onomatopoeia": "ふーん",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_034",
+    "time_stamps": {
+      "start": 80.941,
+      "end": 82.056,
+      "stroke_peak_recommendation": 81.499
+    },
+    "raw_text": "容易を付けて幹の周りをくるくる回り。紐が絡まる。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_035",
+    "time_stamps": {
+      "start": 82.056,
+      "end": 82.941,
+      "stroke_peak_recommendation": 82.587
+    },
+    "raw_text": "あーれー",
+    "annotation": {
+      "main_onomatopoeia": "あーれー",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_036",
+    "time_stamps": {
+      "start": 82.942,
+      "end": 84.942,
+      "stroke_peak_recommendation": 83.942
+    },
+    "raw_text": "ぐるぐるぐるぐる。くるくるくる。",
+    "annotation": {
+      "main_onomatopoeia": "ぐるぐる",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_037",
+    "time_stamps": {
+      "start": 85.6,
+      "end": 86.918,
+      "stroke_peak_recommendation": 86.259
+    },
+    "raw_text": "体がもそもそ、ぞわぞわ",
+    "annotation": {
+      "main_onomatopoeia": "ぞわぞわ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_038",
+    "time_stamps": {
+      "start": 86.918,
+      "end": 88.159,
+      "stroke_peak_recommendation": 87.538
+    },
+    "raw_text": "かおがさわさわ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_039",
+    "time_stamps": {
+      "start": 88.159,
+      "end": 89.759,
+      "stroke_peak_recommendation": 88.959
+    },
+    "raw_text": "ちょこちょこ、もぞもぞ、ちょろちょろ、",
+    "annotation": {
+      "main_onomatopoeia": "ちょこちょこ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_040",
+    "time_stamps": {
+      "start": 89.759,
+      "end": 91.368,
+      "stroke_peak_recommendation": 90.564
+    },
+    "raw_text": "だんだん小さくなる",
+    "annotation": {
+      "main_onomatopoeia": "だんだん",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_041",
+    "time_stamps": {
+      "start": 91.368,
+      "end": 93.368,
+      "stroke_peak_recommendation": 92.368
+    },
+    "raw_text": "動きがとまる。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_042",
+    "time_stamps": {
+      "start": 93.937,
+      "end": 95.962,
+      "stroke_peak_recommendation": 94.95
+    },
+    "raw_text": "むにゃむにゃむにゃ眠いな。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_043",
+    "time_stamps": {
+      "start": 95.962,
+      "end": 98.54,
+      "stroke_peak_recommendation": 96.362
+    },
+    "raw_text": "ぐっすり",
+    "annotation": {
+      "main_onomatopoeia": "ぐっすり",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_044",
+    "time_stamps": {
+      "start": 98.54,
+      "end": 100.952,
+      "stroke_peak_recommendation": 98.94
+    },
+    "raw_text": "胸のあたりがピクッと動く。",
+    "annotation": {
+      "main_onomatopoeia": "ピクッ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "胸部・体幹",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_045",
+    "time_stamps": {
+      "start": 102.478,
+      "end": 104.194,
+      "stroke_peak_recommendation": 102.878
+    },
+    "raw_text": "小さくトントン。右手がすっと伸びる。",
+    "annotation": {
+      "main_onomatopoeia": "すっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_046",
+    "time_stamps": {
+      "start": 105.435,
+      "end": 107.435,
+      "stroke_peak_recommendation": 105.835
+    },
+    "raw_text": "小さくとんとん左手がすっと伸びる。",
+    "annotation": {
+      "main_onomatopoeia": "さくとん",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_047",
+    "time_stamps": {
+      "start": 108.635,
+      "end": 110.635,
+      "stroke_peak_recommendation": 109.635
+    },
+    "raw_text": "ちいさくトントン。",
+    "annotation": {
+      "main_onomatopoeia": "トントン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_048",
+    "time_stamps": {
+      "start": 110.635,
+      "end": 111.59,
+      "stroke_peak_recommendation": 111.112
+    },
+    "raw_text": "まゆがトクトク。",
+    "annotation": {
+      "main_onomatopoeia": "トクトク",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_049",
+    "time_stamps": {
+      "start": 114.001,
+      "end": 116.001,
+      "stroke_peak_recommendation": 115.001
+    },
+    "raw_text": "ブドウが速くなって形が変わる。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_050",
+    "time_stamps": {
+      "start": 116.001,
+      "end": 116.501,
+      "stroke_peak_recommendation": 116.251
+    },
+    "raw_text": "中から何かグッとしたものが動く。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_051",
+    "time_stamps": {
+      "start": 116.501,
+      "end": 118.438,
+      "stroke_peak_recommendation": 117.47
+    },
+    "raw_text": "体中がゾワゾワゾワゾワとする。",
+    "annotation": {
+      "main_onomatopoeia": "ゾワゾワ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_052",
+    "time_stamps": {
+      "start": 118.644,
+      "end": 120.644,
+      "stroke_peak_recommendation": 119.644
+    },
+    "raw_text": "違うから強いものが外に突き破ろうとするドン、パラパラ",
+    "annotation": {
+      "main_onomatopoeia": "パラパラ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_053",
+    "time_stamps": {
+      "start": 120.644,
+      "end": 122.281,
+      "stroke_peak_recommendation": 121.463
+    },
+    "raw_text": "ぐぐぐ。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_054",
+    "time_stamps": {
+      "start": 122.351,
+      "end": 124.107,
+      "stroke_peak_recommendation": 123.229
+    },
+    "raw_text": "首から外に出る、首の周りがヒラヒラしている",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_055",
+    "time_stamps": {
+      "start": 124.18,
+      "end": 126.18,
+      "stroke_peak_recommendation": 125.18
+    },
+    "raw_text": "外に出て目がシュワシュワする",
+    "annotation": {
+      "main_onomatopoeia": "シュワシュワ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_056",
+    "time_stamps": {
+      "start": 126.18,
+      "end": 127.958,
+      "stroke_peak_recommendation": 126.58
+    },
+    "raw_text": "右の触角がびよーんと生える",
+    "annotation": {
+      "main_onomatopoeia": "びよーん",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_057",
+    "time_stamps": {
+      "start": 127.958,
+      "end": 129.096,
+      "stroke_peak_recommendation": 128.527
+    },
+    "raw_text": "左のショックがビヨンと生える。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_058",
+    "time_stamps": {
+      "start": 129.096,
+      "end": 129.859,
+      "stroke_peak_recommendation": 129.478
+    },
+    "raw_text": "触角",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_059",
+    "time_stamps": {
+      "start": 129.859,
+      "end": 131.859,
+      "stroke_peak_recommendation": 130.859
+    },
+    "raw_text": "手をすぽん、すぽんと出す",
+    "annotation": {
+      "main_onomatopoeia": "すぽん",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_060",
+    "time_stamps": {
+      "start": 131.859,
+      "end": 135.252,
+      "stroke_peak_recommendation": 133.555
+    },
+    "raw_text": "全身をにゅにゅうにゅっと外に出す。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_061",
+    "time_stamps": {
+      "start": 135.252,
+      "end": 136.1,
+      "stroke_peak_recommendation": 135.676
+    },
+    "raw_text": "腰まで体が出た",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "腰部・骨盤",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_062",
+    "time_stamps": {
+      "start": 136.1,
+      "end": 140.457,
+      "stroke_peak_recommendation": 138.279
+    },
+    "raw_text": "目の前のひもをつかんで下半身をぐいぐい引きずり出す。",
+    "annotation": {
+      "main_onomatopoeia": "ぐいぐい",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "胸前描画空間",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_063",
+    "time_stamps": {
+      "start": 140.457,
+      "end": 142.001,
+      "stroke_peak_recommendation": 140.857
+    },
+    "raw_text": "すっぽん、びよよん、胴体が抜けた。",
+    "annotation": {
+      "main_onomatopoeia": "すっぽん",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "胸部・体幹",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_064",
+    "time_stamps": {
+      "start": 142.001,
+      "end": 143.796,
+      "stroke_peak_recommendation": 142.899
+    },
+    "raw_text": "ふーと一息。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_065",
+    "time_stamps": {
+      "start": 145.333,
+      "end": 147.602,
+      "stroke_peak_recommendation": 145.733
+    },
+    "raw_text": "ご機嫌になったら眠くなった",
+    "annotation": {
+      "main_onomatopoeia": "なったら",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_066",
+    "time_stamps": {
+      "start": 147.602,
+      "end": 149.068,
+      "stroke_peak_recommendation": 148.482
+    },
+    "raw_text": "ふわーっと大きなあくび",
+    "annotation": {
+      "main_onomatopoeia": "ふわー",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_067",
+    "time_stamps": {
+      "start": 149.068,
+      "end": 151.068,
+      "stroke_peak_recommendation": 150.068
+    },
+    "raw_text": "中から大きな羽がひろがる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_068",
+    "time_stamps": {
+      "start": 151.068,
+      "end": 153.068,
+      "stroke_peak_recommendation": 152.068
+    },
+    "raw_text": "あれれ何か様子が違うぞ。ラジオ左右をよくみてみる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_069",
+    "time_stamps": {
+      "start": 155.756,
+      "end": 157.756,
+      "stroke_peak_recommendation": 156.756
+    },
+    "raw_text": "自分に羽があることに気づき自慢そうに羽を広げる。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_070",
+    "time_stamps": {
+      "start": 157.757,
+      "end": 159.757,
+      "stroke_peak_recommendation": 158.157
+    },
+    "raw_text": "待っていたヒモを。パッとはなす",
+    "annotation": {
+      "main_onomatopoeia": "パッ",
+      "context_conditions": {
+        "action_state": "急拡大・破裂展開",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_071",
+    "time_stamps": {
+      "start": 160.236,
+      "end": 161.378,
+      "stroke_peak_recommendation": 160.636
+    },
+    "raw_text": "羽をパッと。広げる",
+    "annotation": {
+      "main_onomatopoeia": "パッ",
+      "context_conditions": {
+        "action_state": "急拡大・破裂展開",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_072",
+    "time_stamps": {
+      "start": 161.378,
+      "end": 162.939,
+      "stroke_peak_recommendation": 162.159
+    },
+    "raw_text": "バタバタしながら。やや落下",
+    "annotation": {
+      "main_onomatopoeia": "バタバタ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_073",
+    "time_stamps": {
+      "start": 162.939,
+      "end": 164.939,
+      "stroke_peak_recommendation": 163.939
+    },
+    "raw_text": "パタパタパタパタ羽を羽ばたかせる",
+    "annotation": {
+      "main_onomatopoeia": "パタパタ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_074",
+    "time_stamps": {
+      "start": 164.939,
+      "end": 167.673,
+      "stroke_peak_recommendation": 166.306
+    },
+    "raw_text": "ぱたぱた、ぱたぱた",
+    "annotation": {
+      "main_onomatopoeia": "ぱたぱた",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_075",
+    "time_stamps": {
+      "start": 167.673,
+      "end": 169.673,
+      "stroke_peak_recommendation": 168.673
+    },
+    "raw_text": "すーと空中遊泳",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_076",
+    "time_stamps": {
+      "start": 169.673,
+      "end": 170.925,
+      "stroke_peak_recommendation": 170.299
+    },
+    "raw_text": "ごきげん",
+    "annotation": {
+      "main_onomatopoeia": "ごきげん",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_077",
+    "time_stamps": {
+      "start": 172.855,
+      "end": 174.0,
+      "stroke_peak_recommendation": 173.428
+    },
+    "raw_text": "すー",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_078",
+    "time_stamps": {
+      "start": 174.0,
+      "end": 174.5,
+      "stroke_peak_recommendation": 174.25
+    },
+    "raw_text": "ぱたぱた、大きく",
+    "annotation": {
+      "main_onomatopoeia": "ぱたぱた",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_079",
+    "time_stamps": {
+      "start": 174.5,
+      "end": 176.101,
+      "stroke_peak_recommendation": 175.3
+    },
+    "raw_text": "ぱたぱたぱた、小さく",
+    "annotation": {
+      "main_onomatopoeia": "ぱたぱた",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_080",
+    "time_stamps": {
+      "start": 176.101,
+      "end": 178.101,
+      "stroke_peak_recommendation": 177.101
+    },
+    "raw_text": "ぱたぱた、より小さく",
+    "annotation": {
+      "main_onomatopoeia": "ぱたぱた",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_081",
+    "time_stamps": {
+      "start": 178.101,
+      "end": 180.976,
+      "stroke_peak_recommendation": 179.538
+    },
+    "raw_text": "はがたきがゆっくりに",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "4PeYpRbg18Y_seg_082",
+    "time_stamps": {
+      "start": 180.976,
+      "end": 182.623,
+      "stroke_peak_recommendation": 181.799
+    },
+    "raw_text": "遠くかなたへ消えていく",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  }
+]

@@ -17,11 +17,14 @@ __pycache__/
 *.task
 *.wav
 *.zip
+*.backup_*.json
 onomato-audio-recorder/dataset_output/audio_files/
 onomato-audio-recorder/dataset_output/audio_files_wav_archive.zip
 
 # Output & Downloads
 output/
+!kinematic_engine/output/
+dataset_output/
 downloads/
 models/
 visualizer/data/

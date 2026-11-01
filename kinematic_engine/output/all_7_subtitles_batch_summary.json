@@ -1,0 +1,71 @@
+{
+  "total_videos": 7,
+  "total_segments": 506,
+  "total_onomatopoeia_detected": 313,
+  "elapsed_seconds": 47.83,
+  "videos": [
+    {
+      "video_id": "3Yb5JOB_75M",
+      "subtitle_file": "3Yb5JOB_75M_subtitle.sbv",
+      "duration_sec": 184.8,
+      "mocap_frames": 5544,
+      "segments_count": 93,
+      "onomatopoeia_count": 63,
+      "vs_mode_ratio_avg": 0.631
+    },
+    {
+      "video_id": "4PeYpRbg18Y",
+      "subtitle_file": "4PeYpRbg18Y_subtitle.sbv",
+      "duration_sec": 193.69,
+      "mocap_frames": 5805,
+      "segments_count": 83,
+      "onomatopoeia_count": 56,
+      "vs_mode_ratio_avg": 0.503
+    },
+    {
+      "video_id": "6VBBEOXtI4I",
+      "subtitle_file": "6VBBEOXtI4I字幕.sbv",
+      "duration_sec": 162.07,
+      "mocap_frames": 4862,
+      "segments_count": 63,
+      "onomatopoeia_count": 47,
+      "vs_mode_ratio_avg": 0.69
+    },
+    {
+      "video_id": "7O1y-isl79A",
+      "subtitle_file": "7O1y-isl79A字幕.sbv",
+      "duration_sec": 648.07,
+      "mocap_frames": 19442,
+      "segments_count": 107,
+      "onomatopoeia_count": 39,
+      "vs_mode_ratio_avg": 0.422
+    },
+    {
+      "video_id": "9dMU8HMJTp8",
+      "subtitle_file": "9dMU8HMJTp8字幕.sbv",
+      "duration_sec": 268.8,
+      "mocap_frames": 8064,
+      "segments_count": 72,
+      "onomatopoeia_count": 54,
+      "vs_mode_ratio_avg": 0.301
+    },
+    {
+      "video_id": "hD48RQLQurg",
+      "subtitle_file": "hD48RQLQurg字幕.sbv",
+      "duration_sec": 90.8,
+      "mocap_frames": 2724,
+      "segments_count": 20,
+      "onomatopoeia_count": 14,
+      "vs_mode_ratio_avg": 0.693
+    },
+    {
+      "video_id": "HGhzCqXizHc",
+      "subtitle_file": "HGhzCqXizHc字幕.sbv",
+      "duration_sec": 93.96,
+      "mocap_frames": 2816,
+      "segments_count": 68,
+      "onomatopoeia_count": 40,
+      "vs_mode_ratio_avg": 0.63
+    }
+  ]
+}

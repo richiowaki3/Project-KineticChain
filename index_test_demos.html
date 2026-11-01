@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>オノマトペ・音響変調＆音声解析 4大単体テストデモ・ポータル</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #131b2e;
+      --accent: #38bdf8;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+      --border: #243553;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 30px 20px; min-height: 100vh; }
+    .container { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+    header { text-align: center; border-bottom: 1px solid var(--border); padding-bottom: 24px; }
+    h1 { font-size: 28px; font-weight: 800; color: #38bdf8; margin-bottom: 8px; letter-spacing: -0.5px; }
+    .subtitle { color: var(--text-dim); font-size: 15px; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+
+    .grid-demos { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 768px) { .grid-demos { grid-template-columns: 1fr; } }
+
+    .demo-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .demo-card:hover {
+      border-color: #38bdf8;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+    .demo-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 4px;
+    }
+    .card-1::before { background: linear-gradient(90deg, #f59e0b, #10b981); }
+    .card-2::before { background: linear-gradient(90deg, #06b6d4, #ec4899); }
+    .card-3::before { background: linear-gradient(90deg, #10b981, #38bdf8); }
+    .card-4::before { background: linear-gradient(90deg, #8b5cf6, #38bdf8); }
+
+    .demo-header { display: flex; align-items: center; justify-content: space-between; }
+    .demo-title { font-size: 18px; font-weight: 700; color: #f1f5f9; display: flex; align-items: center; gap: 10px; }
+    .demo-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 700; }
+
+    .demo-desc { font-size: 13.5px; color: var(--text-dim); line-height: 1.6; }
+    .demo-points { font-size: 12.5px; color: #cbd5e1; display: flex; flex-direction: column; gap: 6px; background: rgba(0,0,0,0.3); padding: 12px 14px; border-radius: 8px; }
+
+    .btn-open {
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      display: block;
+      transition: all 0.2s;
+    }
+    .btn-1 { background: linear-gradient(135deg, #d97706, #059669); }
+    .btn-1:hover { box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4); }
+    .btn-2 { background: linear-gradient(135deg, #0891b2, #db2777); }
+    .btn-2:hover { box-shadow: 0 4px 14px rgba(236, 72, 153, 0.4); }
+    .btn-3 { background: linear-gradient(135deg, #059669, #0284c7); }
+    .btn-3:hover { box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4); }
+    .btn-4 { background: linear-gradient(135deg, #7c3aed, #0284c7); }
+    .btn-4:hover { box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4); }
+
+    footer { text-align: center; font-size: 12px; color: #64748b; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎛️ 音響変調 ＆ 音声解析 4大単体テストデモ</h1>
+      <div class="subtitle">
+        オノマトペの認知工学・身体運動リズム・ポリフォニー連打・音声解析再合成の各効果を個別に聴き比べ・視覚検証できる単体テスト環境一覧です。
+      </div>
+    </header>
+
+    <div class="grid-demos">
+      <!-- デモ 1 -->
+      <div class="demo-card card-1">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div class="demo-header">
+            <div class="demo-title"><span>🔁</span> 【デモ1】畳語 動的変調テスト</div>
+            <span class="demo-badge" style="background: rgba(245,158,11,0.2); color: #fbbf24;">A/B 聴き比べ</span>
+          </div>
+          <div class="demo-desc">
+            「パチパチ」「サラサラ」等における機械的な50:50等角打ち込み音と、1打目・2打目のダイナミクス・スウィング・促音タメ変調音の聴感差を検証。
+          </div>
+          <div class="demo-points">
+            <div>• <strong>スウィング (50〜75%)</strong>: 1音目長め・2音目詰めのタイムストレッチ</div>
+            <div>• <strong>強弱コントラスト</strong>: 2音目の音量・Decay・帯域抑制</div>
+            <div>• <strong>促音「っ」のタメ</strong>: 10〜30msの蓄圧期（無音ポーズ）</div>
+          </div>
+        </div>
+        <a href="demo1_gemination_test.html" class="btn-open btn-1">▶ デモ1 をブラウザで開く</a>
+      </div>
+
+      <!-- デモ 2 -->
+      <div class="demo-card card-2">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div class="demo-header">
+            <div class="demo-title"><span>📜</span> 【デモ2】575 律動変調テスト</div>
+            <span class="demo-badge" style="background: rgba(6,182,212,0.2); color: #67e8f9;">詩的フレーズ</span>
+          </div>
+          <div class="demo-desc">
+            17モーラを完全一定リズムで打つ平坦メトロノームと、句境界のブレス静寂・句末ピッチブレーキ・初拍Sub-Kickアクセントによる日本語の詩的律動を検証。
+          </div>
+          <div class="demo-points">
+            <div>• <strong>句境界ブレスポーズ</strong>: 5拍目・12拍目直後の1.5拍静寂</div>
+            <div>• <strong>句末ピッチスロープ</strong>: 文末へ向かう -260Hz 下降ブレーキ</div>
+            <div>• <strong>初拍アクセント</strong>: 各句頭への重厚なSub-Kick低音打撃</div>
+          </div>
+        </div>
+        <a href="demo2_575_rhythm_test.html" class="btn-open btn-2">▶ デモ2 をブラウザで開く</a>
+      </div>
+
+      <!-- デモ 3 -->
+      <div class="demo-card card-3">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div class="demo-header">
+            <div class="demo-title"><span>🎛️</span> 【デモ3】2Dパッド ✕ 鳴り切り連打</div>
+            <span class="demo-badge" style="background: rgba(16,185,129,0.2); color: #34d399;">Non-Interrupting</span>
+          </div>
+          <div class="demo-desc">
+            2D質感パッド（X:湿度, Y:粒度）の連打において、新音発音時に前音を切断してしまうブツ切り（モノフォニック）と、余韻を最後まで完奏させる鳴り切りの差を検証。
+          </div>
+          <div class="demo-points">
+            <div>• <strong>450x450px 2D Pad</strong>: 湿度(ぱさ/びちゃ) ✕ 粒度(ガタ/サラ)</div>
+            <div>• <strong>鳴り切りポリフォニック</strong>: 発音余韻を消えるまで重畳完奏</div>
+            <div>• <strong>リアルタイム波形</strong>: オシロスコープ ＆ 同時発音数カウンター</div>
+          </div>
+        </div>
+        <a href="demo3_polyphonic_pad_test.html" class="btn-open btn-3">▶ デモ3 をブラウザで開く</a>
+      </div>
+
+      <!-- デモ 4 -->
+      <div class="demo-card card-4">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div class="demo-header">
+            <div class="demo-title"><span>🎙️</span> 【デモ4】録音解析 ＆ オノマトペ再合成</div>
+            <span class="demo-badge" style="background: rgba(139,92,246,0.2); color: #c084fc;">WAV ➔ DSP復元</span>
+          </div>
+          <div class="demo-desc">
+            録音WAV（肉声/TTS/効果音）をドラッグ＆ドロップして物理音響特徴量とLaban Effort 4軸を抽出し、モジュラーDSPパラメータへ自動逆変換して再生成音を聴き比べ。
+          </div>
+          <div class="demo-points">
+            <div>• <strong>音響物理解析</strong>: F0ピッチ軌跡, RMS, Crest Factor, 重心, T60</div>
+            <div>• <strong>Laban 4軸バー</strong>: Weight / Time / Space / Flow の身体スコア</div>
+            <div>• <strong>再合成プレイヤー</strong>: 解析結果から合成されたオノマトペを即試聴</div>
+          </div>
+        </div>
+        <a href="demo4_audio_resynthesizer_web.html" class="btn-open btn-4">▶ デモ4 (Web版) をブラウザで開く</a>
+      </div>
+    </div>
+
+    <footer>
+      OnomaFoley Project: Multi-Dimensional Onomatopoeia Synthesis & Acoustic Testing Suite
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "dataset": {
+    "total_raw_segments": 506,
+    "purified_pure_onoma_segments": 365,
+    "eliminated_noise_segments": 141,
+    "noise_reduction_ratio": 0.279
+  },
+  "metrics_cleaned": {
+    "Jerk_R2": 0.3955,
+    "VS_Mode_R2": 0.2618,
+    "Torsion_R2": 0.1892,
+    "Spine_Area_R2": 0.176,
+    "Weight_R2": 0.0626,
+    "Time_R2": 0.0792,
+    "Space_R2": 0.1026,
+    "Flow_R2": 0.0859
+  }
+}

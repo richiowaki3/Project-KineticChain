@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【デモ1】畳語（重ね言葉）動的変調・比較検証テスト</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent-a: #f59e0b;
+      --accent-b: #10b981;
+      --text: #f1f5f9;
+      --text-dim: #94a3b8;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 24px; min-height: 100vh; }
+    .container { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+    header { border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    h1 { font-size: 24px; font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 10px; }
+    .subtitle { color: var(--text-dim); font-size: 14px; margin-top: 6px; }
+    
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+    
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+    .card-title { font-size: 16px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
+    
+    /* ボタンデザイン */
+    .btn-play {
+      width: 100%;
+      padding: 16px 20px;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-a { background: linear-gradient(135deg, #d97706, #b45309); color: white; }
+    .btn-a:hover { background: linear-gradient(135deg, #f59e0b, #d97706); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4); }
+    .btn-b { background: linear-gradient(135deg, #059669, #047857); color: white; }
+    .btn-b:hover { background: linear-gradient(135deg, #10b981, #059669); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4); }
+    .btn-play.playing { animation: pulse 1s infinite alternate; }
+    @keyframes pulse {
+      from { box-shadow: 0 0 10px rgba(255,255,255,0.2); }
+      to { box-shadow: 0 0 25px rgba(255,255,255,0.6); }
+    }
+
+    /* コントロールスライダー */
+    .control-row { display: flex; flex-direction: column; gap: 6px; }
+    .control-header { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); }
+    .val-badge { font-family: monospace; font-weight: 700; color: #38bdf8; }
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #334155;
+      border-radius: 3px;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #38bdf8;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+    /* プリセットセレクター */
+    .preset-group { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn-preset {
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: #334155;
+      color: var(--text);
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.15s;
+    }
+    .btn-preset:hover { background: #475569; }
+    .btn-preset.active { background: #0284c7; color: white; border-color: #38bdf8; font-weight: 700; }
+
+    /* 波形表示 Canvas */
+    .canvas-container { background: #090d16; border-radius: 8px; border: 1px solid #1e293b; padding: 10px; position: relative; }
+    canvas { width: 100%; height: 120px; display: block; }
+    .canvas-label { position: absolute; top: 14px; left: 16px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+
+    /* 説明パネル */
+    .explain-box { background: rgba(56, 189, 248, 0.08); border-left: 4px solid #38bdf8; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; line-height: 1.6; }
+    .explain-box strong { color: #38bdf8; }
+
+    /* トグルスイッチ */
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; }
+    .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .2s; border-radius: 24px; }
+    .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .2s; border-radius: 50%; }
+    input:checked + .slider { background-color: #10b981; }
+    input:checked + .slider:before { transform: translateX(20px); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><span>🔁</span> 畳語（重ね言葉）動的変調テストデモ</h1>
+      <div class="subtitle">機械的な等角打ち込み音と、1打目・2打目のダイナミクス・スウィング・促音変調をかけたオノマトペ音の比較検証</div>
+    </header>
+
+    <!-- 質感プリセット & ループ設定 -->
+    <div class="card" style="padding: 16px 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: gap: 14px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 14px; font-weight: 600; color: var(--text-dim);">語彙プリセット:</span>
+          <div class="preset-group">
+            <button class="btn-preset active" data-preset="pachi">パチパチ (火花/破裂)</button>
+            <button class="btn-preset" data-preset="sara">サラサラ (砂粒/微粒子)</button>
+            <button class="btn-preset" data-preset="katsu">カツカツ (硬質/乾いた打撃)</button>
+            <button class="btn-preset" data-preset="ton">トントン (弾性/木槌)</button>
+          </div>
+        </div>
+        <div class="toggle-row" style="gap: 12px;">
+          <span style="font-size: 13px; color: var(--text-dim);">連続ループ再生:</span>
+          <label class="switch">
+            <input type="checkbox" id="chk_loop" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 比較再生カード (2列) -->
+    <div class="grid-2">
+      <!-- パターンA: 均等打ち込み音 -->
+      <div class="card" style="border-top: 4px solid var(--accent-a);">
+        <div class="card-title">
+          <span style="color: var(--accent-a);">パターン A: 「均等打ち込み音」</span>
+          <span style="font-size: 11px; background: rgba(245,158,11,0.2); color: #fbbf24; padding: 2px 8px; border-radius: 12px;">機械的 / 50:50等角</span>
+        </div>
+        <div class="canvas-container">
+          <span class="canvas-label" style="color: var(--accent-a);">ENVELOPE A (均等)</span>
+          <canvas id="cv_a"></canvas>
+        </div>
+        <div style="font-size: 12px; color: var(--text-dim); line-height: 1.5;">
+          • 1打目と2打目が全く同じ振幅 (100%)<br>
+          • 均等な時間配分 (50% : 50%)<br>
+          • 同一のフィルターCutoffとDecay減衰
+        </div>
+        <button class="btn-play btn-a" id="btn_play_a">
+          <span>▶</span> パターンA (均等音) を再生
+        </button>
+      </div>
+
+      <!-- パターンB: 動的変調音 (畳語モデル) -->
+      <div class="card" style="border-top: 4px solid var(--accent-b);">
+        <div class="card-title">
+          <span style="color: var(--accent-b);">パターン B: 「動的変調音（畳語モデル）」</span>
+          <span style="font-size: 11px; background: rgba(16,185,129,0.2); color: #34d399; padding: 2px 8px; border-radius: 12px;">人間味 / 抑揚・タメ</span>
+        </div>
+        <div class="canvas-container">
+          <span class="canvas-label" style="color: var(--accent-b);">ENVELOPE B (動的変調)</span>
+          <canvas id="cv_b"></canvas>
+        </div>
+        <div style="font-size: 12px; color: var(--text-dim); line-height: 1.5;">
+          • 1打目を主音(100%)、2打目を弱音・短Decayに抑制<br>
+          • 1打目を長め・2打目を詰めるスウィング律動<br>
+          • 打音直前の促音「っ」蓄圧タメ期
+        </div>
+        <button class="btn-play btn-b" id="btn_play_b">
+          <span>▶</span> パターンB (動的変調音) を再生
+        </button>
+      </div>
+    </div>
+
+    <!-- 動的変調パラメータ調整パネル -->
+    <div class="card">
+      <div class="card-title">
+        <span>🎛️ パターンB 動的変調パラメータ調整</span>
+        <button id="btn_reset_params" style="background: none; border: 1px solid var(--border); color: var(--text-dim); font-size: 12px; padding: 4px 10px; border-radius: 6px; cursor: pointer;">デフォルトに戻す</button>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <!-- スウィング比率 -->
+        <div class="control-row">
+          <div class="control-header">
+            <span>スウィング比率 (1打目時間配分)</span>
+            <span class="val-badge" id="disp_swing">58 %</span>
+          </div>
+          <input type="range" id="sl_swing" min="50" max="75" value="58" step="1">
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b;">
+            <span>50:50 (均等)</span>
+            <span>60:40 (自然な跳ね)</span>
+            <span>75:25 (シャッフル)</span>
+          </div>
+        </div>
+
+        <!-- 2音目の減衰比率 -->
+        <div class="control-row">
+          <div class="control-header">
+            <span>2音目の音量・Cutoff比率</span>
+            <span class="val-badge" id="disp_decay">65 %</span>
+          </div>
+          <input type="range" id="sl_decay" min="30" max="100" value="65" step="1">
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b;">
+            <span>30% (強弱極大)</span>
+            <span>65% (推奨畳語感)</span>
+            <span>100% (同一強度)</span>
+          </div>
+        </div>
+
+        <!-- 促音タメ時間 -->
+        <div class="control-row">
+          <div class="control-header">
+            <span>促音「っ」の無音タメ時間 (Charge Phase)</span>
+            <span class="val-badge" id="disp_charge">18 ms</span>
+          </div>
+          <input type="range" id="sl_charge" min="0" max="50" value="18" step="1">
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b;">
+            <span>0 ms (タメなし)</span>
+            <span>18 ms (軽やかな弾み)</span>
+            <span>50 ms (強い溜め)</span>
+          </div>
+        </div>
+
+        <!-- テンポ BPM -->
+        <div class="control-row">
+          <div class="control-header">
+            <span>全体テンポ (BPM)</span>
+            <span class="val-badge" id="disp_bpm">120 BPM</span>
+          </div>
+          <input type="range" id="sl_bpm" min="60" max="220" value="120" step="5">
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: #64748b;">
+            <span>60 (ゆったり)</span>
+            <span>120 (標準)</span>
+            <span>220 (超高速連打)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 学術・聴覚解説 -->
+    <div class="explain-box">
+      <strong>💡 畳語（重ね言葉）認知工学のポイント:</strong><br>
+      人間が「パチパチ」「サラサラ」とオノマトペを発音・知覚する際、機械のような完全等間隔・同一音量では発声されません。
+      先行する1モーラ目にアクセント（主拍）が乗り、後続の2モーラ目は<strong>音量が30〜40%抑制され、フィルター帯域も狭く短く減衰</strong>します。
+      さらに、子音の立ち上がり直前に微小な<strong>促音の蓄圧タメ（10〜20ms）</strong>が入ることで、単なる機械ビートが「生き生きとした自然現象・質感」として脳内で認知されます。
+    </div>
+  </div>
+
+  <script>
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+      return audioCtx;
+    }
+
+    // パラメータ
+    let activePreset = "pachi";
+    let isLooping = true;
+    let playingMode = null; // 'A' or 'B' or null
+    let timerId = null;
+
+    let paramSwing = 0.58; // 0.50 ~ 0.75
+    let paramDecay = 0.65; // 0.30 ~ 1.00
+    let paramChargeMs = 18; // 0 ~ 50 ms
+    let paramBpm = 120;
+
+    // プリセット音色定義
+    const presets = {
+      pachi: {
+        name: "パチパチ",
+        type: "burst",
+        baseFreq: 2400,
+        q: 4.5,
+        baseDecay: 0.05
+      },
+      sara: {
+        name: "サラサラ",
+        type: "noise",
+        baseFreq: 4500,
+        q: 2.0,
+        baseDecay: 0.08
+      },
+      katsu: {
+        name: "カツカツ",
+        type: "click",
+        baseFreq: 1100,
+        q: 6.0,
+        baseDecay: 0.035
+      },
+      ton: {
+        name: "トントン",
+        type: "drum",
+        baseFreq: 130,
+        q: 1.5,
+        baseDecay: 0.12
+      }
+    };
+
+    // UI要素
+    const slSwing = document.getElementById("sl_swing");
+    const slDecay = document.getElementById("sl_decay");
+    const slCharge = document.getElementById("sl_charge");
+    const slBpm = document.getElementById("sl_bpm");
+
+    const dispSwing = document.getElementById("disp_swing");
+    const dispDecay = document.getElementById("disp_decay");
+    const dispCharge = document.getElementById("disp_charge");
+    const dispBpm = document.getElementById("disp_bpm");
+
+    const btnPlayA = document.getElementById("btn_play_a");
+    const btnPlayB = document.getElementById("btn_play_b");
+    const chkLoop = document.getElementById("chk_loop");
+
+    slSwing.addEventListener("input", (e) => {
+      paramSwing = parseInt(e.target.value) / 100;
+      dispSwing.innerText = `${e.target.value} %`;
+      drawAllEnvelopes();
+    });
+    slDecay.addEventListener("input", (e) => {
+      paramDecay = parseInt(e.target.value) / 100;
+      dispDecay.innerText = `${e.target.value} %`;
+      drawAllEnvelopes();
+    });
+    slCharge.addEventListener("input", (e) => {
+      paramChargeMs = parseInt(e.target.value);
+      dispCharge.innerText = `${paramChargeMs} ms`;
+      drawAllEnvelopes();
+    });
+    slBpm.addEventListener("input", (e) => {
+      paramBpm = parseInt(e.target.value);
+      dispBpm.innerText = `${paramBpm} BPM`;
+      drawAllEnvelopes();
+    });
+
+    document.getElementById("btn_reset_params").addEventListener("click", () => {
+      slSwing.value = 58; paramSwing = 0.58; dispSwing.innerText = "58 %";
+      slDecay.value = 65; paramDecay = 0.65; dispDecay.innerText = "65 %";
+      slCharge.value = 18; paramChargeMs = 18; dispCharge.innerText = "18 ms";
+      slBpm.value = 120; paramBpm = 120; dispBpm.innerText = "120 BPM";
+      drawAllEnvelopes();
+    });
+
+    // プリセット切替
+    document.querySelectorAll(".btn-preset").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".btn-preset").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activePreset = btn.getAttribute("data-preset");
+        drawAllEnvelopes();
+      });
+    });
+
+    chkLoop.addEventListener("change", (e) => {
+      isLooping = e.target.checked;
+      if (!isLooping && timerId) {
+        clearTimeout(timerId);
+        timerId = null;
+        stopAll();
+      }
+    });
+
+    // 再生ボタン
+    btnPlayA.addEventListener("click", () => {
+      if (playingMode === 'A') {
+        stopAll();
+      } else {
+        stopAll();
+        playingMode = 'A';
+        btnPlayA.classList.add("playing");
+        btnPlayA.innerHTML = "<span>⏹</span> パターンA を停止";
+        triggerPatternA();
+      }
+    });
+
+    btnPlayB.addEventListener("click", () => {
+      if (playingMode === 'B') {
+        stopAll();
+      } else {
+        stopAll();
+        playingMode = 'B';
+        btnPlayB.classList.add("playing");
+        btnPlayB.innerHTML = "<span>⏹</span> パターンB を停止";
+        triggerPatternB();
+      }
+    });
+
+    function stopAll() {
+      if (timerId) { clearTimeout(timerId); timerId = null; }
+      playingMode = null;
+      btnPlayA.classList.remove("playing");
+      btnPlayA.innerHTML = "<span>▶</span> パターンA (均等音) を再生";
+      btnPlayB.classList.remove("playing");
+      btnPlayB.innerHTML = "<span>▶</span> パターンB (動的変調音) を再生";
+    }
+
+    // =======================================================================
+    // 音響合成エンジン (Web Audio API)
+    // =======================================================================
+    function synthHit(time, amp, decayScale, cutoffScale) {
+      const ctx = getAudioCtx();
+      const p = presets[activePreset];
+      const dur = p.baseDecay * decayScale;
+
+      const mainG = ctx.createGain();
+      mainG.gain.setValueAtTime(0.0001, time);
+      mainG.gain.linearRampToValueAtTime(amp, time + 0.003);
+      mainG.gain.exponentialRampToValueAtTime(0.0001, time + dur);
+      mainG.connect(ctx.destination);
+
+      if (p.type === "burst" || p.type === "click") {
+        const osc = ctx.createOscillator();
+        osc.type = p.type === "burst" ? "sawtooth" : "triangle";
+        osc.frequency.setValueAtTime(p.baseFreq * cutoffScale, time);
+        osc.frequency.exponentialRampToValueAtTime(p.baseFreq * 0.3, time + dur);
+        osc.connect(mainG);
+        osc.start(time);
+        osc.stop(time + dur);
+      } else if (p.type === "noise") {
+        const bufLen = Math.floor(ctx.sampleRate * dur);
+        const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+        const ch = buf.getChannelData(0);
+        for (let i = 0; i < bufLen; i++) ch[i] = Math.random() * 2 - 1;
+        const src = ctx.createBufferSource();
+        src.buffer = buf;
+
+        const bpf = ctx.createBiquadFilter();
+        bpf.type = "bandpass";
+        bpf.frequency.setValueAtTime(p.baseFreq * cutoffScale, time);
+        bpf.Q.setValueAtTime(p.q, time);
+
+        src.connect(bpf);
+        bpf.connect(mainG);
+        src.start(time);
+        src.stop(time + dur);
+      } else if (p.type === "drum") {
+        const osc = ctx.createOscillator();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(p.baseFreq * 2.2 * cutoffScale, time);
+        osc.frequency.exponentialRampToValueAtTime(p.baseFreq, time + 0.04);
+        osc.connect(mainG);
+        osc.start(time);
+        osc.stop(time + dur);
+      }
+    }
+
+    // パターンA (均等音): 50:50, 100%:100%
+    function triggerPatternA() {
+      const ctx = getAudioCtx();
+      const now = ctx.currentTime;
+      const beatDur = 60.0 / paramBpm; // 1拍の長さ(秒)
+      const halfDur = beatDur / 2.0;
+
+      // 1打目
+      synthHit(now, 0.9, 1.0, 1.0);
+      // 2打目 (均等時間、同一音量)
+      synthHit(now + halfDur, 0.9, 1.0, 1.0);
+
+      highlightWave(cvA, 0, halfDur, beatDur);
+
+      if (isLooping && playingMode === 'A') {
+        timerId = setTimeout(triggerPatternA, beatDur * 1000);
+      } else if (!isLooping) {
+        setTimeout(stopAll, beatDur * 1000);
+      }
+    }
+
+    // パターンB (動的変調音): スウィング, 強弱Cutoffコントラスト, 促音タメ
+    function triggerPatternB() {
+      const ctx = getAudioCtx();
+      const now = ctx.currentTime;
+      const beatDur = 60.0 / paramBpm; // 1拍の長さ(秒)
+
+      // スウィングによる2打目タイミング
+      const t1 = 0;
+      const t2 = beatDur * paramSwing;
+      const chargeSec = paramChargeMs / 1000.0;
+
+      // 1打目: 主音 (100%振幅, 100%帯域)
+      synthHit(now + t1, 0.95, 1.0, 1.0);
+      // 2打目: 促音タメの後に弱音発音 (振幅 paramDecay, 短Decay, 低Cutoff)
+      synthHit(now + t2 + chargeSec, 0.95 * paramDecay, paramDecay * 0.9, paramDecay);
+
+      highlightWave(cvB, 0, t2 + chargeSec, beatDur);
+
+      if (isLooping && playingMode === 'B') {
+        timerId = setTimeout(triggerPatternB, beatDur * 1000);
+      } else if (!isLooping) {
+        setTimeout(stopAll, beatDur * 1000);
+      }
+    }
+
+    // =======================================================================
+    // 包絡線波形可視化 (Canvas)
+    // =======================================================================
+    const cvA = document.getElementById("cv_a");
+    const cvB = document.getElementById("cv_b");
+
+    function setupCanvas(cv) {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = cv.getBoundingClientRect();
+      cv.width = rect.width * dpr;
+      cv.height = 120 * dpr;
+      const ctx = cv.getContext("2d");
+      ctx.scale(dpr, dpr);
+      return { ctx, W: rect.width, H: 120 };
+    }
+
+    function drawEnvelope(cv, isPatternB, activeFrac = -1) {
+      const { ctx, W, H } = setupCanvas(cv);
+      ctx.clearRect(0, 0, W, H);
+
+      // 背景グリッドと時間目盛り
+      ctx.strokeStyle = "#1e293b";
+      ctx.lineWidth = 1;
+      for (let x = 0; x <= W; x += W / 4) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+      }
+      ctx.beginPath(); ctx.moveTo(0, H - 20); ctx.lineTo(W, H - 20); ctx.stroke();
+
+      ctx.fillStyle = "#64748b";
+      ctx.font = "10px monospace";
+      ctx.fillText("0ms", 4, H - 6);
+      ctx.fillText("50%", W / 2 - 10, H - 6);
+      ctx.fillText("100% (1拍)", W - 58, H - 6);
+
+      const color = isPatternB ? "#10b981" : "#f59e0b";
+      const p = presets[activePreset];
+
+      let t1Frac = 0.05;
+      let dur1Frac = 0.22;
+      let amp1 = 0.85;
+
+      let t2Frac, dur2Frac, amp2;
+
+      if (!isPatternB) {
+        // パターンA: 均等
+        t2Frac = 0.50;
+        dur2Frac = dur1Frac;
+        amp2 = amp1;
+      } else {
+        // パターンB: スウィング + 減衰 + 促音タメ
+        const chargeFrac = (paramChargeMs / 1000.0) / (60.0 / paramBpm);
+        t2Frac = Math.min(0.85, paramSwing + chargeFrac);
+        dur2Frac = dur1Frac * paramDecay;
+        amp2 = amp1 * paramDecay;
+
+        // 促音タメ区間の帯域表示
+        const chargeStartPx = paramSwing * W;
+        const chargeEndPx = t2Frac * W;
+        if (chargeEndPx > chargeStartPx) {
+          ctx.fillStyle = "rgba(239, 68, 68, 0.2)";
+          ctx.fillRect(chargeStartPx, 10, chargeEndPx - chargeStartPx, H - 35);
+          ctx.fillStyle = "#f87171";
+          ctx.font = "9px sans-serif";
+          ctx.fillText("促音「っ」タメ", chargeStartPx + 2, 24);
+        }
+      }
+
+      // 1打目描画
+      drawPulse(ctx, t1Frac * W, dur1Frac * W, amp1 * (H - 35), color, "1打目 (主拍: 100%)");
+
+      // 2打目描画
+      const label2 = isPatternB ? `2打目 (減衰: ${Math.round(paramDecay*100)}%)` : "2打目 (均等: 100%)";
+      drawPulse(ctx, t2Frac * W, dur2Frac * W, amp2 * (H - 35), color, label2);
+
+      // 再生中プログレスライン
+      if (activeFrac >= 0) {
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(activeFrac * W, 0);
+        ctx.lineTo(activeFrac * W, H);
+        ctx.stroke();
+      }
+    }
+
+    function drawPulse(ctx, startX, widthPx, heightPx, color, label) {
+      const baseY = 95;
+      ctx.beginPath();
+      ctx.moveTo(startX, baseY);
+      ctx.lineTo(startX + 4, baseY - heightPx);
+      ctx.quadraticCurveTo(startX + widthPx * 0.3, baseY - heightPx * 0.2, startX + widthPx, baseY);
+      ctx.closePath();
+
+      ctx.fillStyle = color + "33";
+      ctx.fill();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.fillStyle = "#f1f5f9";
+      ctx.font = "10px sans-serif";
+      ctx.fillText(label, startX, baseY - heightPx - 5);
+    }
+
+    function highlightWave(cv, startSec, t2Sec, beatDur) {
+      const startTime = performance.now();
+      const totalMs = beatDur * 1000;
+      const isB = (cv === cvB);
+
+      function anim() {
+        const elapsed = performance.now() - startTime;
+        const frac = elapsed / totalMs;
+        if (frac <= 1.0 && ((isB && playingMode === 'B') || (!isB && playingMode === 'A'))) {
+          drawEnvelope(cv, isB, frac);
+          requestAnimationFrame(anim);
+        } else {
+          drawEnvelope(cv, isB, -1);
+        }
+      }
+      requestAnimationFrame(anim);
+    }
+
+    function drawAllEnvelopes() {
+      drawEnvelope(cvA, false);
+      drawEnvelope(cvB, true);
+    }
+
+    window.addEventListener("resize", drawAllEnvelopes);
+    window.addEventListener("DOMContentLoaded", () => {
+      setTimeout(drawAllEnvelopes, 100);
+    });
+  </script>
+</body>
+</html>

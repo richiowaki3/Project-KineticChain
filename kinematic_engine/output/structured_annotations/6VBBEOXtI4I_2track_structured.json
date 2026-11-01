@@ -1,0 +1,1136 @@
+[
+  {
+    "segment_id": "6VBBEOXtI4I_seg_000",
+    "time_stamps": {
+      "start": 7.189,
+      "end": 9.656,
+      "stroke_peak_recommendation": 7.589
+    },
+    "raw_text": "そよそよと風がふく",
+    "annotation": {
+      "main_onomatopoeia": "そよそよ",
+      "context_conditions": {
+        "action_state": "流動・波動揺らぎ",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_001",
+    "time_stamps": {
+      "start": 9.656,
+      "end": 11.286,
+      "stroke_peak_recommendation": 10.471
+    },
+    "raw_text": "もこもこもこ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_002",
+    "time_stamps": {
+      "start": 11.286,
+      "end": 13.436,
+      "stroke_peak_recommendation": 11.686
+    },
+    "raw_text": "すっと集まってから、もこもこもこ",
+    "annotation": {
+      "main_onomatopoeia": "すっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_003",
+    "time_stamps": {
+      "start": 13.436,
+      "end": 15.046,
+      "stroke_peak_recommendation": 14.241
+    },
+    "raw_text": "上の方でゆらゆら",
+    "annotation": {
+      "main_onomatopoeia": "ゆらゆら",
+      "context_conditions": {
+        "action_state": "流動・波動揺らぎ",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_004",
+    "time_stamps": {
+      "start": 15.046,
+      "end": 17.661,
+      "stroke_peak_recommendation": 16.354
+    },
+    "raw_text": "私の周りが、ゆらゆら",
+    "annotation": {
+      "main_onomatopoeia": "ゆらゆら",
+      "context_conditions": {
+        "action_state": "流動・波動揺らぎ",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_005",
+    "time_stamps": {
+      "start": 17.661,
+      "end": 20.399,
+      "stroke_peak_recommendation": 18.061
+    },
+    "raw_text": "シャラシャラと空気が吹き抜ける",
+    "annotation": {
+      "main_onomatopoeia": "シャラシャラ",
+      "context_conditions": {
+        "action_state": "流動・波動揺らぎ",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_006",
+    "time_stamps": {
+      "start": 20.399,
+      "end": 22.399,
+      "stroke_peak_recommendation": 21.399
+    },
+    "raw_text": "私自身が、ゆらゆら",
+    "annotation": {
+      "main_onomatopoeia": "ゆらゆら",
+      "context_conditions": {
+        "action_state": "流動・波動揺らぎ",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_007",
+    "time_stamps": {
+      "start": 22.399,
+      "end": 23.102,
+      "stroke_peak_recommendation": 22.751
+    },
+    "raw_text": "ぐらぐら",
+    "annotation": {
+      "main_onomatopoeia": "ぐらぐら",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_008",
+    "time_stamps": {
+      "start": 23.102,
+      "end": 23.602,
+      "stroke_peak_recommendation": 23.327
+    },
+    "raw_text": "ワッサ",
+    "annotation": {
+      "main_onomatopoeia": "ワッサ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_009",
+    "time_stamps": {
+      "start": 23.602,
+      "end": 25.124,
+      "stroke_peak_recommendation": 24.002
+    },
+    "raw_text": "ワッサー、ワッサ",
+    "annotation": {
+      "main_onomatopoeia": "ワッサー",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_010",
+    "time_stamps": {
+      "start": 25.124,
+      "end": 26.241,
+      "stroke_peak_recommendation": 25.524
+    },
+    "raw_text": "ぎゅーんと前方に硬いものが通りすぎる。",
+    "annotation": {
+      "main_onomatopoeia": "ぎゅーん",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_011",
+    "time_stamps": {
+      "start": 26.241,
+      "end": 26.741,
+      "stroke_peak_recommendation": 26.491
+    },
+    "raw_text": "ちりちり",
+    "annotation": {
+      "main_onomatopoeia": "ちりちり",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_012",
+    "time_stamps": {
+      "start": 26.741,
+      "end": 28.686,
+      "stroke_peak_recommendation": 27.713
+    },
+    "raw_text": "のっしのっし、なにか大きな動物が歩いてくる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_013",
+    "time_stamps": {
+      "start": 28.968,
+      "end": 30.519,
+      "stroke_peak_recommendation": 29.368
+    },
+    "raw_text": "耳もとカサカサと何かが通り過ぎる。",
+    "annotation": {
+      "main_onomatopoeia": "カサカサ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_014",
+    "time_stamps": {
+      "start": 30.519,
+      "end": 33.065,
+      "stroke_peak_recommendation": 30.919
+    },
+    "raw_text": "ノッシノッシと大きな動物が歩く。",
+    "annotation": {
+      "main_onomatopoeia": "ノッシノッシ",
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_015",
+    "time_stamps": {
+      "start": 33.065,
+      "end": 37.01,
+      "stroke_peak_recommendation": 35.037
+    },
+    "raw_text": "バツク硬い肩が。胸をはって歩く。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "通常スケール",
+        "body_part": "肩部・上腕",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_016",
+    "time_stamps": {
+      "start": 37.01,
+      "end": 38.314,
+      "stroke_peak_recommendation": 37.41
+    },
+    "raw_text": "ノッシノッシ",
+    "annotation": {
+      "main_onomatopoeia": "ノッシノッシ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_017",
+    "time_stamps": {
+      "start": 38.314,
+      "end": 41.477,
+      "stroke_peak_recommendation": 38.714
+    },
+    "raw_text": "太く重い尻尾がぶらぶらと揺れている。",
+    "annotation": {
+      "main_onomatopoeia": "ぶらぶら",
+      "context_conditions": {
+        "action_state": "流動・波動揺らぎ",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_018",
+    "time_stamps": {
+      "start": 41.477,
+      "end": 43.371,
+      "stroke_peak_recommendation": 41.877
+    },
+    "raw_text": "ノッシノッシ",
+    "annotation": {
+      "main_onomatopoeia": "ノッシノッシ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_019",
+    "time_stamps": {
+      "start": 43.371,
+      "end": 46.455,
+      "stroke_peak_recommendation": 43.771
+    },
+    "raw_text": "ピッピッと細いもので、突き刺す",
+    "annotation": {
+      "main_onomatopoeia": "ピッピ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_020",
+    "time_stamps": {
+      "start": 46.455,
+      "end": 48.455,
+      "stroke_peak_recommendation": 47.455
+    },
+    "raw_text": "鋭い爪で。地面をひっかく。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "手指・指先",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_021",
+    "time_stamps": {
+      "start": 49.762,
+      "end": 51.48,
+      "stroke_peak_recommendation": 50.621
+    },
+    "raw_text": "足跡がペタペタ残る",
+    "annotation": {
+      "main_onomatopoeia": "ペタペタ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_022",
+    "time_stamps": {
+      "start": 53.08,
+      "end": 55.08,
+      "stroke_peak_recommendation": 53.48
+    },
+    "raw_text": "ノッシノッシ",
+    "annotation": {
+      "main_onomatopoeia": "ノッシノッシ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_023",
+    "time_stamps": {
+      "start": 59.746,
+      "end": 61.746,
+      "stroke_peak_recommendation": 60.746
+    },
+    "raw_text": "目がこちらを睨んでいる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_024",
+    "time_stamps": {
+      "start": 62.641,
+      "end": 63.61,
+      "stroke_peak_recommendation": 63.126
+    },
+    "raw_text": "何かにかじりついているげっ歯類",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_025",
+    "time_stamps": {
+      "start": 63.61,
+      "end": 64.94,
+      "stroke_peak_recommendation": 64.275
+    },
+    "raw_text": "音に気が付いて顔を上げ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_026",
+    "time_stamps": {
+      "start": 64.94,
+      "end": 66.94,
+      "stroke_peak_recommendation": 65.34
+    },
+    "raw_text": "髭が生えていて。目はクリクリとしている。",
+    "annotation": {
+      "main_onomatopoeia": "クリクリ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_027",
+    "time_stamps": {
+      "start": 66.94,
+      "end": 68.94,
+      "stroke_peak_recommendation": 67.94
+    },
+    "raw_text": "では小さくパタパタさせている",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_028",
+    "time_stamps": {
+      "start": 70.777,
+      "end": 72.777,
+      "stroke_peak_recommendation": 71.777
+    },
+    "raw_text": "大きな動物は目的のものとは違って目を背ける",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_029",
+    "time_stamps": {
+      "start": 74.186,
+      "end": 75.578,
+      "stroke_peak_recommendation": 74.586
+    },
+    "raw_text": "ヒゲが長いげっ歯類は？右尾ひくひくとさせる。",
+    "annotation": {
+      "main_onomatopoeia": "ひくひく",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_030",
+    "time_stamps": {
+      "start": 75.578,
+      "end": 76.829,
+      "stroke_peak_recommendation": 75.978
+    },
+    "raw_text": "また、そうな食べ物をカリカリと食べる",
+    "annotation": {
+      "main_onomatopoeia": "カリカリ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_031",
+    "time_stamps": {
+      "start": 76.829,
+      "end": 78.0,
+      "stroke_peak_recommendation": 77.229
+    },
+    "raw_text": "口からポロポロとこぼれ落ちる。",
+    "annotation": {
+      "main_onomatopoeia": "ポロポロ",
+      "context_conditions": {
+        "action_state": "着地・床面衝撃",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_032",
+    "time_stamps": {
+      "start": 78.0,
+      "end": 78.678,
+      "stroke_peak_recommendation": 78.339
+    },
+    "raw_text": "カリカリカリ",
+    "annotation": {
+      "main_onomatopoeia": "カリカリ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_033",
+    "time_stamps": {
+      "start": 78.678,
+      "end": 79.497,
+      "stroke_peak_recommendation": 79.088
+    },
+    "raw_text": "固いもの",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_034",
+    "time_stamps": {
+      "start": 79.497,
+      "end": 80.158,
+      "stroke_peak_recommendation": 79.828
+    },
+    "raw_text": "ヒゲがヒクヒク",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_035",
+    "time_stamps": {
+      "start": 80.158,
+      "end": 82.158,
+      "stroke_peak_recommendation": 81.158
+    },
+    "raw_text": "尻をバタバタさせる。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_036",
+    "time_stamps": {
+      "start": 83.649,
+      "end": 85.649,
+      "stroke_peak_recommendation": 84.049
+    },
+    "raw_text": "大きな動物はゆっくりとそれを見ている。",
+    "annotation": {
+      "main_onomatopoeia": "ゆっくり",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_037",
+    "time_stamps": {
+      "start": 89.828,
+      "end": 91.828,
+      "stroke_peak_recommendation": 90.828
+    },
+    "raw_text": "大きな牙が生えている。口を大きく開けて",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_038",
+    "time_stamps": {
+      "start": 91.828,
+      "end": 93.705,
+      "stroke_peak_recommendation": 92.954
+    },
+    "raw_text": "ガオー！と吠える",
+    "annotation": {
+      "main_onomatopoeia": "ガオー",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_039",
+    "time_stamps": {
+      "start": 93.705,
+      "end": 95.705,
+      "stroke_peak_recommendation": 94.905
+    },
+    "raw_text": "ガオー",
+    "annotation": {
+      "main_onomatopoeia": "ガオー",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_040",
+    "time_stamps": {
+      "start": 95.705,
+      "end": 98.161,
+      "stroke_peak_recommendation": 96.933
+    },
+    "raw_text": "遠くまで声が響きをあたる。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_041",
+    "time_stamps": {
+      "start": 98.161,
+      "end": 100.161,
+      "stroke_peak_recommendation": 99.361
+    },
+    "raw_text": "あーーーー",
+    "annotation": {
+      "main_onomatopoeia": "あーーーー",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_042",
+    "time_stamps": {
+      "start": 100.161,
+      "end": 102.414,
+      "stroke_peak_recommendation": 101.287
+    },
+    "raw_text": "ボイを張り上げながらゆっくり口を閉じる。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_043",
+    "time_stamps": {
+      "start": 102.414,
+      "end": 103.927,
+      "stroke_peak_recommendation": 103.171
+    },
+    "raw_text": "げっ歯類は顔をあげて。マーリを見渡し。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_044",
+    "time_stamps": {
+      "start": 103.927,
+      "end": 105.927,
+      "stroke_peak_recommendation": 104.927
+    },
+    "raw_text": "一目散に走って逃げる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_045",
+    "time_stamps": {
+      "start": 105.927,
+      "end": 108.039,
+      "stroke_peak_recommendation": 106.327
+    },
+    "raw_text": "鳥がバサバサと激しく飛び立つ。",
+    "annotation": {
+      "main_onomatopoeia": "バサバサ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_046",
+    "time_stamps": {
+      "start": 108.039,
+      "end": 109.537,
+      "stroke_peak_recommendation": 108.788
+    },
+    "raw_text": "気な動物はげっ歯類をにらみつける",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_047",
+    "time_stamps": {
+      "start": 109.537,
+      "end": 111.343,
+      "stroke_peak_recommendation": 110.44
+    },
+    "raw_text": "げっ歯類は髭をピンと逆立て、細長い耳をぴくぴくを動かし、て逃げる。",
+    "annotation": {
+      "main_onomatopoeia": "ぴくぴく",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_048",
+    "time_stamps": {
+      "start": 111.343,
+      "end": 113.008,
+      "stroke_peak_recommendation": 112.175
+    },
+    "raw_text": "持っていた食べ物をポイと投げ捨て。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_049",
+    "time_stamps": {
+      "start": 113.008,
+      "end": 115.008,
+      "stroke_peak_recommendation": 113.408
+    },
+    "raw_text": "げっ歯類はちょこちょこと逃げ出す",
+    "annotation": {
+      "main_onomatopoeia": "ちょこちょこ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_050",
+    "time_stamps": {
+      "start": 118.808,
+      "end": 119.425,
+      "stroke_peak_recommendation": 119.086
+    },
+    "raw_text": "ノッシノッシ",
+    "annotation": {
+      "main_onomatopoeia": "ノッシノッシ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_051",
+    "time_stamps": {
+      "start": 119.425,
+      "end": 120.923,
+      "stroke_peak_recommendation": 119.825
+    },
+    "raw_text": "ボスンと座りこむ。",
+    "annotation": {
+      "main_onomatopoeia": "ボスン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_052",
+    "time_stamps": {
+      "start": 120.923,
+      "end": 122.0,
+      "stroke_peak_recommendation": 121.323
+    },
+    "raw_text": "尻尾をシュッと巻き込む",
+    "annotation": {
+      "main_onomatopoeia": "シュッ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_053",
+    "time_stamps": {
+      "start": 123.489,
+      "end": 126.48,
+      "stroke_peak_recommendation": 124.984
+    },
+    "raw_text": "大きな牙を持っているその動物は周りをゆっくり見渡す。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_054",
+    "time_stamps": {
+      "start": 126.48,
+      "end": 128.0,
+      "stroke_peak_recommendation": 127.24
+    },
+    "raw_text": "何かに気がつく",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_055",
+    "time_stamps": {
+      "start": 128.0,
+      "end": 129.548,
+      "stroke_peak_recommendation": 128.774
+    },
+    "raw_text": "木のようなものが大きくそびえたつ。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_056",
+    "time_stamps": {
+      "start": 129.548,
+      "end": 131.548,
+      "stroke_peak_recommendation": 130.548
+    },
+    "raw_text": "メキメキメキメキ",
+    "annotation": {
+      "main_onomatopoeia": "メキメキ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_057",
+    "time_stamps": {
+      "start": 131.548,
+      "end": 133.845,
+      "stroke_peak_recommendation": 131.948
+    },
+    "raw_text": "じっと眺める。",
+    "annotation": {
+      "main_onomatopoeia": "じっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_058",
+    "time_stamps": {
+      "start": 133.845,
+      "end": 135.845,
+      "stroke_peak_recommendation": 134.845
+    },
+    "raw_text": "メキメキメキメキ、先っちょの方",
+    "annotation": {
+      "main_onomatopoeia": "メキメキ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_059",
+    "time_stamps": {
+      "start": 137.898,
+      "end": 141.096,
+      "stroke_peak_recommendation": 139.497
+    },
+    "raw_text": "その大きな木は大きな着物を上から見下ろす。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_060",
+    "time_stamps": {
+      "start": 141.096,
+      "end": 142.274,
+      "stroke_peak_recommendation": 141.685
+    },
+    "raw_text": "大きかった生き物は小さくなって小さく吠える。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_061",
+    "time_stamps": {
+      "start": 142.274,
+      "end": 144.274,
+      "stroke_peak_recommendation": 143.274
+    },
+    "raw_text": "プレイいたしましたとてくてくとその場を去る。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "6VBBEOXtI4I_seg_062",
+    "time_stamps": {
+      "start": 147.501,
+      "end": 149.501,
+      "stroke_peak_recommendation": 148.501
+    },
+    "raw_text": "ああやってらんない",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  }
+]

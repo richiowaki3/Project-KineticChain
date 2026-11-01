@@ -1,0 +1,21 @@
+{
+  "verb_accuracy": 0.7451,
+  "mean_geo_r2": 0.6603,
+  "geo_r2_breakdown": {
+    "T_torsion": 0.7709,
+    "Enclosure_Area": 0.8225,
+    "Flexion_Sin": 0.4221,
+    "VS_Mode_Ratio": 0.6255
+  },
+  "mean_style_r2": 0.249,
+  "style_r2_breakdown": {
+    "Jerk_Spike": 0.4476,
+    "Stiffness_K": 0.1548,
+    "Effort_Weight": 0.3316,
+    "Effort_Time": 0.289,
+    "Effort_Space": -0.0926,
+    "Effort_Flow": 0.3637
+  },
+  "total_eval_samples": 102,
+  "onoma_eval_samples": 44
+}

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【デモ3】2D質感パッド ✕ 鳴り切りBPM連打タイマー デモ</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #131b2e;
+      --accent: #38bdf8;
+      --accent-poly: #10b981;
+      --accent-mono: #ef4444;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+      --border: #243553;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 24px; min-height: 100vh; }
+    .container { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+    header { border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    h1 { font-size: 24px; font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 10px; }
+    .subtitle { color: var(--text-dim); font-size: 14px; margin-top: 6px; }
+
+    .main-layout { display: grid; grid-template-columns: 470px 1fr; gap: 24px; }
+    @media (max-width: 900px) { .main-layout { grid-template-columns: 1fr; } }
+
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+    .card-title { font-size: 15px; font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
+
+    /* 2D Pad */
+    .pad-container {
+      width: 450px;
+      height: 450px;
+      background: #060911;
+      border: 2px solid #243553;
+      border-radius: 12px;
+      position: relative;
+      cursor: crosshair;
+      overflow: hidden;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+      user-select: none;
+    }
+    canvas#pad_cv { width: 100%; height: 100%; display: block; }
+
+    /* ボード情報バッジ */
+    .badge {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: monospace;
+    }
+    .badge-voice { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+
+    /* モード切替ボタングループ */
+    .mode-switch-group { display: flex; gap: 10px; }
+    .btn-mode {
+      flex: 1;
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #1e293b;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .btn-mode:hover { background: #334155; }
+    .btn-mode.active-poly {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: var(--accent-poly);
+      color: #34d399;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+    }
+    .btn-mode.active-mono {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: var(--accent-mono);
+      color: #f87171;
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+    }
+
+    /* コントロールスライダー */
+    .control-row { display: flex; flex-direction: column; gap: 6px; }
+    .control-header { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); }
+    .val-badge { font-family: monospace; font-weight: 700; color: #38bdf8; }
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #243553;
+      border-radius: 3px;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #38bdf8;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+    /* オシロスコープ */
+    .scope-box { background: #060911; border: 1px solid #1e2c47; border-radius: 8px; padding: 10px; }
+    canvas#scope_cv { width: 100%; height: 90px; display: block; }
+
+    /* 説明ボックス */
+    .explain-box { background: rgba(56, 189, 248, 0.08); border-left: 4px solid var(--accent); padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; line-height: 1.6; }
+    .explain-box strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><span>🎛️</span> 2D質感パッド ✕ 鳴り切りBPM連打タイマー デモ</h1>
+      <div class="subtitle">発音余韻を途中で切断せず最後まで鳴り切らせる（Non-Interrupting Polyphony）と途切れリセットの比較検証</div>
+    </header>
+
+    <div class="main-layout">
+      <!-- 左カラム: 2D Pad (450x450px) -->
+      <div>
+        <div class="pad-container" id="pad_container">
+          <canvas id="pad_cv" width="450" height="450"></canvas>
+        </div>
+        <div style="font-size: 12px; color: var(--text-dim); text-align: center; margin-top: 8px;">
+          👆 パッド上をクリック・ドラッグすると、指定BPM周期で最新座標のオノマトペを連打します
+        </div>
+      </div>
+
+      <!-- 右カラム: コントロール & 可視化 -->
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <!-- 発音モード切替 -->
+        <div class="card">
+          <div class="card-title">
+            <span>発音ポリフォニー方式の選択</span>
+            <span class="badge badge-voice" id="disp_voices">発音数: 0</span>
+          </div>
+
+          <div class="mode-switch-group">
+            <button class="btn-mode active-poly" id="btn_poly">
+              <div style="font-size: 14px; margin-bottom: 3px;">🟢 鳴り切りポリフォニック</div>
+              <div style="font-size: 11px; opacity: 0.8;">余韻を切らず重畳完奏（自然）</div>
+            </button>
+            <button class="btn-mode" id="btn_mono">
+              <div style="font-size: 14px; margin-bottom: 3px;">🔴 途切れモノフォニック</div>
+              <div style="font-size: 11px; opacity: 0.8;">新音で前音を急峻カット（機械的）</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- パラメータコントロール -->
+        <div class="card">
+          <div class="card-title">
+            <span>⏱️ テンポ ＆ エンベロープ調整</span>
+          </div>
+
+          <!-- BPM -->
+          <div class="control-row">
+            <div class="control-header">
+              <span>連打BPM (16分音符周期)</span>
+              <span class="val-badge" id="disp_bpm">135 BPM (111ms)</span>
+            </div>
+            <input type="range" id="sl_bpm" min="60" max="240" value="135" step="5">
+          </div>
+
+          <!-- 減衰時間 Decay -->
+          <div class="control-row">
+            <div class="control-header">
+              <span>基本余韻長 (Decay Time)</span>
+              <span class="val-badge" id="disp_decay">220 ms</span>
+            </div>
+            <input type="range" id="sl_decay" min="60" max="600" value="220" step="10">
+            <div style="font-size: 11px; color: #64748b;">
+              ※連打周期より余韻が長いとき、鳴り切りの「豊かな音の重なり合い」が最大化します
+            </div>
+          </div>
+
+          <!-- マスター音量 -->
+          <div class="control-row">
+            <div class="control-header">
+              <span>マスター音量</span>
+              <span class="val-badge" id="disp_vol">85 %</span>
+            </div>
+            <input type="range" id="sl_vol" min="10" max="100" value="85" step="5">
+          </div>
+        </div>
+
+        <!-- リアルタイムステータス ＆ 波形 -->
+        <div class="card">
+          <div class="card-title">
+            <span>リアルタイム波形モニター ＆ 推定語彙</span>
+            <span class="val-badge" id="disp_word" style="font-size: 14px;">サラサラ</span>
+          </div>
+          <div class="scope-box">
+            <canvas id="scope_cv" width="400" height="90"></canvas>
+          </div>
+          <div style="font-size: 12px; color: var(--text-dim); display: flex; justify-content: space-between;">
+            <span>座標: <strong id="disp_coord" style="color: #38bdf8;">X: +0.00, Y: +0.00</strong></span>
+            <span>現在タイマー周期: <strong id="disp_rate" style="color: #10b981;">111 ms</strong></span>
+          </div>
+        </div>
+
+        <!-- 学術解説 -->
+        <div class="explain-box">
+          <strong>💡 鳴り切り（Non-Interrupting Polyphony）の重要性:</strong><br>
+          「さらさら」「ざらざら」といった触感・粒度オノマトペは、個々の粒子や衝突の微小な減衰余韻が次々に折り重なることで「テクスチャ」として知覚されます。
+          新音が鳴るたびに直前の音をリセット（切断）してしまうと、耳障りなプチプチというクリッピングノイズが生じ、連続した手触り感が失われます。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let audioCtx = null;
+    let masterGain = null;
+    let analyser = null;
+
+    function getAudioCtx() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0.85, audioCtx.currentTime);
+
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 512;
+        masterGain.connect(analyser);
+        analyser.connect(audioCtx.destination);
+      }
+      if (audioCtx.state === "suspended") audioCtx.resume();
+      return audioCtx;
+    }
+
+    // パラメータ
+    let isPolyMode = true; // true = 鳴り切り, false = 途切れカット
+    let paramBpm = 135;
+    let paramBaseDecayMs = 220;
+    let paramVol = 0.85;
+
+    let curX = 0.0; // -1: ぱさぱさ ↔ +1: びちゃびちゃ (湿度)
+    let curY = 0.0; // -1: ガタガタ ↔ +1: サラサラ (粒度)
+    let isDragging = false;
+    let timerId = null;
+
+    let activeVoices = 0;
+    let lastVoiceNodes = []; // モノフォニック時の切断用ノード保持
+
+    // アンカー点定義
+    const anchors = [
+      { word: "サラサラ", x: 0.0, y: 0.8, color: "#38bdf8" },
+      { word: "びちゃびちゃ", x: 0.8, y: -0.2, color: "#06b6d4" },
+      { word: "ぱさぱさ", x: -0.8, y: -0.1, color: "#f59e0b" },
+      { word: "ガタガタ", x: -0.2, y: -0.8, color: "#ef4444" },
+      { word: "どろどろ", x: 0.6, y: -0.7, color: "#8b5cf6" },
+      { word: "ツルツル", x: 0.2, y: 0.6, color: "#10b981" }
+    ];
+
+    // UI要素
+    const padCv = document.getElementById("pad_cv");
+    const padCtx = padCv.getContext("2d");
+    const scopeCv = document.getElementById("scope_cv");
+    const scopeCtx = scopeCv.getContext("2d");
+
+    const btnPoly = document.getElementById("btn_poly");
+    const btnMono = document.getElementById("btn_mono");
+    const dispVoices = document.getElementById("disp_voices");
+    const dispWord = document.getElementById("disp_word");
+    const dispCoord = document.getElementById("disp_coord");
+    const dispRate = document.getElementById("disp_rate");
+
+    const slBpm = document.getElementById("sl_bpm");
+    const slDecay = document.getElementById("sl_decay");
+    const slVol = document.getElementById("sl_vol");
+    const dispBpm = document.getElementById("disp_bpm");
+    const dispDecay = document.getElementById("disp_decay");
+    const dispVol = document.getElementById("disp_vol");
+
+    btnPoly.addEventListener("click", () => {
+      isPolyMode = true;
+      btnPoly.classList.add("active-poly");
+      btnMono.classList.remove("active-mono");
+    });
+    btnMono.addEventListener("click", () => {
+      isPolyMode = false;
+      btnMono.classList.add("active-mono");
+      btnPoly.classList.remove("active-poly");
+    });
+
+    slBpm.addEventListener("input", (e) => {
+      paramBpm = parseInt(e.target.value);
+      const intervalMs = Math.round((60000 / paramBpm) / 4);
+      dispBpm.innerText = `${paramBpm} BPM (${intervalMs}ms)`;
+      dispRate.innerText = `${intervalMs} ms`;
+      if (isDragging) startPadLoop();
+    });
+
+    slDecay.addEventListener("input", (e) => {
+      paramBaseDecayMs = parseInt(e.target.value);
+      dispDecay.innerText = `${paramBaseDecayMs} ms`;
+    });
+
+    slVol.addEventListener("input", (e) => {
+      paramVol = parseInt(e.target.value) / 100.0;
+      dispVol.innerText = `${e.target.value} %`;
+      if (masterGain) masterGain.gain.setValueAtTime(paramVol, audioCtx.currentTime);
+    });
+
+    // =======================================================================
+    // 2Dパッド マウス/タッチ操作
+    // =======================================================================
+    function updateCoordsFromEvent(e) {
+      const rect = padCv.getBoundingClientRect();
+      const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+      const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+      const sx = clientX - rect.left;
+      const sy = clientY - rect.top;
+
+      const CX = padCv.width / 2;
+      const CY = padCv.height / 2;
+
+      curX = Math.max(-1.0, Math.min(1.0, (sx - CX) / (CX - 30)));
+      curY = Math.max(-1.0, Math.min(1.0, (CY - sy) / (CY - 30)));
+
+      dispCoord.innerText = `X: ${(curX>=0?"+":"")+curX.toFixed(2)}, Y: ${(curY>=0?"+":"")+curY.toFixed(2)}`;
+      updateNearestWord();
+    }
+
+    function updateNearestWord() {
+      let minDist = 9999;
+      let nearest = anchors[0].word;
+      anchors.forEach(a => {
+        const d = Math.hypot(curX - a.x, curY - a.y);
+        if (d < minDist) { minDist = d; nearest = a.word; }
+      });
+      dispWord.innerText = nearest;
+    }
+
+    padCv.addEventListener("mousedown", (e) => {
+      getAudioCtx();
+      isDragging = true;
+      updateCoordsFromEvent(e);
+      startPadLoop();
+    });
+    window.addEventListener("mousemove", (e) => {
+      if (isDragging) updateCoordsFromEvent(e);
+    });
+    window.addEventListener("mouseup", () => {
+      isDragging = false;
+      if (timerId) { clearTimeout(timerId); timerId = null; }
+    });
+
+    padCv.addEventListener("touchstart", (e) => {
+      getAudioCtx();
+      isDragging = true;
+      updateCoordsFromEvent(e);
+      startPadLoop();
+      e.preventDefault();
+    }, {passive: false});
+    window.addEventListener("touchmove", (e) => {
+      if (isDragging) { updateCoordsFromEvent(e); e.preventDefault(); }
+    }, {passive: false});
+    window.addEventListener("touchend", () => {
+      isDragging = false;
+      if (timerId) { clearTimeout(timerId); timerId = null; }
+    });
+
+    // =======================================================================
+    // 16分音符連打タイマー
+    // =======================================================================
+    function startPadLoop() {
+      if (timerId) clearTimeout(timerId);
+
+      function tick() {
+        if (!isDragging) { timerId = null; return; }
+        playTextureSound(curX, curY);
+
+        const intervalMs = Math.round((60000 / paramBpm) / 4);
+        timerId = setTimeout(tick, intervalMs);
+      }
+      tick();
+    }
+
+    // =======================================================================
+    // オノマトペ音響合成 (Polyphony vs Monophonic Cut)
+    // =======================================================================
+    function playTextureSound(x, y) {
+      const ctx = getAudioCtx();
+      const now = ctx.currentTime;
+
+      // 🔴 モノフォニックモードの場合: 直前の発音中の音を強制遮断（急峻カット）
+      if (!isPolyMode && lastVoiceNodes.length > 0) {
+        lastVoiceNodes.forEach(node => {
+          try {
+            if (node.gain) {
+              node.gain.cancelScheduledValues(now);
+              node.gain.setValueAtTime(0.0001, now);
+            }
+            if (node.stop) node.stop(now);
+          } catch(e) {}
+        });
+        lastVoiceNodes = [];
+      }
+
+      // 余韻長: 湿度(X)が高いと長く、粒度(Y)が高いと短い
+      const decaySec = (paramBaseDecayMs / 1000.0) * (0.8 + (x + 1.0) * 0.35) * (0.9 - Math.max(0, y) * 0.4);
+
+      activeVoices++;
+      dispVoices.innerText = `発音数: ${activeVoices}`;
+
+      // 個別ボイス用Gainノード
+      const voiceGain = ctx.createGain();
+      voiceGain.gain.setValueAtTime(0.0001, now);
+      voiceGain.gain.linearRampToValueAtTime(0.85, now + 0.004);
+      voiceGain.gain.exponentialRampToValueAtTime(0.0001, now + decaySec);
+      voiceGain.connect(masterGain);
+
+      // 粒子ノイズ生成 (White Noise + Bandpass)
+      const bufLen = Math.max(128, Math.floor(ctx.sampleRate * decaySec));
+      const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+      const ch = buf.getChannelData(0);
+      for (let i = 0; i < bufLen; i++) ch[i] = Math.random() * 2 - 1;
+
+      const noise = ctx.createBufferSource();
+      noise.buffer = buf;
+
+      const bpf = ctx.createBiquadFilter();
+      bpf.type = "bandpass";
+      // 粒度Y軸が高いほど高域サラサラ、低いほど低域ガタガタ
+      const cutoff = Math.max(150.0, 1800.0 + (y + 1.0) * 2500.0 - (x + 1.0) * 800.0);
+      bpf.frequency.setValueAtTime(cutoff, now);
+      bpf.Q.setValueAtTime(2.0 + Math.abs(x) * 4.0, now);
+
+      noise.connect(bpf);
+      bpf.connect(voiceGain);
+
+      noise.start(now);
+      noise.stop(now + decaySec);
+
+      // 湿気(X)が高い場合: 粘性サイン波・低域インパルス
+      if (x > -0.2) {
+        const wetOsc = ctx.createOscillator();
+        const wetG = ctx.createGain();
+        wetOsc.type = "sine";
+        wetOsc.frequency.setValueAtTime(120.0 + (x + 1.0) * 60.0, now);
+        wetOsc.frequency.exponentialRampToValueAtTime(45.0, now + decaySec * 0.5);
+        wetG.gain.setValueAtTime((x + 0.2) * 0.5, now);
+        wetG.gain.exponentialRampToValueAtTime(0.0001, now + decaySec * 0.6);
+
+        wetOsc.connect(wetG);
+        wetG.connect(voiceGain);
+        wetOsc.start(now);
+        wetOsc.stop(now + decaySec);
+
+        if (!isPolyMode) lastVoiceNodes.push(wetOsc, wetG);
+      }
+
+      if (!isPolyMode) lastVoiceNodes.push(noise, voiceGain);
+
+      // 発音終了タイマー
+      setTimeout(() => {
+        activeVoices = Math.max(0, activeVoices - 1);
+        dispVoices.innerText = `発音数: ${activeVoices}`;
+      }, decaySec * 1000);
+    }
+
+    // =======================================================================
+    // 描画ループ (2D Pad ＆ オシロスコープ)
+    // =======================================================================
+    function render() {
+      // 2D Pad 描画
+      const W = padCv.width;
+      const H = padCv.height;
+      const CX = W / 2;
+      const CY = H / 2;
+
+      padCtx.clearRect(0, 0, W, H);
+
+      // 軸線
+      padCtx.strokeStyle = "#1e2c47";
+      padCtx.lineWidth = 1.5;
+      padCtx.beginPath();
+      padCtx.moveTo(CX, 0); padCtx.lineTo(CX, H);
+      padCtx.moveTo(0, CY); padCtx.lineTo(W, CY);
+      padCtx.stroke();
+
+      // 軸ラベル
+      padCtx.fillStyle = "#64748b";
+      padCtx.font = "11px monospace";
+      padCtx.fillText("X: ぱさぱさ (-)", 10, CY - 6);
+      padCtx.fillText("X: びちゃびちゃ (+)", W - 118, CY - 6);
+      padCtx.fillText("Y: サラサラ (+)", CX + 8, 20);
+      padCtx.fillText("Y: ガタガタ (-)", CX + 8, H - 10);
+
+      // アンカー点
+      anchors.forEach(a => {
+        const px = CX + a.x * (CX - 30);
+        const py = CY - a.y * (CY - 30);
+        padCtx.beginPath();
+        padCtx.arc(px, py, 4, 0, Math.PI * 2);
+        padCtx.fillStyle = a.color + "99";
+        padCtx.fill();
+        padCtx.fillStyle = a.color;
+        padCtx.font = "12px sans-serif";
+        padCtx.fillText(a.word, px + 7, py + 4);
+      });
+
+      // 現在位置カーソル
+      const curPx = CX + curX * (CX - 30);
+      const curPy = CY - curY * (CY - 30);
+      padCtx.beginPath();
+      padCtx.arc(curPx, curPy, isDragging ? 11 : 8, 0, Math.PI * 2);
+      padCtx.fillStyle = isPolyMode ? "#10b981" : "#ef4444";
+      padCtx.fill();
+      padCtx.lineWidth = 2;
+      padCtx.strokeStyle = "#ffffff";
+      padCtx.stroke();
+
+      // オシロスコープ描画
+      if (analyser) {
+        const sw = scopeCv.width;
+        const sh = scopeCv.height;
+        const timeData = new Uint8Array(analyser.frequencyBinCount);
+        analyser.getByteTimeDomainData(timeData);
+
+        scopeCtx.fillStyle = "#060911";
+        scopeCtx.fillRect(0, 0, sw, sh);
+
+        scopeCtx.lineWidth = 2;
+        scopeCtx.strokeStyle = isPolyMode ? "#10b981" : "#ef4444";
+        scopeCtx.beginPath();
+
+        const sliceWidth = sw / timeData.length;
+        let x = 0;
+        for (let i = 0; i < timeData.length; i++) {
+          const v = timeData[i] / 128.0;
+          const y = (v * sh) / 2;
+          if (i === 0) scopeCtx.moveTo(x, y);
+          else scopeCtx.lineTo(x, y);
+          x += sliceWidth;
+        }
+        scopeCtx.lineTo(sw, sh / 2);
+        scopeCtx.stroke();
+      }
+
+      requestAnimationFrame(render);
+    }
+
+    render();
+  </script>
+</body>
+</html>

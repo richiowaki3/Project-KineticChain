@@ -653,17 +653,31 @@ def build_multidimensional_pads_component() -> str:
 
         if (state.recState === "armed") {{
           btn.classList.add("armed");
-          btn.innerHTML = "🟡 待機中...";
+          btn.innerHTML = "🟡 クリック待ち...";
         }} else if (state.recState === "recording") {{
           btn.classList.add("recording");
-          btn.innerHTML = "🔴 記録中...";
+          btn.innerHTML = "⏹ REC終了→再生";
         }} else if (state.recState === "looping") {{
           btn.classList.add("looping");
-          btn.innerHTML = "🔁 LOOP中";
+          btn.innerHTML = "🔁 LOOP中 (停止)";
           if (card) card.classList.add("looping");
         }} else {{
           btn.innerHTML = "⏺ REC";
         }}
+      }}
+
+      // 記録軌跡内の特定時刻における発音アクティブ判定 (無音・休符の再現)
+      function isTrackActiveAt(track, elapsed) {{
+        if (!track || track.length === 0) return false;
+        let act = track[0].active !== false;
+        for (let i = 0; i < track.length; i++) {{
+          if (track[i].t <= elapsed) {{
+            act = track[i].active !== false;
+          }} else {{
+            break;
+          }}
+        }}
+        return act;
       }}
 
       // モーションループ再生エンジン
@@ -693,6 +707,9 @@ def build_multidimensional_pads_component() -> str:
             state.curX = p1.x + (p2.x - p1.x) * frac;
             state.curY = p1.y + (p2.y - p1.y) * frac;
             state.curZ = p1.z + (p2.z - p1.z) * frac;
+
+            // 現在時刻が無音区間か有音区間かを更新
+            state.isLoopVoiceActive = isTrackActiveAt(track, elapsed);
             updatePadUI(key);
           }}
           state.loopTimerId = requestAnimationFrame(step);
@@ -747,18 +764,41 @@ def build_multidimensional_pads_component() -> str:
           }});
         }}
 
-        // 🔴 RECボタン (記録開始 ➔ クリック終了で自動ループ ➔ 再度RECで停止)
+        // 🔴 RECボタン (待機 ➔ クリックで記録 ➔ もう一度RECで終了＆再生 ➔ もう一度RECで停止)
         const recBtn = document.getElementById("rec_btn_" + key);
         if (recBtn) {{
           recBtn.addEventListener("click", () => {{
             resumeAudio();
             if (state.recState === "idle") {{
-              // 待機状態へ
+              // 待機状態へ (最初のクリックで記録開始)
               state.recState = "armed";
               state.motionTrack = [];
               updateRecBtnUI(key);
-            }} else {{
-              // 停止・解除
+            }} else if (state.recState === "recording" || state.recState === "armed") {{
+              // 録音中（または待機中）にもう一度RECボタンを押した場合 ➔ 録音終了して自動ループ再生開始！
+              if (state.recState === "recording" && state.motionTrack && state.motionTrack.length >= 2) {{
+                const totalDur = performance.now() - state.recStartTime;
+                // 最後の無音休符区間も含めるため、現在時刻の点を追加
+                state.motionTrack.push({{
+                  t: totalDur,
+                  x: state.curX,
+                  y: state.curY,
+                  z: state.curZ,
+                  active: false
+                }});
+                state.recState = "looping";
+                state.trackDuration = totalDur;
+                state.loopStartTime = performance.now();
+                state.isDragging = false;
+                updateRecBtnUI(key);
+                startMotionLoop(key);
+                startPadLoop(key); // ループ再生開始！
+              }} else {{
+                state.recState = "idle";
+                updateRecBtnUI(key);
+              }}
+            }} else if (state.recState === "looping") {{
+              // ループ中に押した場合 ➔ 停止・解除
               state.recState = "idle";
               if (state.loopTimerId) {{
                 cancelAnimationFrame(state.loopTimerId);
@@ -778,11 +818,11 @@ def build_multidimensional_pads_component() -> str:
           if (state.recState === "armed") {{
             state.recState = "recording";
             state.recStartTime = performance.now();
-            state.motionTrack = [{{ t: 0, x: state.curX, y: state.curY, z: state.curZ }}];
+            state.motionTrack = [{{ t: 0, x: state.curX, y: state.curY, z: state.curZ, active: true }}];
             updateRecBtnUI(key);
           }} else if (state.recState === "recording") {{
             const elapsed = performance.now() - state.recStartTime;
-            state.motionTrack.push({{ t: elapsed, x: state.curX, y: state.curY, z: state.curZ }});
+            state.motionTrack.push({{ t: elapsed, x: state.curX, y: state.curY, z: state.curZ, active: true }});
           }}
         }}
 
@@ -908,30 +948,20 @@ def build_multidimensional_pads_component() -> str:
         updatePadUI(key);
       }});
 
-      // マウスアップ / タッチ終了時の共通処理 (記録完了 ➔ 自動ループ開始判定)
+      // マウスアップ / タッチ終了時の共通処理
       function finishGesture() {{
         modelKeys.forEach((k) => {{
           const st = padStates[k];
           st.isDragging = false;
           st.activePlane = null;
 
-          // 記録中だった場合 ➔ ループへ自動突入！
+          // 記録中の場合: 録音は終了せず継続！指を離した点（active: false）を記録して音を止める（無音区間へ）
           if (st.recState === "recording") {{
-            const totalDur = performance.now() - st.recStartTime;
-            if (st.motionTrack.length >= 3 && totalDur > 120) {{
-              st.recState = "looping";
-              st.trackDuration = totalDur;
-              st.loopStartTime = performance.now();
-              updateRecBtnUI(k);
-              startMotionLoop(k);
-              startPadLoop(k); // 音声ループ連打も継続！
-            }} else {{
-              st.recState = "idle";
-              updateRecBtnUI(k);
-            }}
+            const elapsed = performance.now() - st.recStartTime;
+            st.motionTrack.push({{ t: elapsed, x: st.curX, y: st.curY, z: st.curZ, active: false }});
           }}
 
-          // HOLDでもなく、LOOP中でもなければタイマー停止
+          // HOLDでもなく、LOOP中でもなければタイマー停止（音を止めて無音にする）
           if (!st.isHold && st.recState !== "looping" && st.timerId) {{
             clearTimeout(st.timerId);
             st.timerId = null;
@@ -951,7 +981,17 @@ def build_multidimensional_pads_component() -> str:
             state.timerId = null;
             return;
           }}
-          playPadSound(key);
+
+          // モーションLOOP再生時は、記録時に指を押していた区間（active === true）のみ発音！
+          // 指を離していた「無音部分」はスキップして休符にする
+          if (state.recState === "looping") {{
+            if (state.isLoopVoiceActive) {{
+              playPadSound(key);
+            }}
+          }} else {{
+            playPadSound(key);
+          }}
+
           const intervalMs = Math.round((60000 / state.bpm) / 4);
           state.timerId = setTimeout(tick, intervalMs);
         }}
@@ -1449,14 +1489,15 @@ def build_multidimensional_pads_component() -> str:
               }}
 
               // 現在位置カーソル
+              const isSilent = (state.recState === "looping" && !state.isLoopVoiceActive);
               const curPx = CX + p.xVal * (W/2 - 25);
               const curPy = CY - p.yVal * (H/2 - 25);
               ctx.beginPath();
-              ctx.arc(curPx, curPy, (state.recState === "looping" ? 9 : (state.isHold ? 8 : 7)) + state.pulse * 5, 0, Math.PI * 2);
-              ctx.fillStyle = state.recState === "looping" ? "#10b981" : (state.isHold ? "#ef4444" : "#38bdf8");
+              ctx.arc(curPx, curPy, (state.recState === "looping" ? (isSilent ? 6 : 9) : (state.isHold ? 8 : 7)) + state.pulse * 5, 0, Math.PI * 2);
+              ctx.fillStyle = state.recState === "looping" ? (isSilent ? "rgba(16, 185, 129, 0.35)" : "#10b981") : (state.isHold ? "#ef4444" : "#38bdf8");
               ctx.fill();
               ctx.lineWidth = 2;
-              ctx.strokeStyle = "#ffffff";
+              ctx.strokeStyle = isSilent ? "rgba(255, 255, 255, 0.4)" : "#ffffff";
               ctx.stroke();
             }});
 
@@ -1513,14 +1554,15 @@ def build_multidimensional_pads_component() -> str:
               ctx.stroke();
             }}
 
+            const isSilent = (state.recState === "looping" && !state.isLoopVoiceActive);
             const curPx = CX + state.curX * (W/2 - 25);
             const curPy = CY - state.curY * (H/2 - 25);
             ctx.beginPath();
-            ctx.arc(curPx, curPy, (state.recState === "looping" ? 10 : (state.isHold ? 9 : 8)) + state.pulse * 6, 0, Math.PI * 2);
-            ctx.fillStyle = state.recState === "looping" ? "#10b981" : (state.isHold ? "#ef4444" : "#38bdf8");
+            ctx.arc(curPx, curPy, (state.recState === "looping" ? (isSilent ? 7 : 10) : (state.isHold ? 9 : 8)) + state.pulse * 6, 0, Math.PI * 2);
+            ctx.fillStyle = state.recState === "looping" ? (isSilent ? "rgba(16, 185, 129, 0.35)" : "#10b981") : (state.isHold ? "#ef4444" : "#38bdf8");
             ctx.fill();
             ctx.lineWidth = 2;
-            ctx.strokeStyle = "#ffffff";
+            ctx.strokeStyle = isSilent ? "rgba(255, 255, 255, 0.4)" : "#ffffff";
             ctx.stroke();
           }}
         }});

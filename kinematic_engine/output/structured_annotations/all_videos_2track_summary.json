@@ -1,0 +1,64 @@
+{
+  "total_videos": 7,
+  "total_segments": 506,
+  "total_pure_onomatopoeia": 365,
+  "total_non_onoma_purified": 141,
+  "videos": [
+    {
+      "video_id": "3Yb5JOB_75M",
+      "subtitle_file": "3Yb5JOB_75M_subtitle.sbv",
+      "total_segments": 93,
+      "pure_onomatopoeia_detected": 64,
+      "non_onomatopoeia_purified_to_null": 29,
+      "onomatopoeia_purity_rate": 0.688
+    },
+    {
+      "video_id": "4PeYpRbg18Y",
+      "subtitle_file": "4PeYpRbg18Y_subtitle.sbv",
+      "total_segments": 83,
+      "pure_onomatopoeia_detected": 63,
+      "non_onomatopoeia_purified_to_null": 20,
+      "onomatopoeia_purity_rate": 0.759
+    },
+    {
+      "video_id": "6VBBEOXtI4I",
+      "subtitle_file": "6VBBEOXtI4I字幕.sbv",
+      "total_segments": 63,
+      "pure_onomatopoeia_detected": 52,
+      "non_onomatopoeia_purified_to_null": 11,
+      "onomatopoeia_purity_rate": 0.825
+    },
+    {
+      "video_id": "7O1y-isl79A",
+      "subtitle_file": "7O1y-isl79A字幕.sbv",
+      "total_segments": 107,
+      "pure_onomatopoeia_detected": 54,
+      "non_onomatopoeia_purified_to_null": 53,
+      "onomatopoeia_purity_rate": 0.505
+    },
+    {
+      "video_id": "9dMU8HMJTp8",
+      "subtitle_file": "9dMU8HMJTp8字幕.sbv",
+      "total_segments": 72,
+      "pure_onomatopoeia_detected": 62,
+      "non_onomatopoeia_purified_to_null": 10,
+      "onomatopoeia_purity_rate": 0.861
+    },
+    {
+      "video_id": "hD48RQLQurg",
+      "subtitle_file": "hD48RQLQurg字幕.sbv",
+      "total_segments": 20,
+      "pure_onomatopoeia_detected": 15,
+      "non_onomatopoeia_purified_to_null": 5,
+      "onomatopoeia_purity_rate": 0.75
+    },
+    {
+      "video_id": "HGhzCqXizHc",
+      "subtitle_file": "HGhzCqXizHc字幕.sbv",
+      "total_segments": 68,
+      "pure_onomatopoeia_detected": 55,
+      "non_onomatopoeia_purified_to_null": 13,
+      "onomatopoeia_purity_rate": 0.809
+    }
+  ]
+}

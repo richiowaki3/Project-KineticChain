@@ -1,0 +1,1298 @@
+[
+  {
+    "segment_id": "9dMU8HMJTp8_seg_000",
+    "time_stamps": {
+      "start": 6.899,
+      "end": 10.62,
+      "stroke_peak_recommendation": 8.759
+    },
+    "raw_text": "物の上に物が乗っかる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_001",
+    "time_stamps": {
+      "start": 13.024,
+      "end": 15.024,
+      "stroke_peak_recommendation": 13.424
+    },
+    "raw_text": "ブスブスと胸にデンサーが貼られる",
+    "annotation": {
+      "main_onomatopoeia": "ブスブス",
+      "context_conditions": {
+        "action_state": "接触・装着固定",
+        "spatial_mode": "通常スケール",
+        "body_part": "胸部・体幹",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_002",
+    "time_stamps": {
+      "start": 15.024,
+      "end": 15.524,
+      "stroke_peak_recommendation": 15.274
+    },
+    "raw_text": "勢いよくケーブルがつながる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_003",
+    "time_stamps": {
+      "start": 15.589,
+      "end": 17.156,
+      "stroke_peak_recommendation": 16.372
+    },
+    "raw_text": "四角い窓",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_004",
+    "time_stamps": {
+      "start": 17.156,
+      "end": 21.799,
+      "stroke_peak_recommendation": 17.556
+    },
+    "raw_text": "ピコンピコンと心電図",
+    "annotation": {
+      "main_onomatopoeia": "ピコンピコン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_005",
+    "time_stamps": {
+      "start": 23.542,
+      "end": 25.257,
+      "stroke_peak_recommendation": 24.4
+    },
+    "raw_text": "ピロピロピロ",
+    "annotation": {
+      "main_onomatopoeia": "ピロピロ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_006",
+    "time_stamps": {
+      "start": 25.257,
+      "end": 28.772,
+      "stroke_peak_recommendation": 27.014
+    },
+    "raw_text": "点滴がおたんぽたんと落ちる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "着地・床面衝撃",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_007",
+    "time_stamps": {
+      "start": 32.065,
+      "end": 36.515,
+      "stroke_peak_recommendation": 34.29
+    },
+    "raw_text": "心臓がトクトク動く",
+    "annotation": {
+      "main_onomatopoeia": "トクトク",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_008",
+    "time_stamps": {
+      "start": 36.515,
+      "end": 40.708,
+      "stroke_peak_recommendation": 38.611
+    },
+    "raw_text": "心機械がシャキンシャキンと勢いよく動",
+    "annotation": {
+      "main_onomatopoeia": "シャキン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_009",
+    "time_stamps": {
+      "start": 40.708,
+      "end": 42.708,
+      "stroke_peak_recommendation": 41.108
+    },
+    "raw_text": "機械がシャキッと動く",
+    "annotation": {
+      "main_onomatopoeia": "シャキッ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_010",
+    "time_stamps": {
+      "start": 44.258,
+      "end": 48.924,
+      "stroke_peak_recommendation": 46.591
+    },
+    "raw_text": "呼吸で胸が動く",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "胸部・体幹",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_011",
+    "time_stamps": {
+      "start": 48.924,
+      "end": 51.634,
+      "stroke_peak_recommendation": 50.279
+    },
+    "raw_text": "シャアキンシャキン",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_012",
+    "time_stamps": {
+      "start": 51.634,
+      "end": 53.33,
+      "stroke_peak_recommendation": 52.482
+    },
+    "raw_text": "行ったり来たり、かくかくかく",
+    "annotation": {
+      "main_onomatopoeia": "かくかく",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_013",
+    "time_stamps": {
+      "start": 53.33,
+      "end": 54.396,
+      "stroke_peak_recommendation": 53.863
+    },
+    "raw_text": "あたくて鋭い柱",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_014",
+    "time_stamps": {
+      "start": 54.396,
+      "end": 56.396,
+      "stroke_peak_recommendation": 55.396
+    },
+    "raw_text": "小さな部屋がたくさん並んでいる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "ミニチュア表現 (VS Mode)",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_015",
+    "time_stamps": {
+      "start": 56.396,
+      "end": 59.136,
+      "stroke_peak_recommendation": 56.796
+    },
+    "raw_text": "書類のようなものが何枚も重なってばらばらと動いて、だんだん減速して止まる",
+    "annotation": {
+      "main_onomatopoeia": "ばらばら",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_016",
+    "time_stamps": {
+      "start": 59.136,
+      "end": 62.8,
+      "stroke_peak_recommendation": 60.968
+    },
+    "raw_text": "四角いユニットがそれらを探す",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_017",
+    "time_stamps": {
+      "start": 62.8,
+      "end": 64.743,
+      "stroke_peak_recommendation": 63.771
+    },
+    "raw_text": "見つける",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_018",
+    "time_stamps": {
+      "start": 64.744,
+      "end": 67.291,
+      "stroke_peak_recommendation": 66.017
+    },
+    "raw_text": "心臓がトクトク",
+    "annotation": {
+      "main_onomatopoeia": "トクトク",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_019",
+    "time_stamps": {
+      "start": 74.736,
+      "end": 78.741,
+      "stroke_peak_recommendation": 75.136
+    },
+    "raw_text": "四角い表示がゆっくりと横に伸びる",
+    "annotation": {
+      "main_onomatopoeia": "ゆっくり",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_020",
+    "time_stamps": {
+      "start": 78.741,
+      "end": 79.241,
+      "stroke_peak_recommendation": 78.991
+    },
+    "raw_text": "しきり",
+    "annotation": {
+      "main_onomatopoeia": "しきり",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_021",
+    "time_stamps": {
+      "start": 80.598,
+      "end": 84.0,
+      "stroke_peak_recommendation": 80.998
+    },
+    "raw_text": "ひらひらと動く",
+    "annotation": {
+      "main_onomatopoeia": "ひらひら",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_022",
+    "time_stamps": {
+      "start": 84.0,
+      "end": 86.0,
+      "stroke_peak_recommendation": 85.0
+    },
+    "raw_text": "スベースベの台",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_023",
+    "time_stamps": {
+      "start": 86.166,
+      "end": 88.166,
+      "stroke_peak_recommendation": 87.166
+    },
+    "raw_text": "ショコショコショコ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_024",
+    "time_stamps": {
+      "start": 89.219,
+      "end": 90.752,
+      "stroke_peak_recommendation": 89.619
+    },
+    "raw_text": "ゆっくり",
+    "annotation": {
+      "main_onomatopoeia": "ゆっくり",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_025",
+    "time_stamps": {
+      "start": 90.752,
+      "end": 92.585,
+      "stroke_peak_recommendation": 91.668
+    },
+    "raw_text": "コシコシコシ",
+    "annotation": {
+      "main_onomatopoeia": "コシコシ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_026",
+    "time_stamps": {
+      "start": 93.428,
+      "end": 96.51,
+      "stroke_peak_recommendation": 93.828
+    },
+    "raw_text": "白い箱の中に何かが詰まっている",
+    "annotation": {
+      "main_onomatopoeia": "まっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_027",
+    "time_stamps": {
+      "start": 96.51,
+      "end": 98.51,
+      "stroke_peak_recommendation": 97.51
+    },
+    "raw_text": "まるまるまる",
+    "annotation": {
+      "main_onomatopoeia": "まるまる",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_029",
+    "time_stamps": {
+      "start": 101.496,
+      "end": 103.496,
+      "stroke_peak_recommendation": 101.896
+    },
+    "raw_text": "ゆっくり開く",
+    "annotation": {
+      "main_onomatopoeia": "ゆっくり",
+      "context_conditions": {
+        "action_state": "急拡大・破裂展開",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_030",
+    "time_stamps": {
+      "start": 103.987,
+      "end": 105.987,
+      "stroke_peak_recommendation": 104.987
+    },
+    "raw_text": "心電図がピコンピコン",
+    "annotation": {
+      "main_onomatopoeia": "ピコンピコン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_031",
+    "time_stamps": {
+      "start": 107.17,
+      "end": 110.184,
+      "stroke_peak_recommendation": 108.677
+    },
+    "raw_text": "点滴がボタンボタン",
+    "annotation": {
+      "main_onomatopoeia": "ボタンボタン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_032",
+    "time_stamps": {
+      "start": 110.184,
+      "end": 113.726,
+      "stroke_peak_recommendation": 111.955
+    },
+    "raw_text": "ういごが、しゅぼしゅぼ",
+    "annotation": {
+      "main_onomatopoeia": "しゅぼしゅぼ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_033",
+    "time_stamps": {
+      "start": 116.135,
+      "end": 118.135,
+      "stroke_peak_recommendation": 116.535
+    },
+    "raw_text": "蓋がガチャガチャと閉じる",
+    "annotation": {
+      "main_onomatopoeia": "ガチャガチャ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_034",
+    "time_stamps": {
+      "start": 118.872,
+      "end": 120.872,
+      "stroke_peak_recommendation": 119.872
+    },
+    "raw_text": "ホースがカチャッと接続されて風着が勢いよく流れこむ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_035",
+    "time_stamps": {
+      "start": 120.872,
+      "end": 123.875,
+      "stroke_peak_recommendation": 121.272
+    },
+    "raw_text": "ホースから空気がブッシュブッシュッと漏れる",
+    "annotation": {
+      "main_onomatopoeia": "ブッシュ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_036",
+    "time_stamps": {
+      "start": 123.875,
+      "end": 125.875,
+      "stroke_peak_recommendation": 124.875
+    },
+    "raw_text": "もれた空気が与えよう",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_037",
+    "time_stamps": {
+      "start": 125.875,
+      "end": 128.631,
+      "stroke_peak_recommendation": 127.253
+    },
+    "raw_text": "ウーという音とともに空気が広がる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "急拡大・破裂展開",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_038",
+    "time_stamps": {
+      "start": 128.839,
+      "end": 130.839,
+      "stroke_peak_recommendation": 129.839
+    },
+    "raw_text": "心臓がどくどく",
+    "annotation": {
+      "main_onomatopoeia": "どくどく",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_039",
+    "time_stamps": {
+      "start": 130.839,
+      "end": 134.86,
+      "stroke_peak_recommendation": 132.85
+    },
+    "raw_text": "シャキンシャキン",
+    "annotation": {
+      "main_onomatopoeia": "シャキン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_040",
+    "time_stamps": {
+      "start": 134.86,
+      "end": 136.86,
+      "stroke_peak_recommendation": 136.06
+    },
+    "raw_text": "呼吸が、すーはー",
+    "annotation": {
+      "main_onomatopoeia": "すーはー",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_041",
+    "time_stamps": {
+      "start": 138.598,
+      "end": 140.336,
+      "stroke_peak_recommendation": 139.467
+    },
+    "raw_text": "空気が生きよいよくポンと割れる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_042",
+    "time_stamps": {
+      "start": 140.935,
+      "end": 142.935,
+      "stroke_peak_recommendation": 141.935
+    },
+    "raw_text": "スワッバスッパと外に空気が流れる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_043",
+    "time_stamps": {
+      "start": 143.934,
+      "end": 145.792,
+      "stroke_peak_recommendation": 145.049
+    },
+    "raw_text": "ウィーンの四角が横に伸びる",
+    "annotation": {
+      "main_onomatopoeia": "ウィーン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "の"
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_044",
+    "time_stamps": {
+      "start": 145.792,
+      "end": 147.792,
+      "stroke_peak_recommendation": 146.192
+    },
+    "raw_text": "パラパラと書類がめくれる",
+    "annotation": {
+      "main_onomatopoeia": "パラパラ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_045",
+    "time_stamps": {
+      "start": 147.792,
+      "end": 149.632,
+      "stroke_peak_recommendation": 148.712
+    },
+    "raw_text": "こんこんこんこん",
+    "annotation": {
+      "main_onomatopoeia": "こんこん",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_046",
+    "time_stamps": {
+      "start": 151.566,
+      "end": 153.566,
+      "stroke_peak_recommendation": 151.966
+    },
+    "raw_text": "空気がパンと弾けてキラキラと何かがちる",
+    "annotation": {
+      "main_onomatopoeia": "キラキラ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_047",
+    "time_stamps": {
+      "start": 154.297,
+      "end": 156.297,
+      "stroke_peak_recommendation": 155.297
+    },
+    "raw_text": "前から何か空気が破裂して",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "急拡大・破裂展開",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_048",
+    "time_stamps": {
+      "start": 157.977,
+      "end": 158.826,
+      "stroke_peak_recommendation": 158.401
+    },
+    "raw_text": "バンと破裂",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "急拡大・破裂展開",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_049",
+    "time_stamps": {
+      "start": 159.146,
+      "end": 162.445,
+      "stroke_peak_recommendation": 160.796
+    },
+    "raw_text": "バキッバキット割れるように弾ける",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_050",
+    "time_stamps": {
+      "start": 162.445,
+      "end": 162.945,
+      "stroke_peak_recommendation": 162.695
+    },
+    "raw_text": "ギュッとまとまる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_051",
+    "time_stamps": {
+      "start": 163.902,
+      "end": 166.734,
+      "stroke_peak_recommendation": 165.318
+    },
+    "raw_text": "バクチクのように細かく弾けるパンパンパン",
+    "annotation": {
+      "main_onomatopoeia": "パンパン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_052",
+    "time_stamps": {
+      "start": 168.615,
+      "end": 170.615,
+      "stroke_peak_recommendation": 169.815
+    },
+    "raw_text": "前方で大きく何かが爆発するパーン",
+    "annotation": {
+      "main_onomatopoeia": "パーン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_053",
+    "time_stamps": {
+      "start": 170.615,
+      "end": 171.115,
+      "stroke_peak_recommendation": 170.865
+    },
+    "raw_text": "鼓動が速くなるトトトト",
+    "annotation": {
+      "main_onomatopoeia": "トトトト",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_054",
+    "time_stamps": {
+      "start": 173.794,
+      "end": 175.072,
+      "stroke_peak_recommendation": 174.561
+    },
+    "raw_text": "呼吸がスーハー早くなる",
+    "annotation": {
+      "main_onomatopoeia": "スーハー",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_055",
+    "time_stamps": {
+      "start": 175.072,
+      "end": 177.072,
+      "stroke_peak_recommendation": 176.072
+    },
+    "raw_text": "ダンという音と共に膨らむ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_056",
+    "time_stamps": {
+      "start": 177.262,
+      "end": 179.262,
+      "stroke_peak_recommendation": 178.462
+    },
+    "raw_text": "心電図ピーコンピーコン",
+    "annotation": {
+      "main_onomatopoeia": "ピーコン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_057",
+    "time_stamps": {
+      "start": 179.722,
+      "end": 182.66,
+      "stroke_peak_recommendation": 180.122
+    },
+    "raw_text": "グーっと力づよく膨らむ",
+    "annotation": {
+      "main_onomatopoeia": "グーっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_058",
+    "time_stamps": {
+      "start": 183.136,
+      "end": 185.136,
+      "stroke_peak_recommendation": 184.136
+    },
+    "raw_text": "点滴がポタポタ",
+    "annotation": {
+      "main_onomatopoeia": "ポタポタ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_059",
+    "time_stamps": {
+      "start": 185.658,
+      "end": 188.431,
+      "stroke_peak_recommendation": 186.058
+    },
+    "raw_text": "ガーっと膨らむ",
+    "annotation": {
+      "main_onomatopoeia": "ガーっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_060",
+    "time_stamps": {
+      "start": 188.765,
+      "end": 190.765,
+      "stroke_peak_recommendation": 189.165
+    },
+    "raw_text": "ふいごがバフバフと動く",
+    "annotation": {
+      "main_onomatopoeia": "バフバフ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_061",
+    "time_stamps": {
+      "start": 192.464,
+      "end": 196.846,
+      "stroke_peak_recommendation": 194.655
+    },
+    "raw_text": "つい破裂、パン、バンバンバン",
+    "annotation": {
+      "main_onomatopoeia": "バンバン",
+      "context_conditions": {
+        "action_state": "急拡大・破裂展開",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_062",
+    "time_stamps": {
+      "start": 196.847,
+      "end": 198.416,
+      "stroke_peak_recommendation": 197.632
+    },
+    "raw_text": "心電図がすごい勢いで触れるピピピピピ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_063",
+    "time_stamps": {
+      "start": 198.416,
+      "end": 199.93,
+      "stroke_peak_recommendation": 199.173
+    },
+    "raw_text": "点滴がポタポタ",
+    "annotation": {
+      "main_onomatopoeia": "ポタポタ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_064",
+    "time_stamps": {
+      "start": 199.93,
+      "end": 201.93,
+      "stroke_peak_recommendation": 200.93
+    },
+    "raw_text": "ふいごがバフバフ",
+    "annotation": {
+      "main_onomatopoeia": "バフバフ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_065",
+    "time_stamps": {
+      "start": 201.93,
+      "end": 203.811,
+      "stroke_peak_recommendation": 202.87
+    },
+    "raw_text": "心臓トクトク",
+    "annotation": {
+      "main_onomatopoeia": "トクトク",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_066",
+    "time_stamps": {
+      "start": 205.116,
+      "end": 207.116,
+      "stroke_peak_recommendation": 206.316
+    },
+    "raw_text": "呼吸がスーハー",
+    "annotation": {
+      "main_onomatopoeia": "スーハー",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_067",
+    "time_stamps": {
+      "start": 237.588,
+      "end": 240.817,
+      "stroke_peak_recommendation": 239.202
+    },
+    "raw_text": "ふいごがゆっくりファフファフ",
+    "annotation": {
+      "main_onomatopoeia": "ファフファフ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_068",
+    "time_stamps": {
+      "start": 240.817,
+      "end": 244.358,
+      "stroke_peak_recommendation": 242.588
+    },
+    "raw_text": "点滴がポタポタ",
+    "annotation": {
+      "main_onomatopoeia": "ポタポタ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_069",
+    "time_stamps": {
+      "start": 244.358,
+      "end": 246.358,
+      "stroke_peak_recommendation": 245.358
+    },
+    "raw_text": "心臓がゆっくりトクトク",
+    "annotation": {
+      "main_onomatopoeia": "トクトク",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_070",
+    "time_stamps": {
+      "start": 247.324,
+      "end": 249.92,
+      "stroke_peak_recommendation": 247.724
+    },
+    "raw_text": "謎の機械ゆっくりシュッシュッ",
+    "annotation": {
+      "main_onomatopoeia": "シュッシュッ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_071",
+    "time_stamps": {
+      "start": 250.19,
+      "end": 253.698,
+      "stroke_peak_recommendation": 250.59
+    },
+    "raw_text": "呼吸ゆっくり、スーハー、止まる",
+    "annotation": {
+      "main_onomatopoeia": "ゆっくり",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "9dMU8HMJTp8_seg_072",
+    "time_stamps": {
+      "start": 257.762,
+      "end": 263.31,
+      "stroke_peak_recommendation": 260.536
+    },
+    "raw_text": "心電図が動かなくなるピーーーーー",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  }
+]

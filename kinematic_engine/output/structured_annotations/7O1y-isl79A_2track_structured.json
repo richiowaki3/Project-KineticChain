@@ -1,0 +1,1928 @@
+[
+  {
+    "segment_id": "7O1y-isl79A_seg_001",
+    "time_stamps": {
+      "start": 23.155,
+      "end": 25.155,
+      "stroke_peak_recommendation": 24.155
+    },
+    "raw_text": "左肩がムキムキ",
+    "annotation": {
+      "main_onomatopoeia": "ムキムキ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "肩部・上腕",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_002",
+    "time_stamps": {
+      "start": 25.249,
+      "end": 27.249,
+      "stroke_peak_recommendation": 26.249
+    },
+    "raw_text": "右肩もムキムキ",
+    "annotation": {
+      "main_onomatopoeia": "ムキムキ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "肩部・上腕",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_003",
+    "time_stamps": {
+      "start": 27.25,
+      "end": 29.25,
+      "stroke_peak_recommendation": 28.25
+    },
+    "raw_text": "おでこにバンダナ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_004",
+    "time_stamps": {
+      "start": 29.251,
+      "end": 30.985,
+      "stroke_peak_recommendation": 30.118
+    },
+    "raw_text": "おでこにエンブレムを装着",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_005",
+    "time_stamps": {
+      "start": 30.985,
+      "end": 32.985,
+      "stroke_peak_recommendation": 31.985
+    },
+    "raw_text": "後ろ髪はながくポニーテール",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_006",
+    "time_stamps": {
+      "start": 33.107,
+      "end": 35.107,
+      "stroke_peak_recommendation": 34.107
+    },
+    "raw_text": "左腰に刃",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "腰部・骨盤",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_007",
+    "time_stamps": {
+      "start": 37.352,
+      "end": 39.352,
+      "stroke_peak_recommendation": 37.752
+    },
+    "raw_text": "ふすまがスッと開く",
+    "annotation": {
+      "main_onomatopoeia": "スッ",
+      "context_conditions": {
+        "action_state": "急拡大・破裂展開",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_008",
+    "time_stamps": {
+      "start": 40.001,
+      "end": 42.001,
+      "stroke_peak_recommendation": 40.401
+    },
+    "raw_text": "ペタペタと歩く",
+    "annotation": {
+      "main_onomatopoeia": "ペタペタ",
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_009",
+    "time_stamps": {
+      "start": 42.395,
+      "end": 44.395,
+      "stroke_peak_recommendation": 43.395
+    },
+    "raw_text": "真っすぐな床",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_010",
+    "time_stamps": {
+      "start": 44.396,
+      "end": 45.274,
+      "stroke_peak_recommendation": 44.835
+    },
+    "raw_text": "なんにかがそよそよとゆれる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "流動・波動揺らぎ",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_011",
+    "time_stamps": {
+      "start": 45.274,
+      "end": 48.719,
+      "stroke_peak_recommendation": 46.996
+    },
+    "raw_text": "てってってと歩く",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_012",
+    "time_stamps": {
+      "start": 48.719,
+      "end": 50.719,
+      "stroke_peak_recommendation": 49.719
+    },
+    "raw_text": "侍っぽい人物が歩く",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_013",
+    "time_stamps": {
+      "start": 51.553,
+      "end": 53.553,
+      "stroke_peak_recommendation": 52.553
+    },
+    "raw_text": "真っすぐの廊下をその侍が歩いていく",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_014",
+    "time_stamps": {
+      "start": 55.207,
+      "end": 56.599,
+      "stroke_peak_recommendation": 55.903
+    },
+    "raw_text": "ゆらゆら",
+    "annotation": {
+      "main_onomatopoeia": "ゆらゆら",
+      "context_conditions": {
+        "action_state": "流動・波動揺らぎ",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_015",
+    "time_stamps": {
+      "start": 56.749,
+      "end": 62.191,
+      "stroke_peak_recommendation": 59.47
+    },
+    "raw_text": "広いところを歩く",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_016",
+    "time_stamps": {
+      "start": 63.186,
+      "end": 64.635,
+      "stroke_peak_recommendation": 63.91
+    },
+    "raw_text": "侍何かに出会う",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_017",
+    "time_stamps": {
+      "start": 64.635,
+      "end": 68.936,
+      "stroke_peak_recommendation": 66.786
+    },
+    "raw_text": "耳がははえていて、前足があり、鼻が長い、髭がある犬",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_018",
+    "time_stamps": {
+      "start": 69.844,
+      "end": 71.844,
+      "stroke_peak_recommendation": 70.844
+    },
+    "raw_text": "犬は走る",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_019",
+    "time_stamps": {
+      "start": 76.506,
+      "end": 80.0,
+      "stroke_peak_recommendation": 78.253
+    },
+    "raw_text": "侍は右腰から団子を出して犬に与える",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "腰部・骨盤",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_020",
+    "time_stamps": {
+      "start": 80.0,
+      "end": 84.415,
+      "stroke_peak_recommendation": 82.207
+    },
+    "raw_text": "犬は団子を食べる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_021",
+    "time_stamps": {
+      "start": 84.415,
+      "end": 85.0,
+      "stroke_peak_recommendation": 84.707
+    },
+    "raw_text": "ワンと吠える",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_022",
+    "time_stamps": {
+      "start": 85.0,
+      "end": 87.002,
+      "stroke_peak_recommendation": 86.001
+    },
+    "raw_text": "犬、毛づくろい",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_023",
+    "time_stamps": {
+      "start": 88.333,
+      "end": 89.116,
+      "stroke_peak_recommendation": 88.685
+    },
+    "raw_text": "サッと後ろにつく",
+    "annotation": {
+      "main_onomatopoeia": "サッ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_024",
+    "time_stamps": {
+      "start": 91.133,
+      "end": 94.673,
+      "stroke_peak_recommendation": 91.533
+    },
+    "raw_text": "ノッシノッシと歩く",
+    "annotation": {
+      "main_onomatopoeia": "ノッシノッシ",
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_025",
+    "time_stamps": {
+      "start": 94.673,
+      "end": 96.846,
+      "stroke_peak_recommendation": 95.76
+    },
+    "raw_text": "てってってと犬が歩く",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_026",
+    "time_stamps": {
+      "start": 96.846,
+      "end": 99.896,
+      "stroke_peak_recommendation": 98.371
+    },
+    "raw_text": "二人並んで歩く(ミニチュア表現)",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "ミニチュア表現 (VS Mode)",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_027",
+    "time_stamps": {
+      "start": 99.896,
+      "end": 102.225,
+      "stroke_peak_recommendation": 100.296
+    },
+    "raw_text": "植物がゆらゆらと揺れる",
+    "annotation": {
+      "main_onomatopoeia": "ゆらゆら",
+      "context_conditions": {
+        "action_state": "流動・波動揺らぎ",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_028",
+    "time_stamps": {
+      "start": 104.469,
+      "end": 106.469,
+      "stroke_peak_recommendation": 105.469
+    },
+    "raw_text": "歩く(ミニチュア表現)",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "ミニチュア表現 (VS Mode)",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_029",
+    "time_stamps": {
+      "start": 106.469,
+      "end": 106.969,
+      "stroke_peak_recommendation": 106.719
+    },
+    "raw_text": "足を止める",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_030",
+    "time_stamps": {
+      "start": 108.148,
+      "end": 110.148,
+      "stroke_peak_recommendation": 109.148
+    },
+    "raw_text": "何かがカサカサ動く",
+    "annotation": {
+      "main_onomatopoeia": "カサカサ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_031",
+    "time_stamps": {
+      "start": 110.556,
+      "end": 112.556,
+      "stroke_peak_recommendation": 111.556
+    },
+    "raw_text": "激しくカサカサ動く",
+    "annotation": {
+      "main_onomatopoeia": "カサカサ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_032",
+    "time_stamps": {
+      "start": 113.42,
+      "end": 114.298,
+      "stroke_peak_recommendation": 113.815
+    },
+    "raw_text": "侍、じっと見る",
+    "annotation": {
+      "main_onomatopoeia": "じっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_033",
+    "time_stamps": {
+      "start": 114.621,
+      "end": 116.621,
+      "stroke_peak_recommendation": 115.621
+    },
+    "raw_text": "木の上を渡ってくる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_034",
+    "time_stamps": {
+      "start": 117.814,
+      "end": 119.814,
+      "stroke_peak_recommendation": 118.814
+    },
+    "raw_text": "飛び降り着地(ミニチュア表現)",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "着地・床面衝撃",
+        "spatial_mode": "ミニチュア表現 (VS Mode)",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_035",
+    "time_stamps": {
+      "start": 119.814,
+      "end": 125.657,
+      "stroke_peak_recommendation": 122.736
+    },
+    "raw_text": "体のあちこちに付いている",
+    "annotation": {
+      "main_onomatopoeia": "あちこち",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "に"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_036",
+    "time_stamps": {
+      "start": 126.204,
+      "end": 128.204,
+      "stroke_peak_recommendation": 126.604
+    },
+    "raw_text": "猿じっとみている",
+    "annotation": {
+      "main_onomatopoeia": "じっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_037",
+    "time_stamps": {
+      "start": 128.731,
+      "end": 130.731,
+      "stroke_peak_recommendation": 129.731
+    },
+    "raw_text": "激しく飛び跳ねる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_038",
+    "time_stamps": {
+      "start": 130.731,
+      "end": 134.309,
+      "stroke_peak_recommendation": 132.52
+    },
+    "raw_text": "木の周りをぐるぐる回り飛び上がる(ミニチュア表現)",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "ミニチュア表現 (VS Mode)",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_039",
+    "time_stamps": {
+      "start": 134.385,
+      "end": 136.996,
+      "stroke_peak_recommendation": 135.69
+    },
+    "raw_text": "飛び上がり着地",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "着地・床面衝撃",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_040",
+    "time_stamps": {
+      "start": 136.996,
+      "end": 139.892,
+      "stroke_peak_recommendation": 138.444
+    },
+    "raw_text": "身体がかゆい",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_041",
+    "time_stamps": {
+      "start": 141.033,
+      "end": 144.192,
+      "stroke_peak_recommendation": 142.613
+    },
+    "raw_text": "侍は団子取り出し投げる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_042",
+    "time_stamps": {
+      "start": 144.192,
+      "end": 147.751,
+      "stroke_peak_recommendation": 145.971
+    },
+    "raw_text": "だんご高く飛び上がり、スローもションで飛んでいく",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_043",
+    "time_stamps": {
+      "start": 147.751,
+      "end": 150.514,
+      "stroke_peak_recommendation": 149.132
+    },
+    "raw_text": "猿はそれに気が付き走って追いかける",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_044",
+    "time_stamps": {
+      "start": 150.514,
+      "end": 153.946,
+      "stroke_peak_recommendation": 152.23
+    },
+    "raw_text": "高く飛び上がり",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_045",
+    "time_stamps": {
+      "start": 153.946,
+      "end": 156.26,
+      "stroke_peak_recommendation": 155.103
+    },
+    "raw_text": "がっちりキャッチし、",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_046",
+    "time_stamps": {
+      "start": 156.26,
+      "end": 159.036,
+      "stroke_peak_recommendation": 157.648
+    },
+    "raw_text": "木をぐるぐるまわって着地",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "着地・床面衝撃",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_047",
+    "time_stamps": {
+      "start": 160.604,
+      "end": 164.466,
+      "stroke_peak_recommendation": 162.535
+    },
+    "raw_text": "猿、団子をもぐもぐ食べる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_048",
+    "time_stamps": {
+      "start": 164.466,
+      "end": 166.466,
+      "stroke_peak_recommendation": 164.866
+    },
+    "raw_text": "ピョーンとジャンプ",
+    "annotation": {
+      "main_onomatopoeia": "ピョーン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_049",
+    "time_stamps": {
+      "start": 170.101,
+      "end": 172.101,
+      "stroke_peak_recommendation": 171.101
+    },
+    "raw_text": "頭をなでる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_050",
+    "time_stamps": {
+      "start": 172.101,
+      "end": 174.101,
+      "stroke_peak_recommendation": 173.101
+    },
+    "raw_text": "頭をなででられる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_051",
+    "time_stamps": {
+      "start": 174.101,
+      "end": 174.601,
+      "stroke_peak_recommendation": 174.351
+    },
+    "raw_text": "後ろに回り込んで",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_052",
+    "time_stamps": {
+      "start": 174.601,
+      "end": 176.032,
+      "stroke_peak_recommendation": 175.316
+    },
+    "raw_text": "歩き出す",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_053",
+    "time_stamps": {
+      "start": 176.032,
+      "end": 187.937,
+      "stroke_peak_recommendation": 181.984
+    },
+    "raw_text": "のっしのっし、３人三様で歩く",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_054",
+    "time_stamps": {
+      "start": 190.73,
+      "end": 192.73,
+      "stroke_peak_recommendation": 191.73
+    },
+    "raw_text": "地面が流れる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_055",
+    "time_stamps": {
+      "start": 192.73,
+      "end": 194.752,
+      "stroke_peak_recommendation": 193.741
+    },
+    "raw_text": "歩く(ミニチュア表現)",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "ミニチュア表現 (VS Mode)",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_056",
+    "time_stamps": {
+      "start": 194.752,
+      "end": 200.906,
+      "stroke_peak_recommendation": 197.829
+    },
+    "raw_text": "地面が流れる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_057",
+    "time_stamps": {
+      "start": 205.83,
+      "end": 207.83,
+      "stroke_peak_recommendation": 206.83
+    },
+    "raw_text": "鳥が飛んでいる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_058",
+    "time_stamps": {
+      "start": 207.83,
+      "end": 208.903,
+      "stroke_peak_recommendation": 208.366
+    },
+    "raw_text": "先が曲がったくちばし",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_059",
+    "time_stamps": {
+      "start": 208.903,
+      "end": 210.903,
+      "stroke_peak_recommendation": 209.903
+    },
+    "raw_text": "鉢巻を巻いている",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_060",
+    "time_stamps": {
+      "start": 210.903,
+      "end": 219.009,
+      "stroke_peak_recommendation": 211.303
+    },
+    "raw_text": "わっさーわっさーと宙をまう",
+    "annotation": {
+      "main_onomatopoeia": "わっさー",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_061",
+    "time_stamps": {
+      "start": 219.009,
+      "end": 221.331,
+      "stroke_peak_recommendation": 220.17
+    },
+    "raw_text": "空を見あげ、飛ぶ鳥を目で追う",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_062",
+    "time_stamps": {
+      "start": 222.907,
+      "end": 224.907,
+      "stroke_peak_recommendation": 223.907
+    },
+    "raw_text": "団子を投げる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_063",
+    "time_stamps": {
+      "start": 225.963,
+      "end": 227.963,
+      "stroke_peak_recommendation": 226.963
+    },
+    "raw_text": "団子空高く飛ぶ(ミニチュア表現)",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "ミニチュア表現 (VS Mode)",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_064",
+    "time_stamps": {
+      "start": 230.162,
+      "end": 232.162,
+      "stroke_peak_recommendation": 231.162
+    },
+    "raw_text": "鳥が飛ぶ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_065",
+    "time_stamps": {
+      "start": 232.571,
+      "end": 234.571,
+      "stroke_peak_recommendation": 232.971
+    },
+    "raw_text": "ぴょんと飛び込む",
+    "annotation": {
+      "main_onomatopoeia": "ぴょん",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_067",
+    "time_stamps": {
+      "start": 248.066,
+      "end": 250.514,
+      "stroke_peak_recommendation": 249.29
+    },
+    "raw_text": "鳥が団子を食べる、むしゅむしゃ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_068",
+    "time_stamps": {
+      "start": 264.019,
+      "end": 267.883,
+      "stroke_peak_recommendation": 265.951
+    },
+    "raw_text": "頭をなでる",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_069",
+    "time_stamps": {
+      "start": 267.883,
+      "end": 269.163,
+      "stroke_peak_recommendation": 268.523
+    },
+    "raw_text": "向かい合う",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_070",
+    "time_stamps": {
+      "start": 269.163,
+      "end": 271.781,
+      "stroke_peak_recommendation": 269.563
+    },
+    "raw_text": "ぺたぺたと歩く",
+    "annotation": {
+      "main_onomatopoeia": "ぺたぺた",
+      "context_conditions": {
+        "action_state": "歩行・重進",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_071",
+    "time_stamps": {
+      "start": 271.781,
+      "end": 273.23,
+      "stroke_peak_recommendation": 272.181
+    },
+    "raw_text": "バッと飛び上がる",
+    "annotation": {
+      "main_onomatopoeia": "バッ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_072",
+    "time_stamps": {
+      "start": 293.658,
+      "end": 296.822,
+      "stroke_peak_recommendation": 295.24
+    },
+    "raw_text": "ごつごつした岩場",
+    "annotation": {
+      "main_onomatopoeia": "ごつごつ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "した"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_073",
+    "time_stamps": {
+      "start": 301.576,
+      "end": 308.966,
+      "stroke_peak_recommendation": 305.271
+    },
+    "raw_text": "めらめらしたものが見える",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_074",
+    "time_stamps": {
+      "start": 310.198,
+      "end": 315.851,
+      "stroke_peak_recommendation": 310.598
+    },
+    "raw_text": "波がざっぶーんざっぶーん",
+    "annotation": {
+      "main_onomatopoeia": "ざっぶーん",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_076",
+    "time_stamps": {
+      "start": 321.938,
+      "end": 325.693,
+      "stroke_peak_recommendation": 323.815
+    },
+    "raw_text": "ボート(ミニチュア表現)",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "ミニチュア表現 (VS Mode)",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_077",
+    "time_stamps": {
+      "start": 326.692,
+      "end": 328.692,
+      "stroke_peak_recommendation": 327.692
+    },
+    "raw_text": "乗り込む",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_078",
+    "time_stamps": {
+      "start": 328.692,
+      "end": 330.91,
+      "stroke_peak_recommendation": 329.092
+    },
+    "raw_text": "船をぎーこぎーこと漕ぐ",
+    "annotation": {
+      "main_onomatopoeia": "ぎーこぎーこ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_080",
+    "time_stamps": {
+      "start": 369.291,
+      "end": 371.291,
+      "stroke_peak_recommendation": 370.291
+    },
+    "raw_text": "荒れ狂う海",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_081",
+    "time_stamps": {
+      "start": 372.859,
+      "end": 378.136,
+      "stroke_peak_recommendation": 376.025
+    },
+    "raw_text": "雷が落ちる、ピカーピカードカンドカン",
+    "annotation": {
+      "main_onomatopoeia": "ピカーピカー",
+      "context_conditions": {
+        "action_state": "着地・床面衝撃",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_082",
+    "time_stamps": {
+      "start": 378.136,
+      "end": 383.065,
+      "stroke_peak_recommendation": 380.601
+    },
+    "raw_text": "船が島に上陸(ミニチュア表現)",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "ミニチュア表現 (VS Mode)",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_083",
+    "time_stamps": {
+      "start": 388.011,
+      "end": 390.011,
+      "stroke_peak_recommendation": 389.011
+    },
+    "raw_text": "大きな扉が",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_084",
+    "time_stamps": {
+      "start": 391.615,
+      "end": 394.403,
+      "stroke_peak_recommendation": 392.015
+    },
+    "raw_text": "両手で重い戸を押し開ける、ぐーっ",
+    "annotation": {
+      "main_onomatopoeia": "ぐーっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_085",
+    "time_stamps": {
+      "start": 394.403,
+      "end": 398.811,
+      "stroke_peak_recommendation": 396.607
+    },
+    "raw_text": "ギー",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_086",
+    "time_stamps": {
+      "start": 398.811,
+      "end": 400.811,
+      "stroke_peak_recommendation": 399.211
+    },
+    "raw_text": "ぐーっ",
+    "annotation": {
+      "main_onomatopoeia": "ぐーっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_087",
+    "time_stamps": {
+      "start": 400.811,
+      "end": 402.508,
+      "stroke_peak_recommendation": 401.659
+    },
+    "raw_text": "ぐぐぐぐ",
+    "annotation": {
+      "main_onomatopoeia": "ぐぐぐぐ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_088",
+    "time_stamps": {
+      "start": 402.508,
+      "end": 404.631,
+      "stroke_peak_recommendation": 403.569
+    },
+    "raw_text": "ぎぎぎぎ、戸が開く",
+    "annotation": {
+      "main_onomatopoeia": "ぎぎぎぎ",
+      "context_conditions": {
+        "action_state": "急拡大・破裂展開",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_089",
+    "time_stamps": {
+      "start": 407.138,
+      "end": 409.536,
+      "stroke_peak_recommendation": 408.337
+    },
+    "raw_text": "足を止める",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_090",
+    "time_stamps": {
+      "start": 417.043,
+      "end": 418.739,
+      "stroke_peak_recommendation": 417.891
+    },
+    "raw_text": "角が生えていて",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_091",
+    "time_stamps": {
+      "start": 418.739,
+      "end": 420.739,
+      "stroke_peak_recommendation": 419.739
+    },
+    "raw_text": "牙が生えていて",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_092",
+    "time_stamps": {
+      "start": 420.739,
+      "end": 423.364,
+      "stroke_peak_recommendation": 422.051
+    },
+    "raw_text": "胸も右肩も左肩も筋肉",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "肩部・上腕",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_093",
+    "time_stamps": {
+      "start": 423.364,
+      "end": 425.364,
+      "stroke_peak_recommendation": 424.364
+    },
+    "raw_text": "いかつい",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_094",
+    "time_stamps": {
+      "start": 426.618,
+      "end": 428.618,
+      "stroke_peak_recommendation": 427.618
+    },
+    "raw_text": "「おまえ!」と指をさす",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "手指・指先",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_095",
+    "time_stamps": {
+      "start": 433.761,
+      "end": 435.761,
+      "stroke_peak_recommendation": 434.761
+    },
+    "raw_text": "侍、刀にぬく",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_096",
+    "time_stamps": {
+      "start": 437.045,
+      "end": 439.045,
+      "stroke_peak_recommendation": 438.045
+    },
+    "raw_text": "犬は口を食いしばり、",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_097",
+    "time_stamps": {
+      "start": 439.045,
+      "end": 441.511,
+      "stroke_peak_recommendation": 440.278
+    },
+    "raw_text": "猿は口をとがらせ",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_098",
+    "time_stamps": {
+      "start": 449.121,
+      "end": 454.147,
+      "stroke_peak_recommendation": 451.634
+    },
+    "raw_text": "スローモーションで走る",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_099",
+    "time_stamps": {
+      "start": 458.663,
+      "end": 460.663,
+      "stroke_peak_recommendation": 459.663
+    },
+    "raw_text": "鬼はでっかい棍棒を取り出す",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_100",
+    "time_stamps": {
+      "start": 461.977,
+      "end": 467.069,
+      "stroke_peak_recommendation": 462.377
+    },
+    "raw_text": "ドスドスドスと走る",
+    "annotation": {
+      "main_onomatopoeia": "ドスドスドス",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_101",
+    "time_stamps": {
+      "start": 469.295,
+      "end": 470.0,
+      "stroke_peak_recommendation": 469.612
+    },
+    "raw_text": "どたどたと走る",
+    "annotation": {
+      "main_onomatopoeia": "どたどた",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_102",
+    "time_stamps": {
+      "start": 470.913,
+      "end": 483.011,
+      "stroke_peak_recommendation": 476.962
+    },
+    "raw_text": "棍棒を振りおろす、刀を振り下ろす",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_103",
+    "time_stamps": {
+      "start": 505.646,
+      "end": 506.733,
+      "stroke_peak_recommendation": 506.046
+    },
+    "raw_text": "ドスンと着地",
+    "annotation": {
+      "main_onomatopoeia": "ドスン",
+      "context_conditions": {
+        "action_state": "着地・床面衝撃",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_104",
+    "time_stamps": {
+      "start": 506.733,
+      "end": 507.77,
+      "stroke_peak_recommendation": 507.251
+    },
+    "raw_text": "バント着地",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "着地・床面衝撃",
+        "spatial_mode": "通常スケール",
+        "body_part": "両足・下半身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_105",
+    "time_stamps": {
+      "start": 508.813,
+      "end": 510.813,
+      "stroke_peak_recommendation": 509.813
+    },
+    "raw_text": "たたたと走る",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_106",
+    "time_stamps": {
+      "start": 514.927,
+      "end": 516.73,
+      "stroke_peak_recommendation": 515.327
+    },
+    "raw_text": "犬腕ぬがぶりとかみつく",
+    "annotation": {
+      "main_onomatopoeia": "ぬがぶり",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_107",
+    "time_stamps": {
+      "start": 516.73,
+      "end": 518.73,
+      "stroke_peak_recommendation": 517.73
+    },
+    "raw_text": "いたたたた",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_108",
+    "time_stamps": {
+      "start": 531.582,
+      "end": 533.582,
+      "stroke_peak_recommendation": 531.982
+    },
+    "raw_text": "ドスンと叩きつけられる",
+    "annotation": {
+      "main_onomatopoeia": "ドスン",
+      "context_conditions": {
+        "action_state": "着地・床面衝撃",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_109",
+    "time_stamps": {
+      "start": 537.478,
+      "end": 539.478,
+      "stroke_peak_recommendation": 538.478
+    },
+    "raw_text": "ばさっびゅーびゅー",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "7O1y-isl79A_seg_110",
+    "time_stamps": {
+      "start": 544.277,
+      "end": 546.277,
+      "stroke_peak_recommendation": 545.277
+    },
+    "raw_text": "ばさっひゅーひゅー",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  }
+]

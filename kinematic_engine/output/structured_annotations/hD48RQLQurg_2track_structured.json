@@ -1,0 +1,362 @@
+[
+  {
+    "segment_id": "hD48RQLQurg_seg_000",
+    "time_stamps": {
+      "start": 0.001,
+      "end": 2.001,
+      "stroke_peak_recommendation": 1.001
+    },
+    "raw_text": "車を運転している",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_001",
+    "time_stamps": {
+      "start": 3.386,
+      "end": 5.386,
+      "stroke_peak_recommendation": 4.386
+    },
+    "raw_text": "窓の外の景色が後ろへと流れていく",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_002",
+    "time_stamps": {
+      "start": 7.251,
+      "end": 9.251,
+      "stroke_peak_recommendation": 7.651
+    },
+    "raw_text": "空には鳩がバタバタと羽ばたく",
+    "annotation": {
+      "main_onomatopoeia": "バタバタ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_003",
+    "time_stamps": {
+      "start": 17.658,
+      "end": 19.658,
+      "stroke_peak_recommendation": 18.658
+    },
+    "raw_text": "腕時計で時間を確認する",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "両腕・手",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_004",
+    "time_stamps": {
+      "start": 19.658,
+      "end": 20.158,
+      "stroke_peak_recommendation": 19.908
+    },
+    "raw_text": "目的の時間が迫っているので焦ってスピードを出す",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_005",
+    "time_stamps": {
+      "start": 21.229,
+      "end": 23.229,
+      "stroke_peak_recommendation": 22.229
+    },
+    "raw_text": "よそ見をする、チラチラ",
+    "annotation": {
+      "main_onomatopoeia": "チラチラ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_006",
+    "time_stamps": {
+      "start": 23.881,
+      "end": 25.881,
+      "stroke_peak_recommendation": 24.881
+    },
+    "raw_text": "前方に人が出てきてそれに気がつく、プロモーションでハンドルを左に切る",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_007",
+    "time_stamps": {
+      "start": 27.491,
+      "end": 29.286,
+      "stroke_peak_recommendation": 27.891
+    },
+    "raw_text": "あで激しくドカーンと何かにぶつかり車がひっくり返る(スローモーション)",
+    "annotation": {
+      "main_onomatopoeia": "ひっくり",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_008",
+    "time_stamps": {
+      "start": 29.64,
+      "end": 31.64,
+      "stroke_peak_recommendation": 30.64
+    },
+    "raw_text": "顔を激しくぶつける（スローモーション）",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_009",
+    "time_stamps": {
+      "start": 31.64,
+      "end": 33.396,
+      "stroke_peak_recommendation": 32.04
+    },
+    "raw_text": "ガラスが顔に当たって飛び散るバシャン（スローモーション）",
+    "annotation": {
+      "main_onomatopoeia": "たっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "頭部・顔面",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_010",
+    "time_stamps": {
+      "start": 34.64,
+      "end": 36.64,
+      "stroke_peak_recommendation": 35.04
+    },
+    "raw_text": "気を失うガックン",
+    "annotation": {
+      "main_onomatopoeia": "ガックン",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_011",
+    "time_stamps": {
+      "start": 37.246,
+      "end": 39.246,
+      "stroke_peak_recommendation": 37.646
+    },
+    "raw_text": "救急車が来るえっとランプが回るウーウー",
+    "annotation": {
+      "main_onomatopoeia": "るえっ",
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": "と"
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_012",
+    "time_stamps": {
+      "start": 40.287,
+      "end": 42.287,
+      "stroke_peak_recommendation": 41.287
+    },
+    "raw_text": "レッドランプがアタリを照らす",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_013",
+    "time_stamps": {
+      "start": 46.301,
+      "end": 48.301,
+      "stroke_peak_recommendation": 47.301
+    },
+    "raw_text": "救急隊員が駆け込んでくるスローモーション）",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_014",
+    "time_stamps": {
+      "start": 49.049,
+      "end": 51.049,
+      "stroke_peak_recommendation": 50.049
+    },
+    "raw_text": "救急隊員が負傷者を起こす",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_015",
+    "time_stamps": {
+      "start": 52.492,
+      "end": 54.492,
+      "stroke_peak_recommendation": 53.492
+    },
+    "raw_text": "救急隊員仲間を集めるこっちへ来いという身振り",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_016",
+    "time_stamps": {
+      "start": 54.492,
+      "end": 56.869,
+      "stroke_peak_recommendation": 55.68
+    },
+    "raw_text": "酸素マスクを取り付ける",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_017",
+    "time_stamps": {
+      "start": 65.948,
+      "end": 67.948,
+      "stroke_peak_recommendation": 66.948
+    },
+    "raw_text": "心臓マッサージの機械を取り出す。",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_018",
+    "time_stamps": {
+      "start": 68.723,
+      "end": 70.723,
+      "stroke_peak_recommendation": 69.723
+    },
+    "raw_text": "電気ショックがバツン",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  },
+  {
+    "segment_id": "hD48RQLQurg_seg_019",
+    "time_stamps": {
+      "start": 72.745,
+      "end": 74.745,
+      "stroke_peak_recommendation": 73.745
+    },
+    "raw_text": "ふたたび電気ショックがバツン",
+    "annotation": {
+      "main_onomatopoeia": null,
+      "context_conditions": {
+        "action_state": "身体運動",
+        "spatial_mode": "通常スケール",
+        "body_part": "全身",
+        "particle": null
+      }
+    }
+  }
+]
