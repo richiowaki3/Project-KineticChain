@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OnomaPoet Synth v6 - 7438語辞書直結 ＆ 4段階ドラマツルギー組曲シーケンサー</title>
+  <style>
+    :root {
+      --bg: #0b0f17;
+      --card-bg: #141b26;
+      --card-border: #233044;
+      --accent-blue: #38bdf8;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-purple: #a855f7;
+      --accent-rose: #f43f5e;
+      --accent-amber: #f59e0b;
+      --text: #e2e8f0;
+      --text-bright: #ffffff;
+      --muted: #8092a8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Meiryo, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 24px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+    .container { width: 100%; max-width: 1000px; display: flex; flex-direction: column; gap: 20px; }
+
+    header { text-align: center; margin-bottom: 6px; }
+    h1 { font-size: 26px; color: var(--text-bright); display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 800; letter-spacing: -0.5px; }
+    .badge { background: linear-gradient(135deg, #0284c7, #ec4899); color: #fff; font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: 700; letter-spacing: 0.5px; }
+    .subtitle { color: var(--muted); font-size: 14px; margin-top: 4px; }
+
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .section-title { font-size: 15px; font-weight: 700; color: var(--accent-blue); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
+    .section-title span { display: flex; align-items: center; gap: 8px; }
+
+    /* Input Section */
+    .input-row { display: flex; gap: 10px; margin-bottom: 14px; }
+    input[type="text"] {
+      flex: 1; background: #070a0f; border: 1px solid var(--card-border); border-radius: 10px;
+      padding: 13px 18px; font-size: 16px; color: var(--text-bright); outline: none; transition: all 0.2s;
+    }
+    input[type="text"]:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(56,189,248,0.2); }
+    .btn-convert {
+      background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff; border: none; border-radius: 10px; padding: 0 24px;
+      font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px;
+    }
+    .btn-convert:hover { background: linear-gradient(135deg, #0369a1, #1d4ed8); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(37,99,235,0.4); }
+
+    .presets { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); }
+    .preset-pill {
+      background: #192231; border: 1px solid var(--card-border); border-radius: 16px;
+      padding: 5px 13px; cursor: pointer; font-size: 12px; color: var(--text); transition: all 0.2s;
+    }
+    .preset-pill:hover { background: #223046; color: var(--accent-blue); border-color: var(--accent-blue); }
+
+    /* Poem Display Box */
+    .poem-box {
+      background: radial-gradient(circle at 50% 30%, #162032 0%, #080c14 100%);
+      border: 1px solid #2d3e58; border-radius: 12px; padding: 24px 20px;
+      min-height: 140px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+      position: relative;
+    }
+    .poem-status-tag { font-size: 11px; font-family: monospace; color: #38bdf8; background: rgba(56,189,248,0.15); padding: 4px 14px; border-radius: 12px; margin-bottom: 12px; font-weight: 700; border: 1px solid rgba(56,189,248,0.3); letter-spacing: 0.5px; }
+    
+    .poem-text-multiline {
+      font-size: 20px; font-weight: 700; color: #f8fafc; line-height: 1.8; letter-spacing: 1.2px; text-shadow: 0 2px 10px rgba(0,0,0,0.6); max-width: 92%;
+      text-align: center; white-space: pre-line;
+    }
+    .poem-subtext { font-size: 13px; color: var(--muted); margin-top: 12px; line-height: 1.5; }
+
+    /* Suite Progression Timeline */
+    .suite-timeline {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; margin-top: 16px; width: 100%;
+    }
+    .suite-stage-card {
+      background: rgba(15, 23, 42, 0.9); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px;
+      display: flex; flex-direction: column; gap: 4px; position: relative; transition: all 0.3s;
+    }
+    .suite-stage-card.stage-active {
+      border-color: #38bdf8; box-shadow: 0 0 16px rgba(56,189,248,0.4); transform: translateY(-2px);
+    }
+    .stage-header { display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 700; color: var(--muted); }
+    .stage-word { font-size: 18px; font-weight: 800; color: #fff; margin-top: 2px; }
+    .stage-desc { font-size: 11px; color: var(--accent-cyan); font-weight: 600; }
+    .stage-metrics { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-top: 6px; border-top: 1px solid #1e293b; padding-top: 4px; font-family: monospace; }
+
+    /* Audio Toolbar */
+    .audio-toolbar { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 18px; }
+    .audio-btn {
+      padding: 15px 16px; border-radius: 12px; border: 1px solid transparent; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;
+    }
+    .audio-btn .btn-title { display: flex; align-items: center; gap: 6px; font-size: 14px; }
+    .audio-btn .btn-desc { font-size: 11px; opacity: 0.85; font-weight: 500; }
+
+    .btn-dsp { background: rgba(2, 132, 199, 0.15); border-color: rgba(56, 189, 248, 0.35); color: #38bdf8; }
+    .btn-dsp:hover { background: rgba(2, 132, 199, 0.3); border-color: #38bdf8; transform: translateY(-2px); }
+    .btn-dsp.active { background: #0284c7; color: #fff; box-shadow: 0 0 16px rgba(2,132,199,0.7); }
+
+    .btn-tts { background: rgba(16, 185, 129, 0.15); border-color: rgba(52, 211, 153, 0.35); color: #34d399; }
+    .btn-tts:hover { background: rgba(16, 185, 129, 0.3); border-color: #34d399; transform: translateY(-2px); }
+    .btn-tts.active { background: #059669; color: #fff; box-shadow: 0 0 16px rgba(16,185,129,0.7); }
+
+    .btn-hybrid { background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(244, 63, 94, 0.25)); border-color: rgba(236, 72, 153, 0.45); color: #f472b6; }
+    .btn-hybrid:hover { background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(244, 63, 94, 0.4)); border-color: #f472b6; transform: translateY(-2px); }
+    .btn-hybrid.active { background: linear-gradient(135deg, #9333ea, #e11d48); color: #fff; box-shadow: 0 0 18px rgba(225,29,72,0.7); }
+
+    .btn-stop { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); color: #f87171; }
+    .btn-stop:hover { background: rgba(239, 68, 68, 0.3); border-color: #f87171; }
+
+    /* Timeline & Options Row */
+    .playback-options {
+      display: flex; justify-content: space-between; align-items: center; margin-top: 14px;
+      padding: 10px 16px; background: #070a0f; border-radius: 8px; border: 1px solid var(--card-border);
+      font-size: 13px; color: var(--muted);
+    }
+    .playback-options label { display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text); }
+    .playback-status { font-family: monospace; color: var(--accent-cyan); font-weight: 600; }
+
+    /* Visualizer */
+    .vis-box { margin-top: 14px; background: #070a0f; border-radius: 10px; border: 1px solid var(--card-border); overflow: hidden; height: 110px; position: relative; }
+    canvas { width: 100%; height: 100%; display: block; }
+    .vis-badge { position: absolute; top: 8px; left: 12px; font-size: 11px; color: var(--muted); font-family: monospace; font-weight: 600; }
+    .vis-engine-type { position: absolute; top: 8px; right: 12px; font-size: 11px; color: var(--accent-cyan); font-family: monospace; font-weight: 700; }
+
+    /* 16D Parameters & Model Inspector */
+    .params-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 14px; }
+    .param-card { background: #090d14; border: 1px solid var(--card-border); border-radius: 10px; padding: 15px; font-size: 13px; }
+    .param-card h4 { font-size: 13px; color: var(--accent-blue); margin-bottom: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid #1e293b; padding-bottom: 6px; }
+    .param-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 12px; }
+    .param-label { color: var(--muted); }
+    .param-val { font-family: monospace; color: var(--text-bright); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1><span>🎼 OnomaPoet Synth</span> <span class="badge">v6 SUITE DRAMATURGY & 7438D LEXICON</span></h1>
+    <p class="subtitle">文章脈絡からオノマトペ詩へ構造化 ＆ 4つの塊が展開する組曲型ダイナミックDSP音響エンジン</p>
+  </header>
+
+  <!-- Step 1: Input -->
+  <div class="card">
+    <div class="section-title">
+      <span>✍️ ① 短文・情景・オノマトペの入力</span>
+      <span style="font-size: 12px; color: #10b981; font-weight: 700;" id="dictStatusText">⚡ 7,438語オノマトペ辞書インデックス: 読込準備完了</span>
+    </div>
+    <div class="input-row">
+      <input type="text" id="inputText" placeholder="情景、感情、またはオノマトペを入力" value="ピカッと閃光が走ったこと思えば、どろどろと解け落ち、しゃがみ込むとごつごつとした床、さっさと退散">
+      <button class="btn-convert" id="btnConvert"><span>✨ オノマトペ詩に変換</span></button>
+    </div>
+    <div class="presets">
+      <span>試聴プリセット:</span>
+      <span class="preset-pill" data-text="ピカッと閃光が走ったこと思えば、どろどろと解け落ち、しゃがみ込むとごつごつとした床、さっさと退散">⚡ 4段コントラスト (ピカッ ➔ どろどろ ➔ ごつごつ ➔ さっさと)</span>
+      <span class="preset-pill" data-text="ゴーゴーと吹く風の中、ぐっと足で踏ん張って進む。道はけわしく長く続く">🌪️ 暴風・踏ん張り (ゴーゴー / ぐっと)</span>
+      <span class="preset-pill" data-text="がしゃんと砕け散り、ばりばりと割れ、どすんと重く響く。">💥 金属ガラス破砕 (がしゃん / ばりばり / どすん)</span>
+      <span class="preset-pill" data-text="暖炉の薪がぱちぱちと爆ぜて、めらめらと赤く燃える。">🔥 暖炉火花 (ぱちぱち / めらめら)</span>
+      <span class="preset-pill" data-text="澄んだ小川がさらさらと岩を撫で、ぽちゃんと水滴が跳ねる。">🍃 清流・水滴 (さらさら / ぽちゃん)</span>
+    </div>
+  </div>
+
+  <!-- Step 2: Poem Display & Suite Progression -->
+  <div class="card">
+    <div class="section-title"><span>📜 ② 生成されたオノマトペ詩 ＆ 4ステージ音響組曲展開</span></div>
+    <div class="poem-box">
+      <div class="poem-status-tag" id="poemStatusTag">POETIC STRUCTURING COMPLETE</div>
+      <div class="poem-text-multiline" id="poemDisplay"></div>
+      <div class="poem-subtext" id="poemSubtext"></div>
+    </div>
+
+    <!-- 4-Stage Suite Timeline Cards -->
+    <div class="suite-timeline" id="suiteTimeline"></div>
+
+    <!-- Step 3: Sound Controls -->
+    <div class="audio-toolbar">
+      <button class="audio-btn btn-dsp" id="btnPlayDSP">
+        <span class="btn-title">🎹 4段組曲フル尺DSP演奏</span>
+        <span class="btn-desc">情景の変貌に同期する劇的コントラスト伴奏</span>
+      </button>
+
+      <button class="audio-btn btn-tts" id="btnPlayTTS">
+        <span class="btn-title">🗣️ オノマトペ詩朗読 (TTS)</span>
+        <span class="btn-desc">詩的な抑揚と改行休符による感情朗読</span>
+      </button>
+
+      <button class="audio-btn btn-hybrid" id="btnPlayHybrid">
+        <span class="btn-title">✨ 組曲ハイブリッド完全同期</span>
+        <span class="btn-desc">朗読音声 ＋ 4段階変貌DSP組曲伴奏</span>
+      </button>
+
+      <button class="audio-btn btn-stop" id="btnStop">
+        <span class="btn-title">⏹️ 停止</span>
+        <span class="btn-desc">全音源・シーケンサー即時停止</span>
+      </button>
+    </div>
+
+    <!-- Playback Options & Progress -->
+    <div class="playback-options">
+      <label>
+        <input type="checkbox" id="chkLoop"> <span>🔁 ループ連続演奏 (BGMモード)</span>
+      </label>
+      <div class="playback-status" id="playbackProgress">SEQUENCE: IDLE</div>
+    </div>
+
+    <!-- Visualizer -->
+    <div class="vis-box">
+      <canvas id="visCanvas"></canvas>
+      <div class="vis-badge" id="visBadge">AUDIO ENGINE: IDLE</div>
+      <div class="vis-engine-type" id="visEngineType">TOPOLOGY: READY</div>
+    </div>
+  </div>
+
+  <!-- Step 4: 16D Parameter Inspector -->
+  <div class="card">
+    <div class="section-title"><span>📊 ③ 辞書から抽出された 16軸パラメータ ＆ 動的リズム算出値</span></div>
+    <div class="params-grid">
+      <!-- 1. Laban Effort -->
+      <div class="param-card">
+        <h4><span>身体力学 (Laban Effort 4軸)</span> <span id="labanLeadWord" style="color:var(--accent-amber);">-</span></h4>
+        <div class="param-row"><span class="param-label">x1 Weight (重厚/軽快):</span><span class="param-val" id="valWeight">-</span></div>
+        <div class="param-row"><span class="param-label">x2 Time (切迫/悠長):</span><span class="param-val" id="valTime">-</span></div>
+        <div class="param-row"><span class="param-label">x3 Space (直接/拡散):</span><span class="param-val" id="valSpace">-</span></div>
+        <div class="param-row"><span class="param-label">x4 Flow (流動/拘束):</span><span class="param-val" id="valFlow">-</span></div>
+      </div>
+
+      <!-- 2. Acoustic / Phrasing -->
+      <div class="param-card">
+        <h4><span>音響物理 ＆ 韻律構造</span> <span style="color:var(--accent-cyan);" id="acousticLeadLabel">-</span></h4>
+        <div class="param-row"><span class="param-label">基底周波数 (Freq):</span><span class="param-val" id="valFreq">-</span></div>
+        <div class="param-row"><span class="param-label">硬度 / 湿度 (Hard/Moist):</span><span class="param-val" id="valHardMoist">-</span></div>
+        <div class="param-row"><span class="param-label">初拍アクセント (Accent):</span><span class="param-val" id="valAccent">-</span></div>
+        <div class="param-row"><span class="param-label">規則性 (Regularity Jitter):</span><span class="param-val" id="valRegularity">-</span></div>
+      </div>
+
+      <!-- 3. Calculated Sequencer Variables -->
+      <div class="param-card">
+        <h4><span>組曲シーケンス制御値</span> <span style="color:var(--accent-emerald);">SUITE ENGINE</span></h4>
+        <div class="param-row"><span class="param-label">構成ステージ数:</span><span class="param-val" id="valSuiteStages">-</span></div>
+        <div class="param-row"><span class="param-label">テンポ変化レンジ:</span><span class="param-val" id="valTempoRange">-</span></div>
+        <div class="param-row"><span class="param-label">音響エンジン遷移:</span><span class="param-val" id="valEngineTransition">-</span></div>
+        <div class="param-row"><span class="param-label">総演奏時間:</span><span class="param-val" id="valTotalDuration">-</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================================
+// 1. EMBEDDED HIGH-PRECISION 16D LEXICON (INSTANT LOCAL FALLBACK)
+// ============================================================================
+let GLOBAL_WEB_LEXICON = {
+  // --- 1. SPARK / CRACKLE (閃光・鋭利アタック) ---
+  "ピカッ": {
+    engine: "crackle", engine_desc: "閃光・高周波スパーク (2800Hz)",
+    effort: { weight: 4.0, time: 9.0, space: 9.0, flow: 2.0 },
+    phrasing: { accent: 5.0, contour: 6.0, meter: 5.0, regularity: 0.5 },
+    acoustic: { freq_hz: 2800.0, hardness: 9.0, moisture: 1.0, decay: 9.0 },
+    dsp: { has_sokuon: true, sokuon_ms: 18.0, sub_kick: false, swing_ratio: 0.5, color_hex: "#38bdf8" }
+  },
+  "ぴかっ": {
+    engine: "crackle", engine_desc: "閃光・高周波スパーク (2800Hz)",
+    effort: { weight: 4.0, time: 9.0, space: 9.0, flow: 2.0 },
+    phrasing: { accent: 5.0, contour: 6.0, meter: 5.0, regularity: 0.5 },
+    acoustic: { freq_hz: 2800.0, hardness: 9.0, moisture: 1.0, decay: 9.0 },
+    dsp: { has_sokuon: true, sokuon_ms: 18.0, sub_kick: false, swing_ratio: 0.5, color_hex: "#38bdf8" }
+  },
+
+  // --- 2. VISCOUS FLUID (高粘性流体・超低域泥土) ---
+  "どろどろ": {
+    engine: "viscous", engine_desc: "高粘性流体・超低域泥土 (160Hz)",
+    effort: { weight: 7.5, time: 2.0, space: 2.0, flow: 6.0 },
+    phrasing: { accent: 4.5, contour: 5.0, meter: 6.0, regularity: 1.0 },
+    acoustic: { freq_hz: 160.0, hardness: 9.0, moisture: 9.0, decay: 2.0 },
+    dsp: { has_sokuon: false, sokuon_ms: 0.0, sub_kick: true, swing_ratio: 0.58, color_hex: "#4B3621" }
+  },
+  "ドロドロ": {
+    engine: "viscous", engine_desc: "高粘性流体・超低域泥土 (160Hz)",
+    effort: { weight: 7.5, time: 2.0, space: 2.0, flow: 6.0 },
+    phrasing: { accent: 4.5, contour: 5.0, meter: 6.0, regularity: 1.0 },
+    acoustic: { freq_hz: 160.0, hardness: 9.0, moisture: 9.0, decay: 2.0 },
+    dsp: { has_sokuon: false, sokuon_ms: 0.0, sub_kick: true, swing_ratio: 0.58, color_hex: "#4B3621" }
+  },
+
+  // --- 3. ROCK IMPACT / HARD SOLID (硬質打撃・岩石衝突) ---
+  "ごつごつ": {
+    engine: "rock_impact", engine_desc: "硬質打撃・岩石衝突 (350Hz)",
+    effort: { weight: 8.5, time: 7.0, space: 7.0, flow: 8.0 },
+    phrasing: { accent: 4.8, contour: 5.0, meter: 6.0, regularity: 1.0 },
+    acoustic: { freq_hz: 350.0, hardness: 1.0, moisture: 1.0, decay: 7.0 },
+    dsp: { has_sokuon: false, sokuon_ms: 0.0, sub_kick: true, swing_ratio: 0.58, color_hex: "#8B4513" }
+  },
+  "ゴツゴツ": {
+    engine: "rock_impact", engine_desc: "硬質打撃・岩石衝突 (350Hz)",
+    effort: { weight: 8.5, time: 7.0, space: 7.0, flow: 8.0 },
+    phrasing: { accent: 4.8, contour: 5.0, meter: 6.0, regularity: 1.0 },
+    acoustic: { freq_hz: 350.0, hardness: 1.0, moisture: 1.0, decay: 7.0 },
+    dsp: { has_sokuon: false, sokuon_ms: 0.0, sub_kick: true, swing_ratio: 0.58, color_hex: "#8B4513" }
+  },
+
+  // --- 4. RUSH / RAPID FRICTION (軽快疾走・高速摩擦) ---
+  "さっさ": {
+    engine: "rush", engine_desc: "軽快疾走・高速摩擦 (900Hz)",
+    effort: { weight: 1.5, time: 8.5, space: 7.0, flow: 2.0 },
+    phrasing: { accent: 3.5, contour: 5.0, meter: 6.0, regularity: 1.0 },
+    acoustic: { freq_hz: 900.0, hardness: 8.0, moisture: 2.0, decay: 8.0 },
+    dsp: { has_sokuon: true, sokuon_ms: 18.0, sub_kick: false, swing_ratio: 0.5, color_hex: "#f59e0b" }
+  },
+  "サッサ": {
+    engine: "rush", engine_desc: "軽快疾走・高速摩擦 (900Hz)",
+    effort: { weight: 1.5, time: 8.5, space: 7.0, flow: 2.0 },
+    phrasing: { accent: 3.5, contour: 5.0, meter: 6.0, regularity: 1.0 },
+    acoustic: { freq_hz: 900.0, hardness: 8.0, moisture: 2.0, decay: 8.0 },
+    dsp: { has_sokuon: true, sokuon_ms: 18.0, sub_kick: false, swing_ratio: 0.5, color_hex: "#f59e0b" }
+  },
+
+  // --- 5. STORM / WIND (暴風・唸り) ---
+  "ゴーゴー": {
+    engine: "storm", engine_desc: "暴風・乱流唸り (320Hz)",
+    effort: { weight: 7.5, time: 7.0, space: 7.5, flow: 8.5 },
+    phrasing: { accent: 4.5, contour: 5.0, meter: 6.0, regularity: 2.0 },
+    acoustic: { freq_hz: 320.0, hardness: 4.0, moisture: 4.0, decay: 7.5 },
+    dsp: { has_sokuon: false, sokuon_ms: 0.0, sub_kick: true, swing_ratio: 0.61, color_hex: "#fdba74" }
+  },
+  "ぐっと": {
+    engine: "rock_impact", engine_desc: "超重量踏ん張り・力感 (85Hz)",
+    effort: { weight: 8.8, time: 8.5, space: 7.5, flow: 2.0 },
+    phrasing: { accent: 5.0, contour: 5.5, meter: 5.0, regularity: 1.0 },
+    acoustic: { freq_hz: 85.0, hardness: 8.0, moisture: 3.0, decay: 4.5 },
+    dsp: { has_sokuon: true, sokuon_ms: 22.0, sub_kick: true, swing_ratio: 0.5, color_hex: "#e9d5ff" }
+  },
+
+  // --- 6. METAL / CRACKLE (金属破壊) ---
+  "がしゃん": {
+    engine: "metal", engine_desc: "金属破砕・多重共振 (820Hz)",
+    effort: { weight: 8.2, time: 9.0, space: 8.5, flow: 3.0 },
+    phrasing: { accent: 4.8, contour: 6.0, meter: 5.0, regularity: 0.8 },
+    acoustic: { freq_hz: 820.0, hardness: 9.5, moisture: 0.5, decay: 6.5 },
+    dsp: { has_sokuon: true, sokuon_ms: 15.0, sub_kick: true, swing_ratio: 0.5, color_hex: "#fda4af" }
+  },
+  "ばりばり": {
+    engine: "crackle", engine_desc: "裂断クラックル (1200Hz)",
+    effort: { weight: 7.2, time: 8.5, space: 7.5, flow: 3.0 },
+    phrasing: { accent: 4.5, contour: 5.5, meter: 6.0, regularity: 1.5 },
+    acoustic: { freq_hz: 1200.0, hardness: 8.5, moisture: 1.0, decay: 4.0 },
+    dsp: { has_sokuon: false, sokuon_ms: 0.0, sub_kick: true, swing_ratio: 0.55, color_hex: "#fde68a" }
+  },
+  "ぱちぱち": {
+    engine: "crackle", engine_desc: "火花爆ぜ (1800Hz)",
+    effort: { weight: 3.0, time: 8.8, space: 7.0, flow: 5.0 },
+    phrasing: { accent: 4.0, contour: 5.0, meter: 6.0, regularity: 1.2 },
+    acoustic: { freq_hz: 1800.0, hardness: 7.0, moisture: 0.5, decay: 3.0 },
+    dsp: { has_sokuon: false, sokuon_ms: 0.0, sub_kick: false, swing_ratio: 0.52, color_hex: "#f59e0b" }
+  },
+  "めらめら": {
+    engine: "storm", engine_desc: "火炎上昇気流 (450Hz)",
+    effort: { weight: 5.5, time: 6.0, space: 6.0, flow: 7.5 },
+    phrasing: { accent: 4.0, contour: 5.0, meter: 6.0, regularity: 2.5 },
+    acoustic: { freq_hz: 450.0, hardness: 3.0, moisture: 1.0, decay: 5.0 },
+    dsp: { has_sokuon: false, sokuon_ms: 0.0, sub_kick: false, swing_ratio: 0.55, color_hex: "#ef4444" }
+  },
+  "ぽちゃん": {
+    engine: "bubble", engine_desc: "水滴Minnaert気泡 (380-950Hz)",
+    effort: { weight: 4.5, time: 8.2, space: 7.5, flow: 6.0 },
+    phrasing: { accent: 3.5, contour: 6.0, meter: 5.0, regularity: 1.0 },
+    acoustic: { freq_hz: 380.0, hardness: 2.0, moisture: 10.0, decay: 3.5 },
+    dsp: { has_sokuon: false, sokuon_ms: 0.0, sub_kick: true, swing_ratio: 0.5, color_hex: "#06b6d4" }
+  },
+  "さらさら": {
+    engine: "friction", engine_desc: "微粒子流動摩擦 (4600Hz)",
+    effort: { weight: 1.8, time: 5.0, space: 5.5, flow: 8.8 },
+    phrasing: { accent: 4.0, contour: 5.0, meter: 6.0, regularity: 2.0 },
+    acoustic: { freq_hz: 4600.0, hardness: 4.0, moisture: 4.0, decay: 3.0 },
+    dsp: { has_sokuon: false, sokuon_ms: 0.0, sub_kick: false, swing_ratio: 0.52, color_hex: "#10b981" }
+  }
+};
+
+// Asynchronously load the 7,438-word full enriched index
+async function loadFullLexicon() {
+  try {
+    const res = await fetch('onomatopoeia_web_lexicon.json');
+    if (res.ok) {
+      const data = await res.json();
+      GLOBAL_WEB_LEXICON = Object.assign({}, data, GLOBAL_WEB_LEXICON);
+      document.getElementById('dictStatusText').innerText = `⚡ 7,438語オノマトペ辞書インデックス: ${Object.keys(data).length.toLocaleString()} 語同期完了`;
+      document.getElementById('dictStatusText').style.color = "#10b981";
+      console.log(`Loaded ${Object.keys(data).length} words into Web Lexicon.`);
+      // Re-trigger update with full lexicon
+      updatePoemAndParams(document.getElementById('inputText').value);
+    }
+  } catch(e) {
+    console.warn("Could not fetch full JSON, using rich embedded lexicon:", e);
+    document.getElementById('dictStatusText').innerText = `⚡ 16D高精度オノマトペインデックス稼働中 (ローカルモード)`;
+  }
+}
+
+// ============================================================================
+// 2. INTELLIGENT ONOMATOPOEIA EXTRACTOR & POETIC STRUCTURING
+// ============================================================================
+function toHiragana(str) {
+  return str.replace(/[\u30a1-\u30f6]/g, m => String.fromCharCode(m.charCodeAt(0) - 0x60));
+}
+function toKatakana(str) {
+  return str.replace(/[\u3041-\u3096]/g, m => String.fromCharCode(m.charCodeAt(0) + 0x60));
+}
+
+// Extract ALL onomatopoeias with exact positions and contextual clauses
+function extractOnomatopoeiasAndClauses(rawText) {
+  const text = rawText.trim();
+  const found = [];
+
+  // Sort dictionary keys by length descending (longest match)
+  const keys = Object.keys(GLOBAL_WEB_LEXICON).sort((a, b) => b.length - a.length);
+
+  // Split text by punctuation into rough clauses
+  const clauses = text.split(/([、。,\.\n]+)/).filter(c => c.trim().length > 0 && !/^[、。,\.\n]+$/.test(c));
+
+  // 1. Match from dictionary
+  for (const clause of clauses) {
+    let matchedWord = null;
+    let bestMatchLen = 0;
+
+    for (const k of keys) {
+      if (clause.includes(k) && k.length > bestMatchLen) {
+        matchedWord = k;
+        bestMatchLen = k.length;
+      }
+    }
+
+    // Heuristic regex match if not directly in dictionary keys:
+    if (!matchedWord) {
+      // Sokuon / Choon (e.g. ピカッ, さっさ, どろどろ)
+      const m1 = clause.match(/([ぁ-んァ-ヶ]{1,2}っ[とて]?)/);
+      const m2 = clause.match(/([ぁ-んァ-ヶ]{2})\1/);
+      const m3 = clause.match(/([ぁ-んァ-ヶ]{1,2}ー[ぁ-んァ-ヶ]{1,2}ー?)/);
+      if (m1) matchedWord = m1[1];
+      else if (m2) matchedWord = m2[0];
+      else if (m3) matchedWord = m3[1];
+    }
+
+    if (matchedWord) {
+      // Clean word (strip trailing particles like 'と', 'て')
+      let cleanWord = matchedWord.replace(/[とて]$/, '');
+      if (cleanWord.length >= 2) {
+        found.push({
+          word: cleanWord,
+          rawClause: clause.trim()
+        });
+      }
+    }
+  }
+
+  // Deduplicate words while preserving order of clauses
+  const uniqueList = [];
+  const seen = new Set();
+  for (const item of found) {
+    if (!seen.has(item.word)) {
+      seen.add(item.word);
+      uniqueList.push(item);
+    }
+  }
+
+  return uniqueList;
+}
+
+// Convert user prose into structured, rhythmic "Onomatopoeia Poem"
+function structureIntoPoem(userText, detectedItems) {
+  if (detectedItems.length === 0) {
+    return {
+      poemLines: [
+        "しんしんと　静まり返る夜の帳",
+        "さらさらと　時は清かに流れゆき",
+        "そよそよと　木々の息吹が通り抜ける"
+      ],
+      tokens: ["しんしん", "さらさら", "そよそよ"],
+      status: "GENERATED EVOCATIVE POEM",
+      desc: "静穏な時間と大気の流動を描いた詩行構造"
+    };
+  }
+
+  // Construct rhythmic poetic stanzas from detected clauses
+  const poemLines = [];
+  const tokens = [];
+
+  detectedItems.forEach((item, idx) => {
+    tokens.push(item.word);
+    let clause = item.rawClause;
+
+    // Clean up phrasing around onomatopoeia to make an elegant poetic line
+    // e.g. "しゃがみ込むとごつごつとした床" -> "ごつごつと　しゃがみ込む床"
+    let remainder = clause.replace(item.word, '');
+    remainder = remainder.replace(/^[とになのをはがとした]+/, '')
+                         .replace(/とした床$/, '硬き床')
+                         .replace(/と$/, '')
+                         .replace(/[、。]/g, '')
+                         .trim();
+
+    if (!remainder) {
+      remainder = "天地に響き渡る";
+    }
+
+    const particle = (item.word.endsWith("っ") || item.word.endsWith("ん")) ? "と" : "と";
+    const line = `${item.word}${particle}　${remainder}`;
+    poemLines.push(line);
+  });
+
+  return {
+    poemLines: poemLines,
+    tokens: tokens,
+    status: `SUITE POEM (${detectedItems.length} STAGES STRUCTURED)`,
+    desc: `文中の【${tokens.join(" ➔ ")}】の情景変化を、4小節ドラマツルギー組曲伴奏へマッピングしました。`
+  };
+}
+
+// Get rich word config from Global Lexicon or Phonetic Physics
+function getWordConfig(word) {
+  if (GLOBAL_WEB_LEXICON[word]) return GLOBAL_WEB_LEXICON[word];
+
+  const hira = toHiragana(word);
+  if (GLOBAL_WEB_LEXICON[hira]) return GLOBAL_WEB_LEXICON[hira];
+
+  const kata = toKatakana(word);
+  if (GLOBAL_WEB_LEXICON[kata]) return GLOBAL_WEB_LEXICON[kata];
+
+  // Phonetic Physics Resolver
+  let engine = "friction";
+  let desc = "音韻推定物理";
+  let freq = 800.0, weight = 5.0, time = 5.0, space = 5.0, flow = 5.0;
+  let subKick = false;
+
+  if (word.includes("ピ") || word.includes("ぴ") || word.includes("パ") || word.includes("ぱ") || word.includes("きら")) {
+    engine = "crackle"; desc = "高周波閃光・鋭利アタック";
+    freq = 2600.0; weight = 3.5; time = 8.5;
+  } else if (word.includes("どろ") || word.includes("ぬる") || word.includes("ねば")) {
+    engine = "viscous"; desc = "高粘性流体・超低周波";
+    freq = 160.0; weight = 8.0; time = 2.5; subKick = true;
+  } else if (word.includes("ごつ") || word.includes("がち") || word.includes("どす") || word.includes("がん")) {
+    engine = "rock_impact"; desc = "硬質岩石衝突・低域衝撃";
+    freq = 320.0; weight = 8.5; time = 7.5; subKick = true;
+  } else if (word.includes("さっ") || word.includes("すた") || word.includes("てく")) {
+    engine = "rush"; desc = "軽快疾走・高速摩擦";
+    freq = 950.0; weight = 2.0; time = 8.5;
+  }
+
+  return {
+    engine: engine,
+    engine_desc: desc,
+    effort: { weight: weight, time: time, space: space, flow: flow },
+    phrasing: { accent: 4.5, contour: 5.0, meter: 6.0, regularity: 2.0 },
+    acoustic: { freq_hz: freq, hardness: 5.0, moisture: 5.0, decay: 5.0 },
+    dsp: { has_sokuon: word.includes("っ"), sokuon_ms: 18.0, sub_kick: subKick, swing_ratio: 0.52, color_hex: "#38bdf8" }
+  };
+}
+
+// ============================================================================
+// 3. 8 DEDICATED PHYSICAL DSP SYNTHESIS CIRCUITS (Web Audio API)
+// ============================================================================
+let audioCtx = null;
+let activeNodes = [];
+let isPlaying = false;
+let sequenceTimer = null;
+let analyser = null;
+let visCanvas, visCtx;
+
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  if (!analyser) {
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 512;
+    analyser.connect(audioCtx.destination);
+  }
+}
+
+function makeDistortionCurve(amount) {
+  const k = typeof amount === 'number' ? amount : 50;
+  const n_samples = 44100;
+  const curve = new Float32Array(n_samples);
+  const deg = Math.PI / 180;
+  for (let i = 0; i < n_samples; ++i) {
+    const x = (i * 2) / n_samples - 1;
+    curve[i] = ((3 + k) * x * 20 * deg) / (Math.PI + k * Math.abs(x));
+  }
+  return curve;
+}
+
+// Trigger physical procedural sound based on exact 16D acoustic parameters
+function triggerPhysicalSound(word, time, velocity = 1.0) {
+  if (!audioCtx) return;
+  const conf = getWordConfig(word);
+  const now = time;
+  const dsp = conf.dsp;
+  const aco = conf.acoustic;
+  const eff = conf.effort;
+
+  const masterGain = audioCtx.createGain();
+  masterGain.connect(analyser);
+
+  // -------------------------------------------------------------
+  // CIRCUIT 1: CRACKLE / SPARK / HIGH-FREQ (ピカッ, ぱちぱち, きらきら)
+  // -------------------------------------------------------------
+  if (conf.engine === "crackle") {
+    // Sharp, instantaneous high-frequency electrical spark impulse
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = "sawtooth";
+    osc.frequency.setValueAtTime(aco.freq_hz, now);
+    osc.frequency.exponentialRampToValueAtTime(aco.freq_hz * 0.4, now + 0.08);
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = "highpass";
+    filter.frequency.setValueAtTime(1400, now);
+
+    const shaper = audioCtx.createWaveShaper();
+    shaper.curve = makeDistortionCurve(60);
+
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(0.75 * velocity, now + 0.003);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+
+    osc.connect(filter);
+    filter.connect(shaper);
+    shaper.connect(gain);
+    gain.connect(masterGain);
+
+    osc.start(now);
+    osc.stop(now + 0.15);
+    activeNodes.push(osc);
+  }
+
+  // -------------------------------------------------------------
+  // CIRCUIT 2: VISCOUS FLUID / HEAVY SLIME (どろどろ, ぬるぬる)
+  // -------------------------------------------------------------
+  else if (conf.engine === "viscous") {
+    // Ultra-low frequency resonant filter sweep with brownian turbulence
+    const sLen = Math.floor(audioCtx.sampleRate * 0.45);
+    const sBuf = audioCtx.createBuffer(1, sLen, audioCtx.sampleRate);
+    const sData = sBuf.getChannelData(0);
+    let last = 0;
+    for (let i = 0; i < sLen; i++) {
+      const white = Math.random() * 2 - 1;
+      sData[i] = (last + (0.02 * white)) / 1.02; // Brown noise
+      last = sData[i];
+      sData[i] *= 4.0;
+    }
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = sBuf;
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(aco.freq_hz * 2.5, now);
+    filter.frequency.exponentialRampToValueAtTime(aco.freq_hz * 0.8, now + 0.35);
+    filter.Q.value = 6.0;
+
+    const vca = audioCtx.createGain();
+    vca.gain.setValueAtTime(0.0001, now);
+    vca.gain.exponentialRampToValueAtTime(0.85 * velocity, now + 0.05);
+    vca.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
+
+    noise.connect(filter);
+    filter.connect(vca);
+    vca.connect(masterGain);
+
+    noise.start(now);
+    noise.stop(now + 0.45);
+    activeNodes.push(noise);
+
+    if (dsp.sub_kick) {
+      const sub = audioCtx.createOscillator();
+      const subGain = audioCtx.createGain();
+      sub.frequency.setValueAtTime(110, now);
+      sub.frequency.exponentialRampToValueAtTime(32, now + 0.35);
+      subGain.gain.setValueAtTime(0.8 * velocity, now);
+      subGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.38);
+      sub.connect(subGain);
+      subGain.connect(masterGain);
+      sub.start(now);
+      sub.stop(now + 0.4);
+      activeNodes.push(sub);
+    }
+  }
+
+  // -------------------------------------------------------------
+  // CIRCUIT 3: ROCK IMPACT / HARD KNOCK (ごつごつ, がちがち, どすん)
+  // -------------------------------------------------------------
+  else if (conf.engine === "rock_impact") {
+    // Inharmonic modal rock collision modes
+    const ratios = [1.0, 1.58, 2.34, 3.1];
+    const gains = [1.0, 0.6, 0.35, 0.2];
+
+    ratios.forEach((r, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(aco.freq_hz * r, now);
+
+      const amp = gains[idx] * 0.45 * velocity;
+      gain.gain.setValueAtTime(amp, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.18 / (1 + idx * 0.4));
+
+      osc.connect(gain);
+      gain.connect(masterGain);
+      osc.start(now);
+      osc.stop(now + 0.25);
+      activeNodes.push(osc);
+    });
+
+    if (dsp.sub_kick) {
+      const sub = audioCtx.createOscillator();
+      const subGain = audioCtx.createGain();
+      sub.frequency.setValueAtTime(140, now);
+      sub.frequency.exponentialRampToValueAtTime(45, now + 0.18);
+      subGain.gain.setValueAtTime(0.9 * velocity, now);
+      subGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+      sub.connect(subGain);
+      subGain.connect(masterGain);
+      sub.start(now);
+      sub.stop(now + 0.25);
+      activeNodes.push(sub);
+    }
+  }
+
+  // -------------------------------------------------------------
+  // CIRCUIT 4: RUSH / RAPID FRICTION (さっさ, てくてく, すたた)
+  // -------------------------------------------------------------
+  else if (conf.engine === "rush") {
+    // Agile bandpass noise burst with crisp attack
+    const sLen = Math.floor(audioCtx.sampleRate * 0.12);
+    const sBuf = audioCtx.createBuffer(1, sLen, audioCtx.sampleRate);
+    const sData = sBuf.getChannelData(0);
+    for (let i = 0; i < sLen; i++) sData[i] = (Math.random() * 2 - 1);
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = sBuf;
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = "bandpass";
+    filter.frequency.setValueAtTime(aco.freq_hz, now);
+    filter.Q.value = 3.2;
+
+    const vca = audioCtx.createGain();
+    vca.gain.setValueAtTime(0.0001, now);
+    vca.gain.exponentialRampToValueAtTime(0.55 * velocity, now + 0.008);
+    vca.gain.exponentialRampToValueAtTime(0.0001, now + 0.11);
+
+    noise.connect(filter);
+    filter.connect(vca);
+    vca.connect(masterGain);
+
+    noise.start(now);
+    noise.stop(now + 0.13);
+    activeNodes.push(noise);
+  }
+
+  // -------------------------------------------------------------
+  // CIRCUIT 5: STORM / WIND ROAR (ゴーゴー, びゅーびゅー)
+  // -------------------------------------------------------------
+  else if (conf.engine === "storm") {
+    const sLen = Math.floor(audioCtx.sampleRate * 0.7);
+    const sBuf = audioCtx.createBuffer(1, sLen, audioCtx.sampleRate);
+    const sData = sBuf.getChannelData(0);
+    let last = 0;
+    for (let i = 0; i < sLen; i++) {
+      const white = Math.random() * 2 - 1;
+      sData[i] = (last + (0.02 * white)) / 1.02;
+      last = sData[i];
+      sData[i] *= 3.0;
+    }
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = sBuf;
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = "lowpass";
+    filter.frequency.setValueAtTime(aco.freq_hz, now);
+
+    const lfo = audioCtx.createOscillator();
+    lfo.frequency.setValueAtTime(1.2, now);
+    const lfoGain = audioCtx.createGain();
+    lfoGain.gain.setValueAtTime(aco.freq_hz * 0.8, now);
+    lfo.connect(lfoGain);
+    lfoGain.connect(filter.frequency);
+
+    const vca = audioCtx.createGain();
+    vca.gain.setValueAtTime(0.0001, now);
+    vca.gain.exponentialRampToValueAtTime(0.7 * velocity, now + 0.08);
+    vca.gain.exponentialRampToValueAtTime(0.0001, now + 0.65);
+
+    noise.connect(filter);
+    filter.connect(vca);
+    vca.connect(masterGain);
+
+    noise.start(now);
+    noise.stop(now + 0.7);
+    lfo.start(now);
+    lfo.stop(now + 0.7);
+    activeNodes.push(noise, lfo);
+
+    if (dsp.sub_kick) {
+      const sub = audioCtx.createOscillator();
+      const subGain = audioCtx.createGain();
+      sub.frequency.setValueAtTime(95, now);
+      sub.frequency.exponentialRampToValueAtTime(32, now + 0.28);
+      subGain.gain.setValueAtTime(0.6 * velocity, now);
+      subGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
+      sub.connect(subGain);
+      subGain.connect(masterGain);
+      sub.start(now);
+      sub.stop(now + 0.32);
+      activeNodes.push(sub);
+    }
+  }
+
+  // -------------------------------------------------------------
+  // CIRCUIT 6: METAL / GLASS (がしゃん)
+  // -------------------------------------------------------------
+  else if (conf.engine === "metal") {
+    [1.0, 1.48, 2.14, 2.85, 3.42].forEach((r, idx) => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(aco.freq_hz * r, now);
+      gain.gain.setValueAtTime(0.25 * velocity / (idx + 1), now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.45 / (1 + idx * 0.5));
+      osc.connect(gain);
+      gain.connect(masterGain);
+      osc.start(now);
+      osc.stop(now + 0.5);
+      activeNodes.push(osc);
+    });
+  }
+
+  // -------------------------------------------------------------
+  // CIRCUIT 7: BUBBLE / DROP (ぽちゃん)
+  // -------------------------------------------------------------
+  else if (conf.engine === "bubble") {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(aco.freq_hz, now);
+    osc.frequency.exponentialRampToValueAtTime(aco.freq_hz * 2.5, now + 0.06);
+    gain.gain.setValueAtTime(0.6 * velocity, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
+    osc.connect(gain);
+    gain.connect(masterGain);
+    osc.start(now);
+    osc.stop(now + 0.35);
+    activeNodes.push(osc);
+  }
+
+  // -------------------------------------------------------------
+  // CIRCUIT 8: AIR / BREEZE / FRICTION (さらさら, そよそよ)
+  // -------------------------------------------------------------
+  else {
+    const sLen = Math.floor(audioCtx.sampleRate * 0.35);
+    const sBuf = audioCtx.createBuffer(1, sLen, audioCtx.sampleRate);
+    const sData = sBuf.getChannelData(0);
+    for (let i = 0; i < sLen; i++) sData[i] = (Math.random() * 2 - 1);
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = sBuf;
+
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = "bandpass";
+    filter.frequency.setValueAtTime(aco.freq_hz, now);
+    filter.Q.value = 2.5;
+
+    const vca = audioCtx.createGain();
+    vca.gain.setValueAtTime(0.0001, now);
+    vca.gain.exponentialRampToValueAtTime(0.4 * velocity, now + 0.02);
+    vca.gain.exponentialRampToValueAtTime(0.0001, now + 0.3);
+
+    noise.connect(filter);
+    filter.connect(vca);
+    vca.connect(masterGain);
+
+    noise.start(now);
+    noise.stop(now + 0.35);
+    activeNodes.push(noise);
+  }
+}
+
+// ============================================================================
+// 4. MULTI-STAGE SUITE SEQUENCER (DRAMATURGY PROGRESSION)
+// ============================================================================
+let suiteStages = [];
+let suiteStartTime = 0;
+let suiteTotalDuration = 0;
+
+function playSuiteSequence(isLoop = false) {
+  initAudio();
+  stopAllAudio();
+  isPlaying = true;
+
+  if (suiteStages.length === 0) return;
+
+  const now = audioCtx.currentTime + 0.08;
+  suiteStartTime = now;
+
+  let currentStageStartTime = now;
+  suiteTotalDuration = 0;
+
+  // Build sequential timeline across each distinct onomatopoeia stage
+  suiteStages.forEach((stage, stageIdx) => {
+    const conf = stage.config;
+    const eff = conf.effort;
+    const phr = conf.phrasing;
+    const dsp = conf.dsp;
+
+    // Stage-specific dynamic BPM: x2_time ➔ 70 - 150 BPM
+    const stageBpm = 68 + (eff.time * 8.2);
+    const beatSec = 60 / stageBpm;
+    const measureSec = beatSec * 4;
+    const stageBars = 1; // 1 distinct measure per dramatic stage
+    const stageDuration = measureSec * stageBars;
+
+    stage.startTime = currentStageStartTime;
+    stage.duration = stageDuration;
+    stage.bpm = stageBpm;
+
+    // Schedule 4 beats for this stage with its unique acoustic engine
+    for (let beat = 0; beat < 4; beat++) {
+      const beatTime = currentStageStartTime + (beat * beatSec);
+      const isDownbeat = (beat === 0);
+      const isBackbeat = (beat === 2);
+
+      const baseVel = 0.55 + (eff.weight * 0.045);
+      const beatVel = baseVel * (isDownbeat ? (1.0 + phr.accent * 0.09) : (isBackbeat ? 0.85 : 0.6));
+
+      const jitter = (Math.random() - 0.5) * (6.0 - Math.min(5.0, phr.regularity)) * 0.005;
+      const strikeTime = beatTime + jitter;
+
+      // Strike primary sound
+      triggerPhysicalSound(stage.word, strikeTime, beatVel);
+
+      // Reduplication / Swing bounce
+      if (stage.word.length >= 4 && (beat % 2 === 0)) {
+        const swingTime = strikeTime + (beatSec * dsp.swing_ratio);
+        triggerPhysicalSound(stage.word, swingTime, beatVel * 0.65);
+      }
+    }
+
+    currentStageStartTime += stageDuration;
+    suiteTotalDuration += stageDuration;
+  });
+
+  document.getElementById('visBadge').innerText = `AUDIO ENGINE: SUITE DRAMATURGY (${suiteStages.length} STAGES)`;
+  updateProgressUI();
+
+  // Highlight timeline cards dynamically during playback
+  const highlightInterval = setInterval(() => {
+    if (!isPlaying) { clearInterval(highlightInterval); return; }
+    const curTime = audioCtx.currentTime;
+    suiteStages.forEach((stage, idx) => {
+      const card = document.getElementById(`stageCard_${idx}`);
+      if (!card) return;
+      if (curTime >= stage.startTime && curTime < (stage.startTime + stage.duration)) {
+        card.classList.add('stage-active');
+        document.getElementById('visEngineType').innerText = `PLAYING STAGE ${idx+1}: ${stage.word} (${confToTag(stage.config)})`;
+      } else {
+        card.classList.remove('stage-active');
+      }
+    });
+  }, 50);
+
+  // Complete or loop
+  const totalMs = suiteTotalDuration * 1000;
+  sequenceTimer = setTimeout(() => {
+    clearInterval(highlightInterval);
+    if (document.getElementById('chkLoop').checked) {
+      playSuiteSequence(true);
+    } else {
+      stopAllAudio();
+    }
+  }, totalMs);
+}
+
+function confToTag(conf) {
+  return `${conf.engine.toUpperCase()} / ${conf.acoustic.freq_hz.toFixed(0)}Hz / Weight:${conf.effort.weight.toFixed(1)}`;
+}
+
+function updateProgressUI() {
+  if (!isPlaying) {
+    document.getElementById('playbackProgress').innerText = "SEQUENCE: IDLE";
+    return;
+  }
+  const elapsed = Math.max(0, audioCtx.currentTime - suiteStartTime);
+  document.getElementById('playbackProgress').innerText = `SUITE: ${elapsed.toFixed(1)}s / ${suiteTotalDuration.toFixed(1)}s (${((elapsed / suiteTotalDuration) * 100).toFixed(0)}%)`;
+
+  if (elapsed < suiteTotalDuration) {
+    requestAnimationFrame(updateProgressUI);
+  }
+}
+
+// ============================================================================
+// 5. SPEECH SYNTHESIS (TTS) & VISUALIZER
+// ============================================================================
+let synth = window.speechSynthesis;
+
+function playTTS(poemLines, onEndCallback = null) {
+  if (!synth) {
+    alert("音声読み上げ(SpeechSynthesis)がサポートされていません。");
+    return;
+  }
+  synth.cancel();
+
+  const fullText = poemLines.join("。\n");
+  const utter = new SpeechSynthesisUtterance(fullText);
+  utter.lang = "ja-JP";
+  utter.rate = 0.95;
+  utter.pitch = 1.05;
+
+  const voices = synth.getVoices();
+  const jp = voices.find(v => v.lang.includes("ja") || v.lang.includes("JP"));
+  if (jp) utter.voice = jp;
+
+  utter.onstart = () => {
+    document.getElementById('visBadge').innerText = "AUDIO ENGINE: POETIC SPEECH SYNTHESIS (TTS)";
+  };
+  utter.onend = () => {
+    if (onEndCallback) onEndCallback();
+    else stopAllAudio();
+  };
+
+  synth.speak(utter);
+}
+
+function stopAllAudio() {
+  isPlaying = false;
+  if (sequenceTimer) { clearTimeout(sequenceTimer); sequenceTimer = null; }
+  if (synth) synth.cancel();
+  activeNodes.forEach(node => {
+    try { node.stop(); } catch(e) {}
+  });
+  activeNodes = [];
+  document.getElementById('visBadge').innerText = "AUDIO ENGINE: IDLE";
+  document.getElementById('visEngineType').innerText = "TOPOLOGY: READY";
+  document.querySelectorAll('.audio-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.suite-stage-card').forEach(c => c.classList.remove('stage-active'));
+  document.getElementById('playbackProgress').innerText = "SEQUENCE: STOPPED";
+}
+
+function initVisualizer() {
+  visCanvas = document.getElementById('visCanvas');
+  visCtx = visCanvas.getContext('2d');
+  visCanvas.width = visCanvas.clientWidth * window.devicePixelRatio;
+  visCanvas.height = visCanvas.clientHeight * window.devicePixelRatio;
+}
+
+function drawVis() {
+  requestAnimationFrame(drawVis);
+  if (!visCtx || !visCanvas) return;
+  const w = visCanvas.width;
+  const h = visCanvas.height;
+
+  visCtx.fillStyle = "#070a0f";
+  visCtx.fillRect(0, 0, w, h);
+
+  if (!analyser || !isPlaying) {
+    visCtx.strokeStyle = "#1e293b";
+    visCtx.lineWidth = 2;
+    visCtx.beginPath();
+    visCtx.moveTo(0, h / 2);
+    visCtx.lineTo(w, h / 2);
+    visCtx.stroke();
+    return;
+  }
+
+  const bufLen = analyser.frequencyBinCount;
+  const data = new Uint8Array(bufLen);
+  analyser.getByteTimeDomainData(data);
+
+  visCtx.lineWidth = 2.5;
+  visCtx.strokeStyle = "#38bdf8";
+  visCtx.beginPath();
+
+  const slice = w / bufLen;
+  let x = 0;
+  for (let i = 0; i < bufLen; i++) {
+    const v = data[i] / 128.0;
+    const y = (v * h) / 2;
+    if (i === 0) visCtx.moveTo(x, y);
+    else visCtx.lineTo(x, y);
+    x += slice;
+  }
+  visCtx.lineTo(w, h / 2);
+  visCtx.stroke();
+}
+
+// ============================================================================
+// 6. UI CONTROLLER & DATA BINDING
+// ============================================================================
+let currentPoemData = null;
+
+function updatePoemAndParams(inputText) {
+  const detected = extractOnomatopoeiasAndClauses(inputText);
+  currentPoemData = structureIntoPoem(inputText, detected);
+
+  // Render Multiline Poem
+  document.getElementById('poemDisplay').innerText = currentPoemData.poemLines.join("\n");
+  document.getElementById('poemStatusTag').innerText = currentPoemData.status;
+  document.getElementById('poemSubtext').innerText = currentPoemData.desc;
+
+  // Build Suite Stages
+  suiteStages = [];
+  currentPoemData.tokens.forEach(tok => {
+    const conf = getWordConfig(tok);
+    suiteStages.push({
+      word: tok,
+      config: conf
+    });
+  });
+
+  // Render Suite Progression Timeline Cards
+  const timeline = document.getElementById('suiteTimeline');
+  timeline.innerHTML = "";
+
+  suiteStages.forEach((st, idx) => {
+    const conf = st.config;
+    const eff = conf.effort;
+    const aco = conf.acoustic;
+    const bpm = 68 + (eff.time * 8.2);
+
+    const card = document.createElement('div');
+    card.className = "suite-stage-card";
+    card.id = `stageCard_${idx}`;
+    card.innerHTML = `
+      <div class="stage-header">
+        <span>STAGE ${idx + 1}</span>
+        <span style="color: ${conf.dsp.color_hex};">${conf.engine.toUpperCase()}</span>
+      </div>
+      <div class="stage-word">${st.word}</div>
+      <div class="stage-desc">${conf.engine_desc}</div>
+      <div class="stage-metrics">
+        <span>${aco.freq_hz.toFixed(0)} Hz</span>
+        <span>Weight ${eff.weight.toFixed(1)}</span>
+        <span>${bpm.toFixed(0)} BPM</span>
+      </div>
+    `;
+    timeline.appendChild(card);
+  });
+
+  // 16D Parameter Inspector for Lead Word
+  if (suiteStages.length > 0) {
+    const lead = suiteStages[0];
+    const conf = lead.config;
+    const eff = conf.effort;
+    const aco = conf.acoustic;
+    const phr = conf.phrasing;
+
+    document.getElementById('labanLeadWord').innerText = `${lead.word} (${conf.engine})`;
+    document.getElementById('valWeight').innerText = `${eff.weight.toFixed(1)} (${eff.weight >= 6.0 ? '重量Sub-Kick・重圧' : '軽快・鋭利'})`;
+    document.getElementById('valTime').innerText = `${eff.time.toFixed(1)} (${eff.time >= 7.0 ? '超高速切迫・瞬間' : '遅滞・粘性'})`;
+    document.getElementById('valSpace').innerText = `${eff.space.toFixed(1)} (直接定位)`;
+    document.getElementById('valFlow').innerText = `${eff.flow.toFixed(1)} (${eff.flow >= 6.0 ? '流動・残響' : 'スタッカート拘束'})`;
+
+    document.getElementById('acousticLeadLabel').innerText = `${aco.freq_hz.toFixed(0)} Hz / ${conf.engine.toUpperCase()}`;
+    document.getElementById('valFreq').innerText = `${aco.freq_hz.toFixed(0)} Hz (${aco.freq_hz >= 2000 ? '超高域閃光' : aco.freq_hz <= 200 ? '超低域重粘性' : '中域衝突'})`;
+    document.getElementById('valHardMoist').innerText = `硬度 ${aco.hardness.toFixed(1)} / 湿度 ${aco.moisture.toFixed(1)}`;
+    document.getElementById('valAccent').innerText = `${phr.accent.toFixed(1)} (${(1.0 + phr.accent * 0.09).toFixed(2)}x 初拍強調)`;
+    document.getElementById('valRegularity').innerText = `${phr.regularity.toFixed(1)} (Jitter ±${((6.0 - Math.min(5.0, phr.regularity)) * 5.0).toFixed(1)}ms)`;
+
+    // Suite Variables
+    document.getElementById('valSuiteStages').innerText = `${suiteStages.length} 段階コントラスト展開`;
+    const bpms = suiteStages.map(s => 68 + s.config.effort.time * 8.2);
+    document.getElementById('valTempoRange').innerText = `${Math.min(...bpms).toFixed(0)} BPM 〜 ${Math.max(...bpms).toFixed(0)} BPM`;
+    document.getElementById('valEngineTransition').innerText = suiteStages.map(s => s.config.engine).join(" ➔ ");
+    
+    const totalSec = suiteStages.reduce((acc, s) => acc + (60 / (68 + s.config.effort.time * 8.2)) * 4, 0);
+    document.getElementById('valTotalDuration').innerText = `${totalSec.toFixed(1)} 秒 (4小節ドラマツルギー)`;
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  initVisualizer();
+  drawVis();
+  loadFullLexicon();
+
+  document.getElementById('btnConvert').addEventListener('click', () => {
+    updatePoemAndParams(document.getElementById('inputText').value);
+  });
+
+  document.getElementById('inputText').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      updatePoemAndParams(document.getElementById('inputText').value);
+    }
+  });
+
+  document.querySelectorAll('.preset-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const val = pill.getAttribute('data-text');
+      document.getElementById('inputText').value = val;
+      updatePoemAndParams(val);
+    });
+  });
+
+  // Button 1: Suite DSP Sequencer
+  document.getElementById('btnPlayDSP').addEventListener('click', function() {
+    stopAllAudio();
+    this.classList.add('active');
+    playSuiteSequence(false);
+  });
+
+  // Button 2: TTS Speech
+  document.getElementById('btnPlayTTS').addEventListener('click', function() {
+    stopAllAudio();
+    this.classList.add('active');
+    playTTS(currentPoemData.poemLines, () => {
+      this.classList.remove('active');
+    });
+  });
+
+  // Button 3: Hybrid (TTS + Suite DSP together)
+  document.getElementById('btnPlayHybrid').addEventListener('click', function() {
+    stopAllAudio();
+    this.classList.add('active');
+    playSuiteSequence(false);
+    playTTS(currentPoemData.poemLines, () => {
+      this.classList.remove('active');
+    });
+  });
+
+  // Button 4: Stop
+  document.getElementById('btnStop').addEventListener('click', () => {
+    stopAllAudio();
+  });
+
+  // Initial render
+  updatePoemAndParams(document.getElementById('inputText').value);
+});
+</script>
+
+</body>
+</html>
